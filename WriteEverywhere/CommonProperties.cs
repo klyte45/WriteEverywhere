@@ -8,6 +8,7 @@ namespace Kwytto
     {
         public static bool DebugMode => ModInstance.DebugMode;
         public static string Version => ModInstance.Version;
+        public static string FullVersion => ModInstance.FullVersion;
         public static string ModName => ModInstance.Instance.SimpleName;
         public static string Acronym { get; } = "WE";
         public static string ModRootFolder => MainController.FOLDER_PATH;

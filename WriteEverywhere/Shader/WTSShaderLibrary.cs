@@ -51,7 +51,7 @@ namespace Klyte.WriteTheSigns
         {
             LogUtils.DoWarnLog("LOADING Shaders");
             m_memoryLoaded?.Unload(true);
-            m_memoryLoaded = AssetBundle.LoadFromFile("Q:/GameModding/Cities Skylines/CodedMods/Current/projects/WriteTheCity/Shaders/ShaderTest.unity3d");
+            m_memoryLoaded = AssetBundle.LoadFromFile(System.Environment.GetEnvironmentVariable("K45_WE_PROJECTROOT") + "/Shaders/ShaderTest.unity3d");
             if (m_memoryLoaded != null)
             {
                 LogUtils.DoWarnLog("FOUND Shaders");

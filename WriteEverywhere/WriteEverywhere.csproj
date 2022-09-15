@@ -67,21 +67,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommonProperties.cs" />
-    <EmbeddedResource Include="Localization\Str.zh-cn.resx" />
-    <EmbeddedResource Include="Localization\Str.de.resx" />
-    <EmbeddedResource Include="Localization\Str.es.resx" />
-    <EmbeddedResource Include="Localization\Str.fr.resx" />
-    <EmbeddedResource Include="Localization\Str.it.resx" />
-    <EmbeddedResource Include="Localization\Str.ja.resx" />
-    <EmbeddedResource Include="Localization\Str.ko.resx" />
-    <EmbeddedResource Include="Localization\Str.pl.resx" />
-    <EmbeddedResource Include="Localization\Str.pt.resx" />
+    <Compile Include="_commons\Redirectors\UIViewRedirector.cs" />
+    <EmbeddedResource Include="Localization\Str.*.resx" />
     <EmbeddedResource Include="Localization\Str.resx">
       <LastGenOutput>Str.Designer.cs</LastGenOutput>
       <Generator>ResXFileCodeGenerator</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="Localization\Str.ru.resx" />
-    <EmbeddedResource Include="Localization\Str.th.resx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Localization\Str.Designer.cs">
@@ -89,45 +80,28 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Str.resx</DependentUpon>
     </Compile>
-    <Compile Include="ModInfo.cs" />
-    <Compile Include="_commons\**\*.cs" Exclude="_commons\Localization\KStr.Designer.cs"/>
+    <Compile Include="ModInstance.cs" />
+    <Compile Include="_commons\**\*.cs" Exclude="_commons\Localization\KStr.Designer.cs" />
     <Compile Include="_commons\Localization\KStr.Designer.cs">
       <DependentUpon>KStr.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-    </Compile>	
-    <EmbeddedResource Include="_commons\Localization\KStr.*.resx" />
-    <EmbeddedResource Include="_commons\Localization\KStr.resx">
-      <LastGenOutput>KStr.Designer.cs</LastGenOutput>
-      <Generator>ResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Shader\WTSShaderLibrary.cs" />
+    <EmbeddedResource Include="Shader\**\*.unity3d" />
     <None Include="packages.config" />
-    <None Include="Shader\ShaderTest-linux.unity3d" />
-    <None Include="Shader\ShaderTest-macosx.unity3d" />
-    <None Include="Shader\ShaderTest.unity3d" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="UI\VersionNotes.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="_commons\Localization\KStr.de.resx" />
-    <EmbeddedResource Include="_commons\Localization\Str.es.resx" />
-    <EmbeddedResource Include="_commons\Localization\Str.fr.resx" />
-    <EmbeddedResource Include="_commons\Localization\Str.it.resx" />
-    <EmbeddedResource Include="_commons\Localization\Str.ja.resx" />
-    <EmbeddedResource Include="_commons\Localization\Str.ko.resx" />
-    <EmbeddedResource Include="_commons\Localization\Str.pl.resx" />
-    <EmbeddedResource Include="_commons\Localization\Str.pt.resx" />
+    <EmbeddedResource Include="_commons\Localization\KStr.*.resx" />
     <EmbeddedResource Include="_commons\Localization\KStr.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>KStr.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="_commons\Localization\Str.ru.resx" />
-    <EmbeddedResource Include="_commons\Localization\Str.th.resx" />
-    <EmbeddedResource Include="_commons\Localization\Str.zh-cn.resx" />
     <EmbeddedResource Include="_commons\UI\Images\*.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
