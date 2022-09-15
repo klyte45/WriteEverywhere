@@ -72,7 +72,7 @@ namespace Klyte.WriteTheSigns
         }
         private Dictionary<string, Shader> LoadAllShaders(string assetBundleName)
         {
-            AssetBundle bundle = KlyteResourceLoader.LoadBundle(assetBundleName);
+            AssetBundle bundle = KResourceLoader.LoadBundle(assetBundleName);
             if (bundle != null)
             {
 

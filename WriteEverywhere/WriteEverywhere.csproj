@@ -104,6 +104,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="_commons\UI\Images\*.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="UI\Images\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>set "ModDir=%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(SolutionName)\"
