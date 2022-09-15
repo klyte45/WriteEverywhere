@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{291D9EA9-6945-4EA3-8756-37464D40F450}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Klyte</RootNamespace>
+    <AssemblyName>WriteEverywhere</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>false</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>..\..\_managed\Assembly-CSharp.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="CitiesHarmony.API, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CitiesHarmony.API.2.1.0\lib\net35\CitiesHarmony.API.dll</HintPath>
+    </Reference>
+    <Reference Include="CitiesHarmony.Harmony, Version=2.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CitiesHarmony.Harmony.2.2.0\lib\net35\CitiesHarmony.Harmony.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ColossalManaged">
+      <HintPath>..\..\_managed\ColossalManaged.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ICities">
+      <HintPath>..\..\_managed\ICities.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UnifiedUILib">
+      <HintPath>..\libs\UnifiedUILib.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>..\..\_managed\UnityEngine.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CommonProperties.cs" />
+    <EmbeddedResource Include="Localization\Str.zh-cn.resx" />
+    <EmbeddedResource Include="Localization\Str.de.resx" />
+    <EmbeddedResource Include="Localization\Str.es.resx" />
+    <EmbeddedResource Include="Localization\Str.fr.resx" />
+    <EmbeddedResource Include="Localization\Str.it.resx" />
+    <EmbeddedResource Include="Localization\Str.ja.resx" />
+    <EmbeddedResource Include="Localization\Str.ko.resx" />
+    <EmbeddedResource Include="Localization\Str.pl.resx" />
+    <EmbeddedResource Include="Localization\Str.pt.resx" />
+    <EmbeddedResource Include="Localization\Str.resx">
+      <LastGenOutput>Str.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Localization\Str.ru.resx" />
+    <EmbeddedResource Include="Localization\Str.th.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Localization\Str.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Str.resx</DependentUpon>
+    </Compile>
+    <Compile Include="ModInfo.cs" />
+    <Compile Include="_commons\**\*.cs" Exclude="_commons\Localization\KStr.Designer.cs"/>
+    <Compile Include="_commons\Localization\KStr.Designer.cs">
+      <DependentUpon>KStr.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>	
+    <EmbeddedResource Include="_commons\Localization\KStr.*.resx" />
+    <EmbeddedResource Include="_commons\Localization\KStr.resx">
+      <LastGenOutput>KStr.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Shader\WTSShaderLibrary.cs" />
+    <None Include="packages.config" />
+    <None Include="Shader\ShaderTest-linux.unity3d" />
+    <None Include="Shader\ShaderTest-macosx.unity3d" />
+    <None Include="Shader\ShaderTest.unity3d" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="UI\VersionNotes.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="_commons\Localization\KStr.de.resx" />
+    <EmbeddedResource Include="_commons\Localization\Str.es.resx" />
+    <EmbeddedResource Include="_commons\Localization\Str.fr.resx" />
+    <EmbeddedResource Include="_commons\Localization\Str.it.resx" />
+    <EmbeddedResource Include="_commons\Localization\Str.ja.resx" />
+    <EmbeddedResource Include="_commons\Localization\Str.ko.resx" />
+    <EmbeddedResource Include="_commons\Localization\Str.pl.resx" />
+    <EmbeddedResource Include="_commons\Localization\Str.pt.resx" />
+    <EmbeddedResource Include="_commons\Localization\KStr.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>KStr.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="_commons\Localization\Str.ru.resx" />
+    <EmbeddedResource Include="_commons\Localization\Str.th.resx" />
+    <EmbeddedResource Include="_commons\Localization\Str.zh-cn.resx" />
+    <EmbeddedResource Include="_commons\UI\Images\*.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>set "ModDir=%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(SolutionName)\"
+rmdir /s /q "%25ModDir%25"
+
+mkdir "%25ModDir%25"
+xcopy /y /e "$(TargetDir)*" "%25ModDir%25"
+del "%25ModDir%25*.pdb"
+</PostBuildEvent>
+  </PropertyGroup>
+</Project>

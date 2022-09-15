@@ -1,5 +1,7 @@
-﻿using ColossalFramework;
-using Klyte.Commons.Utils;
+﻿#if  UNITY_EDITOR
+#else
+using ColossalFramework;
+using Kwytto.Utils;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -106,3 +108,4 @@ namespace Klyte.WriteTheSigns
         }
     }
 }
+#endif
