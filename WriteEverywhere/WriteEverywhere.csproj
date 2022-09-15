@@ -104,8 +104,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="_commons\UI\Images\*.png" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="UI\Images\" />
+    <EmbeddedResource Include="UI\Images\*.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
