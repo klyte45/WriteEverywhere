@@ -59,6 +59,7 @@
     <Reference Include="System.Xml" />
     <Reference Include="UnifiedUILib">
       <HintPath>..\libs\UnifiedUILib.dll</HintPath>
+      <Aliases>UUI</Aliases>
     </Reference>
     <Reference Include="UnityEngine">
       <HintPath>..\..\_managed\UnityEngine.dll</HintPath>
@@ -95,6 +96,33 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="UI\VersionNotes.txt" />
+    <Compile Include="ModShared\**\*.cs" />
+    <Compile Include="Singleton\**\*.cs" />
+    <Compile Include="Xml\**\*.cs" />
+    <Compile Include="_StbTrueTypeSharp\**\*.cs" />
+    <Compile Include="Rendering\**\*.cs" />
+    <Compile Include="Font\**\*.cs" />
+    <Compile Include="Utils\**\*.cs" />
+  </ItemGroup>  
+  <ItemGroup>	
+    <Reference Include="TransportLinesManager">
+      <HintPath>..\..\_appdataMods\TLM\TransportLinesManager.dll</HintPath>
+      <Aliases>TLM</Aliases>
+      <Private>False</Private>
+      <Required>False</Required>
+    </Reference>
+    <Reference Include="Addresses">
+      <HintPath>..\..\_appdataMods\ADR\KlyteAddresses.dll</HintPath>
+      <Aliases>ADR</Aliases>
+      <Private>False</Private>
+      <Required>False</Required>
+    </Reference>
+    <Reference Include="VehicleSkins">
+      <HintPath>..\..\_appdataMods\VS\KlyteVehicleSkins.dll</HintPath>
+      <Aliases>VS</Aliases>
+      <Private>False</Private>
+      <Required>False</Required>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="_commons\Localization\KStr.*.resx" />
@@ -104,9 +132,8 @@
     </EmbeddedResource>
     <EmbeddedResource Include="_commons\UI\Images\*.png" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <EmbeddedResource Include="UI\Images\*.png" />
+    <EmbeddedResource Include="UI\**\*.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

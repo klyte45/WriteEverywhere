@@ -1,5 +1,4 @@
 ﻿using Klyte.Localization;
-using Klyte.WriteTheSigns;
 using Kwytto.Interfaces;
 using Kwytto.Utils;
 using System.Globalization;
