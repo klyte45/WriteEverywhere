@@ -4,8 +4,8 @@ using ColossalFramework;
 using ColossalFramework.Globalization;
 using ColossalFramework.Threading;
 using ColossalFramework.UI;
-using Klyte.Localization;
 using Kwytto.LiteUI;
+using Kwytto.Localization;
 using Kwytto.Utils;
 using SpriteFontPlus;
 using SpriteFontPlus.Utility;
@@ -223,8 +223,6 @@ namespace WriteEverywhere.Sprites
                     if (isRoot)
                     {
                         spritesToAdd.AddRange(UIView.GetAView().defaultAtlas.sprites.Select(x => CloneSpriteInfo(x)).ToList());
-                        TextureAtlasUtils.LoadImagesFromResources("commons.UI.Images", ref spritesToAdd);
-                        TextureAtlasUtils.LoadImagesFromResources("UI.Images", ref spritesToAdd);
                     }
                     TextureAtlasUtils.RegenerateTextureAtlas(LocalAtlases[atlasName], spritesToAdd);
                 }
@@ -240,7 +238,7 @@ namespace WriteEverywhere.Sprites
                         KwyttoDialog.SpaceBtn,
                         new KwyttoDialog.ButtonDefinition
                         {
-                            title = Str.we_Ok,
+                            title = KStr.comm_releaseNotes_Ok,
                             onClick=() => true,
                         },
                         KwyttoDialog.SpaceBtn

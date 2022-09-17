@@ -43,7 +43,7 @@ namespace WriteEverywhere
         public static void ReloadFontsFromPath()
         {
             FontServer.instance.ResetCollection();
-            FontServer.instance.RegisterFont(DEFAULT_FONT_KEY, KResourceLoader.LoadResourceData("UI.DefaultFont.SourceSansPro-Regular.ttf"), DefaultTextureSizeFont);
+            FontServer.instance.RegisterFont(DEFAULT_FONT_KEY, KResourceLoader.LoadResourceDataMod("UI.DefaultFont.SourceSansPro-Regular.ttf"), DefaultTextureSizeFont);
 
             foreach (string fontFile in Directory.GetFiles(FontFilesPath, "*.ttf"))
             {

@@ -70,15 +70,6 @@ namespace Klyte.Localization {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a OK.
-        /// </summary>
-        internal static string we_Ok {
-            get {
-                return ResourceManager.GetString("we_Ok", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a WTS_FOLDERSRC_ASSET.
         /// </summary>
         internal static string WTS_FOLDERSRC_ASSET {
@@ -129,6 +120,15 @@ namespace Klyte.Localization {
         internal static string WTS_PARAMTYPE_VARIABLE {
             get {
                 return ResourceManager.GetString("WTS_PARAMTYPE_VARIABLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a WTS_PICK_A_SEGMENT.
+        /// </summary>
+        internal static string WTS_PICK_A_SEGMENT {
+            get {
+                return ResourceManager.GetString("WTS_PICK_A_SEGMENT", resourceCulture);
             }
         }
     }

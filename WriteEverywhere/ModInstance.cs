@@ -1,10 +1,13 @@
-﻿using ColossalFramework;
+﻿extern alias UUI;
+
+using ColossalFramework;
 using Klyte.Localization;
 using Kwytto.Interfaces;
 using Kwytto.Utils;
 using System.Globalization;
 using System.Reflection;
 using UnityEngine;
+using WriteEverywhere.Tools;
 
 [assembly: AssemblyVersion("0.0.0.*")]
 namespace WriteEverywhere
@@ -26,5 +29,15 @@ namespace WriteEverywhere
         public static readonly SavedFloat ClockPrecision = new SavedFloat("K45_WTS_clockPrecision", Settings.gameSettingsFile, 15);
         public static readonly SavedBool ClockShowLeadingZero = new SavedBool("K45_WTS_clockShowLeadingZero", Settings.gameSettingsFile, true);
         public static readonly SavedBool Clock12hFormat = new SavedBool("K45_WTS_clock12hFormat", Settings.gameSettingsFile, false);
+
+        public override IUUIButtonContainerPlaceholder[] UUIButtons => new[]
+        {
+            new UUIToolButtonContainerPlaceholder(
+                buttonName :  $"{SimpleName} - {Str.WTS_PICK_A_SEGMENT}",
+                iconPath : $"UI.Images.K45_WTS_SegmentPickerIcon.png",
+                tooltip : $"WE: {Str.WTS_PICK_A_SEGMENT}",
+                toolGetter : ()=> ToolsModifierControl.toolController.GetComponent<SegmentEditorPickerTool>()
+            )
+        };
     }
 }

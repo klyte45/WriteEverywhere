@@ -13,7 +13,7 @@ namespace WriteEverywhere.UI
     {
         private Vector2 m_tabViewScroll;
 
-        public override Texture TabIcon { get; } = KResourceLoader.LoadCommonsTexture(CommonsSpriteNames.K45_FontIcon);
+        public override Texture TabIcon { get; } = KResourceLoader.LoadTextureKwytto(CommonsSpriteNames.K45_FontIcon);
 
         protected override string GetAssetName(OnNetInstanceCacheContainerXml item) => item.Descriptor?.PropName;
         protected override void SetTextParameter(OnNetInstanceCacheContainerXml item, int currentEditingParam, string paramValue) => item.SetTextParameter(currentEditingParam, paramValue);

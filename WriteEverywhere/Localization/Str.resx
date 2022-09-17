@@ -138,4 +138,7 @@
   <data name="WTS_PARAMTYPE_VARIABLE" xml:space="preserve">
     <value>WTS_PARAMTYPE_VARIABLE</value>
   </data>
+  <data name="WTS_PICK_A_SEGMENT" xml:space="preserve">
+    <value>WTS_PICK_A_SEGMENT</value>
+  </data>
 </root>

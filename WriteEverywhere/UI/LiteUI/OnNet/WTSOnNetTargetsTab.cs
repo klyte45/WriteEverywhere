@@ -15,7 +15,7 @@ namespace WriteEverywhere.UI
 
         private Vector2 m_tabViewScroll;
 
-        public Texture TabIcon { get; } = KResourceLoader.LoadCommonsTexture(CommonsSpriteNames.K45_MapIcon);
+        public Texture TabIcon { get; } = KResourceLoader.LoadTextureKwytto(CommonsSpriteNames.K45_MapIcon);
         public void Reset() => CurrentSegmentInSelect = -1;
 
         public bool DrawArea(Vector2 areaRect, ref OnNetInstanceCacheContainerXml item, int _)
