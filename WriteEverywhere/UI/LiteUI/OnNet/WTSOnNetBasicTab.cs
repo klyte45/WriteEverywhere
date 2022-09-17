@@ -1,11 +1,11 @@
 ﻿using ColossalFramework;
-using ColossalFramework.Globalization;
 using Klyte.Localization;
 using Kwytto.LiteUI;
 using Kwytto.UI;
 using Kwytto.Utils;
 using System;
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 using WriteEverywhere.Data;
 using WriteEverywhere.Libraries;
@@ -42,7 +42,8 @@ namespace WriteEverywhere.UI
         private int m_currentModelType;
         private readonly string[] m_modelTypesStr = new string[] { Str.WTS_ONNETEDITOR_PROPLAYOUT, Str.WTS_ONNETEDITOR_PROPMODELSELECT };
         private Vector2 m_tabViewScroll;
-        private readonly Wrapper<string[]> m_searchResult = new Wrapper<string[]>();
+        private readonly Wrapper<IIndexedPrefabData[]> m_searchResultPrefab = new Wrapper<IIndexedPrefabData[]>();
+        private readonly Wrapper<string[]> m_searchResultLayouts = new Wrapper<string[]>();
         private OnNetInstanceCacheContainerXml m_lastItem;
         private State m_currentState = State.Normal;
         private readonly Action<OnNetInstanceCacheContainerXml> m_onImportFromLib;
@@ -111,23 +112,28 @@ namespace WriteEverywhere.UI
 
         private IEnumerator OnFilterLayouts(string input, Action<string[]> setOptions)
         {
-            yield return m_currentModelType == 0
-                ? WTSPropLayoutData.Instance.FilterBy(input, TextRenderingClass.PlaceOnNet, m_searchResult)
-                : PropIndexes.instance.BasicInputFiltering(input, m_searchResult);
-            setOptions(m_searchResult.Value);
+            if (m_currentModelType == 0)
+            {
+                yield return WTSPropLayoutData.Instance.FilterBy(input, TextRenderingClass.PlaceOnNet, m_searchResultLayouts);
+                setOptions(m_searchResultLayouts.Value);
+            }
+            else
+            {
+                yield return PropIndexes.instance.BasicInputFiltering(input, m_searchResultPrefab);
+                setOptions(m_searchResultPrefab.Value.Select(x => x.DisplayName).ToArray());
+            }
         }
         private void OnModelSet(int selectLayout, string _)
         {
             if (m_currentModelType == 0)
             {
-                m_lastItem.PropLayoutName = m_searchResult.Value[selectLayout];
+                m_lastItem.PropLayoutName = m_searchResultLayouts.Value[selectLayout];
                 m_lastItem.SimpleProp = null;
             }
             else
             {
                 m_lastItem.PropLayoutName = null;
-                PropIndexes.instance.PrefabsLoaded.TryGetValue(m_searchResult.Value[selectLayout], out PropInfo info);
-                m_lastItem.SimpleProp = info;
+                m_lastItem.SimpleProp = m_searchResultPrefab.Value[selectLayout]?.Info as PropInfo;
             }
         }
         #endregion
