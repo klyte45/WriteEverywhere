@@ -120,4 +120,22 @@
   <data name="root_modDescription" xml:space="preserve">
     <value>Allow to write text in-game to simulate stuff like boards or signs.</value>
   </data>
+  <data name="WTS_FOLDERSRC_ASSET" xml:space="preserve">
+    <value>WTS_FOLDERSRC_ASSET</value>
+  </data>
+  <data name="WTS_FOLDERSRC_LOCAL" xml:space="preserve">
+    <value>WTS_FOLDERSRC_LOCAL</value>
+  </data>
+  <data name="WTS_IMAGESRC_ASSET" xml:space="preserve">
+    <value>WTS_IMAGESRC_ASSET</value>
+  </data>
+  <data name="WTS_IMAGESRC_LOCAL" xml:space="preserve">
+    <value>WTS_IMAGESRC_LOCAL</value>
+  </data>
+  <data name="WTS_PARAMTYPE_PLAINTEXT" xml:space="preserve">
+    <value>WTS_PARAMTYPE_PLAINTEXT</value>
+  </data>
+  <data name="WTS_PARAMTYPE_VARIABLE" xml:space="preserve">
+    <value>WTS_PARAMTYPE_VARIABLE</value>
+  </data>
 </root>

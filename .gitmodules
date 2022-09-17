@@ -1,3 +1,6 @@
 [submodule "WriteEverywhre/commons"]
 	path = WriteEverywhre/commons
 	url = https://github.com/klyte45/KwyttoUtility.git
+[submodule "WriteEverywhere/_StbTrueTypeSharp"]
+	path = WriteEverywhere/_StbTrueTypeSharp
+	url = https://github.com/klyte45/SafeStbTrueTypeSharp.git

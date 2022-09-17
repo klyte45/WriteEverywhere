@@ -68,5 +68,68 @@ namespace Klyte.Localization {
                 return ResourceManager.GetString("root_modDescription", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a OK.
+        /// </summary>
+        internal static string we_Ok {
+            get {
+                return ResourceManager.GetString("we_Ok", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a WTS_FOLDERSRC_ASSET.
+        /// </summary>
+        internal static string WTS_FOLDERSRC_ASSET {
+            get {
+                return ResourceManager.GetString("WTS_FOLDERSRC_ASSET", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a WTS_FOLDERSRC_LOCAL.
+        /// </summary>
+        internal static string WTS_FOLDERSRC_LOCAL {
+            get {
+                return ResourceManager.GetString("WTS_FOLDERSRC_LOCAL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a WTS_IMAGESRC_ASSET.
+        /// </summary>
+        internal static string WTS_IMAGESRC_ASSET {
+            get {
+                return ResourceManager.GetString("WTS_IMAGESRC_ASSET", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a WTS_IMAGESRC_LOCAL.
+        /// </summary>
+        internal static string WTS_IMAGESRC_LOCAL {
+            get {
+                return ResourceManager.GetString("WTS_IMAGESRC_LOCAL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a WTS_PARAMTYPE_PLAINTEXT.
+        /// </summary>
+        internal static string WTS_PARAMTYPE_PLAINTEXT {
+            get {
+                return ResourceManager.GetString("WTS_PARAMTYPE_PLAINTEXT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a WTS_PARAMTYPE_VARIABLE.
+        /// </summary>
+        internal static string WTS_PARAMTYPE_VARIABLE {
+            get {
+                return ResourceManager.GetString("WTS_PARAMTYPE_VARIABLE", resourceCulture);
+            }
+        }
     }
 }
