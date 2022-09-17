@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 
 namespace WriteEverywhere.Xml
 {
+
     internal class CommandLevel
     {
 
@@ -64,7 +65,6 @@ namespace WriteEverywhere.Xml
 
         public static string[] GetParameterPath(string input) => Regex.Split(input, @"(?<!\\)/").Select(x => x.Replace("\\/", "/")).ToArray();
         public static string FromParameterPath(IEnumerable<string> path) => string.Join("/", path.Select(x => Regex.Replace(x, @"([^\\])/|^/", "$1\\/")).ToArray()) + "/";
-        public static string ToLocaleVar(Enum e) => $"{e.GetType().Name}.{e.ToString()}";
 
         public const string PROTOCOL_VARIABLE = "var://";
 
@@ -148,7 +148,7 @@ namespace WriteEverywhere.Xml
             {
                 if (currentLevel.defaultValue != null)
                 {
-                    Enum varType = currentLevel.defaultValue;
+                    var varType = currentLevel.defaultValue;
                     try
                     {
                         varType = (Enum)Enum.Parse(varType.GetType(), parameterPath[level]);
@@ -179,9 +179,9 @@ namespace WriteEverywhere.Xml
             currentLocaleDesc = !(currentLevel.descriptionKey is null)
                 ? currentLevel.descriptionKey
                 : !(levelKey is null)
-                    ? CommandLevel.ToLocaleVar(levelKey)
+                    ? levelKey.VariableToI18n()
                     : !(currentLevel.defaultValue is null)
-                        ? CommandLevel.ToLocaleVar(currentLevel.defaultValue)
+                        ? currentLevel.defaultValue.VariableToI18n()
                         : null;
             currentLevel.level = level;
             return currentLevel;

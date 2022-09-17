@@ -1,5 +1,6 @@
 ﻿using ColossalFramework;
 using ColossalFramework.Globalization;
+using Klyte.Localization;
 using Kwytto.LiteUI;
 using Kwytto.UI;
 using Kwytto.Utils;
@@ -15,7 +16,7 @@ namespace WriteEverywhere.UI
 {
     public class WTSOnNetBasicTab : IGUITab<OnNetInstanceCacheContainerXml>
     {
-        private const string f_base = "K45_WTS_OnNetInstanceCacheContainerXml_";
+        private const string f_base = "K45_WE_OnNetInstanceCacheContainerXml_";
         private const string f_SaveName = f_base + "SaveName";
         private const string f_ModelSelect = f_base + "ModelSelect";
         private const string f_ModelSelectType = f_base + "ModelSelectType";
@@ -39,7 +40,7 @@ namespace WriteEverywhere.UI
         }
 
         private int m_currentModelType;
-        private readonly string[] m_modelTypesStr = new string[] { Locale.Get("K45_WTS_ONNETEDITOR_PROPLAYOUT"), Locale.Get("K45_WTS_ONNETEDITOR_PROPMODELSELECT") };
+        private readonly string[] m_modelTypesStr = new string[] { Str.WTS_ONNETEDITOR_PROPLAYOUT, Str.WTS_ONNETEDITOR_PROPMODELSELECT };
         private Vector2 m_tabViewScroll;
         private readonly Wrapper<string[]> m_searchResult = new Wrapper<string[]>();
         private OnNetInstanceCacheContainerXml m_lastItem;
@@ -49,12 +50,12 @@ namespace WriteEverywhere.UI
         private readonly GUIFilterItemsScreen<State> m_layoutFilter;
         private readonly GUIXmlLib<WTSLibOnNetPropLayout, BoardInstanceOnNetXml, OnNetInstanceCacheContainerXml> xmlLibItem = new GUIXmlLib<WTSLibOnNetPropLayout, BoardInstanceOnNetXml, OnNetInstanceCacheContainerXml>()
         {
-            DeleteQuestionI18n = "K45_WTS_PROPEDIT_CONFIGDELETE_MESSAGE",
-            ImportI18n = "K45_WTS_SEGMENT_IMPORTDATA",
-            ExportI18n = "K45_WTS_SEGMENT_EXPORTDATA",
-            DeleteButtonI18n = "K45_WTS_SEGMENT_REMOVEITEM",
-            NameAskingI18n = "K45_WTS_EXPORTDATA_NAMEASKING",
-            NameAskingOverwriteI18n = "K45_WTS_EXPORTDATA_NAMEASKING_OVERWRITE",
+            DeleteQuestionI18n = Str.WTS_PROPEDIT_CONFIGDELETE_MESSAGE,
+            ImportI18n = Str.WTS_SEGMENT_IMPORTDATA,
+            ExportI18n = Str.WTS_SEGMENT_EXPORTDATA,
+            DeleteButtonI18n = Str.WTS_SEGMENT_REMOVEITEM,
+            NameAskingI18n = Str.WTS_EXPORTDATA_NAMEASKING,
+            NameAskingOverwriteI18n = Str.WTS_EXPORTDATA_NAMEASKING_OVERWRITE,
 
         };
         private GUIStyle m_redButton;
@@ -68,12 +69,12 @@ namespace WriteEverywhere.UI
                     {
                         normal = new GUIStyleState()
                         {
-                            background = GUIKlyteCommons.darkRedTexture,
+                            background = GUIKwyttoCommons.darkRedTexture,
                             textColor = Color.white
                         },
                         hover = new GUIStyleState()
                         {
-                            background = GUIKlyteCommons.redTexture,
+                            background = GUIKwyttoCommons.redTexture,
                             textColor = Color.white
                         },
                     };
@@ -82,14 +83,14 @@ namespace WriteEverywhere.UI
             }
         }
 
-        public Texture TabIcon { get; } = GUIKlyteCommons.GetByNameFromDefaultAtlas("K45_Settings");
+        public Texture TabIcon { get; } = GUIKwyttoCommons.GetByNameFromDefaultAtlas("K45_Settings");
 
         public WTSOnNetBasicTab(Action<OnNetInstanceCacheContainerXml> onImportFromLib, Action onDelete)
         {
             m_onImportFromLib = onImportFromLib;
             m_onDelete = onDelete;
 
-            m_layoutFilter = new GUIFilterItemsScreen<State>(Locale.Get("K45_WTS_BUILDINGEDITOR_MODELLAYOUTSELECT"), ModInstance.Controller, OnFilterLayouts, OnModelSet, GoTo, State.Normal, State.GetLayout, otherFilters: DrawExtraFilter);
+            m_layoutFilter = new GUIFilterItemsScreen<State>(Str.WTS_BUILDINGEDITOR_MODELLAYOUTSELECT, ModInstance.Controller, OnFilterLayouts, OnModelSet, GoTo, State.Normal, State.GetLayout, otherFilters: DrawExtraFilter);
         }
 
         #region Layout Selection
@@ -168,7 +169,7 @@ namespace WriteEverywhere.UI
         {
             using (new GUILayout.HorizontalScope())
             {
-                GUILayout.Label(Locale.Get("K45_WTS_ONNETEDITOR_NAME"));
+                GUILayout.Label(Str.WTS_ONNETEDITOR_NAME);
                 var newName = GUITextField.TextField(f_SaveName, item.SaveName);
                 if (!newName.IsNullOrWhiteSpace() && newName != item.SaveName)
                 {
@@ -181,14 +182,14 @@ namespace WriteEverywhere.UI
             using (new GUILayout.HorizontalScope())
             {
                 GUI.SetNextControlName(f_InstanceMode);
-                item.SegmentPositionRepeating = GUILayout.Toggle(item.SegmentPositionRepeating, Locale.Get("K45_WTS_POSITIONINGMODE_ISMULTIPLE"));
+                item.SegmentPositionRepeating = GUILayout.Toggle(item.SegmentPositionRepeating, Str.WTS_POSITIONINGMODE_ISMULTIPLE);
             };
 
             if (item.SegmentPositionRepeating)
             {
                 using (new GUILayout.HorizontalScope())
                 {
-                    GUILayout.Label(Locale.Get("K45_WTS_ONNETEDITOR_SEGMENTPOSITION_START"));
+                    GUILayout.Label(Str.WTS_ONNETEDITOR_SEGMENTPOSITION_START);
                     GUILayout.Space(areaRect.x / 3);
                     var rect = GUILayoutUtility.GetLastRect();
                     item.SegmentPositionStart = GUI.HorizontalSlider(new Rect(rect.x, rect.yMin + 7, rect.width, 15), item.SegmentPositionStart, 0, 1);
@@ -196,7 +197,7 @@ namespace WriteEverywhere.UI
                 };
                 using (new GUILayout.HorizontalScope())
                 {
-                    GUILayout.Label(Locale.Get("K45_WTS_ONNETEDITOR_SEGMENTPOSITION_END"));
+                    GUILayout.Label(Str.WTS_ONNETEDITOR_SEGMENTPOSITION_END);
                     GUILayout.Space(areaRect.x / 3);
                     var rect = GUILayoutUtility.GetLastRect();
                     item.SegmentPositionEnd = GUI.HorizontalSlider(new Rect(rect.x, rect.yMin + 7, rect.width, 15), item.SegmentPositionEnd, 0, 1);
@@ -204,7 +205,7 @@ namespace WriteEverywhere.UI
                 };
                 using (new GUILayout.HorizontalScope())
                 {
-                    GUILayout.Label(Locale.Get("K45_WTS_ONNETEDITOR_SEGMENTPOSITION_COUNT"));
+                    GUILayout.Label(Str.WTS_ONNETEDITOR_SEGMENTPOSITION_COUNT);
                     item.SegmentPositionRepeatCount = (ushort)GUIIntField.IntField(f_SegmentRepeatCount, item.SegmentPositionRepeatCount, 1, ushort.MaxValue);
                 };
             }
@@ -212,7 +213,7 @@ namespace WriteEverywhere.UI
             {
                 using (new GUILayout.HorizontalScope())
                 {
-                    GUILayout.Label(Locale.Get("K45_WTS_ONNETEDITOR_SEGMENTPOSITION"));
+                    GUILayout.Label(Str.WTS_ONNETEDITOR_SEGMENTPOSITION);
                     GUILayout.Space(areaRect.x / 3);
                     var rect = GUILayoutUtility.GetLastRect();
                     item.SegmentPosition = GUI.HorizontalSlider(new Rect(rect.x, rect.yMin + 7, rect.width, 15), item.SegmentPosition, 0, 1);
@@ -224,17 +225,17 @@ namespace WriteEverywhere.UI
 
             using (new GUILayout.HorizontalScope())
             {
-                item.InvertSign = GUILayout.Toggle(item.InvertSign, Locale.Get("K45_WTS_INVERT_SIGN_SIDE"));
+                item.InvertSign = GUILayout.Toggle(item.InvertSign, Str.WTS_INVERT_SIGN_SIDE);
             };
 
             using (new GUILayout.HorizontalScope())
             {
-                GUILayout.Label(Locale.Get("K45_WTS_ONNETEDITOR_LOCATION_SETTINGS"));
+                GUILayout.Label(Str.WTS_ONNETEDITOR_LOCATION_SETTINGS);
             };
 
-            GUIKlyteCommons.AddVector3Field(areaRect.x, item.PropPosition, "K45_WTS_ONNETEDITOR_POSITIONOFFSET", f_SegmentPositionOffset);
-            GUIKlyteCommons.AddVector3Field(areaRect.x, item.PropRotation, "K45_WTS_ONNETEDITOR_ROTATION", f_SegmentRotationOffset);
-            GUIKlyteCommons.AddVector3Field(areaRect.x, item.Scale, "K45_WTS_ONNETEDITOR_SCALE", f_SegmentScaleOffset);
+            GUIKwyttoCommons.AddVector3Field(areaRect.x, item.PropPosition, Str.WTS_ONNETEDITOR_POSITIONOFFSET, f_SegmentPositionOffset);
+            GUIKwyttoCommons.AddVector3Field(areaRect.x, item.PropRotation, Str.WTS_ONNETEDITOR_ROTATION, f_SegmentRotationOffset);
+            GUIKwyttoCommons.AddVector3Field(areaRect.x, item.Scale, Str.WTS_ONNETEDITOR_SCALE, f_SegmentScaleOffset);
 
             xmlLibItem.Draw(RedButton, m_onDelete, () => m_lastItem, xmlLibItem.FooterDraw);
         }

@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.Globalization;
+using Klyte.Localization;
 using Kwytto.LiteUI;
 using Kwytto.UI;
 using Kwytto.Utils;
@@ -41,15 +42,19 @@ namespace WriteEverywhere.UI
             }
         }
 
-        public void Init()
+        public void Awake()
         {
-            Init("On Net Editor", new Rect(128, 128, 680, 420), resizable: true, minSize: new Vector2(340, 260));
             Instance = this;
-            m_tabsContainer = new GUIBasicListingTabsContainer<OnNetInstanceCacheContainerXml>(new IGUITab<OnNetInstanceCacheContainerXml>[] {
-                new WTSOnNetBasicTab(OnImportSingle, OnDelete),
+            Instance.Init("On Net Editor", new Rect(128, 128, 680, 420), resizable: true, minSize: new Vector2(340, 260));
+            Instance.m_tabsContainer = new GUIBasicListingTabsContainer<OnNetInstanceCacheContainerXml>(new IGUITab<OnNetInstanceCacheContainerXml>[] {
+                new WTSOnNetBasicTab(Instance.OnImportSingle, Instance.OnDelete),
                 new WTSOnNetTargetsTab(),
                 new WTSOnNetParamsTab()
-            }, OnAdd, GetSideList, GetSelectedItem, OnSetCurrentItem);
+            }, Instance.OnAdd, Instance.GetSideList, Instance.GetSelectedItem, Instance.OnSetCurrentItem);
+        }
+        public static void Destroy()
+        {
+            Instance = null;
         }
 
         public void Start() => Visible = false;
@@ -65,12 +70,12 @@ namespace WriteEverywhere.UI
         private ushort currentSegmentId;
         private readonly GUIXmlLib<WTSLibOnNetPropLayoutList, ExportableBoardInstanceOnNetListXml> xmlLibList = new GUIXmlLib<WTSLibOnNetPropLayoutList, ExportableBoardInstanceOnNetListXml>()
         {
-            DeleteQuestionI18n = "K45_WTS_SEGMENT_CLEARDATA_AYS",
-            ImportI18n = "K45_WTS_SEGMENT_IMPORTDATA",
-            ExportI18n = "K45_WTS_SEGMENT_EXPORTDATA",
-            DeleteButtonI18n = "K45_WTS_SEGMENT_REMOVEITEM",
-            NameAskingI18n = "K45_WTS_EXPORTDATA_NAMEASKING",
-            NameAskingOverwriteI18n = "K45_WTS_EXPORTDATA_NAMEASKING_OVERWRITE",
+            DeleteQuestionI18n = Str.WTS_SEGMENT_CLEARDATA_AYS,
+            ImportI18n = Str.WTS_SEGMENT_IMPORTDATA,
+            ExportI18n = Str.WTS_SEGMENT_EXPORTDATA,
+            DeleteButtonI18n = Str.WTS_SEGMENT_REMOVEITEM,
+            NameAskingI18n = Str.WTS_EXPORTDATA_NAMEASKING,
+            NameAskingOverwriteI18n = Str.WTS_EXPORTDATA_NAMEASKING_OVERWRITE,
 
         };
 
@@ -91,7 +96,7 @@ namespace WriteEverywhere.UI
         private void ReloadSegment()
         {
             ModInstance.Controller.ConnectorADR.GetAddressStreetAndNumber(NetManager.instance.m_segments.m_buffer[CurrentSegmentId].m_middlePosition, NetManager.instance.m_segments.m_buffer[CurrentSegmentId].m_middlePosition, out int num, out string streetName);
-            Title = $"{Locale.Get("K45_WTS_SEGMENTPLACING_TITLE")}: {streetName}, ~{num}m";
+            Title = $"{Str.WTS_SEGMENTPLACING_TITLE}: {streetName}, ~{num}m";
             if (WTSOnNetData.Instance.m_boardsContainers[CurrentSegmentId] == null)
             {
                 WTSOnNetData.Instance.m_boardsContainers[CurrentSegmentId] = new OnNetGroupDescriptorXml();
@@ -137,17 +142,17 @@ namespace WriteEverywhere.UI
                 {
                     using (new GUILayout.HorizontalScope())
                     {
-                        LockSelection = GUILayout.Toggle(LockSelection, Locale.Get("K45_WTS_SEGMENTEDITOR_BUTTONROWACTION_LOCKCAMERASELECTION"));
+                        LockSelection = GUILayout.Toggle(LockSelection, Str.WTS_SEGMENTEDITOR_BUTTONROWACTION_LOCKCAMERASELECTION);
                         GUILayout.FlexibleSpace();
-                        if (GUILayout.Button(Locale.Get("K45_WTS_SEGMENT_IMPORTDATA")))
+                        if (GUILayout.Button(Str.WTS_SEGMENT_IMPORTDATA))
                         {
                             xmlLibList.GoToImport();
                         }
-                        if (GUILayout.Button(Locale.Get("K45_WTS_SEGMENT_EXPORTDATA")))
+                        if (GUILayout.Button(Str.WTS_SEGMENT_EXPORTDATA))
                         {
                             xmlLibList.GoToExport();
                         }
-                        if (GUILayout.Button(Locale.Get("K45_WTS_SEGMENT_CLEARDATA")))
+                        if (GUILayout.Button(Str.WTS_SEGMENT_CLEARDATA))
                         {
                             xmlLibList.GoToRemove();
                         }

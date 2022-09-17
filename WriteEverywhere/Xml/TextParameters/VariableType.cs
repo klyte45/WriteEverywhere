@@ -34,6 +34,7 @@ namespace WriteEverywhere.Xml
                     return true;
             }
         }
+
         public static CommandLevel GetCommandTree(this VariableType var)
         {
             switch (var)

@@ -23,18 +23,18 @@ namespace WriteEverywhere
             {
                 if (Application.platform == RuntimePlatform.WindowsPlayer)
                 {
-                    m_loadedShaders = LoadAllShaders("Shaders.ShaderTest.unity3d");
+                    m_loadedShaders = LoadAllShaders("Shader.ShaderTest.unity3d");
                     LogUtils.DoLog($"Shaders loaded for {Application.platform}!");
                 }
                 else if (Application.platform == RuntimePlatform.LinuxPlayer)
                 {
-                    m_loadedShaders = LoadAllShaders("Shaders.ShaderTest-linux.unity3d");
+                    m_loadedShaders = LoadAllShaders("Shader.ShaderTest-linux.unity3d");
                     LogUtils.DoLog($"Shaders loaded for {Application.platform}!");
                 }
                 else if (Application.platform == RuntimePlatform.OSXPlayer)
                 {
 
-                    m_loadedShaders = LoadAllShaders("Shaders.ShaderTest-macosx.unity3d");
+                    m_loadedShaders = LoadAllShaders("Shader.ShaderTest-macosx.unity3d");
                     LogUtils.DoLog($"Shaders loaded for {Application.platform}!");
                 }
                 else
@@ -42,6 +42,7 @@ namespace WriteEverywhere
                     m_loadedShaders = new Dictionary<string, Shader>();
                     LogUtils.DoErrorLog($"WARNING: Shaders not found for {Application.platform}!");
                 }
+                LogUtils.DoLog($"Shaders loaded:\n\t- {string.Join("\n\t- ", m_loadedShaders.Keys?.ToArray() ?? new[] { "ERRRRRR" })}");
             }
             return m_loadedShaders;
         }
@@ -89,20 +90,14 @@ namespace WriteEverywhere
             string[] files = bundle.GetAllAssetNames();
             foreach (string filename in files)
             {
+                LogUtils.DoLog($"Reading file {filename} inside the bundle {bundle}");
                 if (filename.EndsWith(".shader"))
                 {
 
                     Shader shader = bundle.LoadAsset<Shader>(filename);
                     string effectiveName = filename.Split('.')[0].Split('/').Last();
-                    if (effectiveName.StartsWith("klyte"))
-                    {
-                        shader.name = $"Klyte/WTS/{effectiveName}";
-                        m_loadedShaders[shader.name] = (shader);
-                    }
-                    else
-                    {
-                        GameObject.Destroy(shader);
-                    }
+                    shader.name = $"klyte/wts/{effectiveName}";
+                    m_loadedShaders[shader.name] = (shader);
                 }
             }
         }

@@ -70,7 +70,151 @@ namespace Klyte.Localization {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a WTS_FOLDERSRC_ASSET.
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Highway shield.
+        /// </summary>
+        internal static string WTS_BOARD_TEXT_TYPE_DESC__HwShield {
+            get {
+                return ResourceManager.GetString("WTS_BOARD_TEXT_TYPE_DESC__HwShield", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a List of lines.
+        /// </summary>
+        internal static string WTS_BOARD_TEXT_TYPE_DESC__LinesNameList {
+            get {
+                return ResourceManager.GetString("WTS_BOARD_TEXT_TYPE_DESC__LinesNameList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Lines passing.
+        /// </summary>
+        internal static string WTS_BOARD_TEXT_TYPE_DESC__LinesSymbols {
+            get {
+                return ResourceManager.GetString("WTS_BOARD_TEXT_TYPE_DESC__LinesSymbols", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a None.
+        /// </summary>
+        internal static string WTS_BOARD_TEXT_TYPE_DESC__None {
+            get {
+                return ResourceManager.GetString("WTS_BOARD_TEXT_TYPE_DESC__None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Sprite slideshow from a folder.
+        /// </summary>
+        internal static string WTS_BOARD_TEXT_TYPE_DESC__ParameterizedSpriteFolder {
+            get {
+                return ResourceManager.GetString("WTS_BOARD_TEXT_TYPE_DESC__ParameterizedSpriteFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Parameterized sprite.
+        /// </summary>
+        internal static string WTS_BOARD_TEXT_TYPE_DESC__ParameterizedSpriteSingle {
+            get {
+                return ResourceManager.GetString("WTS_BOARD_TEXT_TYPE_DESC__ParameterizedSpriteSingle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Parameterized Text.
+        /// </summary>
+        internal static string WTS_BOARD_TEXT_TYPE_DESC__ParameterizedText {
+            get {
+                return ResourceManager.GetString("WTS_BOARD_TEXT_TYPE_DESC__ParameterizedText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Text sequence.
+        /// </summary>
+        internal static string WTS_BOARD_TEXT_TYPE_DESC__TextParameterSequence {
+            get {
+                return ResourceManager.GetString("WTS_BOARD_TEXT_TYPE_DESC__TextParameterSequence", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Time &amp; Temperature.
+        /// </summary>
+        internal static string WTS_BOARD_TEXT_TYPE_DESC__TimeTemperature {
+            get {
+                return ResourceManager.GetString("WTS_BOARD_TEXT_TYPE_DESC__TimeTemperature", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Model/Layout selection.
+        /// </summary>
+        internal static string WTS_BUILDINGEDITOR_MODELLAYOUTSELECT {
+            get {
+                return ResourceManager.GetString("WTS_BUILDINGEDITOR_MODELLAYOUTSELECT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Some erros happened while trying to load custom sprites:.
+        /// </summary>
+        internal static string WTS_CUSTOMSPRITE_ERRORHEADER {
+            get {
+                return ResourceManager.GetString("WTS_CUSTOMSPRITE_ERRORHEADER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a An error has occurred loading image....
+        /// </summary>
+        internal static string WTS_CUSTOMSPRITE_FAILEDREADIMAGE {
+            get {
+                return ResourceManager.GetString("WTS_CUSTOMSPRITE_FAILEDREADIMAGE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Image too large!!.
+        /// </summary>
+        internal static string WTS_CUSTOMSPRITE_IMAGETOOLARGE {
+            get {
+                return ResourceManager.GetString("WTS_CUSTOMSPRITE_IMAGETOOLARGE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Default game font.
+        /// </summary>
+        internal static string WTS_DEFAULT_FONT_LABEL {
+            get {
+                return ResourceManager.GetString("WTS_DEFAULT_FONT_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Name of this rule to be saved:.
+        /// </summary>
+        internal static string WTS_EXPORTDATA_NAMEASKING {
+            get {
+                return ResourceManager.GetString("WTS_EXPORTDATA_NAMEASKING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a There&apos;s already a rule with this name. Overwrite?.
+        /// </summary>
+        internal static string WTS_EXPORTDATA_NAMEASKING_OVERWRITE {
+            get {
+                return ResourceManager.GetString("WTS_EXPORTDATA_NAMEASKING_OVERWRITE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Folder from asset.
         /// </summary>
         internal static string WTS_FOLDERSRC_ASSET {
             get {
@@ -79,7 +223,7 @@ namespace Klyte.Localization {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a WTS_FOLDERSRC_LOCAL.
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Global folder.
         /// </summary>
         internal static string WTS_FOLDERSRC_LOCAL {
             get {
@@ -88,7 +232,7 @@ namespace Klyte.Localization {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a WTS_IMAGESRC_ASSET.
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Image from asset folder.
         /// </summary>
         internal static string WTS_IMAGESRC_ASSET {
             get {
@@ -97,7 +241,7 @@ namespace Klyte.Localization {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a WTS_IMAGESRC_LOCAL.
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Image from global folder.
         /// </summary>
         internal static string WTS_IMAGESRC_LOCAL {
             get {
@@ -106,7 +250,151 @@ namespace Klyte.Localization {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a WTS_PARAMTYPE_PLAINTEXT.
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Invert road side.
+        /// </summary>
+        internal static string WTS_INVERT_SIGN_SIDE {
+            get {
+                return ResourceManager.GetString("WTS_INVERT_SIGN_SIDE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a &lt;color=#FF0000&gt;Wrong settings in this parameter!&lt;/color&gt;\nThere are more than one text entry of different kind pointing to this parameter. Please check your layout settings..
+        /// </summary>
+        internal static string WTS_ONNETEDITOR_INVALIDPARAMSETTINGS_DIFFERENTKINDSAMEPARAM {
+            get {
+                return ResourceManager.GetString("WTS_ONNETEDITOR_INVALIDPARAMSETTINGS_DIFFERENTKINDSAMEPARAM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Positioning settings.
+        /// </summary>
+        internal static string WTS_ONNETEDITOR_LOCATION_SETTINGS {
+            get {
+                return ResourceManager.GetString("WTS_ONNETEDITOR_LOCATION_SETTINGS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Name.
+        /// </summary>
+        internal static string WTS_ONNETEDITOR_NAME {
+            get {
+                return ResourceManager.GetString("WTS_ONNETEDITOR_NAME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Position offset.
+        /// </summary>
+        internal static string WTS_ONNETEDITOR_POSITIONOFFSET {
+            get {
+                return ResourceManager.GetString("WTS_ONNETEDITOR_POSITIONOFFSET", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Prop layout.
+        /// </summary>
+        internal static string WTS_ONNETEDITOR_PROPLAYOUT {
+            get {
+                return ResourceManager.GetString("WTS_ONNETEDITOR_PROPLAYOUT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Prop model.
+        /// </summary>
+        internal static string WTS_ONNETEDITOR_PROPMODELSELECT {
+            get {
+                return ResourceManager.GetString("WTS_ONNETEDITOR_PROPMODELSELECT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Rotation.
+        /// </summary>
+        internal static string WTS_ONNETEDITOR_ROTATION {
+            get {
+                return ResourceManager.GetString("WTS_ONNETEDITOR_ROTATION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Scale.
+        /// </summary>
+        internal static string WTS_ONNETEDITOR_SCALE {
+            get {
+                return ResourceManager.GetString("WTS_ONNETEDITOR_SCALE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Segment path relative position.
+        /// </summary>
+        internal static string WTS_ONNETEDITOR_SEGMENTPOSITION {
+            get {
+                return ResourceManager.GetString("WTS_ONNETEDITOR_SEGMENTPOSITION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Instances count.
+        /// </summary>
+        internal static string WTS_ONNETEDITOR_SEGMENTPOSITION_COUNT {
+            get {
+                return ResourceManager.GetString("WTS_ONNETEDITOR_SEGMENTPOSITION_COUNT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Last item segment offset.
+        /// </summary>
+        internal static string WTS_ONNETEDITOR_SEGMENTPOSITION_END {
+            get {
+                return ResourceManager.GetString("WTS_ONNETEDITOR_SEGMENTPOSITION_END", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a First item segment offset.
+        /// </summary>
+        internal static string WTS_ONNETEDITOR_SEGMENTPOSITION_START {
+            get {
+                return ResourceManager.GetString("WTS_ONNETEDITOR_SEGMENTPOSITION_START", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Target {0}.
+        /// </summary>
+        internal static string WTS_ONNETEDITOR_TARGET {
+            get {
+                return ResourceManager.GetString("WTS_ONNETEDITOR_TARGET", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Parameter {0}.
+        /// </summary>
+        internal static string WTS_ONNETEDITOR_TEXTPARAM {
+            get {
+                return ResourceManager.GetString("WTS_ONNETEDITOR_TEXTPARAM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a &lt;Target is not set&gt;.
+        /// </summary>
+        internal static string WTS_ONNETEDITOR_UNSETTARGETDESC {
+            get {
+                return ResourceManager.GetString("WTS_ONNETEDITOR_UNSETTARGETDESC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Plain text.
         /// </summary>
         internal static string WTS_PARAMTYPE_PLAINTEXT {
             get {
@@ -115,7 +403,7 @@ namespace Klyte.Localization {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a WTS_PARAMTYPE_VARIABLE.
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Game stats variable.
         /// </summary>
         internal static string WTS_PARAMTYPE_VARIABLE {
             get {
@@ -124,11 +412,488 @@ namespace Klyte.Localization {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a WTS_PICK_A_SEGMENT.
+        ///   Consulta uma cadeia de caracteres localizada semelhante a City name..
+        /// </summary>
+        internal static string WTS_PARAMVARS_DESC__VariableCitySubType_CityName {
+            get {
+                return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableCitySubType_CityName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a  City population.\n\nSelect for formatting options..
+        /// </summary>
+        internal static string WTS_PARAMVARS_DESC__VariableCitySubType_CityPopulation {
+            get {
+                return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableCitySubType_CityPopulation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a &lt;None?&gt;.
+        /// </summary>
+        internal static string WTS_PARAMVARS_DESC__VariableCitySubType_None {
+            get {
+                return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableCitySubType_None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Road direction - acronym in current language loaded in the mod. (English will be used as fallback).
+        /// </summary>
+        internal static string WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_Direction {
+            get {
+                return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_Direction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Distance from zero marker of the city (in kilometers)\n\nSelect for formatting options..
+        /// </summary>
+        internal static string WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistanceFromReferenceKilometers {
+            get {
+                return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistanceFromReferenceKilometers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Distance from zero marker of the city (in meters)\n\nSelect for formatting options..
+        /// </summary>
+        internal static string WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistanceFromReferenceMeters {
+            get {
+                return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistanceFromReferenceMeters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Distance from zero marker of the city (in miles)\n\nSelect for formatting options..
+        /// </summary>
+        internal static string WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistanceFromReferenceMiles {
+            get {
+                return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistanceFromReferenceMiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a District name, or the outside connection city if at map edge. City name will be used as fallback.\n\nTIP: Outside connection names may be customized using the &lt;color=#00FF00&gt;Addresses Mod&lt;/color&gt;..
+        /// </summary>
+        internal static string WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_District {
+            get {
+                return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_District", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Current district size in square kilometers. City area size if not inside one.\n\nSelect for formatting options..
+        /// </summary>
+        internal static string WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistrictAreaKm2 {
+            get {
+                return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistrictAreaKm2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Current district size in square meters. City area size if not inside one.\n\nSelect for formatting options..
+        /// </summary>
+        internal static string WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistrictAreaM2 {
+            get {
+                return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistrictAreaM2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Current district size in square miles. City area size if not inside one.\n\nSelect for formatting options..
+        /// </summary>
+        internal static string WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistrictAreaMi2 {
+            get {
+                return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistrictAreaMi2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a District name, or the outside connection city if at map edge. If none available, the Sub-area name will be used if the segment inside one of them. City name will be used as fallback.\n\nTIP: Outside connection names may be customized using the &lt;color=#00FF00&gt;Addresses Mod&lt;/color&gt;..
+        /// </summary>
+        internal static string WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistrictOrPark {
+            get {
+                return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistrictOrPark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a District population. City population if not inside one.\n\nSelect for formatting options..
+        /// </summary>
+        internal static string WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistrictPopulation {
+            get {
+                return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistrictPopulation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Long highway code (if available).
+        /// </summary>
+        internal static string WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_HwCodeLong {
+            get {
+                return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_HwCodeLong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Short highway code (if available).
+        /// </summary>
+        internal static string WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_HwCodeShort {
+            get {
+                return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_HwCodeShort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Dettached prefix from highway (if available).
+        /// </summary>
+        internal static string WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_HwDettachedPrefix {
+            get {
+                return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_HwDettachedPrefix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Highway identifier (if available).
+        /// </summary>
+        internal static string WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_HwIdentifierSuffix {
+            get {
+                return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_HwIdentifierSuffix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Current mileage in kilometers.\n\nSelect for formatting options..
+        /// </summary>
+        internal static string WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_MileageKilometers {
+            get {
+                return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_MileageKilometers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Current mileage in meters.\n\nSelect for formatting options..
+        /// </summary>
+        internal static string WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_MileageMeters {
+            get {
+                return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_MileageMeters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Current mileage in miles.\n\nSelect for formatting options..
+        /// </summary>
+        internal static string WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_MileageMiles {
+            get {
+                return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_MileageMiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Select the data type to be extracted from the selected segment..
+        /// </summary>
+        internal static string WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_None {
+            get {
+                return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Sub-area name, or empty if not in one.\n\nSub-areas are called internally as &quot;Park&quot; because they were introduced at Parklife DLC, then after used by the Industries, Campus and Airport DLC without changing name..
+        /// </summary>
+        internal static string WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_Park {
+            get {
+                return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_Park", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Sub-area size in square kilometers. 0 if not inside one.\n\nSelect for formatting options..
+        /// </summary>
+        internal static string WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_ParkAreaKm2 {
+            get {
+                return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_ParkAreaKm2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Sub-area size in square meters. 0 if not inside one.\n\nSelect for formatting options..
+        /// </summary>
+        internal static string WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_ParkAreaM2 {
+            get {
+                return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_ParkAreaM2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Sub-area size in square miles. 0 if not inside one.\n\nSelect for formatting options..
+        /// </summary>
+        internal static string WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_ParkAreaMi2 {
+            get {
+                return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_ParkAreaMi2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Sub-area name, then District/OutSide Connection/City name if none available.\n\nSub-areas are called internally as &quot;Park&quot; because they were introduced at Parklife DLC, then after used by the Industries, Campus and Airport DLC without changing name.\n\nTIP: Outside connection names may be customized using the &lt;color=#00FF00&gt;Addresses Mod&lt;/color&gt;..
+        /// </summary>
+        internal static string WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_ParkOrDistrict {
+            get {
+                return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_ParkOrDistrict", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Postal code.\n\nTIP: Can be customized by using the &lt;color=#00FF00&gt;Addresses Mod&lt;/color&gt;..
+        /// </summary>
+        internal static string WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_PostalCode {
+            get {
+                return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_PostalCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Segment full name..
+        /// </summary>
+        internal static string WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_StreetNameComplete {
+            get {
+                return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_StreetNameComplete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Segment name qualifier (Avenue, Street, etc)..
+        /// </summary>
+        internal static string WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_StreetPrefix {
+            get {
+                return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_StreetPrefix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Segment name without qualifier..
+        /// </summary>
+        internal static string WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_StreetSuffix {
+            get {
+                return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_StreetSuffix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Variables about city general data.
+        /// </summary>
+        internal static string WTS_PARAMVARS_DESC__VariableType_CityData {
+            get {
+                return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableType_CityData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Variables about current building (building layouts only).
+        /// </summary>
+        internal static string WTS_PARAMVARS_DESC__VariableType_CurrentBuilding {
+            get {
+                return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableType_CurrentBuilding", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Variables about current segment. (on net and road nodes layouts only).
+        /// </summary>
+        internal static string WTS_PARAMVARS_DESC__VariableType_CurrentSegment {
+            get {
+                return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableType_CurrentSegment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Variables about current vehicle (vehicle layouts only).
+        /// </summary>
+        internal static string WTS_PARAMVARS_DESC__VariableType_CurrentVehicle {
+            get {
+                return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableType_CurrentVehicle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a --INVALID--.
+        /// </summary>
+        internal static string WTS_PARAMVARS_DESC__VariableType_Invalid {
+            get {
+                return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableType_Invalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Variables about referenced segments. (on net layouts only).
+        /// </summary>
+        internal static string WTS_PARAMVARS_DESC__VariableType_SegmentTarget {
+            get {
+                return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableType_SegmentTarget", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Last stop of line (destination).
+        /// </summary>
+        internal static string WTS_PARAMVARS_DESC__VariableVehicleSubType_LastStopLine {
+            get {
+                return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableVehicleSubType_LastStopLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Line full name.
+        /// </summary>
+        internal static string WTS_PARAMVARS_DESC__VariableVehicleSubType_LineFullName {
+            get {
+                return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableVehicleSubType_LineFullName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Line identifier.
+        /// </summary>
+        internal static string WTS_PARAMVARS_DESC__VariableVehicleSubType_LineIdentifier {
+            get {
+                return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableVehicleSubType_LineIdentifier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Next stop of line.
+        /// </summary>
+        internal static string WTS_PARAMVARS_DESC__VariableVehicleSubType_NextStopLine {
+            get {
+                return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableVehicleSubType_NextStopLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a &lt;None?&gt;.
+        /// </summary>
+        internal static string WTS_PARAMVARS_DESC__VariableVehicleSubType_None {
+            get {
+                return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableVehicleSubType_None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Own number.
+        /// </summary>
+        internal static string WTS_PARAMVARS_DESC__VariableVehicleSubType_OwnNumber {
+            get {
+                return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableVehicleSubType_OwnNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Previous stop of line.
+        /// </summary>
+        internal static string WTS_PARAMVARS_DESC__VariableVehicleSubType_PrevStopLine {
+            get {
+                return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableVehicleSubType_PrevStopLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Pick a segment.
         /// </summary>
         internal static string WTS_PICK_A_SEGMENT {
             get {
                 return ResourceManager.GetString("WTS_PICK_A_SEGMENT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Repeat multiple instances along segment.
+        /// </summary>
+        internal static string WTS_POSITIONINGMODE_ISMULTIPLE {
+            get {
+                return ResourceManager.GetString("WTS_POSITIONINGMODE_ISMULTIPLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Are you sure that you want to delete &quot;{0}&quot;?.
+        /// </summary>
+        internal static string WTS_PROPEDIT_CONFIGDELETE_MESSAGE {
+            get {
+                return ResourceManager.GetString("WTS_PROPEDIT_CONFIGDELETE_MESSAGE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Clear items.
+        /// </summary>
+        internal static string WTS_SEGMENT_CLEARDATA {
+            get {
+                return ResourceManager.GetString("WTS_SEGMENT_CLEARDATA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Are you sure you want to erase all items in the list?.
+        /// </summary>
+        internal static string WTS_SEGMENT_CLEARDATA_AYS {
+            get {
+                return ResourceManager.GetString("WTS_SEGMENT_CLEARDATA_AYS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Export data to library.
+        /// </summary>
+        internal static string WTS_SEGMENT_EXPORTDATA {
+            get {
+                return ResourceManager.GetString("WTS_SEGMENT_EXPORTDATA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Import rules.
+        /// </summary>
+        internal static string WTS_SEGMENT_IMPORTDATA {
+            get {
+                return ResourceManager.GetString("WTS_SEGMENT_IMPORTDATA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Remove item.
+        /// </summary>
+        internal static string WTS_SEGMENT_REMOVEITEM {
+            get {
+                return ResourceManager.GetString("WTS_SEGMENT_REMOVEITEM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Lock camera in the current selected item.
+        /// </summary>
+        internal static string WTS_SEGMENTEDITOR_BUTTONROWACTION_LOCKCAMERASELECTION {
+            get {
+                return ResourceManager.GetString("WTS_SEGMENTEDITOR_BUTTONROWACTION_LOCKCAMERASELECTION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a On segment placing editor.
+        /// </summary>
+        internal static string WTS_SEGMENTPLACING_TITLE {
+            get {
+                return ResourceManager.GetString("WTS_SEGMENTPLACING_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a &lt;Use parent font setting&gt;.
+        /// </summary>
+        internal static string WTS_USE_GROUP_SETTING_FONT {
+            get {
+                return ResourceManager.GetString("WTS_USE_GROUP_SETTING_FONT", resourceCulture);
             }
         }
     }

@@ -9,7 +9,7 @@ namespace WriteEverywhere.Data
     [XmlRoot("WTSEtcData")]
     public class WTSEtcData //: DataExtensionBase<WTSEtcData>
     {
-     //   public override string SaveId => "K45_WTS_EtcData";
+     //   public override string SaveId => Str.WTS_EtcData;
 
         [XmlElement("fontSettings")]
         public FontSettings FontSettings { get; set; } = new FontSettings();

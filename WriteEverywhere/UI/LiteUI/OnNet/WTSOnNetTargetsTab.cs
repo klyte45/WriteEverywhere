@@ -5,12 +5,13 @@ using Kwytto.Utils;
 using WriteEverywhere.Tools;
 using WriteEverywhere.Xml;
 using UnityEngine;
+using Klyte.Localization;
 
 namespace WriteEverywhere.UI
 {
     public class WTSOnNetTargetsTab : IGUITab<OnNetInstanceCacheContainerXml>
     {
-        private const string f_base = "K45_WTS_OnNetInstanceCacheContainerXml_";
+        private const string f_base = "K45_WE_OnNetInstanceCacheContainerXml_";
         private const string f_Targets = f_base + "Target";
 
         private Vector2 m_tabViewScroll;
@@ -35,7 +36,7 @@ namespace WriteEverywhere.UI
             {
                 using (new GUILayout.HorizontalScope(GUILayout.Width(areaRect.x)))
                 {
-                    GUILayout.Label(string.Format(Locale.Get("K45_WTS_ONNETEDITOR_TARGET"), i), GUILayout.Width(areaRect.x / 4));
+                    GUILayout.Label(string.Format(Str.WTS_ONNETEDITOR_TARGET, i), GUILayout.Width(areaRect.x / 4));
                     GUI.SetNextControlName(f_Targets + i);
                     if (GUILayout.Button(GetSegmentName(item, i)))
                     {
@@ -56,7 +57,7 @@ namespace WriteEverywhere.UI
             {
                 if (targSeg == 0)
                 {
-                    cachedSegmentNames[i] = Tuple.New(targSeg, Locale.Get("K45_WTS_ONNETEDITOR_UNSETTARGETDESC"));
+                    cachedSegmentNames[i] = Tuple.New(targSeg, Str.WTS_ONNETEDITOR_UNSETTARGETDESC);
                 }
                 else
                 {

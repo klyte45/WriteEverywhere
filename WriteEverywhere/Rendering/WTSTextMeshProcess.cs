@@ -158,7 +158,7 @@
 //                    multipleOutput = ModInstance.Controller.AtlasesLibrary.DrawLineFormats(new WTSLine[textDescriptor.MultiItemSettings.SubItemsPerColumn * textDescriptor.MultiItemSettings.SubItemsPerRow].Select((x, y) => new WTSLine((ushort)y, false, true)));
 //                    return null;
 //                case TextContent.HwShield:
-//                    return ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(null, "K45_WTS FrameBorder");
+//                    return ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(null, "K45WTS FrameBorder");
 //                case TextContent.TimeTemperature:
 //                    return WTSCacheSingleton.GetTextData(ModInstance.Clock12hFormat ? "12:60AM" : "24:60", textDescriptor.m_prefix, textDescriptor.m_suffix, baseFont, textDescriptor.m_overrideFont);
 //                case TextContent.TextParameterSequence:
@@ -219,7 +219,7 @@
 //        }
 //        private static BasicRenderInformation GetSpriteFromParameter(PrefabInfo prop, TextParameterWrapper param)
 //            => param is null
-//                ? ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(null, "K45_WTS FrameParamsNotSet")
+//                ? ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(null, "K45WTS FrameParamsNotSet")
 //                : param.IsEmpty
 //                    ? null
 //                    : param.GetImageBRI(prop);
@@ -285,7 +285,7 @@
 //                case TextType.ParkOrDistrict: return WTSCacheSingleton.GetTextData($"{otherText}Area or District", textDescriptor.m_prefix, textDescriptor.m_suffix, baseFont, textDescriptor.m_overrideFont);
 //                case TextType.Park: return WTSCacheSingleton.GetTextData($"{otherText}Area", textDescriptor.m_prefix, textDescriptor.m_suffix, baseFont, textDescriptor.m_overrideFont);
 //                case TextType.PlatformNumber: return WTSCacheSingleton.GetTextData("00", textDescriptor.m_prefix, textDescriptor.m_suffix, baseFont, textDescriptor.m_overrideFont);
-//                case TextType.HwShield: return ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(null, "K45_WTS FrameBorder");
+//                case TextType.HwShield: return ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(null, "K45WTS FrameBorder");
 //                case TextType.TimeTemperature: return WTSCacheSingleton.GetTextData(ModInstance.Clock12hFormat ? "12:60AM" : "24:60", textDescriptor.m_prefix, textDescriptor.m_suffix, baseFont, textDescriptor.m_overrideFont);
 //                case TextType.LinesSymbols:
 //                    multipleOutput = ModInstance.Controller.AtlasesLibrary.DrawLineFormats(new WTSLine[textDescriptor.MultiItemSettings.SubItemsPerColumn * textDescriptor.MultiItemSettings.SubItemsPerRow].Select((x, y) => new WTSLine((ushort)y, false, true)));

@@ -1,10 +1,6 @@
-﻿using ColossalFramework;
-using ColossalFramework.Math;
-using Kwytto;
+﻿using Kwytto;
 using Kwytto.Tools;
-using Kwytto.Utils;
 using System;
-using System.Diagnostics;
 using UnityEngine;
 
 namespace WriteEverywhere.Tools
@@ -38,9 +34,5 @@ namespace WriteEverywhere.Tools
             base.OnDisable();
         }
 
-        protected override void OnRaycastHoverInstance(Ray mouseRay)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

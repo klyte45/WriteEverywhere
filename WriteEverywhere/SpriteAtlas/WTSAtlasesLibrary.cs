@@ -4,6 +4,7 @@ using ColossalFramework;
 using ColossalFramework.Globalization;
 using ColossalFramework.Threading;
 using ColossalFramework.UI;
+using Klyte.Localization;
 using Kwytto.LiteUI;
 using Kwytto.Localization;
 using Kwytto.Utils;
@@ -73,7 +74,7 @@ namespace WriteEverywhere.Sprites
         {
             if (spriteName.IsNullOrWhiteSpace())
             {
-                return GetFromLocalAtlases(null, "K45_WTS FrameParamsInvalidImage");
+                return GetFromLocalAtlases(null, "FrameParamsInvalidImage");
             }
 
             if (LocalAtlasesCache.TryGetValue(atlasName ?? string.Empty, out Dictionary<string, BasicRenderInformation> resultDicCache) && resultDicCache.TryGetValue(spriteName ?? "", out BasicRenderInformation cachedInfo))
@@ -82,7 +83,7 @@ namespace WriteEverywhere.Sprites
             }
             if (!LocalAtlases.TryGetValue(atlasName ?? string.Empty, out UITextureAtlas atlas) || !atlas.spriteNames.Contains(spriteName))
             {
-                return fallbackOnInvalid ? GetFromLocalAtlases(null, "K45_WTS FrameParamsInvalidImage") : null;
+                return fallbackOnInvalid ? GetFromLocalAtlases(null, "FrameParamsInvalidImage") : null;
             }
             if (resultDicCache == null)
             {
@@ -96,10 +97,10 @@ namespace WriteEverywhere.Sprites
             return null;
         }
         public BasicRenderInformation GetSlideFromLocal(string atlasName, Func<int, int> idxFunc, bool fallbackOnInvalid = false) => !LocalAtlases.TryGetValue(atlasName ?? string.Empty, out UITextureAtlas atlas)
-                ? fallbackOnInvalid ? GetFromLocalAtlases(null, "K45_WTS FrameParamsInvalidFolder") : null
+                ? fallbackOnInvalid ? GetFromLocalAtlases(null, "FrameParamsInvalidFolder") : null
                 : GetFromLocalAtlases(atlasName ?? string.Empty, atlas.spriteNames[idxFunc(atlas.spriteNames.Length - 1) + 1], fallbackOnInvalid);
         public BasicRenderInformation GetSlideFromAsset(ulong assetId, Func<int, int> idxFunc, bool fallbackOnInvalid = false) => !AssetAtlases.TryGetValue(assetId, out UITextureAtlas atlas)
-                ? fallbackOnInvalid ? GetFromLocalAtlases(null, "K45_WTS FrameParamsInvalidFolder") : null
+                ? fallbackOnInvalid ? GetFromLocalAtlases(null, "FrameParamsInvalidFolder") : null
                 : GetFromAssetAtlases(assetId, atlas.spriteNames[idxFunc(atlas.spriteNames.Length - 1) + 1], fallbackOnInvalid);
 
         public BasicRenderInformation GetFromAssetAtlases(ulong assetId, string spriteName, bool fallbackOnInvalid = false)
@@ -114,7 +115,7 @@ namespace WriteEverywhere.Sprites
             }
             if (!AssetAtlases.TryGetValue(assetId, out UITextureAtlas atlas) || !atlas.spriteNames.Contains(spriteName))
             {
-                return fallbackOnInvalid ? GetFromLocalAtlases(null, "K45_WTS FrameParamsInvalidImageAsset") : null;
+                return fallbackOnInvalid ? GetFromLocalAtlases(null, "FrameParamsInvalidImageAsset") : null;
             }
             if (resultDicCache == null)
             {
@@ -233,7 +234,7 @@ namespace WriteEverywhere.Sprites
             {
                 KwyttoDialog.ShowModal(new KwyttoDialog.BindProperties
                 {
-                    message = $"{Locale.Get("K45_WTS_CUSTOMSPRITE_ERRORHEADER")}:\n\t{string.Join("\n\t", errors.ToArray())}",
+                    message = $"{Str.WTS_CUSTOMSPRITE_ERRORHEADER}:\n\t{string.Join("\n\t", errors.ToArray())}",
                     buttons = new[]{
                         KwyttoDialog.SpaceBtn,
                         new KwyttoDialog.ButtonDefinition

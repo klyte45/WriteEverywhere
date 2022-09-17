@@ -1,6 +1,7 @@
 using ColossalFramework;
 using ColossalFramework.Globalization;
 using ColossalFramework.UI;
+using Klyte.Localization;
 //using Kwytto.Utils;
 //using WriteEverywhere.Data;
 using SpriteFontPlus;
@@ -25,10 +26,10 @@ namespace WriteEverywhere.Utils
                 var items = FontServer.instance.GetAllFonts().ToList();
                 items.Sort();
                 items.Remove(MainController.DEFAULT_FONT_KEY);
-                items.Insert(0, Locale.Get("K45_WTS_DEFAULT_FONT_LABEL"));
+                items.Insert(0, Str.WTS_DEFAULT_FONT_LABEL);
                 if (hasDefaultOption)
                 {
-                    items.Insert(0, Locale.Get("K45_WTS_USE_GROUP_SETTING_FONT"));
+                    items.Insert(0, Str.WTS_USE_GROUP_SETTING_FONT);
                 }
                 target.items = items.ToArray();
                 if (items.Contains(targetValue))

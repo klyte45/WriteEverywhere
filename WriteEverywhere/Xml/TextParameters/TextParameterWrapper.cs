@@ -245,11 +245,11 @@ namespace WriteEverywhere.Xml
         //                case TextContent.ParameterizedSpriteFolder:
         //                    return (instance.GetParameter(textDescriptor.m_parameterIdx) ?? textDescriptor.DefaultParameterValue) is TextParameterWrapper tpw2
         //                        ? tpw2.GetSpriteFromCycle(textDescriptor, instance.TargetAssetParameter, refId, secIdx, tercIdx)
-        //                        : ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(null, "K45_WTS FrameParamsNotSet");
+        //                        : ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(null, "FrameParamsNotSet");
         //                case TextContent.ParameterizedSpriteSingle:
         //                    return (instance.GetParameter(textDescriptor.m_parameterIdx) ?? textDescriptor.DefaultParameterValue) is TextParameterWrapper tpw3
         //                        ? tpw3.GetSpriteFromParameter(instance.TargetAssetParameter)
-        //                        : ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(null, "K45_WTS FrameParamsNotSet");
+        //                        : ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(null, "FrameParamsNotSet");
         //                case TextContent.LinesNameList:
         //                    break;
         //                case TextContent.HwShield:
@@ -281,11 +281,11 @@ namespace WriteEverywhere.Xml
         //                case TextContent.ParameterizedSpriteFolder:
         //                    return !(tpw is null)
         //                        ? tpw.GetSpriteFromCycle(textDescriptor, instance.TargetAssetParameter, refId, secIdx, tercIdx)
-        //                        : ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(null, "K45_WTS FrameParamsNotSet");
+        //                        : ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(null, "FrameParamsNotSet");
         //                case TextContent.ParameterizedSpriteSingle:
         //                    return !(tpw is null)
         //                        ? tpw.GetSpriteFromParameter(instance.TargetAssetParameter)
-        //                        : ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(null, "K45_WTS FrameParamsNotSet");
+        //                        : ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(null, "FrameParamsNotSet");
         //                case TextContent.LinesNameList:
         //                    break;
         //                case TextContent.HwShield:
@@ -318,7 +318,7 @@ namespace WriteEverywhere.Xml
         //            }
         //            else
         //            {
-        //                return ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(null, "K45_WTS FrameParamsImageRequired");
+        //                return ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(null, "FrameParamsImageRequired");
         //            }
 
         //        }
@@ -347,7 +347,7 @@ namespace WriteEverywhere.Xml
         //            }
         //            if (ParamType != TextParameterWrapper.ParameterType.FOLDER)
         //            {
-        //                return ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(null, "K45_WTS FrameParamsFolderRequired");
+        //                return ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(null, "FrameParamsFolderRequired");
         //            }
         //            if (textDescriptor.AnimationSettings.m_itemCycleFramesDuration < 1)
         //            {
@@ -371,7 +371,7 @@ namespace WriteEverywhere.Xml
         //            }
         //            else
         //            {
-        //                return ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(null, "K45_WTS FrameParamsFolderRequired");
+        //                return ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(null, "FrameParamsFolderRequired");
         //            }
 
         //        }

@@ -118,7 +118,7 @@ namespace WriteEverywhere.UI
             HoverIdx = selectOpt;
             var str = tab.m_searchResult.Value[HoverIdx];
             var key = cl.nextLevelOptions.Where(z => z.Key.ToString() == str).FirstOrDefault().Key;
-            tab.SetVariableDescription(key is null ? "" : $"<color=#00FF00>{key}</color>\n\n" + Locale.Get("K45_WTS_PARAMVARS_DESC", CommandLevel.ToLocaleVar(key)));
+            tab.SetVariableDescription(key is null ? "" : $"<color=#00FF00>{key}</color>\n\n" + key.VariableToI18n());
         }
 
         public string[] OnFilterParam(WTSBaseParamsTab<T> tab)
@@ -132,7 +132,7 @@ namespace WriteEverywhere.UI
             {
                 tab.SetVariableDescription(
                     (cmdResult.regexValidValues.IsNullOrWhiteSpace() ? "" : $"Regex: <color=#FFFF00>{cmdResult.regexValidValues}</color>\n")
-                    + Locale.Get("K45_WTS_PARAMVARS_DESC", currentDescription));
+                    + currentDescription);
                 return cmdResult.regexValidValues != null
                     ? Regex.IsMatch(tab.SearchText, cmdResult.regexValidValues) ? (new[] { Regex.Replace(tab.SearchText, @"([^\\])/|^/", "$1\\/") }) : (new string[0])
                     : cmdResult.nextLevelOptions?.Select(x => x.Key.ToString()).Where(x => x.ToLower().Contains(tab.SearchText)).OrderBy(x => x).ToArray();

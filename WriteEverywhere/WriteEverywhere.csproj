@@ -103,7 +103,7 @@
     <Compile Include="Data\**\*.cs" />
     <Compile Include="SpriteAtlas\**\*.cs" />
   </ItemGroup>
-  <!-- <ItemGroup> -->
+  <!-- <ItemGroup> --> 
   <!-- <Reference Include="TransportLinesManager">  -->
   <!-- <HintPath>..\..\_appdataMods\TLM\TransportLinesManager.dll</HintPath> -->
   <!-- <Aliases>TLM</Aliases> -->
@@ -123,7 +123,7 @@
   <!-- <Required>False</Required> -->
   <!-- </Reference> -->
   <!-- </ItemGroup> --> 
-  <ItemGroup>
+  <ItemGroup> 
     <EmbeddedResource Include="UI\**\*.png" />
   </ItemGroup>
   <ItemGroup>

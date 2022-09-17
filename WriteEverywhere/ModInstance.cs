@@ -24,17 +24,17 @@ namespace WriteEverywhere
 
         protected override void SetLocaleCulture(CultureInfo culture) => Str.Culture = culture;
 
-        public static readonly SavedInt StartTextureSizeFont = new SavedInt("K45_WTS_startTextureSizeFont", Settings.gameSettingsFile, 0);
-        public static readonly SavedInt FontQuality = new SavedInt("K45_WTS_fontQuality", Settings.gameSettingsFile, 2);
-        public static readonly SavedFloat ClockPrecision = new SavedFloat("K45_WTS_clockPrecision", Settings.gameSettingsFile, 15);
-        public static readonly SavedBool ClockShowLeadingZero = new SavedBool("K45_WTS_clockShowLeadingZero", Settings.gameSettingsFile, true);
-        public static readonly SavedBool Clock12hFormat = new SavedBool("K45_WTS_clock12hFormat", Settings.gameSettingsFile, false);
+        public static readonly SavedInt StartTextureSizeFont = new SavedInt("K45_WE_startTextureSizeFont", Settings.gameSettingsFile, 0);
+        public static readonly SavedInt FontQuality = new SavedInt("K45_WE_fontQuality", Settings.gameSettingsFile, 2);
+        public static readonly SavedFloat ClockPrecision = new SavedFloat("K45_WE_clockPrecision", Settings.gameSettingsFile, 15);
+        public static readonly SavedBool ClockShowLeadingZero = new SavedBool("K45_WE_clockShowLeadingZero", Settings.gameSettingsFile, true);
+        public static readonly SavedBool Clock12hFormat = new SavedBool("K45_WE_clock12hFormat", Settings.gameSettingsFile, false);
 
         public override IUUIButtonContainerPlaceholder[] UUIButtons => new[]
         {
             new UUIToolButtonContainerPlaceholder(
                 buttonName :  $"{SimpleName} - {Str.WTS_PICK_A_SEGMENT}",
-                iconPath : $"UI.Images.K45_WTS_SegmentPickerIcon.png",
+                iconPath : "WTS_SegmentPickerIcon",
                 tooltip : $"WE: {Str.WTS_PICK_A_SEGMENT}",
                 toolGetter : ()=> ToolsModifierControl.toolController.GetComponent<SegmentEditorPickerTool>()
             )

@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Serialization;
 using UnityEngine;
+using Klyte.Localization;
 
 namespace WriteEverywhere.Data
 {
@@ -43,7 +44,7 @@ namespace WriteEverywhere.Data
             }
         }
 
-        public override string SaveId => "K45_WTS_WTSOnNetData";
+        public override string SaveId => "K45_WE_WTSOnNetData";
 
 
 

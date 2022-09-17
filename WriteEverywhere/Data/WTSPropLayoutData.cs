@@ -22,7 +22,7 @@ namespace WriteEverywhere.Data
     public class WTSPropLayoutData : DataExtensionLibBase<WTSPropLayoutData, BoardDescriptorGeneralXml>
     {
 
-        public override string SaveId => "K45_WTS_PropLayoutData";
+        public override string SaveId => "K45_WE_PropLayoutData";
 
         protected override void Save()
         {

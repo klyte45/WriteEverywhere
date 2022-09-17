@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.Globalization;
+using Klyte.Localization;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -25,7 +26,7 @@ namespace WriteEverywhere.Utils
                 {
                     if (tex.width <= MAX_SIZE_IMAGE_IMPORT && tex.width <= MAX_SIZE_IMAGE_IMPORT)
                     {
-                        var imgName = addPrefix ? $"K45_WTS_{Path.GetFileNameWithoutExtension(imgFile)}" : Path.GetFileNameWithoutExtension(imgFile);
+                        var imgName = addPrefix ? $"K45_WE_{Path.GetFileNameWithoutExtension(imgFile)}" : Path.GetFileNameWithoutExtension(imgFile);
                         spritesToAdd.Add(new SpriteInfo
                         {
                             border = new RectOffset(),
@@ -35,12 +36,12 @@ namespace WriteEverywhere.Utils
                     }
                     else
                     {
-                        errors.Add($"{Path.GetFileName(imgFile)}: {Locale.Get("K45_WTS_CUSTOMSPRITE_IMAGETOOLARGE")} (max: 400x400)");
+                        errors.Add($"{Path.GetFileName(imgFile)}: {Str.WTS_CUSTOMSPRITE_IMAGETOOLARGE} (max: 400x400)");
                     }
                 }
                 else
                 {
-                    errors.Add($"{Path.GetFileName(imgFile)}: {Locale.Get("K45_WTS_CUSTOMSPRITE_FAILEDREADIMAGE")}");
+                    errors.Add($"{Path.GetFileName(imgFile)}: {Str.WTS_CUSTOMSPRITE_FAILEDREADIMAGE}");
                 }
             }
         }

@@ -120,25 +120,273 @@
   <data name="root_modDescription" xml:space="preserve">
     <value>Allow to write text in-game to simulate stuff like boards or signs.</value>
   </data>
+  <data name="WTS_BUILDINGEDITOR_MODELLAYOUTSELECT" xml:space="preserve">
+    <value>Model/Layout selection</value>
+  </data>
+  <data name="WTS_CUSTOMSPRITE_ERRORHEADER" xml:space="preserve">
+    <value>Some erros happened while trying to load custom sprites:</value>
+  </data>
+  <data name="WTS_CUSTOMSPRITE_IMAGETOOLARGE" xml:space="preserve">
+    <value>Image too large!!</value>
+  </data>
+  <data name="WTS_DEFAULT_FONT_LABEL" xml:space="preserve">
+    <value>Default game font</value>
+  </data>
   <data name="WTS_FOLDERSRC_ASSET" xml:space="preserve">
-    <value>WTS_FOLDERSRC_ASSET</value>
+    <value>Folder from asset</value>
   </data>
   <data name="WTS_FOLDERSRC_LOCAL" xml:space="preserve">
-    <value>WTS_FOLDERSRC_LOCAL</value>
+    <value>Global folder</value>
   </data>
   <data name="WTS_IMAGESRC_ASSET" xml:space="preserve">
-    <value>WTS_IMAGESRC_ASSET</value>
+    <value>Image from asset folder</value>
   </data>
   <data name="WTS_IMAGESRC_LOCAL" xml:space="preserve">
-    <value>WTS_IMAGESRC_LOCAL</value>
+    <value>Image from global folder</value>
+  </data>
+  <data name="WTS_INVERT_SIGN_SIDE" xml:space="preserve">
+    <value>Invert road side</value>
+  </data>
+  <data name="WTS_ONNETEDITOR_LOCATION_SETTINGS" xml:space="preserve">
+    <value>Positioning settings</value>
+  </data>
+  <data name="WTS_ONNETEDITOR_NAME" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="WTS_ONNETEDITOR_PROPLAYOUT" xml:space="preserve">
+    <value>Prop layout</value>
+  </data>
+  <data name="WTS_ONNETEDITOR_PROPMODELSELECT" xml:space="preserve">
+    <value>Prop model</value>
+  </data>
+  <data name="WTS_ONNETEDITOR_SEGMENTPOSITION" xml:space="preserve">
+    <value>Segment path relative position</value>
+  </data>
+  <data name="WTS_ONNETEDITOR_SEGMENTPOSITION_COUNT" xml:space="preserve">
+    <value>Instances count</value>
+  </data>
+  <data name="WTS_ONNETEDITOR_SEGMENTPOSITION_END" xml:space="preserve">
+    <value>Last item segment offset</value>
+  </data>
+  <data name="WTS_ONNETEDITOR_SEGMENTPOSITION_START" xml:space="preserve">
+    <value>First item segment offset</value>
+  </data>
+  <data name="WTS_ONNETEDITOR_TARGET" xml:space="preserve">
+    <value>Target {0}</value>
+  </data>
+  <data name="WTS_ONNETEDITOR_UNSETTARGETDESC" xml:space="preserve">
+    <value>&lt;Target is not set&gt;</value>
   </data>
   <data name="WTS_PARAMTYPE_PLAINTEXT" xml:space="preserve">
-    <value>WTS_PARAMTYPE_PLAINTEXT</value>
+    <value>Plain text</value>
   </data>
   <data name="WTS_PARAMTYPE_VARIABLE" xml:space="preserve">
-    <value>WTS_PARAMTYPE_VARIABLE</value>
+    <value>Game stats variable</value>
   </data>
   <data name="WTS_PICK_A_SEGMENT" xml:space="preserve">
-    <value>WTS_PICK_A_SEGMENT</value>
+    <value>Pick a segment</value>
   </data>
+  <data name="WTS_POSITIONINGMODE_ISMULTIPLE" xml:space="preserve">
+    <value>Repeat multiple instances along segment</value>
+  </data>
+  <data name="WTS_SEGMENT_CLEARDATA" xml:space="preserve">
+    <value>Clear items</value>
+  </data>
+  <data name="WTS_SEGMENT_EXPORTDATA" xml:space="preserve">
+    <value>Export data to library</value>
+  </data>
+  <data name="WTS_SEGMENT_IMPORTDATA" xml:space="preserve">
+    <value>Import rules</value>
+  </data>
+  <data name="WTS_SEGMENTEDITOR_BUTTONROWACTION_LOCKCAMERASELECTION" xml:space="preserve">
+    <value>Lock camera in the current selected item</value>
+  </data>
+  <data name="WTS_SEGMENTPLACING_TITLE" xml:space="preserve">
+    <value>On segment placing editor</value>
+  </data>
+  <data name="WTS_USE_GROUP_SETTING_FONT" xml:space="preserve">
+    <value>&lt;Use parent font setting&gt;</value>
+  </data>
+  <data name="WTS_CUSTOMSPRITE_FAILEDREADIMAGE" xml:space="preserve">
+    <value>An error has occurred loading image...</value>
+  </data>
+  <data name="WTS_EXPORTDATA_NAMEASKING" xml:space="preserve">
+    <value>Name of this rule to be saved:</value>
+  </data>
+  <data name="WTS_EXPORTDATA_NAMEASKING_OVERWRITE" xml:space="preserve">
+    <value>There's already a rule with this name. Overwrite?</value>
+  </data>
+  <data name="WTS_ONNETEDITOR_INVALIDPARAMSETTINGS_DIFFERENTKINDSAMEPARAM" xml:space="preserve">
+    <value>&lt;color=#FF0000&gt;Wrong settings in this parameter!&lt;/color&gt;\nThere are more than one text entry of different kind pointing to this parameter. Please check your layout settings.</value>
+  </data>
+  <data name="WTS_ONNETEDITOR_TEXTPARAM" xml:space="preserve">
+    <value>Parameter {0}</value>
+  </data>
+  <data name="WTS_SEGMENT_CLEARDATA_AYS" xml:space="preserve">
+    <value>Are you sure you want to erase all items in the list?</value>
+  </data>
+  <data name="WTS_SEGMENT_REMOVEITEM" xml:space="preserve">
+    <value>Remove item</value>
+  </data>
+  <data name="WTS_BOARD_TEXT_TYPE_DESC__HwShield" xml:space="preserve">
+    <value>Highway shield</value>
+  </data>
+  <data name="WTS_BOARD_TEXT_TYPE_DESC__LinesSymbols" xml:space="preserve">
+    <value>Lines passing</value>
+  </data>
+  <data name="WTS_BOARD_TEXT_TYPE_DESC__ParameterizedText" xml:space="preserve">
+    <value>Parameterized Text</value>
+  </data>
+  <data name="WTS_BOARD_TEXT_TYPE_DESC__TimeTemperature" xml:space="preserve">
+    <value>Time &amp; Temperature</value>
+  </data>
+  <data name="WTS_BOARD_TEXT_TYPE_DESC__LinesNameList" xml:space="preserve">
+    <value>List of lines</value>
+  </data>
+  <data name="WTS_BOARD_TEXT_TYPE_DESC__None" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="WTS_BOARD_TEXT_TYPE_DESC__ParameterizedSpriteFolder" xml:space="preserve">
+    <value>Sprite slideshow from a folder</value>
+  </data>
+  <data name="WTS_BOARD_TEXT_TYPE_DESC__ParameterizedSpriteSingle" xml:space="preserve">
+    <value>Parameterized sprite</value>
+  </data>
+  <data name="WTS_BOARD_TEXT_TYPE_DESC__TextParameterSequence" xml:space="preserve">
+    <value>Text sequence</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableCitySubType_CityName" xml:space="preserve">
+    <value>City name.</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableCitySubType_CityPopulation" xml:space="preserve">
+    <value> City population.\n\nSelect for formatting options.</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_Direction" xml:space="preserve">
+    <value>Road direction - acronym in current language loaded in the mod. (English will be used as fallback)</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistanceFromReferenceKilometers" xml:space="preserve">
+    <value>Distance from zero marker of the city (in kilometers)\n\nSelect for formatting options.</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistanceFromReferenceMeters" xml:space="preserve">
+    <value>Distance from zero marker of the city (in meters)\n\nSelect for formatting options.</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistanceFromReferenceMiles" xml:space="preserve">
+    <value>Distance from zero marker of the city (in miles)\n\nSelect for formatting options.</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_District" xml:space="preserve">
+    <value>District name, or the outside connection city if at map edge. City name will be used as fallback.\n\nTIP: Outside connection names may be customized using the &lt;color=#00FF00&gt;Addresses Mod&lt;/color&gt;.</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistrictAreaKm2" xml:space="preserve">
+    <value>Current district size in square kilometers. City area size if not inside one.\n\nSelect for formatting options.</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistrictAreaM2" xml:space="preserve">
+    <value>Current district size in square meters. City area size if not inside one.\n\nSelect for formatting options.</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistrictAreaMi2" xml:space="preserve">
+    <value>Current district size in square miles. City area size if not inside one.\n\nSelect for formatting options.</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistrictOrPark" xml:space="preserve">
+    <value>District name, or the outside connection city if at map edge. If none available, the Sub-area name will be used if the segment inside one of them. City name will be used as fallback.\n\nTIP: Outside connection names may be customized using the &lt;color=#00FF00&gt;Addresses Mod&lt;/color&gt;.</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistrictPopulation" xml:space="preserve">
+    <value>District population. City population if not inside one.\n\nSelect for formatting options.</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_HwCodeLong" xml:space="preserve">
+    <value>Long highway code (if available)</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_HwCodeShort" xml:space="preserve">
+    <value>Short highway code (if available)</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_HwDettachedPrefix" xml:space="preserve">
+    <value>Dettached prefix from highway (if available)</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_HwIdentifierSuffix" xml:space="preserve">
+    <value>Highway identifier (if available)</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_MileageKilometers" xml:space="preserve">
+    <value>Current mileage in kilometers.\n\nSelect for formatting options.</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_MileageMeters" xml:space="preserve">
+    <value>Current mileage in meters.\n\nSelect for formatting options.</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_MileageMiles" xml:space="preserve">
+    <value>Current mileage in miles.\n\nSelect for formatting options.</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_None" xml:space="preserve">
+    <value>Select the data type to be extracted from the selected segment.</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_Park" xml:space="preserve">
+    <value>Sub-area name, or empty if not in one.\n\nSub-areas are called internally as "Park" because they were introduced at Parklife DLC, then after used by the Industries, Campus and Airport DLC without changing name.</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_ParkAreaKm2" xml:space="preserve">
+    <value>Sub-area size in square kilometers. 0 if not inside one.\n\nSelect for formatting options.</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_ParkAreaM2" xml:space="preserve">
+    <value>Sub-area size in square meters. 0 if not inside one.\n\nSelect for formatting options.</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_ParkAreaMi2" xml:space="preserve">
+    <value>Sub-area size in square miles. 0 if not inside one.\n\nSelect for formatting options.</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_ParkOrDistrict" xml:space="preserve">
+    <value>Sub-area name, then District/OutSide Connection/City name if none available.\n\nSub-areas are called internally as "Park" because they were introduced at Parklife DLC, then after used by the Industries, Campus and Airport DLC without changing name.\n\nTIP: Outside connection names may be customized using the &lt;color=#00FF00&gt;Addresses Mod&lt;/color&gt;.</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_PostalCode" xml:space="preserve">
+    <value>Postal code.\n\nTIP: Can be customized by using the &lt;color=#00FF00&gt;Addresses Mod&lt;/color&gt;.</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_StreetNameComplete" xml:space="preserve">
+    <value>Segment full name.</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_StreetPrefix" xml:space="preserve">
+    <value>Segment name qualifier (Avenue, Street, etc).</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_StreetSuffix" xml:space="preserve">
+    <value>Segment name without qualifier.</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableType_CityData" xml:space="preserve">
+    <value>Variables about city general data</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableType_CurrentBuilding" xml:space="preserve">
+    <value>Variables about current building (building layouts only)</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableType_CurrentSegment" xml:space="preserve">
+    <value>Variables about current segment. (on net and road nodes layouts only)</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableType_CurrentVehicle" xml:space="preserve">
+    <value>Variables about current vehicle (vehicle layouts only)</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableType_SegmentTarget" xml:space="preserve">
+    <value>Variables about referenced segments. (on net layouts only)</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableCitySubType_None" xml:space="preserve">
+    <value>&lt;None?&gt;</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableType_Invalid" xml:space="preserve">
+    <value>--INVALID--</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableVehicleSubType_LastStopLine" xml:space="preserve">
+    <value>Last stop of line (destination)</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableVehicleSubType_LineFullName" xml:space="preserve">
+    <value>Line full name</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableVehicleSubType_LineIdentifier" xml:space="preserve">
+    <value>Line identifier</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableVehicleSubType_NextStopLine" xml:space="preserve">
+    <value>Next stop of line</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableVehicleSubType_None" xml:space="preserve">
+    <value>&lt;None?&gt;</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableVehicleSubType_OwnNumber" xml:space="preserve">
+    <value>Own number</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableVehicleSubType_PrevStopLine" xml:space="preserve">
+    <value>Previous stop of line</value>
+  </data>
+  <data name="WTS_ONNETEDITOR_POSITIONOFFSET" xml:space="preserve">    <value>Position offset</value>  </data>
+  <data name="WTS_ONNETEDITOR_ROTATION" xml:space="preserve">    <value>Rotation</value>  </data>
+  <data name="WTS_ONNETEDITOR_SCALE" xml:space="preserve">    <value>Scale</value>  </data>
+  <data name="WTS_PROPEDIT_CONFIGDELETE_MESSAGE" xml:space="preserve">    <value>Are you sure that you want to delete "{0}"?</value>  </data>
+
 </root>

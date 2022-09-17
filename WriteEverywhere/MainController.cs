@@ -1,6 +1,7 @@
-﻿extern alias TLM;
-extern alias ADR;
+﻿extern alias ADR;
+extern alias TLM;
 
+using ColossalFramework.UI;
 using Kwytto.Interfaces;
 using Kwytto.Utils;
 using SpriteFontPlus;
@@ -10,6 +11,7 @@ using UnityEngine;
 using WriteEverywhere.ModShared;
 using WriteEverywhere.Sprites;
 using WriteEverywhere.Tools;
+using WriteEverywhere.UI;
 
 namespace WriteEverywhere
 {
@@ -35,7 +37,7 @@ namespace WriteEverywhere
         public ADR::Bridge_WE2ADR.IBridge ConnectorADR { get; } = new BridgeADRFallback();
         public TLM::Bridge_WE2TLM.IBridge ConnectorTLM { get; } = new BridgeTLMFallback();
 
-        public static Shader DEFAULT_SHADER_TEXT = WTSShaderLibrary.instance.GetShaders()["Klyte/WTS/WTSShader"];
+        public static Shader DEFAULT_SHADER_TEXT = WTSShaderLibrary.instance.GetShaders().TryGetValue("klyte/wts/wtsshader", out Shader value) ? value : value;
 
         public const string DEFAULT_FONT_KEY = "/DEFAULT/";
         public event Action EventFontsReloadedFromFolder;
@@ -50,6 +52,15 @@ namespace WriteEverywhere
                 FontServer.instance.RegisterFont(Path.GetFileNameWithoutExtension(fontFile), File.ReadAllBytes(fontFile), DefaultTextureSizeFont);
             }
             ModInstance.Controller?.EventFontsReloadedFromFolder?.Invoke();
+        }
+
+        public void Awake()
+        {
+            ToolsModifierControl.toolController.AddExtraToolToController<SegmentEditorPickerTool>();
+            ToolsModifierControl.toolController.AddExtraToolToController<RoadSegmentTool>();
+            var uiGO = new GameObject("WE");
+            uiGO.transform.SetParent(UIView.GetAView().gameObject.transform);
+            uiGO.AddComponent<WTSOnNetLiteUI>();
         }
     }
 }
