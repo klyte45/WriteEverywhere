@@ -83,7 +83,7 @@ namespace WriteEverywhere.UI
                 {
                     var value = tab.m_searchResult.Value[selectOpt];
                     var paramPath = CommandLevel.GetParameterPath(tab.SelectedValue ?? "");
-                    tab.SetSelectedValue(CommandLevel.FromParameterPath(paramPath.Take(cl.level).Concat(new[] { value == GUIKlyteCommons.v_empty ? "" : value })));
+                    tab.SetSelectedValue(CommandLevel.FromParameterPath(paramPath.Take(cl.level).Concat(new[] { value == GUIKwyttoCommons.v_empty ? "" : value })));
                     tab.m_searchResult.Value = new string[0];
                     tab.SearchText = "";
                     HoverIdx = -1;

@@ -223,7 +223,7 @@ namespace WriteEverywhere.UI
             }
             else if (CurrentState == State.GettingText)
             {
-                yield return m_searchResult.Value = new[] { "<color=#FFFF00><<</color>" }.Concat(TextVarEditor.OnFilterParam(this)?.Select(x => x.IsNullOrWhiteSpace() ? GUIKlyteCommons.v_empty : x) ?? new string[0]).ToArray();
+                yield return m_searchResult.Value = new[] { "<color=#FFFF00><<</color>" }.Concat(TextVarEditor.OnFilterParam(this)?.Select(x => x.IsNullOrWhiteSpace() ? GUIKwyttoCommons.v_empty : x) ?? new string[0]).ToArray();
                 if (autoselect != null)
                 {
                     var autoSelectVal = Array.IndexOf(m_searchResult.Value, autoselect);

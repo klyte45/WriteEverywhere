@@ -1,3 +1,5 @@
+extern alias TLM;
+
 using ColossalFramework;
 using ColossalFramework.Globalization;
 using ColossalFramework.Threading;
@@ -13,6 +15,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using TLM::Bridge_WE2TLM;
 using UnityEngine;
 using WriteEverywhere.Utils;
 using static ColossalFramework.UI.UITextureAtlas;

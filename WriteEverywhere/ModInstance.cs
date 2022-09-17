@@ -1,8 +1,10 @@
 ﻿using ColossalFramework;
 using Klyte.Localization;
 using Kwytto.Interfaces;
+using Kwytto.Utils;
 using System.Globalization;
 using System.Reflection;
+using UnityEngine;
 
 [assembly: AssemblyVersion("0.0.0.*")]
 namespace WriteEverywhere
@@ -12,6 +14,10 @@ namespace WriteEverywhere
         public override string SimpleName { get; } = "Write Everywhere";
 
         public override string Description { get; } = Str.root_modDescription;
+
+        public override string Acronym => "WE";
+
+        public override Color ModColor => ColorExtensions.FromRGB("44aadd");
 
         protected override void SetLocaleCulture(CultureInfo culture) => Str.Culture = culture;
 

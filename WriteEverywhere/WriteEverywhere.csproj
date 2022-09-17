@@ -67,9 +67,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommonProperties.cs" />
     <Compile Include="MainController.cs" />
-    <Compile Include="_commons\Redirectors\UIViewRedirector.cs" />
     <EmbeddedResource Include="Localization\Str.*.resx" />
     <EmbeddedResource Include="Localization\Str.resx">
       <LastGenOutput>Str.Designer.cs</LastGenOutput>
@@ -83,12 +81,6 @@
       <DependentUpon>Str.resx</DependentUpon>
     </Compile>
     <Compile Include="ModInstance.cs" />
-    <Compile Include="_commons\**\*.cs" Exclude="_commons\Localization\KStr.Designer.cs" />
-    <Compile Include="_commons\Localization\KStr.Designer.cs">
-      <DependentUpon>KStr.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Shader\WTSShaderLibrary.cs" />
@@ -99,45 +91,55 @@
     <EmbeddedResource Include="UI\VersionNotes.txt" />
     <Compile Include="ModShared\**\*.cs" />
     <Compile Include="Singleton\**\*.cs" />
-    <Compile Include="Xml\**\*.cs" />  
+    <Compile Include="Libraries\**\*.cs" />
+    <Compile Include="Xml\**\*.cs" />
     <Compile Include="_StbTrueTypeSharp\**\*.cs" />
     <Compile Include="Rendering\**\*.cs" />
+    <Compile Include="ModShared\**\*\**\*.cs" />
     <Compile Include="Font\**\*.cs" />
-    <Compile Include="Utils\**\*.cs" />  
-    <Compile Include="UI\**\*.cs" />
+    <Compile Include="Utils\**\*.cs" />
+    <Compile Include="UI\LiteUI\**\*.cs" />
     <Compile Include="Data\**\*.cs" />
     <Compile Include="SpriteAtlas\**\*.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Reference Include="TransportLinesManager">
-      <HintPath>..\..\_appdataMods\TLM\TransportLinesManager.dll</HintPath>
-      <Aliases>TLM</Aliases>
-      <Private>False</Private>
-      <Required>False</Required>
-    </Reference>
-    <Reference Include="Addresses">
-      <HintPath>..\..\_appdataMods\ADR\KlyteAddresses.dll</HintPath>
-      <Aliases>ADR</Aliases>
-      <Private>False</Private>
-      <Required>False</Required>
-    </Reference>
-    <Reference Include="VehicleSkins">
-      <HintPath>..\..\_appdataMods\VS\KlyteVehicleSkins.dll</HintPath>
-      <Aliases>VS</Aliases>
-      <Private>False</Private>
-      <Required>False</Required>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="_commons\Localization\KStr.*.resx" />
-    <EmbeddedResource Include="_commons\Localization\KStr.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>KStr.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="_commons\UI\Images\*.png" />
-  </ItemGroup>
+  <!-- <ItemGroup> -->
+  <!-- <Reference Include="TransportLinesManager">  -->
+  <!-- <HintPath>..\..\_appdataMods\TLM\TransportLinesManager.dll</HintPath> -->
+  <!-- <Aliases>TLM</Aliases> -->
+  <!-- <Private>False</Private> -->
+  <!-- <Required>False</Required> -->
+  <!-- </Reference> -->
+  <!-- <Reference Include="Addresses"> -->
+  <!-- <HintPath>..\..\_appdataMods\ADR\KlyteAddresses.dll</HintPath> -->
+  <!-- <Aliases>ADR</Aliases> -->
+  <!-- <Private>False</Private> -->
+  <!-- <Required>False</Required> -->
+  <!-- </Reference> -->
+  <!-- <Reference Include="VehicleSkins"> -->
+  <!-- <HintPath>..\..\_appdataMods\VS\KlyteVehicleSkins.dll</HintPath> -->
+  <!-- <Aliases>VS</Aliases> -->
+  <!-- <Private>False</Private> -->
+  <!-- <Required>False</Required> -->
+  <!-- </Reference> -->
+  <!-- </ItemGroup> -->
   <ItemGroup>
     <EmbeddedResource Include="UI\**\*.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Bridge_WE2ADR\Bridge_WE2ADR.csproj">
+      <Project>{60d2e312-654f-499b-a0e0-8786a5a66cf2}</Project>
+      <Name>Bridge_WE2ADR</Name>
+      <Aliases>ADR</Aliases>
+    </ProjectReference>
+    <ProjectReference Include="..\Bridge_WE2TLM\Bridge_WE2TLM.csproj">
+      <Project>{9993bf38-0db8-4959-a4a6-701ab67ec55d}</Project>
+      <Name>Bridge_WE2TLM</Name>
+      <Aliases>TLM</Aliases>
+    </ProjectReference>
+    <ProjectReference Include="..\KwyttoUtilityWE\KwyttoUtilityWE.csproj">
+      <Project>{27c920f8-f40f-4d56-bcb6-9c9025ed0aac}</Project>
+      <Name>KwyttoUtilityWE</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
