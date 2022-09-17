@@ -288,7 +288,7 @@ namespace WriteEverywhere.ModShared
 
         public override void OnAutoNameParameterChanged()
         {
-            //WriteTheSignsMod.Controller.BuildingPropsSingleton.ResetLines();
+            //ModInstance.Controller.BuildingPropsSingleton.ResetLines();
             //WTSCacheSingleton.ClearCacheLineName();
         }
 

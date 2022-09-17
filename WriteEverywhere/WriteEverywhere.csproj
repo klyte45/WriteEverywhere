@@ -98,6 +98,7 @@
     <Compile Include="ModShared\**\*\**\*.cs" />
     <Compile Include="Font\**\*.cs" />
     <Compile Include="Utils\**\*.cs" />
+    <Compile Include="Tools\**\*.cs" />
     <Compile Include="UI\LiteUI\**\*.cs" />
     <Compile Include="Data\**\*.cs" />
     <Compile Include="SpriteAtlas\**\*.cs" />
@@ -107,21 +108,21 @@
   <!-- <HintPath>..\..\_appdataMods\TLM\TransportLinesManager.dll</HintPath> -->
   <!-- <Aliases>TLM</Aliases> -->
   <!-- <Private>False</Private> -->
-  <!-- <Required>False</Required> -->
+  <!-- <Required>False</Required> --> 
   <!-- </Reference> -->
-  <!-- <Reference Include="Addresses"> -->
-  <!-- <HintPath>..\..\_appdataMods\ADR\KlyteAddresses.dll</HintPath> -->
-  <!-- <Aliases>ADR</Aliases> -->
+  <!-- <Reference Include="Addresses"> --> 
+  <!-- <HintPath>..\..\_appdataMods\ADR\KlyteAddresses.dll</HintPath> --> 
+  <!-- <Aliases>ADR</Aliases> --> 
   <!-- <Private>False</Private> -->
   <!-- <Required>False</Required> -->
   <!-- </Reference> -->
-  <!-- <Reference Include="VehicleSkins"> -->
+  <!-- <Reference Include="VehicleSkins"> -->  
   <!-- <HintPath>..\..\_appdataMods\VS\KlyteVehicleSkins.dll</HintPath> -->
   <!-- <Aliases>VS</Aliases> -->
   <!-- <Private>False</Private> -->
   <!-- <Required>False</Required> -->
   <!-- </Reference> -->
-  <!-- </ItemGroup> -->
+  <!-- </ItemGroup> --> 
   <ItemGroup>
     <EmbeddedResource Include="UI\**\*.png" />
   </ItemGroup>

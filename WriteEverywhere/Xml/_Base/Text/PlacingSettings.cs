@@ -4,23 +4,21 @@ using System.Xml.Serialization;
 
 namespace WriteEverywhere.Xml
 {
-    public partial class BoardTextDescriptorGeneralXml
+    public class PlacingSettings
     {
-        public class PlacingSettings
-        {
-            [XmlAttribute("cloneInvertHorizontalAlign")]
-            public bool m_invertYCloneHorizontalAlign;
-            [XmlAttribute("clone180DegY")]
-            public bool m_create180degYClone;
-            [XmlAttribute("mirrored")]
-            public bool m_mirrored;
+        [XmlAttribute("cloneInvertHorizontalAlign")]
+        public bool m_invertYCloneHorizontalAlign;
+        [XmlAttribute("clone180DegY")]
+        public bool m_create180degYClone;
+        [XmlAttribute("mirrored")]
+        public bool m_mirrored;
 
-            [XmlElement("position")]
-            public Vector3Xml Position { get; set; } = new Vector3Xml();
-            [XmlElement("rotation")]
-            public Vector3Xml Rotation { get; set; } = new Vector3Xml();
-        }
+        [XmlElement("position")]
+        public Vector3Xml Position { get; set; } = new Vector3Xml();
+        [XmlElement("rotation")]
+        public Vector3Xml Rotation { get; set; } = new Vector3Xml();
     }
-
 }
+
+
 

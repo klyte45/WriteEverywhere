@@ -2,12 +2,12 @@
 using Kwytto.LiteUI;
 using Kwytto.UI;
 using Kwytto.Utils;
+using System.Linq;
+using UnityEngine;
 using WriteEverywhere.Data;
 using WriteEverywhere.Libraries;
 using WriteEverywhere.Tools;
 using WriteEverywhere.Xml;
-using System.Linq;
-using UnityEngine;
 
 namespace WriteEverywhere.UI
 {
@@ -41,9 +41,9 @@ namespace WriteEverywhere.UI
             }
         }
 
-        public WTSOnNetLiteUI()
-           : base("On Net Editor", new Rect(128, 128, 680, 420), resizable: true, minSize: new Vector2(340, 260))
+        public void Init()
         {
+            Init("On Net Editor", new Rect(128, 128, 680, 420), resizable: true, minSize: new Vector2(340, 260));
             Instance = this;
             m_tabsContainer = new GUIBasicListingTabsContainer<OnNetInstanceCacheContainerXml>(new IGUITab<OnNetInstanceCacheContainerXml>[] {
                 new WTSOnNetBasicTab(OnImportSingle, OnDelete),
@@ -100,7 +100,7 @@ namespace WriteEverywhere.UI
             m_tabsContainer.Reset();
             xmlLibList.ResetStatus();
         }
-       
+
         public int ListSel => m_tabsContainer.ListSel;
 
         protected override void DrawWindow()

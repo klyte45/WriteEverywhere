@@ -2,6 +2,7 @@
 using ColossalFramework.UI;
 using Kwytto.Interfaces;
 using Kwytto.Utils;
+using System.Linq;
 using System.Xml;
 using System.Xml.Serialization;
 using WriteEverywhere.Rendering;
@@ -9,7 +10,7 @@ using WriteEverywhere.Rendering;
 namespace WriteEverywhere.Xml
 {
     [XmlRoot("textDescriptor")]
-    public partial class BoardTextDescriptorGeneralXml : ILibable
+    public class BoardTextDescriptorGeneralXml : ILibable
     {
         #region Line dimensions
         [XmlElement("WriteLineMaxDimensions")]
@@ -99,51 +100,13 @@ namespace WriteEverywhere.Xml
         public BackgroundMesh BackgroundMeshSettings { get; set; } = new BackgroundMesh();
         [XmlElement("AnimationSettings")]
         public AnimationSettings AnimationSettings { get; set; } = new AnimationSettings();
-
-        #region Convert to common
-
-        private void ToParameterStringText(ref int lastParamUsed, VariableSegmentTargetSubType targetType)
+        public bool IsParameter() => ParameterizedTextContents.Contains(textContent);
+        private static readonly TextContent[] ParameterizedTextContents = new[]
         {
-            textContent = TextContent.ParameterizedText;
-            if (m_destinationRelative == 0)
-            {
-                SetDefaultParameterValueAsString($"var://CurrentSegment/{targetType}/{(m_allCaps ? "U" : "")}{(m_applyAbbreviations ? "A" : "")}/{m_prefix}/{m_suffix}", TextRenderingClass.PlaceOnNet);
-            }
-            else
-            {
-                SetDefaultParameterValueAsString($"var://SegmentTarget/{(int)m_destinationRelative}/{targetType}/{(m_allCaps ? "U" : "")}{(m_applyAbbreviations ? "A" : "")}/{m_prefix}/{m_suffix}", TextRenderingClass.PlaceOnNet);
-            }
-            m_parameterIdx = ++lastParamUsed;
-        }
-        private void ToParameterStringText(ref int lastParamUsed, VariableBuildingSubType targetType)
-        {
-            textContent = TextContent.ParameterizedText;
-            SetDefaultParameterValueAsString($"var://CurrentBuilding/{targetType}/{(m_allCaps ? "U" : "")}{(m_applyAbbreviations ? "A" : "")}/{m_prefix}/{m_suffix}", TextRenderingClass.Buildings);
-            m_parameterIdx = ++lastParamUsed;
-        }
-        private void ToParameterStringText(ref int lastParamUsed, VariableCitySubType targetType, TextRenderingClass renderingClass)
-        {
-            textContent = TextContent.ParameterizedText;
-            SetDefaultParameterValueAsString($"var://CityData/{targetType}/{(m_allCaps ? "U" : "")}{(m_applyAbbreviations ? "A" : "")}/{m_prefix}/{m_suffix}", renderingClass);
-            m_parameterIdx = ++lastParamUsed;
-        }
-        private void ToParameterStringText(ref int lastParamUsed, VariableVehicleSubType targetType)
-        {
-            textContent = TextContent.ParameterizedText;
-            if (targetType.GetCommandLevel().descriptionKey == "COMMON_STRINGFORMAT")
-            {
-                SetDefaultParameterValueAsString($"var://CurrentVehicle/{targetType}/{(m_allCaps ? "U" : "")}{(m_applyAbbreviations ? "A" : "")}/{m_prefix}/{m_suffix}", TextRenderingClass.Vehicle);
-            }
-            else
-            {
-                SetDefaultParameterValueAsString($"var://CurrentVehicle/{targetType}/{m_prefix}/{m_suffix}", TextRenderingClass.Vehicle);
-            }
-
-            m_parameterIdx = ++lastParamUsed;
-        }
-
-        #endregion
-
+        TextContent.ParameterizedText,
+        TextContent.ParameterizedSpriteFolder,
+        TextContent.ParameterizedSpriteSingle,
+        };
     }
 
 }
