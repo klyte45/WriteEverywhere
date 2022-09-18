@@ -61,6 +61,7 @@ namespace WriteEverywhere.Data
             LogUtils.DoLog("LOADING PROPS CONFIG START -----------------------------");
             var errorList = new List<string>();
             LogUtils.DoLog($"DefaultBuildingsConfigurationFolder = {MainController.DefaultPropsLayoutConfigurationFolder}");
+            KFileUtils.EnsureFolderCreation(MainController.DefaultPropsLayoutConfigurationFolder);
             KFileUtils.ScanPrefabsFolders<PropInfo>(DefaultFilename, LoadDescriptorsFromXml);
             foreach (string filename in Directory.GetFiles(MainController.DefaultPropsLayoutConfigurationFolder, "*.xml"))
             {

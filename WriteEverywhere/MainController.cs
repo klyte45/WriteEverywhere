@@ -25,7 +25,7 @@ namespace WriteEverywhere
 
         #region Shader
         public WTSShaderLibrary ShaderLib => WTSShaderLibrary.instance;
-        public static Shader DEFAULT_SHADER_TEXT = WTSShaderLibrary.instance.GetShaders().TryGetValue("klyte/wts/wtsshader", out Shader value) ? value : value;
+        public Shader DEFAULT_SHADER_TEXT { get; } = WTSShaderLibrary.instance.GetShaders().TryGetValue("klyte/wts/wtsshader", out Shader value) ? value : value;
         #endregion
 
         #region Fonts
@@ -38,7 +38,7 @@ namespace WriteEverywhere
         {
             FontServer.instance.ResetCollection();
             FontServer.instance.RegisterFont(DEFAULT_FONT_KEY, KResourceLoader.LoadResourceDataMod("UI.DefaultFont.SourceSansPro-Regular.ttf"), DefaultTextureSizeFont);
-
+            KFileUtils.EnsureFolderCreation(FontFilesPath);
             foreach (string fontFile in Directory.GetFiles(FontFilesPath, "*.ttf"))
             {
                 FontServer.instance.RegisterFont(Path.GetFileNameWithoutExtension(fontFile), File.ReadAllBytes(fontFile), DefaultTextureSizeFont);

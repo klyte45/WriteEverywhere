@@ -93,7 +93,6 @@ namespace WriteEverywhere
                 LogUtils.DoLog($"Reading file {filename} inside the bundle {bundle}");
                 if (filename.EndsWith(".shader"))
                 {
-
                     Shader shader = bundle.LoadAsset<Shader>(filename);
                     string effectiveName = filename.Split('.')[0].Split('/').Last();
                     shader.name = $"klyte/wts/{effectiveName}";

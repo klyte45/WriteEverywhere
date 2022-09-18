@@ -269,7 +269,7 @@ namespace WriteEverywhere.Sprites
         private UITextureAtlas CreateAtlasEntry<T>(Dictionary<T, UITextureAtlas> atlasDic, T atlasName, string path, bool addPrefix)
         {
             UITextureAtlas targetAtlas = ScriptableObject.CreateInstance<UITextureAtlas>();
-            targetAtlas.material = new Material(MainController.DEFAULT_SHADER_TEXT);
+            targetAtlas.material = new Material(ModInstance.Controller.DEFAULT_SHADER_TEXT);
             WTSAtlasLoadingUtils.LoadAllImagesFromFolder(path, out List<SpriteInfo> spritesToAdd, out List<string> errors, addPrefix);
             TextureAtlasUtils.RegenerateTextureAtlas(targetAtlas, spritesToAdd);
             foreach (string error in errors)
@@ -408,7 +408,7 @@ namespace WriteEverywhere.Sprites
             {
                 m_transportLineMaterial = new Material(m_transportLineAtlas.material)
                 {
-                    shader = MainController.DEFAULT_SHADER_TEXT,
+                    shader = ModInstance.Controller.DEFAULT_SHADER_TEXT,
                 };
             }
             RegisterMeshSingle(line.lineId, bri, line.regional ? RegionalTransportLineCache : TransportLineCache, m_transportLineAtlas, TransportIsDirty, m_transportLineMaterial);
@@ -683,7 +683,7 @@ namespace WriteEverywhere.Sprites
             {
                 material = new Material(referenceAtlas.material)
                 {
-                    shader = MainController.DEFAULT_SHADER_TEXT,
+                    shader = ModInstance.Controller.DEFAULT_SHADER_TEXT,
                 };
                 materialIndex[idx] = material;
             }

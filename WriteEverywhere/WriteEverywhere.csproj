@@ -125,6 +125,7 @@
   <!-- </ItemGroup> --> 
   <ItemGroup> 
     <EmbeddedResource Include="UI\**\*.png" />
+    <EmbeddedResource Include="UI\**\*.ttf" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Bridge_WE2ADR\Bridge_WE2ADR.csproj">
