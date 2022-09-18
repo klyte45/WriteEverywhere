@@ -17,7 +17,6 @@ bool _MirrorBack;
 fixed4 _Border;
 float _PixelsPerMeters;
 fixed2 _Dimensions;
-// other variables....
 
 void normalPass(fixed4 textureColor, fixed2 uv, inout SurfaceOutput o) {
 	float sample_l;

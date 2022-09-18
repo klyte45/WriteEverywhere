@@ -29,7 +29,7 @@ namespace WriteEverywhere.UI
         {
             m_picker = colorPicker;
             m_root = colorPicker.GetComponentInParent<GUIRootWindowBase>();
-            m_fontFilter = new GUIFilterItemsScreen<State>(Locale.Get("K45_WTS_OVERRIDE_FONT"), ModInstance.Controller, OnFilterParam, null, GoTo, State.Normal, State.GeneralFontPicker, acceptsNull: true);
+            m_fontFilter = new GUIFilterItemsScreen<State>(Str.WTS_OVERRIDE_FONT, ModInstance.Controller, OnFilterParam, null, GoTo, State.Normal, State.GeneralFontPicker, acceptsNull: true);
 
         }
 
@@ -53,7 +53,7 @@ namespace WriteEverywhere.UI
 
         private void NormalDraw(Vector2 tabAreaSize, BoardTextDescriptorGeneralXml item, bool isEditable)
         {
-            GUILayout.Label($"<i>{Locale.Get("K45_WTS_FONTFACE_SETTINGS")}</i>");
+            GUILayout.Label($"<i>{Str.WTS_FONTFACE_SETTINGS}</i>");
             bool useContrast = item.ColoringConfig.UseContrastColor;
             if (GUIKwyttoCommons.AddToggle("K45_WTS_USE_CONTRAST_COLOR", ref useContrast, isEditable))
             {

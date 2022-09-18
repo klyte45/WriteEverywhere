@@ -285,7 +285,6 @@ namespace WriteEverywhere.Sprites
 
         #endregion
 
-
         #region Transport lines
         private UITextureAtlas m_transportLineAtlas;
         private Material m_transportLineMaterial;

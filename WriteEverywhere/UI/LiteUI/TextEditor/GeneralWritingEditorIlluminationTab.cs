@@ -85,7 +85,7 @@ namespace WriteEverywhere.UI
 
         public bool DrawArea(Vector2 tabAreaSize, ref BoardTextDescriptorGeneralXml currentItem, int currentItemIdx)
         {
-            GUILayout.Label($"<i>{Locale.Get("K45_WTS_TEXT_ILLUMINATION_ATTRIBUTES")}</i>");
+            GUILayout.Label($"<i>{Str.WTS_TEXT_ILLUMINATION_ATTRIBUTES}</i>");
             var item = currentItem;
             bool isEditable = true;
 
@@ -109,7 +109,7 @@ namespace WriteEverywhere.UI
             if (item.IlluminationConfig.IlluminationType == MaterialType.FLAGS)
             {
                 GUILayout.Space(10);
-                GUILayout.Label($"<color=#FFFF00>{Locale.Get("K45_WTS_FLAGSREQUREDFORBIDDEN")}</color>");
+                GUILayout.Label($"<color=#FFFF00>{Str.WTS_FLAGSREQUREDFORBIDDEN}</color>");
                 var counter = 0;
                 var itemsPerLine = Mathf.FloorToInt((tabAreaSize.x - 10) / 120);
                 var width = (tabAreaSize.x - 10) / itemsPerLine;

@@ -1,10 +1,10 @@
-﻿using ColossalFramework.Globalization;
-using Kwytto.LiteUI;
+﻿using Kwytto.LiteUI;
 using Kwytto.UI;
 using Kwytto.Utils;
 using System;
 using System.Linq;
 using UnityEngine;
+using WriteEverywhere.Localization;
 using WriteEverywhere.Xml;
 
 namespace WriteEverywhere.UI
@@ -14,7 +14,7 @@ namespace WriteEverywhere.UI
         public override Texture TabIcon { get; } = KResourceLoader.LoadTextureKwytto(CommonsSpriteNames.K45_DiskDrive);
 
         private static readonly TextContent[] m_contents = new[] { TextContent.ParameterizedText, TextContent.ParameterizedSpriteSingle, TextContent.ParameterizedSpriteFolder, TextContent.TextParameterSequence };
-        private static readonly string[] m_optionsContent = m_contents.Select(x => Locale.Get("K45_WTS_PARAM_CONTENTTYPE", x.ToString())).ToArray();
+        private static readonly string[] m_optionsContent = m_contents.Select(x => x.ValueToI18n()).ToArray();
 
         private readonly GUIRootWindowBase m_root;
         private readonly Func<PrefabInfo> infoGetter;
@@ -27,7 +27,7 @@ namespace WriteEverywhere.UI
 
         protected override void DrawListing(Vector2 tabAreaSize, BoardTextDescriptorGeneralXml currentItem)
         {
-            GUILayout.Label($"<i>{Locale.Get("K45_WTS_TEXT_CONTENTVALUE_TAB")}</i>");
+            GUILayout.Label($"<i>{Str.WTS_TEXT_CONTENTVALUE_TAB}</i>");
             var item = currentItem;
             bool isEditable = true;
             GUIKwyttoCommons.AddComboBox(tabAreaSize.x, "K45_WTS_TEXT_CONTENT", ref item.textContent, m_optionsContent, m_contents, m_root, isEditable);
@@ -38,7 +38,7 @@ namespace WriteEverywhere.UI
                 case TextContent.ParameterizedSpriteFolder:
                 case TextContent.ParameterizedSpriteSingle:
                     var param = item.DefaultParameterValue;
-                    GUIKwyttoCommons.AddButtonSelector(tabAreaSize.x, Locale.Get("K45_WTS_CONTENT_TEXTVALUE"), param is null ? GUIKwyttoCommons.v_null : param.IsEmpty ? GUIKwyttoCommons.v_empty : param.ToString(), () => OnGoToPicker(currentItem, -1), isEditable);
+                    GUIKwyttoCommons.AddButtonSelector(tabAreaSize.x, Str.WTS_CONTENT_TEXTVALUE, param is null ? GUIKwyttoCommons.v_null : param.IsEmpty ? GUIKwyttoCommons.v_empty : param.ToString(), () => OnGoToPicker(currentItem, -1), isEditable);
                     break;
                 case TextContent.TextParameterSequence:
                     if (item.ParameterSequence is null)
@@ -49,9 +49,9 @@ namespace WriteEverywhere.UI
                     using (new GUILayout.HorizontalScope())
                     {
                         GUILayout.Label("#", GUILayout.Width(25));
-                        GUILayout.Label(Locale.Get("K45_WTS_CONTENT_TEXTVALUE"));
-                        GUILayout.Label(Locale.Get("K45_WTS_PARAMSEQ_STEPLENGTH"), GUILayout.Width(100));
-                        GUILayout.Label(Locale.Get("K45_WTS_PARAMSEQ_ACTIONS"), GUILayout.Width(60));
+                        GUILayout.Label(Str.WTS_CONTENT_TEXTVALUE);
+                        GUILayout.Label(Str.WTS_PARAMSEQ_STEPLENGTH, GUILayout.Width(100));
+                        GUILayout.Label(Str.WTS_PARAMSEQ_ACTIONS, GUILayout.Width(60));
                         GUILayout.Space(30);
                         var rect = GUILayoutUtility.GetLastRect();
                         rect.height = 18;

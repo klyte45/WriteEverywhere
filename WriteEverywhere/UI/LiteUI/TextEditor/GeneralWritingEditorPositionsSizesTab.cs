@@ -3,6 +3,7 @@ using Kwytto.LiteUI;
 using Kwytto.UI;
 using Kwytto.Utils;
 using UnityEngine;
+using WriteEverywhere.Localization;
 using WriteEverywhere.Xml;
 
 namespace WriteEverywhere.UI
@@ -13,7 +14,7 @@ namespace WriteEverywhere.UI
 
         public bool DrawArea(Vector2 tabAreaSize, ref BoardTextDescriptorGeneralXml currentItem, int currentItemIdx)
         {
-            GUILayout.Label($"<i>{Locale.Get("K45_WTS_TEXT_SIZE_ATTRIBUTES")}</i>");
+            GUILayout.Label($"<i>{Str.WTS_TEXT_SIZE_ATTRIBUTES}</i>");
             var item = currentItem;
             bool isEditable = true;
             GUIKwyttoCommons.AddVector3Field(tabAreaSize.x, item.PlacingConfig.Position, "K45_WTS_RELATIVE_POS", "K45_WTS_RELATIVE_POS", isEditable);

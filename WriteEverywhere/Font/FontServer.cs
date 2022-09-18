@@ -1,9 +1,9 @@
 using ColossalFramework;
 using FontStashSharp;
 using Kwytto.Utils;
-using WriteEverywhere;
 using System.Collections.Generic;
 using UnityEngine;
+using WriteEverywhere;
 
 namespace SpriteFontPlus
 {
@@ -118,6 +118,6 @@ namespace SpriteFontPlus
 
         public IEnumerable<string> GetAllFonts() => m_fontRegistered.Keys;
 
-        public Shader m_defaultShader = Shader.Find("Custom/Props/Prop/Default");
+        public Shader DefaultShader => ModInstance.Controller.defaultTextShader;
     }
 }

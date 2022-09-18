@@ -4,6 +4,7 @@ using Kwytto.LiteUI;
 using Kwytto.UI;
 using Kwytto.Utils;
 using UnityEngine;
+using WriteEverywhere.Localization;
 using WriteEverywhere.Xml;
 
 namespace WriteEverywhere.UI
@@ -39,7 +40,7 @@ namespace WriteEverywhere.UI
 
         public bool DrawArea(Vector2 tabAreaRect, ref BoardTextDescriptorGeneralXml currentItem, int currentItemIdx)
         {
-            GUILayout.Label($"<i>{Locale.Get("K45_WTS_GENERAL_SETTINGS")}</i>");
+            GUILayout.Label($"<i>{Str.WTS_GENERAL_SETTINGS}</i>");
             var canEdit = true;
             var item = currentItem;
             var hasChanges = false;
@@ -51,7 +52,7 @@ namespace WriteEverywhere.UI
             }
             else
             {
-                hasChanges |= GUIKwyttoCommons.TextWithLabel(tabAreaRect.x, Locale.Get("K45_WTS_TEXT_TAB_TITLE"), item.SaveName, (x) => ChangeName(x, item), canEdit);
+                hasChanges |= GUIKwyttoCommons.TextWithLabel(tabAreaRect.x, Str.WTS_TEXT_TAB_TITLE, item.SaveName, (x) => ChangeName(x, item), canEdit);
 
                 using (new GUILayout.VerticalScope())
                 {
@@ -61,13 +62,13 @@ namespace WriteEverywhere.UI
                         {
                             GUI.tooltip = "";
                             GUILayout.FlexibleSpace();
-                            GUIKwyttoCommons.SquareTextureButton(m_deleteItem, Locale.Get("K45_WTS_DELETETEXTITEM"), () => wrapper.Value = null, canEdit);
+                            GUIKwyttoCommons.SquareTextureButton(m_deleteItem, Str.WTS_DELETETEXTITEM, () => wrapper.Value = null, canEdit);
                             GUILayout.FlexibleSpace();
-                            GUIKwyttoCommons.SquareTextureButton(m_copy, Locale.Get("K45_WTS_BUILDINGEDITOR_BUTTONROWACTION_COPYTOCLIPBOARD"), () => CopyToClipboard(item));
-                            GUIKwyttoCommons.SquareTextureButton(m_paste, Locale.Get("K45_WTS_BUILDINGEDITOR_BUTTONROWACTION_PASTEFROMCLIPBOARD"), () => PasteFromClipboard(wrapper), canEdit && !(m_clipboard is null));
+                            GUIKwyttoCommons.SquareTextureButton(m_copy, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_COPYTOCLIPBOARD, () => CopyToClipboard(item));
+                            GUIKwyttoCommons.SquareTextureButton(m_paste, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_PASTEFROMCLIPBOARD, () => PasteFromClipboard(wrapper), canEdit && !(m_clipboard is null));
                             //GUILayout.FlexibleSpace();
-                            //GUIKwyttoCommons.SquareTextureButton(m_importLib, Locale.Get("K45_WTS_IMPORTLAYOUT_LIB"), ImportLayout, canEdit);
-                            //GUIKwyttoCommons.SquareTextureButton(m_exportLib, Locale.Get("K45_WTS_EXPORTLAYOUT_LIB"), ExportLayout);
+                            //GUIKwyttoCommons.SquareTextureButton(m_importLib, Str.WTS_IMPORTLAYOUT_LIB, ImportLayout, canEdit);
+                            //GUIKwyttoCommons.SquareTextureButton(m_exportLib, Str.WTS_EXPORTLAYOUT_LIB, ExportLayout);
                         }
                         else
                         {

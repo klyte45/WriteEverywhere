@@ -52,7 +52,9 @@ namespace WriteEverywhere
         {
             LogUtils.DoWarnLog("LOADING Shaders");
             m_memoryLoaded?.Unload(true);
-            m_memoryLoaded = AssetBundle.LoadFromFile(System.Environment.GetEnvironmentVariable("K45_WE_PROJECTROOT") + "/Shaders/ShaderTest.unity3d");
+            var addr = System.Environment.GetEnvironmentVariable("K45_WE_PROJECTROOT") + "/Shader/ShaderTest.unity3d";
+            LogUtils.DoLog($"Loading from: {addr}");
+            m_memoryLoaded = AssetBundle.LoadFromFile(addr);
             if (m_memoryLoaded != null)
             {
                 LogUtils.DoWarnLog("FOUND Shaders");

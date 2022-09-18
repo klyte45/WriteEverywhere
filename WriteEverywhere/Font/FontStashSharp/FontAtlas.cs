@@ -39,7 +39,7 @@ namespace FontStashSharp
             {
                 if (m_materialBright == null)
                 {
-                    m_materialBright = new Material(FontServer.instance.m_defaultShader);
+                    m_materialBright = new Material(FontServer.instance.DefaultShader);
                 }
                 return m_materialBright;
             }

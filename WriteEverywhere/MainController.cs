@@ -92,11 +92,9 @@ namespace WriteEverywhere
             ToolsModifierControl.toolController.AddExtraToolToController<RoadSegmentTool>();
             FontServer.Ensure();
             ReloadFontsFromPath();
-            FontServer.instance.m_defaultShader = defaultTextShader;
             OnNetPropsSingleton = gameObject.AddComponent<WTSOnNetPropsSingleton>();
             HighwayShieldsSingleton = gameObject.AddComponent<WTSHighwayShieldsSingleton>();
             HighwayShieldsAtlasLibrary = gameObject.AddComponent<WTSHighwayShieldsAtlasLibrary>();
-            AtlasesLibrary = gameObject.AddComponent<WTSAtlasesLibrary>();
         }
 
         protected override void StartActions()
@@ -107,8 +105,10 @@ namespace WriteEverywhere
             var uiGO = new GameObject("WE");
             uiGO.transform.SetParent(UIView.GetAView().gameObject.transform);
             uiGO.AddComponent<WTSOnNetLiteUI>();
+            AtlasesLibrary = gameObject.AddComponent<WTSAtlasesLibrary>();
 
         }
+        public static FontServer fontServer = FontServer.instance;
         public static bool ___RELOADSH
         {
             get => false; set
@@ -116,9 +116,9 @@ namespace WriteEverywhere
                 if (value)
                 {
                     WTSShaderLibrary.instance.ReloadFromDisk();
-                    ModInstance.Controller.defaultTextShader = WTSShaderLibrary.instance.GetShaders()["klyte/wts/wtsshader"];
-                    FontServer.instance.m_defaultShader = ModInstance.Controller.defaultTextShader;
+                    ModInstance.Controller.defaultTextShader = WTSShaderLibrary.instance.GetShaders().TryGetValue("klyte/wts/wtsshader", out var x) ? x : null;
                     ReloadFontsFromPath();
+                    ModInstance.Controller.AtlasesLibrary.LoadImagesFromLocalFolders();
                 }
             }
         }

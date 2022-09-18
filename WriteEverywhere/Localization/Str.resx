@@ -417,6 +417,25 @@
   <data name="we_Enum__BlinkType_StrongBlaze_0125_0125" xml:space="preserve">    <value>Strong blaze (neon)</value>  </data>
   <data name="we_Enum__BlinkType_StrongFade_250_250" xml:space="preserve">    <value>Strong fade</value>  </data>
   <data name="we_Enum__BlinkType_Blink_025_025" xml:space="preserve">    <value>Blink 250ms</value>  </data>
+  <data name="WTS_BACKGROUNDANDBOX_SETTINGS" xml:space="preserve">    <value>Background &amp; box </value>  </data>
+  <data name="WTS_BOXMESH_COLORSGROUP_LABEL" xml:space="preserve">    <value>Colors</value>  </data>
+  <data name="WTS_BOXMESH_EFFECTSGROUP_LABEL" xml:space="preserve">    <value>Effects</value>  </data>
+  <data name="WTS_BOXMESH_SIZESGROUP_LABEL" xml:space="preserve">    <value>Sizes</value>  </data>
+  <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_COPYTOCLIPBOARD" xml:space="preserve">    <value>Copy to clipboard</value>  </data>
+  <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_PASTEFROMCLIPBOARD" xml:space="preserve">    <value>Paste from clipboard</value>  </data>
+  <data name="WTS_CONTENT_TEXTVALUE" xml:space="preserve">    <value>Parameter value</value>  </data>
+  <data name="WTS_DELETETEXTITEM" xml:space="preserve">    <value>Delete this text item</value>  </data>
+  <data name="WTS_FLAGSREQUREDFORBIDDEN" xml:space="preserve">    <value>Flags required/forbidden</value>  </data>
+  <data name="WTS_FONTFACE_SETTINGS" xml:space="preserve">    <value>Font face settings</value>  </data>
+  <data name="WTS_GENERAL_SETTINGS" xml:space="preserve">    <value>General settings</value>  </data>
+  <data name="WTS_OVERRIDE_FONT" xml:space="preserve">    <value>Text font for override</value>  </data>
+  <data name="WTS_PARAMSEQ_ACTIONS" xml:space="preserve">    <value>Actions</value>  </data>
+  <data name="WTS_PARAMSEQ_STEPLENGTH" xml:space="preserve">    <value>Duration</value>  </data>
+  <data name="WTS_TEXT_CONTENTVALUE_TAB" xml:space="preserve">    <value>Text contents</value>  </data>
+  <data name="WTS_TEXT_ILLUMINATION_ATTRIBUTES" xml:space="preserve">    <value>Illumination settings</value>  </data>
+  <data name="WTS_TEXT_ILLUMINATION_ATTRIBUTES" xml:space="preserve">    <value>Illumination attributes</value>  </data>
+  <data name="WTS_TEXT_SIZE_ATTRIBUTES" xml:space="preserve">    <value>Text size attributes</value>  </data>
+  <data name="WTS_TEXT_TAB_TITLE" xml:space="preserve">    <value>Text mesh title</value>  </data>
 
 
 </root>

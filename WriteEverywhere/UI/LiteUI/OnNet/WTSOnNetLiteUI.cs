@@ -98,6 +98,7 @@ namespace WriteEverywhere.UI
 
         public static bool LockSelection { get; internal set; } = true;
         public static int LockSelectionInstanceNum => WTSOnNetBasicTab.LockSelectionInstanceNum;
+        public static int LockSelectionTextInstanceNum => WTSOnNetTextTab.LockSelectionInstanceNum;
         private WriteOnNetGroupXml CurrentEditingInstance { get; set; }
         public ushort CurrentSegmentId
         {
@@ -162,6 +163,18 @@ namespace WriteEverywhere.UI
                     {
                         LockSelection = GUILayout.Toggle(LockSelection, Str.WTS_SEGMENTEDITOR_BUTTONROWACTION_LOCKCAMERASELECTION);
                         GUILayout.FlexibleSpace();
+                        if (GUILayout.Button("RL SHD"))
+                        {
+                            MainController.___RELOADSH = true;
+                        }
+                        if (GUILayout.Button("RL IMG"))
+                        {
+                            ModInstance.Controller.AtlasesLibrary.LoadImagesFromLocalFolders();
+                        }
+                        if (GUILayout.Button("RL FNT"))
+                        {
+                            MainController.ReloadFontsFromPath();
+                        }
                         if (GUILayout.Button(Str.WTS_SEGMENT_IMPORTDATA))
                         {
                             xmlLibList.GoToImport();

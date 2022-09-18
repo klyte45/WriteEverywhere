@@ -340,6 +340,15 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Background &amp; box .
+        /// </summary>
+        internal static string WTS_BACKGROUNDANDBOX_SETTINGS {
+            get {
+                return ResourceManager.GetString("WTS_BACKGROUNDANDBOX_SETTINGS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Highway shield.
         /// </summary>
         internal static string WTS_BOARD_TEXT_TYPE_DESC__HwShield {
@@ -421,11 +430,65 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Colors.
+        /// </summary>
+        internal static string WTS_BOXMESH_COLORSGROUP_LABEL {
+            get {
+                return ResourceManager.GetString("WTS_BOXMESH_COLORSGROUP_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Effects.
+        /// </summary>
+        internal static string WTS_BOXMESH_EFFECTSGROUP_LABEL {
+            get {
+                return ResourceManager.GetString("WTS_BOXMESH_EFFECTSGROUP_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Sizes.
+        /// </summary>
+        internal static string WTS_BOXMESH_SIZESGROUP_LABEL {
+            get {
+                return ResourceManager.GetString("WTS_BOXMESH_SIZESGROUP_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Copy to clipboard.
+        /// </summary>
+        internal static string WTS_BUILDINGEDITOR_BUTTONROWACTION_COPYTOCLIPBOARD {
+            get {
+                return ResourceManager.GetString("WTS_BUILDINGEDITOR_BUTTONROWACTION_COPYTOCLIPBOARD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Paste from clipboard.
+        /// </summary>
+        internal static string WTS_BUILDINGEDITOR_BUTTONROWACTION_PASTEFROMCLIPBOARD {
+            get {
+                return ResourceManager.GetString("WTS_BUILDINGEDITOR_BUTTONROWACTION_PASTEFROMCLIPBOARD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Model/Layout selection.
         /// </summary>
         internal static string WTS_BUILDINGEDITOR_MODELLAYOUTSELECT {
             get {
                 return ResourceManager.GetString("WTS_BUILDINGEDITOR_MODELLAYOUTSELECT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Parameter value.
+        /// </summary>
+        internal static string WTS_CONTENT_TEXTVALUE {
+            get {
+                return ResourceManager.GetString("WTS_CONTENT_TEXTVALUE", resourceCulture);
             }
         }
         
@@ -466,6 +529,15 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Delete this text item.
+        /// </summary>
+        internal static string WTS_DELETETEXTITEM {
+            get {
+                return ResourceManager.GetString("WTS_DELETETEXTITEM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Name of this rule to be saved:.
         /// </summary>
         internal static string WTS_EXPORTDATA_NAMEASKING {
@@ -484,6 +556,15 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Flags required/forbidden.
+        /// </summary>
+        internal static string WTS_FLAGSREQUREDFORBIDDEN {
+            get {
+                return ResourceManager.GetString("WTS_FLAGSREQUREDFORBIDDEN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Folder from asset.
         /// </summary>
         internal static string WTS_FOLDERSRC_ASSET {
@@ -498,6 +579,24 @@ namespace WriteEverywhere.Localization {
         internal static string WTS_FOLDERSRC_LOCAL {
             get {
                 return ResourceManager.GetString("WTS_FOLDERSRC_LOCAL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Font face settings.
+        /// </summary>
+        internal static string WTS_FONTFACE_SETTINGS {
+            get {
+                return ResourceManager.GetString("WTS_FONTFACE_SETTINGS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a General settings.
+        /// </summary>
+        internal static string WTS_GENERAL_SETTINGS {
+            get {
+                return ResourceManager.GetString("WTS_GENERAL_SETTINGS", resourceCulture);
             }
         }
         
@@ -660,6 +759,33 @@ namespace WriteEverywhere.Localization {
         internal static string WTS_ONNETEDITOR_UNSETTARGETDESC {
             get {
                 return ResourceManager.GetString("WTS_ONNETEDITOR_UNSETTARGETDESC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Text font for override.
+        /// </summary>
+        internal static string WTS_OVERRIDE_FONT {
+            get {
+                return ResourceManager.GetString("WTS_OVERRIDE_FONT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Actions.
+        /// </summary>
+        internal static string WTS_PARAMSEQ_ACTIONS {
+            get {
+                return ResourceManager.GetString("WTS_PARAMSEQ_ACTIONS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Duration.
+        /// </summary>
+        internal static string WTS_PARAMSEQ_STEPLENGTH {
+            get {
+                return ResourceManager.GetString("WTS_PARAMSEQ_STEPLENGTH", resourceCulture);
             }
         }
         
@@ -1155,6 +1281,42 @@ namespace WriteEverywhere.Localization {
         internal static string WTS_SEGMENTPLACING_TITLE {
             get {
                 return ResourceManager.GetString("WTS_SEGMENTPLACING_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Text contents.
+        /// </summary>
+        internal static string WTS_TEXT_CONTENTVALUE_TAB {
+            get {
+                return ResourceManager.GetString("WTS_TEXT_CONTENTVALUE_TAB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Illumination attributes.
+        /// </summary>
+        internal static string WTS_TEXT_ILLUMINATION_ATTRIBUTES {
+            get {
+                return ResourceManager.GetString("WTS_TEXT_ILLUMINATION_ATTRIBUTES", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Text size attributes.
+        /// </summary>
+        internal static string WTS_TEXT_SIZE_ATTRIBUTES {
+            get {
+                return ResourceManager.GetString("WTS_TEXT_SIZE_ATTRIBUTES", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Text mesh title.
+        /// </summary>
+        internal static string WTS_TEXT_TAB_TITLE {
+            get {
+                return ResourceManager.GetString("WTS_TEXT_TAB_TITLE", resourceCulture);
             }
         }
         

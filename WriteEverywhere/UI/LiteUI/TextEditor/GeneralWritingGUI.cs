@@ -9,6 +9,7 @@ using System.Collections;
 using System.Globalization;
 using System.Linq;
 using UnityEngine;
+using WriteEverywhere.Localization;
 using WriteEverywhere.Xml;
 
 namespace WriteEverywhere.UI
@@ -51,7 +52,7 @@ namespace WriteEverywhere.UI
 
             m_colorPicker = colorPicker;
             this.getInfo = infoGetter;
-            m_fontFilter = new GUIFilterItemsScreen<State>(Locale.Get("K45_WTS_OVERRIDE_FONT"), ModInstance.Controller, OnFilterParam, OnSelectFont, GoTo, State.Normal, State.GeneralFontPicker, acceptsNull: true);
+            m_fontFilter = new GUIFilterItemsScreen<State>(Str.WTS_OVERRIDE_FONT, ModInstance.Controller, OnFilterParam, OnSelectFont, GoTo, State.Normal, State.GeneralFontPicker, acceptsNull: true);
             var uicomp = WTSOnNetLiteUI.Instance.GetComponent<UIComponent>();
             m_tabsContainer = new GUIBasicListingTabsContainer<BoardTextDescriptorGeneralXml>(
                 new IGUITab<BoardTextDescriptorGeneralXml>[]{

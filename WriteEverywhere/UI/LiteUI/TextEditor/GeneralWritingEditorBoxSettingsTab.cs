@@ -2,6 +2,7 @@
 using Kwytto.LiteUI;
 using Kwytto.UI;
 using UnityEngine;
+using WriteEverywhere.Localization;
 using WriteEverywhere.Xml;
 
 namespace WriteEverywhere.UI
@@ -18,7 +19,7 @@ namespace WriteEverywhere.UI
 
         public bool DrawArea(Vector2 tabAreaSize, ref BoardTextDescriptorGeneralXml currentItem, int currentItemIdx)
         {
-            GUILayout.Label($"<i>{Locale.Get("K45_WTS_BACKGROUNDANDBOX_SETTINGS")}</i>");
+            GUILayout.Label($"<i>{Str.WTS_BACKGROUNDANDBOX_SETTINGS}</i>");
             var item = currentItem;
             bool isEditable = true;
             GUIKwyttoCommons.AddToggle("K45_WTS_TEXT_USEFRAME", ref item.BackgroundMeshSettings.m_useFrame, isEditable);
@@ -28,7 +29,7 @@ namespace WriteEverywhere.UI
                 using (new GUILayout.VerticalScope())
                 {
                     GUILayout.Space(10);
-                    GUILayout.Label($"<color=#FFFF00>{Locale.Get("K45_WTS_BOXMESH_SIZESGROUP_LABEL")}</color>");
+                    GUILayout.Label($"<color=#FFFF00>{Str.WTS_BOXMESH_SIZESGROUP_LABEL}</color>");
                     bool changedFrame = false;
                     changedFrame |= GUIKwyttoCommons.AddVector2Field(tabAreaSize.x, item.BackgroundMeshSettings.Size, "K45_WTS_TEXTBACKGROUNDSIZEGENERATED", "K45_WTS_TEXTBACKGROUNDSIZEGENERATED", isEditable);
                     if (usingFrame)
@@ -59,7 +60,7 @@ namespace WriteEverywhere.UI
                     }
 
                     GUILayout.Space(10);
-                    GUILayout.Label($"<color=#FFFF00>{Locale.Get("K45_WTS_BOXMESH_COLORSGROUP_LABEL")}</color>");
+                    GUILayout.Label($"<color=#FFFF00>{Str.WTS_BOXMESH_COLORSGROUP_LABEL}</color>");
                     GUIKwyttoCommons.AddColorPicker("K45_WTS_BG_COLOR", m_picker, ref item.BackgroundMeshSettings.m_cachedColor, isEditable);
                     if (usingFrame)
                     {
@@ -72,7 +73,7 @@ namespace WriteEverywhere.UI
 
 
                         GUILayout.Space(10);
-                        GUILayout.Label($"<color=#FFFF00>{Locale.Get("K45_WTS_BOXMESH_EFFECTSGROUP_LABEL")}</color>");
+                        GUILayout.Label($"<color=#FFFF00>{Str.WTS_BOXMESH_EFFECTSGROUP_LABEL}</color>");
                         if (GUIKwyttoCommons.AddSlider(tabAreaSize.x, "K45_WTS_TEXT_CONTAINERGLASSSPECULARITY", item.BackgroundMeshSettings.FrameMeshSettings.GlassSpecularLevel, out var newVal, 0, 1, isEditable))
                         {
                             item.BackgroundMeshSettings.FrameMeshSettings.GlassSpecularLevel = newVal;

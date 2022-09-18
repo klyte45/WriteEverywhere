@@ -252,7 +252,7 @@ namespace WriteEverywhere.Rendering
             ref Vector3 targetRotation, ref Vector3 baseScale, UIHorizontalAlignment targetTextAlignment, Camera targetCamera, Tuple<Matrix4x4, Tuple<Matrix4x4, Matrix4x4, Matrix4x4, Matrix4x4>> textMatrixTuple,
             PropManager instance, BasicRenderInformation bgBri, ref int defaultCallsCounter)
         {
-            materialPropertyBlock.SetColor(WTSDynamicTextRenderingRules.SHADER_PROP_COLOR, textDescriptor.BackgroundMeshSettings.BackgroundColor * new Color(1, 1, 1, 0));
+            materialPropertyBlock.SetColor(SHADER_PROP_COLOR, textDescriptor.BackgroundMeshSettings.BackgroundColor * new Color(1, 1, 1, 0));
             materialPropertyBlock.SetVector(SHADER_PROP_SURF_PROPERTIES, new Vector4());
             ApplyTextAdjustments(targetPos, targetRotation, bgBri, baseScale, textDescriptor.BackgroundMeshSettings.Size.Y, targetTextAlignment, textDescriptor.BackgroundMeshSettings.Size.X, false, false, false);
 
@@ -313,7 +313,7 @@ namespace WriteEverywhere.Rendering
             }
             if (m_outsideMaterial == null)
             {
-                m_outsideMaterial = new Material(FontServer.instance.m_defaultShader);
+                m_outsideMaterial = new Material(FontServer.instance.DefaultShader);
             }
 
             if (frameConfig.cachedFrameArray == null)
@@ -397,20 +397,20 @@ namespace WriteEverywhere.Rendering
         #region Illumination handling
         private static PropManager CalculateIllumination(ushort refID, int boardIdx, int secIdx, BoardTextDescriptorGeneralXml textDescriptor, MaterialPropertyBlock materialPropertyBlock, ref Color colorToSet, int instanceFlags, int instanceFlags2)
         {
-            Vector4 objectIndex = default;
+            Vector4 surfProperties = default;
             var randomizer = new Randomizer((refID << 8) + (boardIdx << 2) + secIdx);
             switch (textDescriptor.IlluminationConfig.IlluminationType)
             {
                 default:
                 case FontStashSharp.MaterialType.OPAQUE:
-                    objectIndex.z = 0;
+                    surfProperties.z = 0;
                     break;
                 case FontStashSharp.MaterialType.DAYNIGHT:
                     float num = m_daynightOffTime + (randomizer.Int32(100000u) * 1E-05f);
-                    objectIndex.z = MathUtils.SmoothStep(num + 0.01f, num - 0.01f, Singleton<RenderManager>.instance.lightSystem.DayLightIntensity) * textDescriptor.IlluminationConfig.m_illuminationStrength;
+                    surfProperties.z = MathUtils.SmoothStep(num + 0.01f, num - 0.01f, Singleton<RenderManager>.instance.lightSystem.DayLightIntensity) * textDescriptor.IlluminationConfig.m_illuminationStrength;
                     break;
                 case FontStashSharp.MaterialType.FLAGS:
-                    objectIndex.z
+                    surfProperties.z
                         = ((instanceFlags & textDescriptor.IlluminationConfig.m_requiredFlags) == textDescriptor.IlluminationConfig.m_requiredFlags)
                         && ((instanceFlags & textDescriptor.IlluminationConfig.m_forbiddenFlags) == 0)
                         && ((instanceFlags2 & textDescriptor.IlluminationConfig.m_requiredFlags2) == textDescriptor.IlluminationConfig.m_requiredFlags2)
@@ -418,22 +418,22 @@ namespace WriteEverywhere.Rendering
                         ? textDescriptor.IlluminationConfig.m_illuminationStrength : 0;
                     break;
                 case FontStashSharp.MaterialType.BRIGHT:
-                    objectIndex.z = textDescriptor.IlluminationConfig.m_illuminationStrength;
+                    surfProperties.z = textDescriptor.IlluminationConfig.m_illuminationStrength;
                     break;
             }
-            colorToSet *= Color.Lerp(new Color32(200, 200, 200, 255), Color.white, objectIndex.z);
+            colorToSet *= Color.Lerp(new Color32(200, 200, 200, 255), Color.white, surfProperties.z);
             materialPropertyBlock.SetColor(SHADER_PROP_COLOR, colorToSet);
 
 
-            if (objectIndex.z > 0 && textDescriptor.IlluminationConfig.BlinkType != BlinkType.None)
+            if (surfProperties.z > 0 && textDescriptor.IlluminationConfig.BlinkType != BlinkType.None)
             {
-                CalculateBlinkEffect(textDescriptor, ref objectIndex, ref randomizer);
+                CalculateBlinkEffect(textDescriptor, ref surfProperties, ref randomizer);
             }
 
-            objectIndex.x = -textDescriptor.IlluminationConfig.m_illuminationDepth;
+            surfProperties.x = -textDescriptor.IlluminationConfig.m_illuminationDepth;
 
             PropManager instance = Singleton<PropManager>.instance;
-            materialPropertyBlock.SetVector(SHADER_PROP_SURF_PROPERTIES, objectIndex);
+            materialPropertyBlock.SetVector(SHADER_PROP_SURF_PROPERTIES, surfProperties);
             return instance;
         }
         private static void CalculateBlinkEffect(BoardTextDescriptorGeneralXml textDescriptor, ref Vector4 objectIndex, ref Randomizer randomizer)

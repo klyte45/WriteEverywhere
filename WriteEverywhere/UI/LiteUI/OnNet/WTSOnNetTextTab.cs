@@ -13,6 +13,8 @@ namespace WriteEverywhere.UI
         {
         }
 
+        public static int LockSelectionInstanceNum { get; internal set; }
+
         public Texture TabIcon => KResourceLoader.LoadTextureKwytto(CommonsSpriteNames.K45_AutoNameIcon);
 
         public int CurrentTab { get; private set; }
