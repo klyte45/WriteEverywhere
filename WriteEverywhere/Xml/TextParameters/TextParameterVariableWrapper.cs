@@ -118,7 +118,7 @@ namespace WriteEverywhere.Xml
 
 
 
-        public BasicRenderInformation GetTargetText(BoardInstanceXml instance, BoardTextDescriptorGeneralXml textDescriptor, DynamicSpriteFont targetFont, ushort refId, int secRefId, int tercRefId, out IEnumerable<BasicRenderInformation> multipleOutput)
+        public BasicRenderInformation GetTargetText(BaseWriteOnXml instance, BoardTextDescriptorGeneralXml textDescriptor, DynamicSpriteFont targetFont, ushort refId, int secRefId, int tercRefId, out IEnumerable<BasicRenderInformation> multipleOutput)
         {
             string targetStr = m_originalCommand;
             switch (instance)
@@ -204,7 +204,7 @@ namespace WriteEverywhere.Xml
         //            return m_originalCommand;
         //        }
 
-        public string GetTargetTextForNet(BoardInstanceXml descriptor, ushort segmentId, BoardTextDescriptorGeneralXml textDescriptor, out IEnumerable<BasicRenderInformation> multipleOutput)
+        public string GetTargetTextForNet(BaseWriteOnXml descriptor, ushort segmentId, BoardTextDescriptorGeneralXml textDescriptor, out IEnumerable<BasicRenderInformation> multipleOutput)
         {
             multipleOutput = null;
             var propDescriptor = descriptor as OnNetInstanceCacheContainerXml;

@@ -7,7 +7,7 @@ using System.Xml.Serialization;
 namespace WriteEverywhere.Xml
 {
     [XmlRoot("onNetDescriptor")]
-    public class OnNetInstanceCacheContainerXml : BoardInstanceOnNetXml
+    public class OnNetInstanceCacheContainerXml : WriteOnNetXml
     {
         [XmlElement("targetSegments")]
         public SimpleNonSequentialList<ushort> m_targets = new SimpleNonSequentialList<ushort>();

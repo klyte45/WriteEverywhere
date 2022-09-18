@@ -9,7 +9,7 @@ using System.Xml.Serialization;
 namespace WriteEverywhere.Xml
 {
 
-    public class OnNetGroupDescriptorXml : IBoardBunchContainer
+    public class WriteOnNetGroupXml : IWriteGroup
     {
         [XmlIgnore]
         internal OnNetInstanceCacheContainerXml[] BoardsData { get; set; } = new OnNetInstanceCacheContainerXml[0];
@@ -33,7 +33,7 @@ namespace WriteEverywhere.Xml
     }
     public class ExportableBoardInstanceOnNetListXml : ILibable
     {
-        public BoardInstanceOnNetXml[] Instances { get; set; }
+        public WriteOnNetXml[] Instances { get; set; }
         public SimpleXmlDictionary<string, BoardDescriptorGeneralXml> Layouts { get; set; }
         [XmlAttribute("saveName")]
         public string SaveName { get; set; }

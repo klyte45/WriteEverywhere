@@ -220,7 +220,7 @@ namespace WriteEverywhere.Xml
 
         #region renderingInfo
 
-        private static DynamicSpriteFont GetTargetFont(BoardInstanceXml instance, BoardTextDescriptorGeneralXml textDescriptor)
+        private static DynamicSpriteFont GetTargetFont(BaseWriteOnXml instance, BoardTextDescriptorGeneralXml textDescriptor)
             => FontServer.instance.FirstOf(new[]
             {
                         textDescriptor.m_overrideFont,
@@ -229,7 +229,7 @@ namespace WriteEverywhere.Xml
                         WTSEtcData.Instance.FontSettings.GetTargetFont(instance.RenderingClass),
             }.Where(x => !x.IsNullOrWhiteSpace()));
 
-        public static BasicRenderInformation GetRenderInfo(BoardInstanceXml instance, BoardTextDescriptorGeneralXml textDescriptor, ushort refId, int secIdx, int tercIdx, out IEnumerable<BasicRenderInformation> multipleOutput)
+        public static BasicRenderInformation GetRenderInfo(BaseWriteOnXml instance, BoardTextDescriptorGeneralXml textDescriptor, ushort refId, int secIdx, int tercIdx, out IEnumerable<BasicRenderInformation> multipleOutput)
         {
             multipleOutput = null;
             switch (textDescriptor.textContent)
@@ -262,7 +262,7 @@ namespace WriteEverywhere.Xml
         }
 
 
-        public static BasicRenderInformation GetRenderInfo(TextParameterWrapper tpw, BoardInstanceXml instance, BoardTextDescriptorGeneralXml textDescriptor, ushort refId, int secIdx, int tercIdx, out IEnumerable<BasicRenderInformation> multipleOutput)
+        public static BasicRenderInformation GetRenderInfo(TextParameterWrapper tpw, BaseWriteOnXml instance, BoardTextDescriptorGeneralXml textDescriptor, ushort refId, int secIdx, int tercIdx, out IEnumerable<BasicRenderInformation> multipleOutput)
         {
             multipleOutput = null;
             switch (textDescriptor.textContent)
@@ -320,7 +320,7 @@ namespace WriteEverywhere.Xml
 
         }
 
-        public BasicRenderInformation GetTargetText(BoardInstanceXml descriptorBuilding, BoardTextDescriptorGeneralXml textDescriptor, DynamicSpriteFont targetFont, ushort refId, int secId, int tercId, out IEnumerable<BasicRenderInformation> multipleOutput)
+        public BasicRenderInformation GetTargetText(BaseWriteOnXml descriptorBuilding, BoardTextDescriptorGeneralXml textDescriptor, DynamicSpriteFont targetFont, ushort refId, int secId, int tercId, out IEnumerable<BasicRenderInformation> multipleOutput)
         {
             if (ParamType != ParameterType.VARIABLE)
             {

@@ -57,7 +57,7 @@ namespace WriteEverywhere.Rendering
         public static Color RenderPropMesh<DESC>(PropInfo propInfo, RenderManager.CameraInfo cameraInfo, ushort refId, int boardIdx, int secIdx,
             int layerMask, float refAngleRad, Vector3 position, Vector4 dataVector, Vector3 propAngle, Vector3 propScale, BoardDescriptorGeneralXml propLayout,
             DESC descriptor, out Matrix4x4 propMatrix,
-            out bool rendered, InstanceID propRenderID) where DESC : BoardInstanceXml
+            out bool rendered, InstanceID propRenderID) where DESC : BaseWriteOnXml
         {
             Color propColor = GetColorForRule(refId, boardIdx, secIdx, propLayout, descriptor, out rendered);
             if (!rendered)
@@ -101,7 +101,7 @@ namespace WriteEverywhere.Rendering
             return matrix;
         }
 
-        public static Color GetColorForRule<DESC>(ushort refId, int boardIdx, int secIdx, BoardDescriptorGeneralXml propLayout, DESC descriptor, out bool rendered) where DESC : BoardInstanceXml
+        public static Color GetColorForRule<DESC>(ushort refId, int boardIdx, int secIdx, BoardDescriptorGeneralXml propLayout, DESC descriptor, out bool rendered) where DESC : BaseWriteOnXml
         {
             Color propColor = WTSDynamicTextRenderingRules.GetPropColor(refId, boardIdx, secIdx, descriptor, propLayout, out bool colorFound);
             if (!colorFound)
@@ -114,7 +114,7 @@ namespace WriteEverywhere.Rendering
             return propColor;
         }
 
-        public static Color EnsurePropCache<DESC>(ushort refId, int boardIdx, int secIdx, BoardDescriptorGeneralXml propLayout, DESC descriptor, out bool rendered) where DESC : BoardInstanceXml
+        public static Color EnsurePropCache<DESC>(ushort refId, int boardIdx, int secIdx, BoardDescriptorGeneralXml propLayout, DESC descriptor, out bool rendered) where DESC : BaseWriteOnXml
         {
             Color propColor = WTSDynamicTextRenderingRules.GetPropColor(refId, boardIdx, secIdx, descriptor, propLayout, out bool colorFound);
             if (!colorFound)
@@ -128,7 +128,7 @@ namespace WriteEverywhere.Rendering
             return propColor;
         }
 
-        public static void RenderTextMesh(ushort refID, int boardIdx, int secIdx, BoardInstanceXml descriptor, Matrix4x4 propMatrix,
+        public static void RenderTextMesh(ushort refID, int boardIdx, int secIdx, BaseWriteOnXml descriptor, Matrix4x4 propMatrix,
             BoardDescriptorGeneralXml propLayout, ref BoardTextDescriptorGeneralXml textDescriptor, MaterialPropertyBlock materialPropertyBlock,
             int instanceFlags, int instanceFlags2, Color parentColor, PrefabInfo srcInfo, ref int defaultCallsCounter, Camera targetCamera = null)
         {
@@ -567,7 +567,7 @@ namespace WriteEverywhere.Rendering
         #region Color rules
 
         private static Randomizer rand = new Randomizer(0);
-        public static Color GetPropColor(ushort refId, int boardIdx, int secIdx, BoardInstanceXml instance, BoardDescriptorGeneralXml propLayout, out bool found)
+        public static Color GetPropColor(ushort refId, int boardIdx, int secIdx, BaseWriteOnXml instance, BoardDescriptorGeneralXml propLayout, out bool found)
         {
 
             //if (instance is BoardInstanceRoadNodeXml)
@@ -623,7 +623,7 @@ namespace WriteEverywhere.Rendering
             //    return preview?.Descriptor?.FixedColor ?? GetCurrentSimulationColor();
             //}
             //else 
-            if (instance is BoardInstanceOnNetXml n)
+            if (instance is WriteOnNetXml n)
             {
                 found = n.Descriptor != null || n.SimpleProp != null;
                 return n.Descriptor?.FixedColor ?? n.SimpleProp?.m_color0 ?? Color.white;
@@ -631,7 +631,7 @@ namespace WriteEverywhere.Rendering
             found = false;
             return default;
         }
-        private static Color GetTextColor(ushort refID, int boardIdx, int secIdx, BoardInstanceXml descriptor, BoardDescriptorGeneralXml propLayout, BoardTextDescriptorGeneralXml textDescriptor)
+        private static Color GetTextColor(ushort refID, int boardIdx, int secIdx, BaseWriteOnXml descriptor, BoardDescriptorGeneralXml propLayout, BoardTextDescriptorGeneralXml textDescriptor)
         {
             if (textDescriptor.ColoringConfig.UseContrastColor)
             {
@@ -677,7 +677,7 @@ namespace WriteEverywhere.Rendering
             return Color.gray;
         }
 
-        public static Color GetContrastColor(ushort refID, int boardIdx, int secIdx, BoardInstanceXml instance, BoardDescriptorGeneralXml propLayout)
+        public static Color GetContrastColor(ushort refID, int boardIdx, int secIdx, BaseWriteOnXml instance, BoardDescriptorGeneralXml propLayout)
         {
             //if (instance is BoardInstanceRoadNodeXml)
             //{

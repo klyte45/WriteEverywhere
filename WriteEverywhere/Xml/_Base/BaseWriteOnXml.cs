@@ -1,12 +1,12 @@
 ﻿using Kwytto.Utils;
-using WriteEverywhere.Rendering;
 using System.Xml;
 using System.Xml.Serialization;
 using UnityEngine;
+using WriteEverywhere.Rendering;
 
 namespace WriteEverywhere.Xml
 {
-    public abstract class BoardInstanceXml
+    public abstract class BaseWriteOnXml
     {
         private Vector3Xml m_propPosition = new Vector3Xml();
         private Vector3Xml m_propRotation = new Vector3Xml();

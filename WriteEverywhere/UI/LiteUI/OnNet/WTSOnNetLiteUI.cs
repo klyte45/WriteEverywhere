@@ -1,5 +1,4 @@
-﻿using ColossalFramework.Globalization;
-using Klyte.Localization;
+﻿using Klyte.Localization;
 using Kwytto.LiteUI;
 using Kwytto.UI;
 using Kwytto.Utils;
@@ -47,7 +46,7 @@ namespace WriteEverywhere.UI
             Instance = this;
             Instance.Init("On Net Editor", new Rect(128, 128, 680, 420), resizable: true, minSize: new Vector2(340, 260));
             Instance.m_tabsContainer = new GUIBasicListingTabsContainer<OnNetInstanceCacheContainerXml>(new IGUITab<OnNetInstanceCacheContainerXml>[] {
-                new WTSOnNetBasicTab(Instance.OnImportSingle, Instance.OnDelete),
+                new WTSOnNetBasicTab(Instance.OnImportSingle, Instance.OnDelete, this),
                 new WTSOnNetTargetsTab(),
                 new WTSOnNetParamsTab()
             }, Instance.OnAdd, Instance.GetSideList, Instance.GetSelectedItem, Instance.OnSetCurrentItem);
@@ -80,7 +79,8 @@ namespace WriteEverywhere.UI
         };
 
         public static bool LockSelection { get; internal set; } = true;
-        private OnNetGroupDescriptorXml CurrentEditingInstance { get; set; }
+        public static int LockSelectionInstanceNum => WTSOnNetBasicTab.LockSelectionInstanceNum;
+        private WriteOnNetGroupXml CurrentEditingInstance { get; set; }
         public ushort CurrentSegmentId
         {
             get => currentSegmentId; set
@@ -99,7 +99,7 @@ namespace WriteEverywhere.UI
             Title = $"{Str.WTS_SEGMENTPLACING_TITLE}: {streetName}, ~{num}m";
             if (WTSOnNetData.Instance.m_boardsContainers[CurrentSegmentId] == null)
             {
-                WTSOnNetData.Instance.m_boardsContainers[CurrentSegmentId] = new OnNetGroupDescriptorXml();
+                WTSOnNetData.Instance.m_boardsContainers[CurrentSegmentId] = new WriteOnNetGroupXml();
             }
             CurrentEditingInstance = WTSOnNetData.Instance.m_boardsContainers[CurrentSegmentId];
             m_tabsContainer.Reset();
@@ -185,7 +185,7 @@ namespace WriteEverywhere.UI
 
         private void OnSelectBoardList(ExportableBoardInstanceOnNetListXml obj)
         {
-            CurrentEditingInstance.BoardsData = CurrentEditingInstance.BoardsData.Concat(obj.Instances.Select(x => XmlUtils.TransformViaXml<BoardInstanceOnNetXml, OnNetInstanceCacheContainerXml>(x)).Where(x => !(x?.SaveName is null))).ToArray();
+            CurrentEditingInstance.BoardsData = CurrentEditingInstance.BoardsData.Concat(obj.Instances.Select(x => XmlUtils.TransformViaXml<WriteOnNetXml, OnNetInstanceCacheContainerXml>(x)).Where(x => !(x?.SaveName is null))).ToArray();
             foreach (var x in obj.Layouts)
             {
                 if (WTSPropLayoutData.Instance.Get(x.Key) is null)
@@ -198,7 +198,7 @@ namespace WriteEverywhere.UI
         }
         private ExportableBoardInstanceOnNetListXml OnGetCurrentList() => new ExportableBoardInstanceOnNetListXml
         {
-            Instances = CurrentEditingInstance.BoardsData.Select((x) => XmlUtils.DefaultXmlDeserialize<BoardInstanceOnNetXml>(XmlUtils.DefaultXmlSerialize(x))).ToArray(),
+            Instances = CurrentEditingInstance.BoardsData.Select((x) => XmlUtils.DefaultXmlDeserialize<WriteOnNetXml>(XmlUtils.DefaultXmlSerialize(x))).ToArray(),
             Layouts = CurrentEditingInstance.GetLocalLayouts()
         };
 
@@ -213,7 +213,6 @@ namespace WriteEverywhere.UI
             CurrentEditingInstance.BoardsData = CurrentEditingInstance.BoardsData.Where((k, i) => i != m_tabsContainer.ListSel).ToArray();
             m_tabsContainer.Reset();
         }
-        private OnNetInstanceCacheContainerXml GetCurrent() => CurrentEditingInstance.BoardsData[m_tabsContainer.ListSel];
 
         private void OnImportSingle(OnNetInstanceCacheContainerXml data)
         {

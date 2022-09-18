@@ -17,13 +17,13 @@ namespace WriteEverywhere.Data
     public class WTSOnNetData : DataExtensionBase<WTSOnNetData>
     {
         [XmlIgnore]
-        public OnNetGroupDescriptorXml[] m_boardsContainers = new OnNetGroupDescriptorXml[NetManager.MAX_SEGMENT_COUNT];
+        public WriteOnNetGroupXml[] m_boardsContainers = new WriteOnNetGroupXml[NetManager.MAX_SEGMENT_COUNT];
         [XmlElement("BoardContainers")]
-        public SimpleNonSequentialList<OnNetGroupDescriptorXml> BoardContainersExport
+        public SimpleNonSequentialList<WriteOnNetGroupXml> BoardContainersExport
         {
             get
             {
-                var res = new SimpleNonSequentialList<OnNetGroupDescriptorXml>();
+                var res = new SimpleNonSequentialList<WriteOnNetGroupXml>();
                 for (int i = 0; i < m_boardsContainers.Length; i++)
                 {
                     if (m_boardsContainers[i] != null && m_boardsContainers[i].HasAnyBoard())
@@ -51,7 +51,7 @@ namespace WriteEverywhere.Data
         public override void LoadDefaults(ISerializableData serializableData)
         {
             base.LoadDefaults(serializableData);
-            m_boardsContainers = new OnNetGroupDescriptorXml[NetManager.MAX_SEGMENT_COUNT];
+            m_boardsContainers = new WriteOnNetGroupXml[NetManager.MAX_SEGMENT_COUNT];
         }
 
         [XmlAttribute("defaultFont")]
@@ -75,7 +75,7 @@ namespace WriteEverywhere.Data
                 var list = clearCacheQueue.ToList();
                 foreach (var segmentId in list)
                 {
-                    if (BoardContainersExport.TryGetValue(segmentId, out OnNetGroupDescriptorXml descriptorXml))
+                    if (BoardContainersExport.TryGetValue(segmentId, out WriteOnNetGroupXml descriptorXml))
                     {
                         foreach (var board in descriptorXml.BoardsData)
                         {

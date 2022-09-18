@@ -33,6 +33,10 @@ namespace WriteEverywhere.UI
         private const string f_SegmentRotationOffset = f_base + "SegmentRotationOffset";
         private const string f_SegmentScaleOffset = f_base + "SegmentScaleonOffset";
 
+
+        private static readonly PivotPosition[] pivotOptionsValues = Enum.GetValues(typeof(PivotPosition)).Cast<PivotPosition>().ToArray();
+        private static readonly string[] pivotOptions = pivotOptionsValues.Select(x => x.GetLocalizedName()).ToArray();
+
         private enum State
         {
             Normal,
@@ -49,7 +53,7 @@ namespace WriteEverywhere.UI
         private readonly Action<OnNetInstanceCacheContainerXml> m_onImportFromLib;
         private readonly Action m_onDelete;
         private readonly GUIFilterItemsScreen<State> m_layoutFilter;
-        private readonly GUIXmlLib<WTSLibOnNetPropLayout, BoardInstanceOnNetXml, OnNetInstanceCacheContainerXml> xmlLibItem = new GUIXmlLib<WTSLibOnNetPropLayout, BoardInstanceOnNetXml, OnNetInstanceCacheContainerXml>()
+        private readonly GUIXmlLib<WTSLibOnNetPropLayout, WriteOnNetXml, OnNetInstanceCacheContainerXml> xmlLibItem = new GUIXmlLib<WTSLibOnNetPropLayout, WriteOnNetXml, OnNetInstanceCacheContainerXml>()
         {
             DeleteQuestionI18n = Str.WTS_PROPEDIT_CONFIGDELETE_MESSAGE,
             ImportI18n = Str.WTS_SEGMENT_IMPORTDATA,
@@ -85,13 +89,18 @@ namespace WriteEverywhere.UI
         }
 
         public Texture TabIcon { get; } = GUIKwyttoCommons.GetByNameFromDefaultAtlas("K45_Settings");
+        public static int LockSelectionInstanceNum { get => lockSelectionInstanceNum; private set => lockSelectionInstanceNum = value; }
 
-        public WTSOnNetBasicTab(Action<OnNetInstanceCacheContainerXml> onImportFromLib, Action onDelete)
+        private GUIRootWindowBase baseContainer;
+        private static int lockSelectionInstanceNum;
+
+        public WTSOnNetBasicTab(Action<OnNetInstanceCacheContainerXml> onImportFromLib, Action onDelete, GUIRootWindowBase baseContainer)
         {
             m_onImportFromLib = onImportFromLib;
             m_onDelete = onDelete;
 
             m_layoutFilter = new GUIFilterItemsScreen<State>(Str.WTS_BUILDINGEDITOR_MODELLAYOUTSELECT, ModInstance.Controller, OnFilterLayouts, OnModelSet, GoTo, State.Normal, State.GetLayout, otherFilters: DrawExtraFilter);
+            this.baseContainer = baseContainer;
         }
 
         #region Layout Selection
@@ -214,9 +223,11 @@ namespace WriteEverywhere.UI
                     GUILayout.Label(Str.WTS_ONNETEDITOR_SEGMENTPOSITION_COUNT);
                     item.SegmentPositionRepeatCount = (ushort)GUIIntField.IntField(f_SegmentRepeatCount, item.SegmentPositionRepeatCount, 1, ushort.MaxValue);
                 };
+                GUIKwyttoCommons.AddIntField(areaRect.x, Str.we_roadEditor_lockCameraAtInstance, ref lockSelectionInstanceNum, true, 0, item.SegmentPositionRepeatCount - 1);
             }
             else
             {
+                lockSelectionInstanceNum = 0;
                 using (new GUILayout.HorizontalScope())
                 {
                     GUILayout.Label(Str.WTS_ONNETEDITOR_SEGMENTPOSITION);
@@ -229,10 +240,8 @@ namespace WriteEverywhere.UI
             GUILayout.Space(12);
 
 
-            using (new GUILayout.HorizontalScope())
-            {
-                item.InvertSign = GUILayout.Toggle(item.InvertSign, Str.WTS_INVERT_SIGN_SIDE);
-            };
+            GUIKwyttoCommons.AddComboBox(areaRect.x, Str.we_roadEditor_pivotPosition, item.PivotPosition, pivotOptions, pivotOptionsValues, baseContainer, (x) => item.PivotPosition = x);
+
 
             using (new GUILayout.HorizontalScope())
             {
@@ -242,7 +251,7 @@ namespace WriteEverywhere.UI
             GUIKwyttoCommons.AddVector3Field(areaRect.x, item.PropPosition, Str.WTS_ONNETEDITOR_POSITIONOFFSET, f_SegmentPositionOffset);
             GUIKwyttoCommons.AddVector3Field(areaRect.x, item.PropRotation, Str.WTS_ONNETEDITOR_ROTATION, f_SegmentRotationOffset);
             GUIKwyttoCommons.AddVector3Field(areaRect.x, item.Scale, Str.WTS_ONNETEDITOR_SCALE, f_SegmentScaleOffset);
-
+            GUILayout.FlexibleSpace();
             xmlLibItem.Draw(RedButton, m_onDelete, () => m_lastItem, xmlLibItem.FooterDraw);
         }
 

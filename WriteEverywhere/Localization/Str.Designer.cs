@@ -70,6 +70,96 @@ namespace Klyte.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Center (looking front).
+        /// </summary>
+        internal static string we_PivotPosition__Center {
+            get {
+                return ResourceManager.GetString("we_PivotPosition__Center", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Center (looking behind).
+        /// </summary>
+        internal static string we_PivotPosition__CenterInvert {
+            get {
+                return ResourceManager.GetString("we_PivotPosition__CenterInvert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Center (looking left).
+        /// </summary>
+        internal static string we_PivotPosition__CenterLookingLeft {
+            get {
+                return ResourceManager.GetString("we_PivotPosition__CenterLookingLeft", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Center (looking right).
+        /// </summary>
+        internal static string we_PivotPosition__CenterLookingRight {
+            get {
+                return ResourceManager.GetString("we_PivotPosition__CenterLookingRight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Left side.
+        /// </summary>
+        internal static string we_PivotPosition__Left {
+            get {
+                return ResourceManager.GetString("we_PivotPosition__Left", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Left side (inverse traffic).
+        /// </summary>
+        internal static string we_PivotPosition__LeftInvert {
+            get {
+                return ResourceManager.GetString("we_PivotPosition__LeftInvert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Right side.
+        /// </summary>
+        internal static string we_PivotPosition__Right {
+            get {
+                return ResourceManager.GetString("we_PivotPosition__Right", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Right side (inverse traffic).
+        /// </summary>
+        internal static string we_PivotPosition__RightInvert {
+            get {
+                return ResourceManager.GetString("we_PivotPosition__RightInvert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Lock camera at instance # (starting at 0).
+        /// </summary>
+        internal static string we_roadEditor_lockCameraAtInstance {
+            get {
+                return ResourceManager.GetString("we_roadEditor_lockCameraAtInstance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Pivot Position.
+        /// </summary>
+        internal static string we_roadEditor_pivotPosition {
+            get {
+                return ResourceManager.GetString("we_roadEditor_pivotPosition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Highway shield.
         /// </summary>
         internal static string WTS_BOARD_TEXT_TYPE_DESC__HwShield {

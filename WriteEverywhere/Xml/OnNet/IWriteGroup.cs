@@ -1,10 +1,10 @@
 ﻿namespace WriteEverywhere.Xml
 {
-    public interface IBoardBunchContainer
+    public interface IWriteGroup
     {
         bool HasAnyBoard();
     }
-    public class BasicBoardBunchContainer : IBoardBunchContainer
+    public class WriteGroupBase : IWriteGroup
     {
         public bool HasAnyBoard() => false;
     }

@@ -13,8 +13,7 @@
     Example:
     
     ... ado.net/XML headers & schema ...
-    <resheader name="resmimetype">text/microsoft-resx</resheader>
-    <resheader name="version">2.0</resheader>
+    <resheader name="resmimetype">text/microsoft-resx</resheader><resheader name="version">2.0</resheader>
     <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
     <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
     <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
@@ -388,5 +387,16 @@
   <data name="WTS_ONNETEDITOR_ROTATION" xml:space="preserve">    <value>Rotation</value>  </data>
   <data name="WTS_ONNETEDITOR_SCALE" xml:space="preserve">    <value>Scale</value>  </data>
   <data name="WTS_PROPEDIT_CONFIGDELETE_MESSAGE" xml:space="preserve">    <value>Are you sure that you want to delete "{0}"?</value>  </data>
+  <data name="we_PivotPosition__Left" xml:space="preserve">    <value>Left side</value>  </data>
+  <data name="we_PivotPosition__Right" xml:space="preserve">    <value>Right side</value>  </data>
+  <data name="we_PivotPosition__Center" xml:space="preserve">    <value>Center (looking front)</value>  </data>
+  <data name="we_PivotPosition__LeftInvert" xml:space="preserve">    <value>Left side (inverse traffic)</value>  </data>
+  <data name="we_PivotPosition__RightInvert" xml:space="preserve">    <value>Right side (inverse traffic)</value>  </data>
+  <data name="we_PivotPosition__CenterInvert" xml:space="preserve">    <value>Center (looking behind)</value>  </data>
+  <data name="we_PivotPosition__CenterLookingLeft" xml:space="preserve">    <value>Center (looking left)</value>  </data>
+  <data name="we_PivotPosition__CenterLookingRight" xml:space="preserve">    <value>Center (looking right)</value>  </data>
+  <data name="we_roadEditor_pivotPosition" xml:space="preserve">    <value>Pivot Position</value>  </data>
+  <data name="we_roadEditor_lockCameraAtInstance" xml:space="preserve">    <value>Lock camera at instance # (starting at 0)</value>  </data>
+
 
 </root>

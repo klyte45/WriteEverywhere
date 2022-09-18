@@ -1,23 +1,24 @@
 ﻿using Kwytto.Interfaces;
-using WriteEverywhere.Data;
-using WriteEverywhere.Rendering;
 using System.Xml;
 using System.Xml.Serialization;
+using WriteEverywhere.Data;
+using WriteEverywhere.Rendering;
 
 namespace WriteEverywhere.Xml
 {
 
+
     [XmlRoot("onNetDescriptor")]
-    public class BoardInstanceOnNetXml : BoardInstanceXml, ILibable
+    public class WriteOnNetXml : BaseWriteOnXml, ILibable
     {
         public const int TEXT_PARAMETERS_COUNT = 10;
 
-        [XmlAttribute("inverted")]
-        public bool InvertSign
+        [XmlAttribute("pivot")]
+        public PivotPosition PivotPosition
         {
-            get => m_invertSign; set
+            get => m_pivotPosition; set
             {
-                m_invertSign = value;
+                m_pivotPosition = value;
                 OnChangeMatrixData();
             }
         }
@@ -90,7 +91,7 @@ namespace WriteEverywhere.Xml
         private float m_segmentPositionEnd = 1f;
         private ushort m_segmentPositionRepeat = 1;
         private bool m_segmentRepeatItem = false;
-        private bool m_invertSign = false;
+        private PivotPosition m_pivotPosition = PivotPosition.Left;
 
         [XmlIgnore]
         public BoardDescriptorGeneralXml Descriptor

@@ -1,13 +1,12 @@
 ﻿extern alias ADR;
-
 using ColossalFramework.Math;
 using Kwytto.Utils;
+using System.Collections.Generic;
+using UnityEngine;
 using WriteEverywhere.Data;
 using WriteEverywhere.Rendering;
 using WriteEverywhere.UI;
 using WriteEverywhere.Xml;
-using System.Collections.Generic;
-using UnityEngine;
 
 namespace WriteEverywhere.Singleton
 {
@@ -28,7 +27,7 @@ namespace WriteEverywhere.Singleton
         public void AfterRenderInstanceImpl(RenderManager.CameraInfo cameraInfo, ushort segmentId, ref NetSegment data)
         {
 
-            ref OnNetGroupDescriptorXml itemGroup = ref Data.m_boardsContainers[segmentId];
+            ref WriteOnNetGroupXml itemGroup = ref Data.m_boardsContainers[segmentId];
             if (itemGroup == null || !itemGroup.HasAnyBoard())
             {
                 return;
@@ -85,13 +84,11 @@ namespace WriteEverywhere.Singleton
 
             data.GetClosestPositionAndDirection(bezierPos, out _, out Vector3 dir);
             float rotation = dir.GetAngleXZ();
-            if (targetDescriptor.InvertSign != segmentInverted)
-            {
-                rotation += 180;
-            }
+            rotation += targetDescriptor.PivotPosition.GetRotationZ() + (segmentInverted ? 180 : 0);
+
 
             Vector3 rotationVectorX = VectorUtils.X_Y(KMathUtils.DegreeToVector2(rotation - 90));
-            cachedPosition = (Vector3Xml)(bezierPos + (rotationVectorX * (data.Info.m_halfWidth + targetDescriptor.PropPosition.X)) + (VectorUtils.X_Y(KMathUtils.DegreeToVector2(rotation)) * targetDescriptor.PropPosition.Z));
+            cachedPosition = (Vector3Xml)(bezierPos + (rotationVectorX * ((data.Info.m_halfWidth * targetDescriptor.PivotPosition.GetSideOffsetPositionMultiplier()) + targetDescriptor.PropPosition.X)) + (VectorUtils.X_Y(KMathUtils.DegreeToVector2(rotation)) * targetDescriptor.PropPosition.Z));
             cachedPosition.Y += targetDescriptor.PropPosition.Y;
             cachedRotation = (Vector3Xml)(targetDescriptor.PropRotation + new Vector3(0, rotation + 90));
 
@@ -101,7 +98,7 @@ namespace WriteEverywhere.Singleton
 
         internal void CalculateGroupData(ushort segmentID, int layer, ref int vertexCount, ref int triangleCount, ref int objectCount, ref RenderGroup.VertexArrays vertexArrays)
         {
-            ref OnNetGroupDescriptorXml itemGroup = ref Data.m_boardsContainers[segmentID];
+            ref WriteOnNetGroupXml itemGroup = ref Data.m_boardsContainers[segmentID];
             if (itemGroup == null || !itemGroup.HasAnyBoard())
             {
                 return;
@@ -146,7 +143,7 @@ namespace WriteEverywhere.Singleton
 
         internal void PopulateGroupData(ushort segmentID, int layer, ref int vertexIndex, ref int triangleIndex, Vector3 groupPosition, RenderGroup.MeshData data, ref Vector3 min, ref Vector3 max, ref float maxRenderDistance, ref float maxInstanceDistance)
         {
-            ref OnNetGroupDescriptorXml itemGroup = ref Data.m_boardsContainers[segmentID];
+            ref WriteOnNetGroupXml itemGroup = ref Data.m_boardsContainers[segmentID];
             if (itemGroup == null || !itemGroup.HasAnyBoard())
             {
                 return;
@@ -223,7 +220,7 @@ namespace WriteEverywhere.Singleton
                     }
                 }
 
-                if ((i == 0) && WTSOnNetLiteUI.LockSelection && WTSOnNetLiteUI.Instance.Visible && (WTSOnNetLiteUI.Instance.CurrentSegmentId == segmentId) && WTSOnNetLiteUI.Instance.ListSel == boardIdx && !ModInstance.Controller.RoadSegmentToolInstance.enabled)
+                if (WTSOnNetLiteUI.LockSelection && i == WTSOnNetLiteUI.LockSelectionInstanceNum && WTSOnNetLiteUI.Instance.Visible && (WTSOnNetLiteUI.Instance.CurrentSegmentId == segmentId) && WTSOnNetLiteUI.Instance.ListSel == boardIdx && !ModInstance.Controller.RoadSegmentToolInstance.enabled)
                 {
                     ToolsModifierControl.cameraController.m_targetPosition = position;
                 }
