@@ -49,7 +49,7 @@
     </Reference>
     <Reference Include="UnityEngine">
       <HintPath>..\..\_managed\UnityEngine.dll</HintPath>
-      <Private>False</Private>
+      <Private>False</Private> 
     </Reference>
     <Reference Include="ColossalManaged">
       <HintPath>..\..\_managed\ColossalManaged.dll</HintPath>
@@ -61,7 +61,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" /> 
+    <Reference Include="System.Xml.Linq" />  
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />

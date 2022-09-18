@@ -1,8 +1,9 @@
-﻿//using WriteEverywhere.Singleton;
-using WriteEverywhere.Utils;
+﻿extern alias TLM;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using WriteEverywhere.Singleton;
 
 namespace WriteEverywhere.Xml
 {
@@ -68,16 +69,16 @@ namespace WriteEverywhere.Xml
             }
             switch (var)
             {
-                //case VariableVehicleSubType.NextStopLine:
-                    //ref Vehicle[] buffer7 = ref VehicleManager.instance.m_vehicles.m_buffer;
-                    //ref Vehicle targetVehicle7 = ref buffer7[buffer7[vehicleId].GetFirstVehicle(vehicleId)];
-                    //var regLine2 = ModInstance.Controller.ConnectorTLM.GetVehicleLine(vehicleId);
-                    //return ModInstance.Controller.ConnectorTLM.GetStopName(targetVehicle7.m_targetBuilding, regLine2);
-                //case VariableVehicleSubType.PrevStopLine:
-                //    ref Vehicle[] buffer5 = ref VehicleManager.instance.m_vehicles.m_buffer;
-                //    ref Vehicle targetVehicle5 = ref buffer5[buffer5[vehicleId].GetFirstVehicle(vehicleId)];
-                //    var regLine3 = ModInstance.Controller.ConnectorTLM.GetVehicleLine(vehicleId);
-                //    return ModInstance.Controller.ConnectorTLM.GetStopName(TransportLine.GetPrevStop(targetVehicle5.m_targetBuilding), regLine3);
+                case VariableVehicleSubType.NextStopLine:
+                    ref Vehicle[] buffer7 = ref VehicleManager.instance.m_vehicles.m_buffer;
+                    ref Vehicle targetVehicle7 = ref buffer7[buffer7[vehicleId].GetFirstVehicle(vehicleId)];
+                    var regLine2 = ModInstance.Controller.ConnectorTLM.GetVehicleLine(vehicleId);
+                    return ModInstance.Controller.ConnectorTLM.GetStopName(targetVehicle7.m_targetBuilding, regLine2);
+                case VariableVehicleSubType.PrevStopLine:
+                    ref Vehicle[] buffer5 = ref VehicleManager.instance.m_vehicles.m_buffer;
+                    ref Vehicle targetVehicle5 = ref buffer5[buffer5[vehicleId].GetFirstVehicle(vehicleId)];
+                    var regLine3 = ModInstance.Controller.ConnectorTLM.GetVehicleLine(vehicleId);
+                    return ModInstance.Controller.ConnectorTLM.GetStopName(TransportLine.GetPrevStop(targetVehicle5.m_targetBuilding), regLine3);
                 //case VariableVehicleSubType.LastStopLine:
                 //    ref Vehicle[] buffer2 = ref VehicleManager.instance.m_vehicles.m_buffer;
                 //    ref Vehicle targetVehicle = ref buffer2[buffer2[vehicleId].GetFirstVehicle(vehicleId)];
@@ -100,27 +101,27 @@ namespace WriteEverywhere.Xml
                 //                : ModInstance.Controller.ConnectorTLM.GetStopName(targetVehicle.m_targetBuilding, regLine4)
                 //            );
                 //        return result;
-                //    }
-                //case VariableVehicleSubType.OwnNumber:
-                //    return WTSCacheSingleton.instance.GetVehicle(vehicleId).Identifier;
-                //case VariableVehicleSubType.LineIdentifier:
-                //    ref Vehicle[] buffer = ref VehicleManager.instance.m_vehicles.m_buffer;
-                //    var targetVehicleId = buffer[vehicleId].GetFirstVehicle(vehicleId);
-                //    var transportLine = ModInstance.Controller.ConnectorTLM.GetVehicleLine(targetVehicleId);
-                //    if (!transportLine.ZeroLine)
-                //    {
-                //        return WTSCacheSingleton.instance.GetATransportLine(transportLine).Identifier;
-                //    }
-                //    else
-                //    {
-                //        ref Vehicle vehicle = ref buffer[targetVehicleId];
-                //        return vehicle.m_targetBuilding == 0 || (vehicle.m_flags & Vehicle.Flags.GoingBack) != 0
-                //            ? vehicle.m_sourceBuilding.ToString("D5")
-                //            : $"R{vehicle.m_targetBuilding.ToString("X4")}";
-                //    }
-                //case VariableVehicleSubType.LineFullName:
-                //    var regLine = ModInstance.Controller.ConnectorTLM.GetVehicleLine(vehicleId);
-                //    return regLine.regional ? null : varWrapper.TryFormat(WTSCacheSingleton.instance.GetATransportLine(regLine).Name);
+                //}
+                case VariableVehicleSubType.OwnNumber:
+                    return WTSCacheSingleton.instance.GetVehicle(vehicleId).Identifier;
+                case VariableVehicleSubType.LineIdentifier:
+                    ref Vehicle[] buffer = ref VehicleManager.instance.m_vehicles.m_buffer;
+                    var targetVehicleId = buffer[vehicleId].GetFirstVehicle(vehicleId);
+                    var transportLine = ModInstance.Controller.ConnectorTLM.GetVehicleLine(targetVehicleId);
+                    if (!transportLine.ZeroLine)
+                    {
+                        return WTSCacheSingleton.instance.GetATransportLine(transportLine).Identifier;
+                    }
+                    else
+                    {
+                        ref Vehicle vehicle = ref buffer[targetVehicleId];
+                        return vehicle.m_targetBuilding == 0 || (vehicle.m_flags & Vehicle.Flags.GoingBack) != 0
+                            ? vehicle.m_sourceBuilding.ToString("D5")
+                            : $"R{vehicle.m_targetBuilding.ToString("X4")}";
+                    }
+                case VariableVehicleSubType.LineFullName:
+                    var regLine = ModInstance.Controller.ConnectorTLM.GetVehicleLine(vehicleId);
+                    return regLine.regional ? null : varWrapper.TryFormat(WTSCacheSingleton.instance.GetATransportLine(regLine).Name);
                 default:
                     return null;
             }

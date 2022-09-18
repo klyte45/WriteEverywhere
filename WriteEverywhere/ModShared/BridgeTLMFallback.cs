@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TLM::Bridge_WE2TLM;
 using UnityEngine;
+using WriteEverywhere.Singleton;
 using static ItemClass;
 
 namespace WriteEverywhere.ModShared
@@ -90,44 +91,38 @@ namespace WriteEverywhere.ModShared
 
         private string GetStopName(ushort stopId, WTSLine lineObj, out ushort buildingID, out ushort parkID, out ushort districtID)
         {
-            buildingID = 0;
-            parkID = 0;
-            districtID = 0;
-            return "";
-            //if (stopId == 0)
-            //{
-            //    buildingID = 0;
-            //    parkID = 0;
-            //    districtID = 0;
-            //    return "";
-            //}
+            if (stopId == 0)
+            {
+                buildingID = 0;
+                parkID = 0;
+                districtID = 0;
+                return "";
+            }
 
-            //buildingID = WTSBuildingDataCaches.GetStopBuilding(stopId, lineObj);
+            buildingID = 0;// WTSBuildingDataCaches.GetStopBuilding(stopId, lineObj);
 
-            //if (buildingID > 0)
-            //{
-            //    string name = BuildingUtils.GetBuildingName(buildingID, out _, out _);
-            //    parkID = 0;
-            //    districtID = 0;
-            //    return name;
-            //}
-            //NetManager nm = Singleton<NetManager>.instance;
-            //NetNode nn = nm.m_nodes.m_buffer[stopId];
-            //Vector3 location = nn.m_position;
-            //parkID = DistrictManager.instance.GetPark(location);
-            //if (parkID > 0)
-            //{
-            //    districtID = 0;
-            //    return DistrictManager.instance.GetParkName(parkID);
-            //}
-            //districtID = DistrictManager.instance.GetDistrict(location);
-            //if (districtID > 0)
-            //{
-            //    return DistrictManager.instance.GetDistrictName(districtID);
-            //}
-            //return ModInstance.Controller.ConnectorADR.GetAddressStreetAndNumber(location, location, out int number, out string streetName) && !string.IsNullOrEmpty(streetName)
-            //    ? streetName + ", " + number
-            //    : "????";
+            if (buildingID > 0)
+            {
+                string name = BuildingUtils.GetBuildingName(buildingID, out _, out _);
+                parkID = 0;
+                districtID = 0;
+                return name;
+            }
+            NetManager nm = Singleton<NetManager>.instance;
+            NetNode nn = nm.m_nodes.m_buffer[stopId];
+            Vector3 location = nn.m_position;
+            parkID = DistrictManager.instance.GetPark(location);
+            if (parkID > 0)
+            {
+                districtID = 0;
+                return DistrictManager.instance.GetParkName(parkID);
+            }
+            districtID = DistrictManager.instance.GetDistrict(location);
+            return districtID > 0
+                ? DistrictManager.instance.GetDistrictName(districtID)
+                : ModInstance.Controller.ConnectorADR.GetAddressStreetAndNumber(location, location, out int number, out string streetName) && !string.IsNullOrEmpty(streetName)
+                    ? streetName + ", " + number
+                    : "????";
         }
 
 
@@ -288,8 +283,8 @@ namespace WriteEverywhere.ModShared
 
         public override void OnAutoNameParameterChanged()
         {
-            //ModInstance.Controller.BuildingPropsSingleton.ResetLines();
-            //WTSCacheSingleton.ClearCacheLineName();
+            //  ModInstance.Controller.BuildingPropsSingleton.ResetLines();
+            WTSCacheSingleton.ClearCacheLineName();
         }
 
         private readonly TransferManager.TransferReason[] m_defaultAllowedVehicleTypes = {

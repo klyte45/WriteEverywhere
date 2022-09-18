@@ -688,7 +688,7 @@ namespace Bridge_WE2ADR
             }
         }
 
-        internal static int GetNumberAt(float targetLength, ushort targetSegmentId, MileageStartSource startSource, int metersOffset, out bool startAsEnd, Vector3 cityCenter = default)
+        public static int GetNumberAt(float targetLength, ushort targetSegmentId, MileageStartSource startSource, int metersOffset, out bool startAsEnd, Vector3 cityCenter = default)
         {
             //doLog($"targets = S:{targetSegmentId} P:{targetPosition} D:{targetDirection.magnitude} L:{targetLength}");
 

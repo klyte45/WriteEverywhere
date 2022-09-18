@@ -1,7 +1,4 @@
-﻿//using SpriteFontPlus;
-//using SpriteFontPlus.Utility;
-//using System.Collections.Generic;
-using System.Xml.Serialization;
+﻿using System.Xml.Serialization;
 
 namespace WriteEverywhere.Xml
 {

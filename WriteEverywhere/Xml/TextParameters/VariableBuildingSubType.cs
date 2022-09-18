@@ -1,6 +1,4 @@
-﻿//using WriteEverywhere.Singleton;
-using WriteEverywhere.Utils;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 

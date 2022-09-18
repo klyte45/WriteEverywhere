@@ -1,7 +1,7 @@
-﻿//using SpriteFontPlus;
-//using SpriteFontPlus.Utility;
+﻿using SpriteFontPlus;
+using SpriteFontPlus.Utility;
 using System;
-//using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using WriteEverywhere.Rendering;
 
@@ -118,45 +118,45 @@ namespace WriteEverywhere.Xml
 
 
 
-        //        public BasicRenderInformation GetTargetText(BoardInstanceXml instance, BoardTextDescriptorGeneralXml textDescriptor, DynamicSpriteFont targetFont, ushort refId, int secRefId, int tercRefId, out IEnumerable<BasicRenderInformation> multipleOutput)
-        //        {
-        //            string targetStr = m_originalCommand;
-        //            switch (instance)
-        //            {
-        //                case OnNetInstanceCacheContainerXml cc:
-        //                    targetStr = GetTargetTextForNet(cc, refId, textDescriptor, out multipleOutput);
-        //                    break;
-        //                case BoardInstanceBuildingXml bd:
-        //                    targetStr = GetTargetTextForBuilding(bd, refId, textDescriptor, out multipleOutput);
-        //                    break;
-        //                case LayoutDescriptorVehicleXml ve:
-        //                    targetStr = GetTargetTextForVehicle(refId, textDescriptor, out multipleOutput);
-        //                    break;
-        //                case BoardPreviewInstanceXml bp:
-        //                    switch (instance.RenderingClass)
-        //                    {
-        //                        case TextRenderingClass.None:
-        //                            break;
-        //                        case TextRenderingClass.RoadNodes:
-        //                            break;
-        //                        case TextRenderingClass.Buildings:
-        //                            targetStr = GetTargetTextForBuilding(bp, refId, textDescriptor, out multipleOutput);
-        //                            break;
-        //                        case TextRenderingClass.PlaceOnNet:
-        //                            targetStr = GetTargetTextForNet(bp, refId, textDescriptor, out multipleOutput);
-        //                            break;
-        //                        case TextRenderingClass.Vehicle:
-        //                            targetStr = GetTargetTextForVehicle(refId, textDescriptor, out multipleOutput);
-        //                            break;
-        //                    }
-        //                    multipleOutput = null;
-        //                    break;
-        //                default:
-        //                    multipleOutput = null;
-        //                    break;
-        //            }
-        //            return multipleOutput is null ? targetFont.DrawString(ModInstance.Controller, targetStr, default, FontServer.instance.ScaleEffective) : null;
-        //        }
+        public BasicRenderInformation GetTargetText(BoardInstanceXml instance, BoardTextDescriptorGeneralXml textDescriptor, DynamicSpriteFont targetFont, ushort refId, int secRefId, int tercRefId, out IEnumerable<BasicRenderInformation> multipleOutput)
+        {
+            string targetStr = m_originalCommand;
+            switch (instance)
+            {
+                case OnNetInstanceCacheContainerXml cc:
+                    targetStr = GetTargetTextForNet(cc, refId, textDescriptor, out multipleOutput);
+                    break;
+                //case BoardInstanceBuildingXml bd:
+                //    targetStr = GetTargetTextForBuilding(bd, refId, textDescriptor, out multipleOutput);
+                //    break;
+                //case LayoutDescriptorVehicleXml ve:
+                //    targetStr = GetTargetTextForVehicle(refId, textDescriptor, out multipleOutput);
+                //    break;
+                //case BoardPreviewInstanceXml bp:
+                //    switch (instance.RenderingClass)
+                //    {
+                //        case TextRenderingClass.None:
+                //            break;
+                //        case TextRenderingClass.RoadNodes:
+                //            break;
+                //        case TextRenderingClass.Buildings:
+                //            targetStr = GetTargetTextForBuilding(bp, refId, textDescriptor, out multipleOutput);
+                //            break;
+                //        case TextRenderingClass.PlaceOnNet:
+                //            targetStr = GetTargetTextForNet(bp, refId, textDescriptor, out multipleOutput);
+                //            break;
+                //        case TextRenderingClass.Vehicle:
+                //            targetStr = GetTargetTextForVehicle(refId, textDescriptor, out multipleOutput);
+                //            break;
+                //    }
+                //    multipleOutput = null;
+                //    break;
+                default:
+                    multipleOutput = null;
+                    break;
+            }
+            return multipleOutput is null ? targetFont.DrawString(ModInstance.Controller, targetStr, default, FontServer.instance.ScaleEffective) : null;
+        }
 
 
 
@@ -204,57 +204,57 @@ namespace WriteEverywhere.Xml
         //            return m_originalCommand;
         //        }
 
-        //        public string GetTargetTextForNet(BoardInstanceXml descriptor, ushort segmentId, BoardTextDescriptorGeneralXml textDescriptor, out IEnumerable<BasicRenderInformation> multipleOutput)
-        //        {
-        //            multipleOutput = null;
-        //            var propDescriptor = descriptor as OnNetInstanceCacheContainerXml;
-        //            switch (type)
-        //            {
-        //                case VariableType.SegmentTarget:
-        //                    var targId = propDescriptor?.GetTargetSegment(index) ?? 0;
-        //                    return targId == 0 || !(subtype is VariableSegmentTargetSubType targetSubtype) || targetSubtype == VariableSegmentTargetSubType.None
-        //                        ? $"{prefix}{subtype}@targ{index}{suffix}"
-        //                        : $"{prefix}{targetSubtype.GetFormattedString(propDescriptor, targId, this) ?? m_originalCommand}{suffix}";
-        //                case VariableType.CurrentSegment:
-        //                    return segmentId == 0 || !(subtype is VariableSegmentTargetSubType targetSubtype2) || targetSubtype2 == VariableSegmentTargetSubType.None
-        //                        ? $"{prefix}{subtype}@currSeg"
-        //                        : $"{prefix}{targetSubtype2.GetFormattedString(propDescriptor, segmentId, this) ?? m_originalCommand}{suffix}";
-        //                case VariableType.CityData:
-        //                    if ((subtype is VariableCitySubType targetCitySubtype))
-        //                    {
-        //                        return $"{prefix}{targetCitySubtype.GetFormattedString(this) ?? m_originalCommand}{suffix}";
-        //                    }
-        //                    break;
-        //                case VariableType.Invalid:
-        //                    return $"<UNSUPPORTED PATH: {m_originalCommand}>";
-        //            }
-        //            return m_originalCommand;
-        //        }
+        public string GetTargetTextForNet(BoardInstanceXml descriptor, ushort segmentId, BoardTextDescriptorGeneralXml textDescriptor, out IEnumerable<BasicRenderInformation> multipleOutput)
+        {
+            multipleOutput = null;
+            var propDescriptor = descriptor as OnNetInstanceCacheContainerXml;
+            switch (type)
+            {
+                case VariableType.SegmentTarget:
+                    var targId = propDescriptor?.GetTargetSegment(index) ?? 0;
+                    return targId == 0 || !(subtype is VariableSegmentTargetSubType targetSubtype) || targetSubtype == VariableSegmentTargetSubType.None
+                        ? $"{prefix}{subtype}@targ{index}{suffix}"
+                        : $"{prefix}{targetSubtype.GetFormattedString(propDescriptor, targId, this) ?? m_originalCommand}{suffix}";
+                case VariableType.CurrentSegment:
+                    return segmentId == 0 || !(subtype is VariableSegmentTargetSubType targetSubtype2) || targetSubtype2 == VariableSegmentTargetSubType.None
+                        ? $"{prefix}{subtype}@currSeg"
+                        : $"{prefix}{targetSubtype2.GetFormattedString(propDescriptor, segmentId, this) ?? m_originalCommand}{suffix}";
+                case VariableType.CityData:
+                    if ((subtype is VariableCitySubType targetCitySubtype))
+                    {
+                        return $"{prefix}{targetCitySubtype.GetFormattedString(this) ?? m_originalCommand}{suffix}";
+                    }
+                    break;
+                case VariableType.Invalid:
+                    return $"<UNSUPPORTED PATH: {m_originalCommand}>";
+            }
+            return m_originalCommand;
+        }
 
-        //        internal string TryFormat(float value, float multiplier)
-        //        {
-        //            try
-        //            {
-        //                return (value * multiplier).ToString(numberFormat);
-        //            }
-        //            catch
-        //            {
-        //                numberFormat = "0";
-        //                return (value * multiplier).ToString(numberFormat);
-        //            }
-        //        }
-        //        internal string TryFormat(long value)
-        //        {
-        //            try
-        //            {
-        //                return value.ToString(numberFormat);
-        //            }
-        //            catch
-        //            {
-        //                numberFormat = "0";
-        //                return value.ToString(numberFormat);
-        //            }
-        //        }
-        //        internal string TryFormat(FormatableString value) => value.GetFormatted(stringFormat);
+        internal string TryFormat(float value, float multiplier)
+        {
+            try
+            {
+                return (value * multiplier).ToString(numberFormat);
+            }
+            catch
+            {
+                numberFormat = "0";
+                return (value * multiplier).ToString(numberFormat);
+            }
+        }
+        internal string TryFormat(long value)
+        {
+            try
+            {
+                return value.ToString(numberFormat);
+            }
+            catch
+            {
+                numberFormat = "0";
+                return value.ToString(numberFormat);
+            }
+        }
+        internal string TryFormat(FormatableString value) => value.GetFormatted(stringFormat);
     }
 }

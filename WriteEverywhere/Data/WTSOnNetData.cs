@@ -1,7 +1,7 @@
 ﻿using ICities;
 using Kwytto.Data;
 using Kwytto.Utils;
-//using WriteEverywhere.Singleton;
+using WriteEverywhere.Singleton;
 using WriteEverywhere.Xml;
 using System.Collections;
 using System.Collections.Generic;
@@ -83,8 +83,8 @@ namespace WriteEverywhere.Data
                             board.m_cachedRotations = null;
                         }
                     }
-                    //WTSCacheSingleton.ClearCacheSegmentSize(segmentId);
-                    //WTSCacheSingleton.ClearCacheSegmentNameParam(segmentId);
+                    WTSCacheSingleton.ClearCacheSegmentSize(segmentId);
+                    WTSCacheSingleton.ClearCacheSegmentNameParam(segmentId);
                     clearCacheQueue.Remove(segmentId);
                     yield return 0;
                 }

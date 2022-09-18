@@ -1,12 +1,12 @@
 extern alias TLM;
 
 using ColossalFramework;
-using ColossalFramework.Globalization;
 using ColossalFramework.Threading;
 using ColossalFramework.UI;
 using Klyte.Localization;
 using Kwytto.LiteUI;
 using Kwytto.Localization;
+using Kwytto.UI;
 using Kwytto.Utils;
 using SpriteFontPlus;
 using SpriteFontPlus.Utility;
@@ -18,6 +18,8 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using TLM::Bridge_WE2TLM;
 using UnityEngine;
+using WriteEverywhere.Data;
+using WriteEverywhere.Rendering;
 using WriteEverywhere.Utils;
 using static ColossalFramework.UI.UITextureAtlas;
 
@@ -314,15 +316,15 @@ namespace WriteEverywhere.Sprites
             m_transportLineMaterial = null;
             TransportIsDirty = true;
         }
-        //public LineIconSpriteNames LineIconTest
-        //{
-        //    get => m_lineIconTest; set
-        //    {
-        //        m_lineIconTest = value;
-        //        PurgeLine(new WTSLine(0, false));
-        //    }
-        //}
-        //private LineIconSpriteNames m_lineIconTest = LineIconSpriteNames.K45_HexagonIcon;
+        public CommonsSpriteNames LineIconTest
+        {
+            get => m_lineIconTest; set
+            {
+                m_lineIconTest = value;
+                PurgeLine(new WTSLine(0, false));
+            }
+        }
+        private CommonsSpriteNames m_lineIconTest = CommonsSpriteNames.K45_HexagonIcon;
         internal List<BasicRenderInformation> DrawLineFormats(IEnumerable<WTSLine> ids)
         {
             var bris = new List<BasicRenderInformation>();
@@ -332,9 +334,7 @@ namespace WriteEverywhere.Sprites
             }
 
             foreach (var id in ids.OrderBy(x =>
-            // x.lineId < 0 ? 
-            x.lineId.ToString("D6")
-            //: ModInstance.Controller.ConnectorTLM.GetLineSortString(x)
+             x.lineId < 0 ? x.lineId.ToString("D6") : ModInstance.Controller.ConnectorTLM.GetLineSortString(x)
             ))
             {
                 if ((id.regional ? RegionalTransportLineCache : TransportLineCache).TryGetValue(id.lineId, out BasicRenderInformation bri))
@@ -363,17 +363,16 @@ namespace WriteEverywhere.Sprites
                 {
                     yield return null;
                 }
-                Tuple<string, Color, string> lineParams = null;
-                //line.ZeroLine ? Tuple.New(KlyteResourceLoader.GetDefaultSpriteNameFor(LineIconTest), (Color)ColorExtensions.FromRGB(0x5e35b1), "K")
-                //: line.lineId < 0 ? Tuple.New(KlyteResourceLoader.GetDefaultSpriteNameFor((LineIconSpriteNames)((-line.lineId % (Enum.GetValues(typeof(LineIconSpriteNames)).Length - 1)) + 1)), WTSDynamicTextRenderingRules.m_spectreSteps[(-line.lineId) % WTSDynamicTextRenderingRules.m_spectreSteps.Length], $"{-line.lineId}")
-                //: ModInstance.Controller.ConnectorTLM.GetLineLogoParameters(line);
-                if (lineParams == null || lineParams.Second == Color.clear)
+                LineLogoParameter lineParams = line.ZeroLine ? new LineLogoParameter(LineIconTest.ToString(), (Color)ColorExtensions.FromRGB(0x5e35b1), "K")
+                : line.lineId < 0 ? new LineLogoParameter(((CommonsSpriteNames)((-line.lineId % (Enum.GetValues(typeof(CommonsSpriteNames)).Length - 1)) + 1)).ToString(), WTSDynamicTextRenderingRules.m_spectreSteps[(-line.lineId) % WTSDynamicTextRenderingRules.m_spectreSteps.Length], $"{-line.lineId}")
+                : ModInstance.Controller.ConnectorTLM.GetLineLogoParameters(line);
+                if (lineParams == null || lineParams.color == Color.clear)
                 {
                     yield break;
                 }
                 var drawingCoroutine = CoroutineWithData.From(this, RenderSpriteLine(
-                    //FontServer.instance[WTSEtcData.Instance.FontSettings.PublicTransportLineSymbolFont] ?? 
-                    FontServer.instance[MainController.DEFAULT_FONT_KEY], UIView.GetAView().defaultAtlas, lineParams.First, lineParams.Second, lineParams.Third));
+                    FontServer.instance[WTSEtcData.Instance.FontSettings.PublicTransportLineSymbolFont] ?? 
+                    FontServer.instance[MainController.DEFAULT_FONT_KEY], UIView.GetAView().defaultAtlas, lineParams.fileName, lineParams.color, lineParams.text));
                 yield return drawingCoroutine.Coroutine;
                 while (!CheckTransportLineCoroutineCanContinue())
                 {
@@ -709,13 +708,13 @@ namespace WriteEverywhere.Sprites
 
         public static void UpdateMaterial(UITextureAtlas referenceAtlas, Material material, bool isDirty)
         {
-            //if (isDirty || referenceAtlas.material.GetTexture("_ACIMap") is null)
-            //{
-            //    var aciTex = new Texture2D(referenceAtlas.texture.width, referenceAtlas.texture.height);
-            //    aciTex.SetPixels(referenceAtlas.texture.GetPixels().Select(x => new Color(1 - x.a, 0, 1f, 1)).ToArray());
-            //    aciTex.Apply();
-            //    material.SetTexture("_ACIMap", aciTex);
-            //}
+            if (isDirty || referenceAtlas.material.GetTexture("_ACIMap") is null)
+            {
+                var aciTex = new Texture2D(referenceAtlas.texture.width, referenceAtlas.texture.height);
+                aciTex.SetPixels(referenceAtlas.texture.GetPixels().Select(x => new Color(1 - x.a, 0, 1f, 1)).ToArray());
+                aciTex.Apply();
+                material.SetTexture("_ACIMap", aciTex);
+            }
         }
         #endregion
     }

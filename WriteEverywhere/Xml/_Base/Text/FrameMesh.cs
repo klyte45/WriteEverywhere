@@ -92,8 +92,6 @@ namespace WriteEverywhere.Xml
         public Vector3[] cachedFrameArray;
         [XmlIgnore]
         public Mesh meshOuterContainer;
-        //   [XmlIgnore]
-        //   public Mesh meshInnerContainer;
         [XmlIgnore]
         public Mesh meshGlass;
         [XmlIgnore]

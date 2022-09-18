@@ -95,14 +95,15 @@
     <Compile Include="Xml\**\*.cs" />
     <Compile Include="_StbTrueTypeSharp\**\*.cs" />
     <Compile Include="Rendering\**\*.cs" />
-    <Compile Include="ModShared\**\*\**\*.cs" />
+    <Compile Include="ModShared\**\*.cs" />
     <Compile Include="Font\**\*.cs" />
     <Compile Include="Utils\**\*.cs" />
-    <Compile Include="Tools\**\*.cs" />
+    <Compile Include="Tools\**\*.cs" /> 
+    <Compile Include="Override\**\*.cs" />
     <Compile Include="UI\LiteUI\**\*.cs" />
     <Compile Include="Data\**\*.cs" />
     <Compile Include="SpriteAtlas\**\*.cs" />
-  </ItemGroup>
+  </ItemGroup> 
   <!-- <ItemGroup> --> 
   <!-- <Reference Include="TransportLinesManager">  -->
   <!-- <HintPath>..\..\_appdataMods\TLM\TransportLinesManager.dll</HintPath> -->

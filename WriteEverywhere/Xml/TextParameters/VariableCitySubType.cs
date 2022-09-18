@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using WriteEverywhere.Singleton;
 
 namespace WriteEverywhere.Xml
 {
@@ -52,18 +53,18 @@ namespace WriteEverywhere.Xml
             subtype = var;
             return true;
         }
-        //public static string GetFormattedString(this VariableCitySubType var, TextParameterVariableWrapper varWrapper)
-        //{
-        //    switch (var)
-        //    {
-        //        case VariableCitySubType.CityName:
-        //            return varWrapper.TryFormat(WTSCacheSingleton.instance.GetDistrict(0).Name);
-        //        case VariableCitySubType.CityPopulation:
-        //            return varWrapper.TryFormat(WTSCacheSingleton.instance.GetDistrict(0).Population);
-        //        default:
-        //            return null;
-        //    }
-        //}
+        public static string GetFormattedString(this VariableCitySubType var, TextParameterVariableWrapper varWrapper)
+        {
+            switch (var)
+            {
+                case VariableCitySubType.CityName:
+                    return varWrapper.TryFormat(WTSCacheSingleton.instance.GetDistrict(0).Name);
+                case VariableCitySubType.CityPopulation:
+                    return varWrapper.TryFormat(WTSCacheSingleton.instance.GetDistrict(0).Population);
+                default:
+                    return null;
+            }
+        }
 
     }
 }

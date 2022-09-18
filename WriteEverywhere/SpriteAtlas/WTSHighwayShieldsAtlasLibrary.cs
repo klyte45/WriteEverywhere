@@ -1,275 +1,277 @@
-﻿//using ColossalFramework.Threading;
-//using ColossalFramework.UI;
-//using Kwytto.Utils;
-//using WriteEverywhere.Data;
-//using WriteEverywhere.Singleton;
-//using WriteEverywhere.Utils;
-//using WriteEverywhere.Xml;
-//using SpriteFontPlus;
-//using SpriteFontPlus.Utility;
-//using System;
-//using System.Collections;
-//using System.Collections.Generic;
-//using System.Linq;
-//using UnityEngine;
-//using static WriteEverywhere.ModShared.IBridgeADR;
+﻿extern alias ADR;
 
-//namespace WriteEverywhere.Sprites
-//{
-//    public class WTSHighwayShieldsAtlasLibrary : MonoBehaviour
-//    {
+using ColossalFramework.Threading;
+using ColossalFramework.UI;
+using Kwytto.Utils;
+using SpriteFontPlus;
+using SpriteFontPlus.Utility;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+using WriteEverywhere.Data;
+using WriteEverywhere.Singleton;
+using WriteEverywhere.Utils;
+using WriteEverywhere.Xml;
+using static ADR::Bridge_WE2ADR.IBridge;
 
-//        public void Awake() => ResetHwShieldAtlas();
+namespace WriteEverywhere.Sprites
+{
+    public class WTSHighwayShieldsAtlasLibrary : MonoBehaviour
+    {
 
-//        #region Highway shields
-//        private UITextureAtlas m_hwShieldsAtlas;
-//        private Material m_hwShieldsMaterial;
-//        private bool HwShieldIsDirty { get; set; }
-//        private Dictionary<ushort, BasicRenderInformation> HighwayShieldsCache { get; } = new Dictionary<ushort, BasicRenderInformation>();
+        public void Awake() => ResetHwShieldAtlas();
 
-//        private void ResetHwShieldAtlas()
-//        {
-//            m_hwShieldsAtlas = ScriptableObject.CreateInstance<UITextureAtlas>();
-//            m_hwShieldsAtlas.material = new Material(UIView.GetAView().defaultAtlas.material.shader);
-//        }
-//        public void PurgeShields()
-//        {
-//            HighwayShieldsCache.Clear();
-//            ResetHwShieldAtlas();
-//            m_hwShieldsMaterial = null;
-//            HwShieldIsDirty = true;
-//        }
+        #region Highway shields
+        private UITextureAtlas m_hwShieldsAtlas;
+        private Material m_hwShieldsMaterial;
+        private bool HwShieldIsDirty { get; set; }
+        private Dictionary<ushort, BasicRenderInformation> HighwayShieldsCache { get; } = new Dictionary<ushort, BasicRenderInformation>();
 
-//        public BasicRenderInformation DrawHwShield(ushort seedId)
-//        {
-//            if (HighwayShieldsCache.TryGetValue(seedId, out BasicRenderInformation bri))
-//            {
-//                if (bri != null)
-//                {
-//                    return bri;
-//                }
-//            }
-//            else
-//            {
-//                HighwayShieldsCache[seedId] = null;
-//                if (ModInstance.Controller.ConnectorADR.AddressesAvailable)
-//                {
-//                    StartCoroutine(WriteHwShieldTextureCoroutine(seedId));
-//                }
-//            }
+        private void ResetHwShieldAtlas()
+        {
+            m_hwShieldsAtlas = ScriptableObject.CreateInstance<UITextureAtlas>();
+            m_hwShieldsAtlas.material = new Material(UIView.GetAView().defaultAtlas.material.shader);
+        }
+        public void PurgeShields()
+        {
+            HighwayShieldsCache.Clear();
+            ResetHwShieldAtlas();
+            m_hwShieldsMaterial = null;
+            HwShieldIsDirty = true;
+        }
 
-//            return null;
+        public BasicRenderInformation DrawHwShield(ushort seedId)
+        {
+            if (HighwayShieldsCache.TryGetValue(seedId, out BasicRenderInformation bri))
+            {
+                if (bri != null)
+                {
+                    return bri;
+                }
+            }
+            else
+            {
+                HighwayShieldsCache[seedId] = null;
+                if (ModInstance.Controller.ConnectorADR.AddressesAvailable)
+                {
+                    StartCoroutine(WriteHwShieldTextureCoroutine(seedId));
+                }
+            }
 
-//        }
-//        private IEnumerator WriteHwShieldTextureCoroutine(ushort seedId)
-//        {
+            return null;
 
-//            string id = $"{seedId}";
+        }
+        private IEnumerator WriteHwShieldTextureCoroutine(ushort seedId)
+        {
 
-//            if (m_hwShieldsAtlas[id] is null)
-//            {
-//                yield return 0;
-//                while (!CheckHwShieldCoroutineCanContinue())
-//                {
-//                    yield return null;
-//                }
-//                var hwData = ModInstance.Controller.ConnectorADR.GetHighwayData(seedId);
-//                if (hwData is null)
-//                {
-//                    yield break;
-//                }
-//                WTSHighwayShieldsSingleton.GetTargetDescriptor(hwData.layoutName ?? "", out ConfigurationSource src, out HighwayShieldDescriptor layoutDescriptor);
-//                if (src == ConfigurationSource.NONE)
-//                {
-//                    yield break;
-//                }
+            string id = $"{seedId}";
 
-//                var drawingCoroutine = CoroutineWithData.From(this, RenderHighwayShield(
-//                    FontServer.instance[layoutDescriptor.FontName] ?? FontServer.instance[WTSEtcData.Instance.FontSettings.HighwayShieldsFont] ?? FontServer.instance[MainController.DEFAULT_FONT_KEY],
-//                    layoutDescriptor, hwData));
-//                yield return drawingCoroutine.Coroutine;
-//                while (!CheckHwShieldCoroutineCanContinue())
-//                {
-//                    yield return null;
-//                }
-//                TextureAtlasUtils.RegenerateTextureAtlas(m_hwShieldsAtlas, new List<UITextureAtlas.SpriteInfo>
-//                {
-//                    new UITextureAtlas.SpriteInfo
-//                    {
-//                        name = id,
-//                        texture = drawingCoroutine.result
-//                    }
-//                });
-//                HwShieldIsDirty = true;
-//                m_hwShieldsMaterial = null;
-//                HighwayShieldsCache.Clear();
-//                StopAllCoroutines();
-//                yield break;
-//            }
-//            yield return 0;
-//            var bri = new BasicRenderInformation
-//            {
-//                m_YAxisOverflows = new RangeVector { min = 0, max = 20 },
-//            };
+            if (m_hwShieldsAtlas[id] is null)
+            {
+                yield return 0;
+                while (!CheckHwShieldCoroutineCanContinue())
+                {
+                    yield return null;
+                }
+                var hwData = ModInstance.Controller.ConnectorADR.GetHighwayData(seedId);
+                if (hwData is null)
+                {
+                    yield break;
+                }
+                WTSHighwayShieldsSingleton.GetTargetDescriptor(hwData.layoutName ?? "", out ConfigurationSource src, out HighwayShieldDescriptor layoutDescriptor);
+                if (src == ConfigurationSource.NONE)
+                {
+                    yield break;
+                }
 
-//            yield return 0;
-//            WTSAtlasesLibrary.BuildMeshFromAtlas(id, bri, m_hwShieldsAtlas);
-//            yield return 0;
-//            if (m_hwShieldsMaterial is null)
-//            {
-//                m_hwShieldsMaterial = new Material(m_hwShieldsAtlas.material)
-//                {
-//                    shader = MainController.DEFAULT_SHADER_TEXT,
-//                };
-//            }
-//            WTSAtlasesLibrary.RegisterMeshSingle(seedId, bri, HighwayShieldsCache, m_hwShieldsAtlas, HwShieldIsDirty, m_hwShieldsMaterial);
-//            HwShieldIsDirty = false;
-//            yield break;
-//        }
-//        private static bool CheckHwShieldCoroutineCanContinue()
-//        {
-//            if (m_lastCoroutineStepHS != SimulationManager.instance.m_currentTickIndex)
-//            {
-//                m_lastCoroutineStepHS = SimulationManager.instance.m_currentTickIndex;
-//                m_coroutineCounterHS = 0;
-//            }
-//            if (m_coroutineCounterHS >= 1)
-//            {
-//                return false;
-//            }
-//            m_coroutineCounterHS++;
-//            return true;
-//        }
+                var drawingCoroutine = CoroutineWithData.From(this, RenderHighwayShield(
+                    FontServer.instance[layoutDescriptor.FontName] ?? FontServer.instance[WTSEtcData.Instance.FontSettings.HighwayShieldsFont] ?? FontServer.instance[MainController.DEFAULT_FONT_KEY],
+                    layoutDescriptor, hwData));
+                yield return drawingCoroutine.Coroutine;
+                while (!CheckHwShieldCoroutineCanContinue())
+                {
+                    yield return null;
+                }
+                TextureAtlasUtils.RegenerateTextureAtlas(m_hwShieldsAtlas, new List<UITextureAtlas.SpriteInfo>
+                {
+                    new UITextureAtlas.SpriteInfo
+                    {
+                        name = id,
+                        texture = drawingCoroutine.result
+                    }
+                });
+                HwShieldIsDirty = true;
+                m_hwShieldsMaterial = null;
+                HighwayShieldsCache.Clear();
+                StopAllCoroutines();
+                yield break;
+            }
+            yield return 0;
+            var bri = new BasicRenderInformation
+            {
+                m_YAxisOverflows = new RangeVector { min = 0, max = 20 },
+            };
 
-//        private static IEnumerator<Texture2D> RenderHighwayShield(DynamicSpriteFont defaultFont, HighwayShieldDescriptor descriptor, AdrHighwayParameters parameters)
-//        {
-//            if (defaultFont is null)
-//            {
-//                defaultFont = FontServer.instance[WTSEtcData.Instance.FontSettings.GetTargetFont(FontClass.HighwayShields)];
-//            }
+            yield return 0;
+            WTSAtlasesLibrary.BuildMeshFromAtlas(id, bri, m_hwShieldsAtlas);
+            yield return 0;
+            if (m_hwShieldsMaterial is null)
+            {
+                m_hwShieldsMaterial = new Material(m_hwShieldsAtlas.material)
+                {
+                    shader = ModInstance.Controller.DEFAULT_SHADER_TEXT,
+                };
+            }
+            WTSAtlasesLibrary.RegisterMeshSingle(seedId, bri, HighwayShieldsCache, m_hwShieldsAtlas, HwShieldIsDirty, m_hwShieldsMaterial);
+            HwShieldIsDirty = false;
+            yield break;
+        }
+        private static bool CheckHwShieldCoroutineCanContinue()
+        {
+            if (m_lastCoroutineStepHS != SimulationManager.instance.m_currentTickIndex)
+            {
+                m_lastCoroutineStepHS = SimulationManager.instance.m_currentTickIndex;
+                m_coroutineCounterHS = 0;
+            }
+            if (m_coroutineCounterHS >= 1)
+            {
+                return false;
+            }
+            m_coroutineCounterHS++;
+            return true;
+        }
 
-//            UITextureAtlas.SpriteInfo spriteInfo = descriptor.BackgroundImageParameter.GetCurrentSpriteInfo(null);
-//            if (spriteInfo is null)
-//            {
-//                LogUtils.DoWarnLog("HW: Background info is invalid for hw shield descriptor " + descriptor.SaveName);
-//                yield break;
-//            }
-//            else
-//            {
+        private static IEnumerator<Texture2D> RenderHighwayShield(DynamicSpriteFont defaultFont, HighwayShieldDescriptor descriptor, AdrHighwayParameters parameters)
+        {
+            if (defaultFont is null)
+            {
+                defaultFont = FontServer.instance[WTSEtcData.Instance.FontSettings.GetTargetFont(FontClass.HighwayShields)];
+            }
 
-//                int shieldHeight = WTSAtlasLoadingUtils.MAX_SIZE_IMAGE_IMPORT;
-//                int shieldWidth = WTSAtlasLoadingUtils.MAX_SIZE_IMAGE_IMPORT;
-//                var shieldTexture = new Texture2D(spriteInfo.texture.width, spriteInfo.texture.height);
-//                var targetColor = descriptor.BackgroundColorIsFromHighway && parameters.hwColor != default ? parameters.hwColor : descriptor.BackgroundColor;
-//                shieldTexture.SetPixels(spriteInfo.texture.GetPixels().Select(x => x.MultiplyChannelsButAlpha(targetColor)).ToArray());
-//                TextureScaler.scale(shieldTexture, shieldWidth, shieldHeight);
-//                Color[] formTexturePixels = shieldTexture.GetPixels();
+            UITextureAtlas.SpriteInfo spriteInfo = descriptor.BackgroundImageParameter.GetCurrentSpriteInfo(null);
+            if (spriteInfo is null)
+            {
+                LogUtils.DoWarnLog("HW: Background info is invalid for hw shield descriptor " + descriptor.SaveName);
+                yield break;
+            }
+            else
+            {
 
-//                foreach (var textDescriptor in descriptor.TextDescriptors)
-//                {
-//                    if (!textDescriptor.GetTargetText(parameters, out string text))
-//                    {
-//                        continue;
-//                    }
+                int shieldHeight = WTSAtlasLoadingUtils.MAX_SIZE_IMAGE_IMPORT;
+                int shieldWidth = WTSAtlasLoadingUtils.MAX_SIZE_IMAGE_IMPORT;
+                var shieldTexture = new Texture2D(spriteInfo.texture.width, spriteInfo.texture.height);
+                var targetColor = descriptor.BackgroundColorIsFromHighway && parameters.hwColor != default ? parameters.hwColor : descriptor.BackgroundColor;
+                shieldTexture.SetPixels(spriteInfo.texture.GetPixels().Select(x => x.MultiplyChannelsButAlpha(targetColor)).ToArray());
+                TextureScaler.scale(shieldTexture, shieldWidth, shieldHeight);
+                Color[] formTexturePixels = shieldTexture.GetPixels();
 
-//                    Texture2D overlayTexture;
-//                    if (text is null && textDescriptor.m_textType == TextType.GameSprite)
-//                    {
-//                        var spriteTexture = textDescriptor.m_spriteParam?.GetCurrentSpriteInfo(null)?.texture;
-//                        if (spriteTexture is null)
-//                        {
-//                            continue;
-//                        }
-//                        overlayTexture = new Texture2D(spriteTexture.width, spriteTexture.height);
-//                        overlayTexture.SetPixels(spriteTexture.GetPixels());
-//                        overlayTexture.Apply();
-//                    }
-//                    else if (text is null)
-//                    {
-//                        continue;
-//                    }
-//                    else
-//                    {
-//                        var targetFont = FontServer.instance[textDescriptor.m_overrideFont] ?? FontServer.instance[WTSEtcData.Instance.FontSettings.GetTargetFont(textDescriptor.m_fontClass)] ?? defaultFont;
-//                        overlayTexture = targetFont.DrawTextToTexture(text, textDescriptor.m_charSpacingFactor);
-//                    }
+                foreach (var textDescriptor in descriptor.TextDescriptors)
+                {
+                    if (!textDescriptor.GetTargetText(parameters, out string text))
+                    {
+                        continue;
+                    }
 
-//                    if (overlayTexture is null)
-//                    {
-//                        continue;
-//                    }
+                    Texture2D overlayTexture;
+                    if (text is null && textDescriptor.m_textType == TextType.GameSprite)
+                    {
+                        var spriteTexture = textDescriptor.m_spriteParam?.GetCurrentSpriteInfo(null)?.texture;
+                        if (spriteTexture is null)
+                        {
+                            continue;
+                        }
+                        overlayTexture = new Texture2D(spriteTexture.width, spriteTexture.height);
+                        overlayTexture.SetPixels(spriteTexture.GetPixels());
+                        overlayTexture.Apply();
+                    }
+                    else if (text is null)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        var targetFont = FontServer.instance[textDescriptor.m_overrideFont] ?? FontServer.instance[WTSEtcData.Instance.FontSettings.GetTargetFont(textDescriptor.m_fontClass)] ?? defaultFont;
+                        overlayTexture = targetFont.DrawTextToTexture(text, textDescriptor.m_charSpacingFactor);
+                    }
 
-//                    Color textColor;
-//                    switch (textDescriptor.ColoringConfig.ColorSource)
-//                    {
-//                        case BoardTextDescriptorGeneralXml.ColoringSettings.ColoringSource.Contrast:
-//                            textColor = targetColor.ContrastColor();
-//                            break;
-//                        case BoardTextDescriptorGeneralXml.ColoringSettings.ColoringSource.Parent:
-//                            textColor = targetColor;
-//                            break;
-//                        case BoardTextDescriptorGeneralXml.ColoringSettings.ColoringSource.Fixed:
-//                        default:
-//                            textColor = textDescriptor.ColoringConfig.m_cachedColor;
-//                            break;
-//                    }
+                    if (overlayTexture is null)
+                    {
+                        continue;
+                    }
 
-//                    Color[] overlayColorArray = overlayTexture.GetPixels().Select(x => new Color(textColor.r, textColor.g, textColor.b, x.a)).ToArray();
+                    Color textColor;
+                    switch (textDescriptor.ColoringConfig.ColorSource)
+                    {
+                        case ColoringSettings.ColoringSource.Contrast:
+                            textColor = targetColor.ContrastColor();
+                            break;
+                        case ColoringSettings.ColoringSource.Parent:
+                            textColor = targetColor;
+                            break;
+                        case ColoringSettings.ColoringSource.Fixed:
+                        default:
+                            textColor = textDescriptor.ColoringConfig.m_cachedColor;
+                            break;
+                    }
 
-//                    var textAreaSize = textDescriptor.GetAreaSize(shieldWidth, shieldHeight, overlayTexture.width, overlayTexture.height, true);
-//                    TextureScaler.scale(overlayTexture, Mathf.FloorToInt(textAreaSize.z), Mathf.FloorToInt(textAreaSize.w));
+                    Color[] overlayColorArray = overlayTexture.GetPixels().Select(x => new Color(textColor.r, textColor.g, textColor.b, x.a)).ToArray();
 
-//                    Color[] textColors = overlayTexture.GetPixels();
-//                    int textWidth = overlayTexture.width;
-//                    int textHeight = overlayTexture.height;
-//                    Destroy(overlayTexture);
+                    var textAreaSize = textDescriptor.GetAreaSize(shieldWidth, shieldHeight, overlayTexture.width, overlayTexture.height, true);
+                    TextureScaler.scale(overlayTexture, Mathf.FloorToInt(textAreaSize.z), Mathf.FloorToInt(textAreaSize.w));
 
-
-//                    Task<Tuple<Color[], int, int>> task = ThreadHelper.taskDistributor.Dispatch(() =>
-//                    {
-//                        int topMerge = Mathf.RoundToInt(textAreaSize.y);
-//                        int leftMerge = Mathf.RoundToInt(textAreaSize.x);
-//                        try
-//                        {
-//                            TextureRenderUtils.MergeColorArrays(colorOr: formTexturePixels,
-//                                                                widthOr: shieldWidth,
-//                                                                colors: textColors.Select(x => x.MultiplyChannelsButAlpha(textColor)).ToArray(),
-//                                                                startX: leftMerge,
-//                                                                startY: topMerge,
-//                                                                sizeX: textWidth,
-//                                                                sizeY: textHeight);
-//                        }
-//                        catch (Exception e)
-//                        {
-//                            LogUtils.DoErrorLog($"Exception while writing text in the shield: {e.Message}\n{e.StackTrace}\n\nDescriptor:{JsonUtility.ToJson(descriptor)}\ntextDescriptor: {textDescriptor?.SaveName}");
-//                        }
-//                        return Tuple.New(formTexturePixels, shieldWidth, shieldHeight);
-//                    });
-//                    while (!task.hasEnded || m_coroutineCounterHS > 1)
-//                    {
-//                        if (task.hasEnded)
-//                        {
-//                            m_coroutineCounterHS++;
-//                        }
-//                        yield return null;
-//                        if (m_lastCoroutineStepHS != SimulationManager.instance.m_currentTickIndex)
-//                        {
-//                            m_lastCoroutineStepHS = SimulationManager.instance.m_currentTickIndex;
-//                            m_coroutineCounterHS = 0;
-//                        }
-//                    }
-//                    m_coroutineCounterHS++;
-//                    formTexturePixels = task.result.First;
-//                }
-//                shieldTexture.SetPixels(formTexturePixels);
-//                shieldTexture.Apply();
-//                yield return shieldTexture;
-//            }
-//        }
+                    Color[] textColors = overlayTexture.GetPixels();
+                    int textWidth = overlayTexture.width;
+                    int textHeight = overlayTexture.height;
+                    Destroy(overlayTexture);
 
 
-//        private static uint m_lastCoroutineStepHS = 0;
-//        private static uint m_coroutineCounterHS = 0;
-//        #endregion
-//    }
-//}
+                    Task<Tuple<Color[], int, int>> task = ThreadHelper.taskDistributor.Dispatch(() =>
+                    {
+                        int topMerge = Mathf.RoundToInt(textAreaSize.y);
+                        int leftMerge = Mathf.RoundToInt(textAreaSize.x);
+                        try
+                        {
+                            TextureRenderUtils.MergeColorArrays(colorOr: formTexturePixels,
+                                                                widthOr: shieldWidth,
+                                                                colors: textColors.Select(x => x.MultiplyChannelsButAlpha(textColor)).ToArray(),
+                                                                startX: leftMerge,
+                                                                startY: topMerge,
+                                                                sizeX: textWidth,
+                                                                sizeY: textHeight);
+                        }
+                        catch (Exception e)
+                        {
+                            LogUtils.DoErrorLog($"Exception while writing text in the shield: {e.Message}\n{e.StackTrace}\n\nDescriptor:{JsonUtility.ToJson(descriptor)}\ntextDescriptor: {textDescriptor?.SaveName}");
+                        }
+                        return Tuple.New(formTexturePixels, shieldWidth, shieldHeight);
+                    });
+                    while (!task.hasEnded || m_coroutineCounterHS > 1)
+                    {
+                        if (task.hasEnded)
+                        {
+                            m_coroutineCounterHS++;
+                        }
+                        yield return null;
+                        if (m_lastCoroutineStepHS != SimulationManager.instance.m_currentTickIndex)
+                        {
+                            m_lastCoroutineStepHS = SimulationManager.instance.m_currentTickIndex;
+                            m_coroutineCounterHS = 0;
+                        }
+                    }
+                    m_coroutineCounterHS++;
+                    formTexturePixels = task.result.First;
+                }
+                shieldTexture.SetPixels(formTexturePixels);
+                shieldTexture.Apply();
+                yield return shieldTexture;
+            }
+        }
+
+
+        private static uint m_lastCoroutineStepHS = 0;
+        private static uint m_coroutineCounterHS = 0;
+        #endregion
+    }
+}
