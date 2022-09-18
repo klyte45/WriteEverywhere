@@ -1,16 +1,14 @@
 ﻿extern alias ADR;
 
 using Kwytto.Interfaces;
-using Kwytto.Utils;
 using System.Xml;
 using System.Xml.Serialization;
 using UnityEngine;
-using static ADR::Bridge_WE2ADR.IBridge;
 
 namespace WriteEverywhere.Xml
 {
     [XmlRoot("textDescriptor2D")]
-    public partial class ImageLayerTextDescriptorXml : ILibable
+    public class ImageLayerTextDescriptorXml : ILibable
     {
         [XmlAttribute("textScale")]
         public float m_textScale = 1f;
@@ -29,26 +27,20 @@ namespace WriteEverywhere.Xml
         public Vector2 PivotUV { get; set; } = Vector2.one / 2;
 
         [XmlAttribute("textContent")]
-        public TextType m_textType = TextType.Fixed;
+        public TextContent m_textType = TextContent.ParameterizedText;
 
-        [XmlAttribute("fixedText")]
-        public string m_fixedText = "Text";
         [XmlIgnore]
-        public TextParameterWrapper m_spriteParam;
+        public TextParameterWrapper m_paramValue;
         [XmlAttribute("spriteName")]
         public string SpriteParam
         {
-            get => m_spriteParam?.ToString();
-            set => m_spriteParam = new TextParameterWrapper(value, Rendering.TextRenderingClass.None);
+            get => m_paramValue?.ToString();
+            set => m_paramValue = new TextParameterWrapper(value, Rendering.TextRenderingClass.None);
         }
 
         [XmlAttribute("overrideFont")] public string m_overrideFont;
         [XmlAttribute("fontClass")] public FontClass m_fontClass = FontClass.Regular;
 
-        [XmlAttribute("prefix")]
-        public string m_prefix = "";
-        [XmlAttribute("suffix")]
-        public string m_suffix = "";
 
         [XmlAttribute("saveName")]
         public string SaveName { get; set; }
@@ -60,8 +52,7 @@ namespace WriteEverywhere.Xml
         {
             switch (m_textType)
             {
-                case TextType.LinesSymbols:
-                case TextType.GameSprite:
+                case TextContent.ParameterizedSpriteSingle:
                     return true;
             }
             return false;
@@ -101,38 +92,6 @@ namespace WriteEverywhere.Xml
                    Mathf.Lerp(0, shieldHeight, invertY ? 1 - OffsetUV.y : OffsetUV.y) - Mathf.Lerp(0, textTargetHeight, invertY ? 1 - PivotUV.y : PivotUV.y),
                    textTargetWidth,
                    textTargetHeight);
-        }
-        internal bool GetTargetText(AdrHighwayParameters parameters, out string text)
-        {
-            switch (m_textType)
-            {
-                case TextType.Fixed:
-                    text = m_fixedText;
-                    break;
-                case TextType.GameSprite:
-                    text = null;
-                    return true;
-                case TextType.CityName:
-                    text = SimulationManager.instance.m_metaData.m_CityName;
-                    break;
-                case TextType.HwCodeShort:
-                    text = parameters?.shortCode;
-                    break;
-                case TextType.HwCodeLong:
-                    text = parameters?.longCode;
-                    break;
-                case TextType.HwDettachedPrefix:
-                    text = parameters?.detachedStr;
-                    break;
-                case TextType.HwIdentifierSuffix:
-                    text = parameters?.hwIdentifier;
-                    break;
-                default:
-                    text = null;
-                    return false;
-            }
-            text = $"{m_prefix}{text}{m_suffix}".TrimToNull();
-            return true;
         }
     }
 

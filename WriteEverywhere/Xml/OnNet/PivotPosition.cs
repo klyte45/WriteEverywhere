@@ -1,4 +1,4 @@
-﻿using Klyte.Localization;
+﻿using WriteEverywhere.Localization;
 
 namespace WriteEverywhere.Xml
 {

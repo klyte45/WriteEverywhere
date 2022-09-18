@@ -1,7 +1,7 @@
 using ColossalFramework;
 using ColossalFramework.Globalization;
 using ColossalFramework.UI;
-using Klyte.Localization;
+using WriteEverywhere.Localization;
 using SpriteFontPlus;
 using System.Linq;
 using UnityEngine;

@@ -1,11 +1,11 @@
 ﻿using ColossalFramework;
 using ColossalFramework.Globalization;
-using Klyte.Localization;
 using Kwytto.LiteUI;
 using Kwytto.UI;
 using Kwytto.Utils;
 using System.Linq;
 using UnityEngine;
+using WriteEverywhere.Localization;
 using WriteEverywhere.Xml;
 
 namespace WriteEverywhere.UI
@@ -14,7 +14,7 @@ namespace WriteEverywhere.UI
     {
         private Vector2 m_tabViewScroll;
 
-        public override Texture TabIcon { get; } = KResourceLoader.LoadTextureKwytto(CommonsSpriteNames.K45_FontIcon);
+        public override Texture TabIcon { get; } = KResourceLoader.LoadTextureKwytto(CommonsSpriteNames.K45_AbsoluteMode);
 
         protected override string GetAssetName(OnNetInstanceCacheContainerXml item) => item.m_simplePropName;
         protected override void SetTextParameter(OnNetInstanceCacheContainerXml item, int currentEditingParam, string paramValue) => item.SetTextParameter(currentEditingParam, paramValue);
@@ -55,7 +55,7 @@ namespace WriteEverywhere.UI
                         var usedByText = string.Join("\n", kv.Value.Select(x => $"\u2022{(x.ParameterDisplayName.IsNullOrWhiteSpace() ? x.SaveName : x.ParameterDisplayName)} ({(x.DefaultParameterValueAsString is null ? GUIKwyttoCommons.v_empty : $"<color=#{target}>{x.DefaultParameterValueAsString}</color>")})").ToArray());
                         using (new GUILayout.HorizontalScope())
                         {
-                            GUILayout.Label(string.Format(Locale.Get(Str.WTS_ONNETEDITOR_TEXTPARAM), kv.Key) + $"\n<color=#{target}>{targetContentType.GetI18n()}</color>\n\n{usedByText}");
+                            GUILayout.Label(string.Format(Locale.Get(Str.WTS_ONNETEDITOR_TEXTPARAM), kv.Key) + $"\n<color=#{target}>{targetContentType.ValueToI18n()}</color>\n\n{usedByText}");
                             var param = item.GetParameter(kv.Key);
                             if (GUILayout.Button(param is null ? GUIKwyttoCommons.v_null : param.IsEmpty ? GUIKwyttoCommons.v_empty : param.ToString(), GUILayout.ExpandHeight(true)))
                             {

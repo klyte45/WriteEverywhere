@@ -7,7 +7,7 @@
     <ProjectGuid>{291D9EA9-6945-4EA3-8756-37464D40F450}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Klyte</RootNamespace>
+    <RootNamespace>WriteEverywhere</RootNamespace>
     <AssemblyName>WriteEverywhere</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -67,7 +67,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MainController.cs" />
     <EmbeddedResource Include="Localization\Str.*.resx" />
     <EmbeddedResource Include="Localization\Str.resx">
       <LastGenOutput>Str.Designer.cs</LastGenOutput>
@@ -81,29 +80,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Str.resx</DependentUpon>
     </Compile>
-    <Compile Include="ModInstance.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Shader\WTSShaderLibrary.cs" />
     <EmbeddedResource Include="Shader\**\*.unity3d" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="UI\VersionNotes.txt" />
-    <Compile Include="ModShared\**\*.cs" />
-    <Compile Include="Singleton\**\*.cs" />
-    <Compile Include="Libraries\**\*.cs" />
-    <Compile Include="Xml\**\*.cs" />
-    <Compile Include="_StbTrueTypeSharp\**\*.cs" />
-    <Compile Include="Rendering\**\*.cs" />
-    <Compile Include="ModShared\**\*.cs" />
-    <Compile Include="Font\**\*.cs" />
-    <Compile Include="Utils\**\*.cs" />
-    <Compile Include="Tools\**\*.cs" />
-    <Compile Include="Override\**\*.cs" />
-    <Compile Include="UI\LiteUI\**\*.cs" />
-    <Compile Include="Data\**\*.cs" />
-    <Compile Include="SpriteAtlas\**\*.cs" />
+    <Compile Include="**\*.cs" Exclude="Localization\Str.Designer.cs" />
   </ItemGroup>
   <!-- <ItemGroup> -->
   <!-- <Reference Include="TransportLinesManager">  -->

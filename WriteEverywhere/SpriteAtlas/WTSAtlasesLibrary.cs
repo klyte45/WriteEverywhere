@@ -3,7 +3,7 @@ extern alias TLM;
 using ColossalFramework;
 using ColossalFramework.Threading;
 using ColossalFramework.UI;
-using Klyte.Localization;
+using WriteEverywhere.Localization;
 using Kwytto.LiteUI;
 using Kwytto.Localization;
 using Kwytto.UI;
@@ -271,7 +271,7 @@ namespace WriteEverywhere.Sprites
         private UITextureAtlas CreateAtlasEntry<T>(Dictionary<T, UITextureAtlas> atlasDic, T atlasName, string path, bool addPrefix)
         {
             UITextureAtlas targetAtlas = ScriptableObject.CreateInstance<UITextureAtlas>();
-            targetAtlas.material = new Material(ModInstance.Controller.DEFAULT_SHADER_TEXT);
+            targetAtlas.material = new Material(ModInstance.Controller.defaultTextShader);
             WTSAtlasLoadingUtils.LoadAllImagesFromFolder(path, out List<SpriteInfo> spritesToAdd, out List<string> errors, addPrefix);
             TextureAtlasUtils.RegenerateTextureAtlas(targetAtlas, spritesToAdd);
             foreach (string error in errors)
@@ -407,7 +407,7 @@ namespace WriteEverywhere.Sprites
             {
                 m_transportLineMaterial = new Material(m_transportLineAtlas.material)
                 {
-                    shader = ModInstance.Controller.DEFAULT_SHADER_TEXT,
+                    shader = ModInstance.Controller.defaultTextShader,
                 };
             }
             RegisterMeshSingle(line.lineId, bri, line.regional ? RegionalTransportLineCache : TransportLineCache, m_transportLineAtlas, TransportIsDirty, m_transportLineMaterial);
@@ -682,7 +682,7 @@ namespace WriteEverywhere.Sprites
             {
                 material = new Material(referenceAtlas.material)
                 {
-                    shader = ModInstance.Controller.DEFAULT_SHADER_TEXT,
+                    shader = ModInstance.Controller.defaultTextShader,
                 };
                 materialIndex[idx] = material;
             }

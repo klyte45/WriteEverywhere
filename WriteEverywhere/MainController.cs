@@ -18,7 +18,7 @@ namespace WriteEverywhere
 {
     public class MainController : BaseController<ModInstance, MainController>
     {
-        public static readonly string FOLDER_PATH = KFileUtils.BASE_FOLDER_PATH + "WriteEverywhere";
+        public static readonly string FOLDER_PATH = KFileUtils.BASE_FOLDER_PATH + ModInstance.Instance.SafeName;
 
         #region Events
         public event Action EventFontsReloadedFromFolder;
@@ -35,7 +35,7 @@ namespace WriteEverywhere
 
         #region Shader
         public WTSShaderLibrary ShaderLib => WTSShaderLibrary.instance;
-        public Shader DEFAULT_SHADER_TEXT { get; } = WTSShaderLibrary.instance.GetShaders().TryGetValue("klyte/wts/wtsshader", out Shader value) ? value : value;
+        public Shader defaultTextShader { get; private set; } = WTSShaderLibrary.instance.GetShaders().TryGetValue("klyte/wts/wtsshader", out Shader value) ? value : value;
         #endregion
 
         #region Fonts
@@ -91,10 +91,12 @@ namespace WriteEverywhere
             ToolsModifierControl.toolController.AddExtraToolToController<SegmentEditorPickerTool>();
             ToolsModifierControl.toolController.AddExtraToolToController<RoadSegmentTool>();
             FontServer.Ensure();
-            AtlasesLibrary = gameObject.AddComponent<WTSAtlasesLibrary>();
+            ReloadFontsFromPath();
+            FontServer.instance.m_defaultShader = defaultTextShader;
             OnNetPropsSingleton = gameObject.AddComponent<WTSOnNetPropsSingleton>();
             HighwayShieldsSingleton = gameObject.AddComponent<WTSHighwayShieldsSingleton>();
             HighwayShieldsAtlasLibrary = gameObject.AddComponent<WTSHighwayShieldsAtlasLibrary>();
+            AtlasesLibrary = gameObject.AddComponent<WTSAtlasesLibrary>();
         }
 
         protected override void StartActions()
@@ -106,6 +108,19 @@ namespace WriteEverywhere
             uiGO.transform.SetParent(UIView.GetAView().gameObject.transform);
             uiGO.AddComponent<WTSOnNetLiteUI>();
 
+        }
+        public static bool ___RELOADSH
+        {
+            get => false; set
+            {
+                if (value)
+                {
+                    WTSShaderLibrary.instance.ReloadFromDisk();
+                    ModInstance.Controller.defaultTextShader = WTSShaderLibrary.instance.GetShaders()["klyte/wts/wtsshader"];
+                    FontServer.instance.m_defaultShader = ModInstance.Controller.defaultTextShader;
+                    ReloadFontsFromPath();
+                }
+            }
         }
     }
 }

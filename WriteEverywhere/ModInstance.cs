@@ -1,7 +1,7 @@
 ﻿extern alias UUI;
 
 using ColossalFramework;
-using Klyte.Localization;
+using WriteEverywhere.Localization;
 using Kwytto.Interfaces;
 using Kwytto.Utils;
 using System.Globalization;
@@ -15,7 +15,7 @@ namespace WriteEverywhere
     public class ModInstance : BasicIUserMod<ModInstance, MainController>
     {
         public override string SimpleName { get; } = "Write Everywhere";
-
+        public override string SafeName { get; } = "WriteEverywhere";
         public override string Description { get; } = Str.root_modDescription;
 
         public override string Acronym => "WE";

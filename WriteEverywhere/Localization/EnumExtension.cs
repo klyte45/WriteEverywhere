@@ -1,11 +1,14 @@
-﻿using Klyte.Localization;
+﻿using ColossalFramework.UI;
+using FontStashSharp;
 using System;
+using System.Linq;
+using WriteEverywhere.Xml;
 
-namespace WriteEverywhere.Xml
+namespace WriteEverywhere.Localization
 {
-    internal static class EnumVariablesGeneralExtension
+    internal static class EnumI18nExtensions
     {
-        public static string VariableToI18n(this Enum variable)
+        public static string ValueToI18n(this Enum variable)
         {
             switch (variable)
             {
@@ -18,16 +21,16 @@ namespace WriteEverywhere.Xml
                         case VariableType.CurrentSegment: return Str.WTS_PARAMVARS_DESC__VariableType_CurrentSegment;
                         case VariableType.CurrentVehicle: return Str.WTS_PARAMVARS_DESC__VariableType_CurrentVehicle;
                         case VariableType.Invalid: return Str.WTS_PARAMVARS_DESC__VariableType_Invalid;
-                        default: return $"{tp.GetType()}|{tp}";
                     }
+                    break;
                 case VariableCitySubType tp:
                     switch (tp)
                     {
                         case VariableCitySubType.None: return Str.WTS_PARAMVARS_DESC__VariableCitySubType_None;
                         case VariableCitySubType.CityName: return Str.WTS_PARAMVARS_DESC__VariableCitySubType_CityName;
                         case VariableCitySubType.CityPopulation: return Str.WTS_PARAMVARS_DESC__VariableCitySubType_CityPopulation;
-                        default: return $"{tp.GetType()}|{tp}";
                     }
+                    break;
                 case VariableSegmentTargetSubType tp:
                     switch (tp)
                     {
@@ -58,8 +61,8 @@ namespace WriteEverywhere.Xml
                         case VariableSegmentTargetSubType.DistanceFromReferenceKilometers: return Str.WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistanceFromReferenceKilometers;
                         case VariableSegmentTargetSubType.DistanceFromReferenceMeters: return Str.WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistanceFromReferenceMeters;
                         case VariableSegmentTargetSubType.DistanceFromReferenceMiles: return Str.WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistanceFromReferenceMiles;
-                        default: return $"{tp.GetType()}|{tp}";
                     }
+                    break;
                 case VariableVehicleSubType tp:
                     switch (tp)
                     {
@@ -70,11 +73,67 @@ namespace WriteEverywhere.Xml
                         case VariableVehicleSubType.PrevStopLine: return Str.WTS_PARAMVARS_DESC__VariableVehicleSubType_PrevStopLine;
                         case VariableVehicleSubType.LastStopLine: return Str.WTS_PARAMVARS_DESC__VariableVehicleSubType_LastStopLine;
                         case VariableVehicleSubType.LineFullName: return Str.WTS_PARAMVARS_DESC__VariableVehicleSubType_LineFullName;
-                        default: return $"{tp.GetType()}|{tp}";
                     }
-                default: return $"{variable?.GetType()}|{variable}";
+                    break;
+                case UIHorizontalAlignment x:
+                    switch (x)
+                    {
+                        case UIHorizontalAlignment.Center: return Str.we_Enum__UIHorizontalAlignment_Center;
+                        case UIHorizontalAlignment.Right: return Str.we_Enum__UIHorizontalAlignment_Right;
+                        case UIHorizontalAlignment.Left: return Str.we_Enum__UIHorizontalAlignment_Left;
+                    }
+                    break;
+                case FontClass x:
+                    switch (x)
+                    {
+                        case FontClass.Regular: return Str.we_Enum__FontClass_Regular;
+                        case FontClass.PublicTransport: return Str.we_Enum__FontClass_PublicTransport;
+                        case FontClass.ElectronicBoards: return Str.we_Enum__FontClass_ElectronicBoards;
+                        case FontClass.Stencil: return Str.we_Enum__FontClass_Stencil;
+                        case FontClass.HighwayShields: return Str.we_Enum__FontClass_HighwayShields;
+                    }
+                    break;
+                case TextContent content:
+                    switch (content)
+                    {
+                        case TextContent.None: return Str.WTS_BOARD_TEXT_TYPE_DESC__None;
+                        case TextContent.ParameterizedText: return Str.WTS_BOARD_TEXT_TYPE_DESC__ParameterizedText;
+                        case TextContent.ParameterizedSpriteFolder: return Str.WTS_BOARD_TEXT_TYPE_DESC__ParameterizedSpriteFolder;
+                        case TextContent.ParameterizedSpriteSingle: return Str.WTS_BOARD_TEXT_TYPE_DESC__ParameterizedSpriteSingle;
+                        case TextContent.LinesSymbols: return Str.WTS_BOARD_TEXT_TYPE_DESC__LinesSymbols;
+                        case TextContent.LinesNameList: return Str.WTS_BOARD_TEXT_TYPE_DESC__LinesNameList;
+                        case TextContent.HwShield: return Str.WTS_BOARD_TEXT_TYPE_DESC__HwShield;
+                        case TextContent.TimeTemperature: return Str.WTS_BOARD_TEXT_TYPE_DESC__TimeTemperature;
+                        case TextContent.TextParameterSequence: return Str.WTS_BOARD_TEXT_TYPE_DESC__TextParameterSequence;
+                    }
+                    break;
+                case MaterialType x:
+                    switch (x)
+                    {
+                        case MaterialType.OPAQUE: return Str.we_Enum__MaterialType_OPAQUE;
+                        case MaterialType.DAYNIGHT: return Str.we_Enum__MaterialType_DAYNIGHT;
+                        case MaterialType.FLAGS: return Str.we_Enum__MaterialType_FLAGS;
+                        case MaterialType.BRIGHT: return Str.we_Enum__MaterialType_BRIGHT;
+                    }
+                    break;
 
+                case BlinkType x:
+                    switch (x)
+                    {
+                        case BlinkType.None: return Str.we_Enum__BlinkType_None;
+                        case BlinkType.Blink_050_050: return Str.we_Enum__BlinkType_Blink_050_050;
+                        case BlinkType.MildFade_0125_0125: return Str.we_Enum__BlinkType_MildFade_0125_0125;
+                        case BlinkType.MediumFade_500_500: return Str.we_Enum__BlinkType_MediumFade_500_500;
+                        case BlinkType.StrongBlaze_0125_0125: return Str.we_Enum__BlinkType_StrongBlaze_0125_0125;
+                        case BlinkType.StrongFade_250_250: return Str.we_Enum__BlinkType_StrongFade_250_250;
+                        case BlinkType.Blink_025_025: return Str.we_Enum__BlinkType_Blink_025_025;
+                        case BlinkType.Custom: return Str.we_Enum__BlinkType_Custom;
+                    }
+                    break;
             }
+            return $"{variable?.GetType()}|{variable}";
         }
+
+        public static string[] GetAllValuesI18n<T>() where T : Enum => Enum.GetValues(typeof(T)).Cast<Enum>().Select(x => x.ValueToI18n()).ToArray();
     }
 }

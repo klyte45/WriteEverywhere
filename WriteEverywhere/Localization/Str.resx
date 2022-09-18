@@ -397,6 +397,26 @@
   <data name="we_PivotPosition__CenterLookingRight" xml:space="preserve">    <value>Center (looking right)</value>  </data>
   <data name="we_roadEditor_pivotPosition" xml:space="preserve">    <value>Pivot Position</value>  </data>
   <data name="we_roadEditor_lockCameraAtInstance" xml:space="preserve">    <value>Lock camera at instance # (starting at 0)</value>  </data>
+  <data name="we_Enum__UIHorizontalAlignment_Center" xml:space="preserve">    <value>Center</value>  </data>
+  <data name="we_Enum__UIHorizontalAlignment_Right" xml:space="preserve">    <value>Right</value>  </data>
+  <data name="we_Enum__UIHorizontalAlignment_Left" xml:space="preserve">    <value>Left</value>  </data>
+  <data name="we_Enum__FontClass_Regular" xml:space="preserve">    <value>Regular</value>  </data>
+  <data name="we_Enum__FontClass_PublicTransport" xml:space="preserve">    <value>Public Transport</value>  </data>
+  <data name="we_Enum__FontClass_ElectronicBoards" xml:space="preserve">    <value>Electronic Boards</value>  </data>
+  <data name="we_Enum__FontClass_Stencil" xml:space="preserve">    <value>Stencil</value>  </data>
+  <data name="we_Enum__FontClass_HighwayShields" xml:space="preserve">    <value>Highway Shields</value>  </data>
+  <data name="we_Enum__BlinkType_Custom" xml:space="preserve">    <value>Custom</value>  </data>
+  <data name="we_Enum__MaterialType_OPAQUE" xml:space="preserve">    <value>Opaque</value>  </data>
+  <data name="we_Enum__MaterialType_DAYNIGHT" xml:space="preserve">    <value>Day/Night illumination</value>  </data>
+  <data name="we_Enum__MaterialType_FLAGS" xml:space="preserve">    <value>By flags</value>  </data>
+  <data name="we_Enum__MaterialType_BRIGHT" xml:space="preserve">    <value>Always bright</value>  </data>
+  <data name="we_Enum__BlinkType_None" xml:space="preserve">    <value>None</value>  </data>
+  <data name="we_Enum__BlinkType_Blink_050_050" xml:space="preserve">    <value>Blink 500ms</value>  </data>
+  <data name="we_Enum__BlinkType_MildFade_0125_0125" xml:space="preserve">    <value>Mild fade</value>  </data>
+  <data name="we_Enum__BlinkType_MediumFade_500_500" xml:space="preserve">    <value>Medium fade</value>  </data>
+  <data name="we_Enum__BlinkType_StrongBlaze_0125_0125" xml:space="preserve">    <value>Strong blaze (neon)</value>  </data>
+  <data name="we_Enum__BlinkType_StrongFade_250_250" xml:space="preserve">    <value>Strong fade</value>  </data>
+  <data name="we_Enum__BlinkType_Blink_025_025" xml:space="preserve">    <value>Blink 250ms</value>  </data>
 
 
 </root>

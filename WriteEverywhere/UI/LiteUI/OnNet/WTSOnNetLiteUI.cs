@@ -1,11 +1,11 @@
-﻿using Klyte.Localization;
-using Kwytto.LiteUI;
+﻿using Kwytto.LiteUI;
 using Kwytto.UI;
 using Kwytto.Utils;
 using System.Linq;
 using UnityEngine;
 using WriteEverywhere.Data;
 using WriteEverywhere.Libraries;
+using WriteEverywhere.Localization;
 using WriteEverywhere.Tools;
 using WriteEverywhere.Xml;
 
@@ -45,10 +45,27 @@ namespace WriteEverywhere.UI
         {
             Instance = this;
             Instance.Init("On Net Editor", new Rect(128, 128, 680, 420), resizable: true, minSize: new Vector2(340, 260));
+            m_colorPicker = GameObjectUtils.CreateElement<GUIColorPicker>(transform).Init();
+            m_colorPicker.Visible = false;
             Instance.m_tabsContainer = new GUIBasicListingTabsContainer<OnNetInstanceCacheContainerXml>(new IGUITab<OnNetInstanceCacheContainerXml>[] {
                 new WTSOnNetBasicTab(Instance.OnImportSingle, Instance.OnDelete, this),
                 new WTSOnNetTargetsTab(),
-                new WTSOnNetParamsTab()
+                new WTSOnNetParamsTab(),
+                new WTSOnNetTextTab(m_colorPicker, () => CurrentEditingInstance?.BoardsData[ListSel]?.SimpleCachedProp, () =>
+                {
+                    if( CurrentEditingInstance?.BoardsData[ListSel] != null)
+                    {
+                        return ref CurrentEditingInstance.BoardsData[ListSel].RefTextDescriptors;
+                    }
+                    throw new System.Exception("Invalid call!!!");
+                }, () =>
+                {
+                    if( CurrentEditingInstance?.BoardsData[ListSel] != null)
+                    {
+                        return ref CurrentEditingInstance.BoardsData[ListSel].RefFontName;
+                    }
+                    throw new System.Exception("Invalid call!!!");
+                })
             }, Instance.OnAdd, Instance.GetSideList, Instance.GetSelectedItem, Instance.OnSetCurrentItem);
         }
         public static void Destroy()
@@ -67,6 +84,7 @@ namespace WriteEverywhere.UI
         }
 
         private ushort currentSegmentId;
+        private GUIColorPicker m_colorPicker;
         private readonly GUIXmlLib<WTSLibOnNetPropLayoutList, ExportableBoardInstanceOnNetListXml> xmlLibList = new GUIXmlLib<WTSLibOnNetPropLayoutList, ExportableBoardInstanceOnNetListXml>()
         {
             DeleteQuestionI18n = Str.WTS_SEGMENT_CLEARDATA_AYS,

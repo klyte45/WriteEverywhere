@@ -1,5 +1,5 @@
 ﻿using ColossalFramework.Globalization;
-using Klyte.Localization;
+using WriteEverywhere.Localization;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;

@@ -4,7 +4,6 @@ using Kwytto.Utils;
 using System.Xml;
 using System.Xml.Serialization;
 using UnityEngine;
-using WriteEverywhere.Data;
 using WriteEverywhere.Rendering;
 
 namespace WriteEverywhere.Xml
@@ -86,11 +85,15 @@ namespace WriteEverywhere.Xml
         public string FixedColorStr { get => m_cachedColor == null ? null : ColorExtensions.ToRGB(FixedColor ?? Color.clear); set => FixedColor = value.IsNullOrWhiteSpace() ? null : (Color?)ColorExtensions.FromRGB(value); }
 
         [XmlAttribute("fontName")]
-        public string FontName { get; set; }
+        public string FontName { get => fontName; set => fontName = value; }
+        [XmlIgnore]
+        public ref string RefFontName => ref fontName;
 
         [XmlElement("textDescriptor")]
         public BoardTextDescriptorGeneralXml[] TextDescriptors { get => textDescriptors; set => textDescriptors = value ?? new BoardTextDescriptorGeneralXml[0]; }
         private BoardTextDescriptorGeneralXml[] textDescriptors = new BoardTextDescriptorGeneralXml[0];
+        [XmlIgnore]
+        internal ref BoardTextDescriptorGeneralXml[] RefTextDescriptors => ref textDescriptors;
 
         [XmlAttribute("simplePropName")]
         public string m_simplePropName;
@@ -117,6 +120,7 @@ namespace WriteEverywhere.Xml
         }
         [XmlIgnore]
         protected PropInfo m_simpleProp;
+        private string fontName;
 
         [XmlAttribute("saveName")]
         public string SaveName { get; set; }

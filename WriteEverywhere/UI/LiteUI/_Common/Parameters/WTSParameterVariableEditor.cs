@@ -5,7 +5,7 @@ using WriteEverywhere.Xml;
 using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
-using Klyte.Localization;
+using WriteEverywhere.Localization;
 
 namespace WriteEverywhere.UI
 {
@@ -118,7 +118,7 @@ namespace WriteEverywhere.UI
             HoverIdx = selectOpt;
             var str = tab.m_searchResult.Value[HoverIdx];
             var key = cl.nextLevelOptions.Where(z => z.Key.ToString() == str).FirstOrDefault().Key;
-            tab.SetVariableDescription(key is null ? "" : $"<color=#00FF00>{key}</color>\n\n" + key.VariableToI18n());
+            tab.SetVariableDescription(key is null ? "" : $"<color=#00FF00>{key}</color>\n\n" + key.ValueToI18n());
         }
 
         public string[] OnFilterParam(WTSBaseParamsTab<T> tab)

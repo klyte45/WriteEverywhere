@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using WriteEverywhere.Localization;
 
 namespace WriteEverywhere.Xml
 {
@@ -179,9 +180,9 @@ namespace WriteEverywhere.Xml
             currentLocaleDesc = !(currentLevel.descriptionKey is null)
                 ? currentLevel.descriptionKey
                 : !(levelKey is null)
-                    ? levelKey.VariableToI18n()
+                    ? levelKey.ValueToI18n()
                     : !(currentLevel.defaultValue is null)
-                        ? currentLevel.defaultValue.VariableToI18n()
+                        ? currentLevel.defaultValue.ValueToI18n()
                         : null;
             currentLevel.level = level;
             return currentLevel;

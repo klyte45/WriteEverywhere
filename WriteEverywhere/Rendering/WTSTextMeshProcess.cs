@@ -88,7 +88,7 @@ namespace WriteEverywhere.Rendering
         //{
         //    if (baseFont is null)
         //    {
-        //        baseFont = FontServer.instance[vehicleDescriptor.FontName] ?? FontServer.instance[WTSVehicleData.Instance.DefaultFont];
+        //        baseFont = FontServer.instance[vehicleDescriptor.FontName] ?? FontServer.instance[GeneralWritingEditorData.Instance.DefaultFont];
         //    }
         //    switch (textDescriptor.textContent)
         //    {
@@ -131,7 +131,7 @@ namespace WriteEverywhere.Rendering
         //                break;
         //            case null:
         //            case TextRenderingClass.Vehicle:
-        //                baseFont = FontServer.instance[WTSVehicleData.Instance.DefaultFont];
+        //                baseFont = FontServer.instance[GeneralWritingEditorData.Instance.DefaultFont];
         //                break;
         //        }
         //    }

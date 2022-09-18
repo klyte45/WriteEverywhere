@@ -1,5 +1,5 @@
 ﻿using ColossalFramework;
-using Klyte.Localization;
+using WriteEverywhere.Localization;
 using Kwytto.LiteUI;
 using Kwytto.UI;
 using Kwytto.Utils;

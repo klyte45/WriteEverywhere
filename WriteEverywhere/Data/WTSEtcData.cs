@@ -92,7 +92,7 @@ namespace WriteEverywhere.Data
                 case TextRenderingClass.PlaceOnNet:
                     return WTSOnNetData.Instance.DefaultFont;
                     //    case TextRenderingClass.Vehicle:
-                    //        return WTSVehicleData.Instance.DefaultFont;
+                    //        return GeneralWritingEditorData.Instance.DefaultFont;
             }
             return null;
         }

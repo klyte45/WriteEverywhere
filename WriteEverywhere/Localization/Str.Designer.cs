@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Klyte.Localization {
+namespace WriteEverywhere.Localization {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Klyte.Localization {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Klyte.Localization.Str", typeof(Str).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("WriteEverywhere.Localization.Str", typeof(Str).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -66,6 +66,186 @@ namespace Klyte.Localization {
         internal static string root_modDescription {
             get {
                 return ResourceManager.GetString("root_modDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Blink 250ms.
+        /// </summary>
+        internal static string we_Enum__BlinkType_Blink_025_025 {
+            get {
+                return ResourceManager.GetString("we_Enum__BlinkType_Blink_025_025", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Blink 500ms.
+        /// </summary>
+        internal static string we_Enum__BlinkType_Blink_050_050 {
+            get {
+                return ResourceManager.GetString("we_Enum__BlinkType_Blink_050_050", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Custom.
+        /// </summary>
+        internal static string we_Enum__BlinkType_Custom {
+            get {
+                return ResourceManager.GetString("we_Enum__BlinkType_Custom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Medium fade.
+        /// </summary>
+        internal static string we_Enum__BlinkType_MediumFade_500_500 {
+            get {
+                return ResourceManager.GetString("we_Enum__BlinkType_MediumFade_500_500", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Mild fade.
+        /// </summary>
+        internal static string we_Enum__BlinkType_MildFade_0125_0125 {
+            get {
+                return ResourceManager.GetString("we_Enum__BlinkType_MildFade_0125_0125", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a None.
+        /// </summary>
+        internal static string we_Enum__BlinkType_None {
+            get {
+                return ResourceManager.GetString("we_Enum__BlinkType_None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Strong blaze (neon).
+        /// </summary>
+        internal static string we_Enum__BlinkType_StrongBlaze_0125_0125 {
+            get {
+                return ResourceManager.GetString("we_Enum__BlinkType_StrongBlaze_0125_0125", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Strong fade.
+        /// </summary>
+        internal static string we_Enum__BlinkType_StrongFade_250_250 {
+            get {
+                return ResourceManager.GetString("we_Enum__BlinkType_StrongFade_250_250", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Electronic Boards.
+        /// </summary>
+        internal static string we_Enum__FontClass_ElectronicBoards {
+            get {
+                return ResourceManager.GetString("we_Enum__FontClass_ElectronicBoards", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Highway Shields.
+        /// </summary>
+        internal static string we_Enum__FontClass_HighwayShields {
+            get {
+                return ResourceManager.GetString("we_Enum__FontClass_HighwayShields", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Public Transport.
+        /// </summary>
+        internal static string we_Enum__FontClass_PublicTransport {
+            get {
+                return ResourceManager.GetString("we_Enum__FontClass_PublicTransport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Regular.
+        /// </summary>
+        internal static string we_Enum__FontClass_Regular {
+            get {
+                return ResourceManager.GetString("we_Enum__FontClass_Regular", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Stencil.
+        /// </summary>
+        internal static string we_Enum__FontClass_Stencil {
+            get {
+                return ResourceManager.GetString("we_Enum__FontClass_Stencil", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Always bright.
+        /// </summary>
+        internal static string we_Enum__MaterialType_BRIGHT {
+            get {
+                return ResourceManager.GetString("we_Enum__MaterialType_BRIGHT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Day/Night illumination.
+        /// </summary>
+        internal static string we_Enum__MaterialType_DAYNIGHT {
+            get {
+                return ResourceManager.GetString("we_Enum__MaterialType_DAYNIGHT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a By flags.
+        /// </summary>
+        internal static string we_Enum__MaterialType_FLAGS {
+            get {
+                return ResourceManager.GetString("we_Enum__MaterialType_FLAGS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Opaque.
+        /// </summary>
+        internal static string we_Enum__MaterialType_OPAQUE {
+            get {
+                return ResourceManager.GetString("we_Enum__MaterialType_OPAQUE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Center.
+        /// </summary>
+        internal static string we_Enum__UIHorizontalAlignment_Center {
+            get {
+                return ResourceManager.GetString("we_Enum__UIHorizontalAlignment_Center", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Left.
+        /// </summary>
+        internal static string we_Enum__UIHorizontalAlignment_Left {
+            get {
+                return ResourceManager.GetString("we_Enum__UIHorizontalAlignment_Left", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Right.
+        /// </summary>
+        internal static string we_Enum__UIHorizontalAlignment_Right {
+            get {
+                return ResourceManager.GetString("we_Enum__UIHorizontalAlignment_Right", resourceCulture);
             }
         }
         
