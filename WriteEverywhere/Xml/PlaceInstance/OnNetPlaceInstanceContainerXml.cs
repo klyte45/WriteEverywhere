@@ -16,7 +16,7 @@ namespace WriteEverywhere.Xml
         [XmlIgnore]
         public List<Vector3Xml> m_cachedRotations;
         [XmlIgnore]
-        public PropInfo m_simpleCachedProp => m_simpleProp;
+        public PropInfo SimpleCachedProp => m_simpleProp;
 
         public override void OnChangeMatrixData()
         {
@@ -73,7 +73,7 @@ namespace WriteEverywhere.Xml
             m_textParameters[idx] = null;
         }
 
-        public Dictionary<int, List<BoardTextDescriptorGeneralXml>> GetAllParametersUsedWithData() => Descriptor?.TextDescriptors.Where(x => x.IsParameter()).GroupBy(x => x.m_parameterIdx).ToDictionary(x => x.Key, x => x.ToList());
+        public Dictionary<int, List<BoardTextDescriptorGeneralXml>> GetAllParametersUsedWithData() => TextDescriptors.Where(x => x.IsParameter()).GroupBy(x => x.m_parameterIdx).ToDictionary(x => x.Key, x => x.ToList());
 
         [XmlIgnore]
         public TextParameterWrapper[] m_textParameters = new TextParameterWrapper[TEXT_PARAMETERS_COUNT];

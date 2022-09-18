@@ -19,7 +19,7 @@ using Kwytto.LiteUI;
 namespace WriteEverywhere.Data
 {
     [XmlRoot("PropLayoutData")]
-    public class WTSPropLayoutData : DataExtensionLibBase<WTSPropLayoutData, BoardDescriptorGeneralXml>
+    public class WTSPropLayoutData : DataExtensionLibBase<WTSPropLayoutData, LibableWriteOnXml>
     {
 
         public override string SaveId => "K45_WE_PropLayoutData";
@@ -47,15 +47,15 @@ namespace WriteEverywhere.Data
         }
 
         [XmlElement("descriptorsData")]
-        public override ListWrapper<BoardDescriptorGeneralXml> SavedDescriptorsSerialized
+        public override ListWrapper<LibableWriteOnXml> SavedDescriptorsSerialized
         {
-            get => new ListWrapper<BoardDescriptorGeneralXml>() { listVal = m_savedDescriptorsSerialized.Values.Where(x => x.m_configurationSource == ConfigurationSource.CITY).ToList() };
+            get => new ListWrapper<LibableWriteOnXml>() { listVal = m_savedDescriptorsSerialized.Values.Where(x => x.m_configurationSource == ConfigurationSource.CITY).ToList() };
             set => ReloadAllPropsConfigurations(value);
         }
 
         private static string DefaultFilename { get; } = $"{MainController.m_defaultFileNamePropsXml}.xml";
         public void ReloadAllPropsConfigurations() => ReloadAllPropsConfigurations(null);
-        private void ReloadAllPropsConfigurations(ListWrapper<BoardDescriptorGeneralXml> fromCity)
+        private void ReloadAllPropsConfigurations(ListWrapper<LibableWriteOnXml> fromCity)
         {
             m_savedDescriptorsSerialized = fromCity?.listVal?.Select(x => { x.m_configurationSource = ConfigurationSource.CITY; return x; }).GroupBy(x => x.SaveName).ToDictionary(x => x.Key, x => x.First()) ?? m_savedDescriptorsSerialized.Where(x => x.Value.m_configurationSource == ConfigurationSource.CITY).ToDictionary(x => x.Key, x => x.Value);
             LogUtils.DoLog("LOADING PROPS CONFIG START -----------------------------");
@@ -104,13 +104,13 @@ namespace WriteEverywhere.Data
         }
         private void LoadDescriptorsFromXml(FileStream stream, PropInfo info)
         {
-            var serializer = new XmlSerializer(typeof(ListWrapper<BoardDescriptorGeneralXml>));
+            var serializer = new XmlSerializer(typeof(ListWrapper<LibableWriteOnXml>));
 
             LogUtils.DoLog($"trying deserialize: {info}");
 
-            if (serializer.Deserialize(stream) is ListWrapper<BoardDescriptorGeneralXml> config)
+            if (serializer.Deserialize(stream) is ListWrapper<LibableWriteOnXml> config)
             {
-                var result = new List<BoardDescriptorGeneralXml>();
+                var result = new List<LibableWriteOnXml>();
                 foreach (var item in config.listVal)
                 {
                     if (info != null)

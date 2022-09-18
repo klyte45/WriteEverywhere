@@ -8,7 +8,7 @@ using WriteEverywhere.Rendering;
 
 namespace WriteEverywhere.Xml
 {
-    public class BoardDescriptorGeneralXml : ILibable, IKeyGetter<string>
+    public class LibableWriteOnXml : ILibable, IKeyGetter<string>
     {
         private const string DEFAULT_PROPNAME = "";
         private string propName;

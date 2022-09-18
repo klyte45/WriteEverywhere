@@ -55,7 +55,7 @@ namespace WriteEverywhere.Rendering
         }
 
         public static Color RenderPropMesh<DESC>(PropInfo propInfo, RenderManager.CameraInfo cameraInfo, ushort refId, int boardIdx, int secIdx,
-            int layerMask, float refAngleRad, Vector3 position, Vector4 dataVector, Vector3 propAngle, Vector3 propScale, BoardDescriptorGeneralXml propLayout,
+            int layerMask, float refAngleRad, Vector3 position, Vector4 dataVector, Vector3 propAngle, Vector3 propScale, LibableWriteOnXml propLayout,
             DESC descriptor, out Matrix4x4 propMatrix,
             out bool rendered, InstanceID propRenderID) where DESC : BaseWriteOnXml
         {
@@ -101,38 +101,24 @@ namespace WriteEverywhere.Rendering
             return matrix;
         }
 
-        public static Color GetColorForRule<DESC>(ushort refId, int boardIdx, int secIdx, BoardDescriptorGeneralXml propLayout, DESC descriptor, out bool rendered) where DESC : BaseWriteOnXml
+        public static Color GetColorForRule<DESC>(ushort refId, int boardIdx, int secIdx, LibableWriteOnXml propLayout, DESC descriptor, out bool rendered) where DESC : BaseWriteOnXml
         {
-            Color propColor = WTSDynamicTextRenderingRules.GetPropColor(refId, boardIdx, secIdx, descriptor, propLayout, out bool colorFound);
+            Color propColor = GetPropColor(refId, boardIdx, secIdx, descriptor, out bool colorFound);
             if (!colorFound)
             {
                 rendered = false;
                 return propColor;
             }
             propColor.a = 1;
-            rendered = true;
-            return propColor;
-        }
-
-        public static Color EnsurePropCache<DESC>(ushort refId, int boardIdx, int secIdx, BoardDescriptorGeneralXml propLayout, DESC descriptor, out bool rendered) where DESC : BaseWriteOnXml
-        {
-            Color propColor = WTSDynamicTextRenderingRules.GetPropColor(refId, boardIdx, secIdx, descriptor, propLayout, out bool colorFound);
-            if (!colorFound)
-            {
-                rendered = false;
-                return propColor;
-            }
-            propColor.a = 1;
-
             rendered = true;
             return propColor;
         }
 
         public static void RenderTextMesh(ushort refID, int boardIdx, int secIdx, BaseWriteOnXml descriptor, Matrix4x4 propMatrix,
-            BoardDescriptorGeneralXml propLayout, ref BoardTextDescriptorGeneralXml textDescriptor, MaterialPropertyBlock materialPropertyBlock,
-            int instanceFlags, int instanceFlags2, Color parentColor, PrefabInfo srcInfo, ref int defaultCallsCounter, Camera targetCamera = null)
+            Vector3 propScale, ref BoardTextDescriptorGeneralXml textDescriptor, MaterialPropertyBlock materialPropertyBlock,
+            int instanceFlags, int instanceFlags2, Color parentColor, PrefabInfo srcInfo, ref int defaultCallsCounter, string fontName, Camera targetCamera = null)
         {
-            BasicRenderInformation renderInfo = WTSTextMeshProcess.GetTextMesh(textDescriptor, refID, boardIdx, secIdx, descriptor, propLayout, out IEnumerable<BasicRenderInformation> multipleOutput, propLayout?.CachedProp);
+            BasicRenderInformation renderInfo = WTSTextMeshProcess.GetTextMesh(textDescriptor, refID, boardIdx, secIdx, descriptor, fontName, out IEnumerable<BasicRenderInformation> multipleOutput, srcInfo);
             if (renderInfo == null)
             {
                 if (multipleOutput != null && multipleOutput.Count() > 0)
@@ -176,7 +162,7 @@ namespace WriteEverywhere.Rendering
                         Vector3 lastRowOrColumnStartPoint = textDescriptor.MultiItemSettings.VerticalFirst
                             ? new Vector3(startPoint.x, textDescriptor.PlacingConfig.Position.Y - CalculateOffsetYMultiItem(textDescriptor.MultiItemSettings.VerticalAlign, lastRowOrColumnItemCount, rowHeight), startPoint.z)
                             : new Vector3(textDescriptor.PlacingConfig.Position.X + CalculateOffsetXMultiItem(textDescriptor.m_textAlign, lastRowOrColumnItemCount, columnWidth, maxWidth), startPoint.y, startPoint.z);
-                        Color colorToSet = GetTextColor(refID, boardIdx, secIdx, descriptor, propLayout, textDescriptor);
+                        Color colorToSet = GetTextColor(refID, boardIdx, secIdx, descriptor, textDescriptor);
                         //LogUtils.DoWarnLog($"sz = {resultArray.Length};targetCount = {targetCount}; origPos = {textDescriptor.PlacingConfig.Position}; maxItemsInAColumn = {maxItemsInAColumn}; maxItemsInARow = {maxItemsInARow};columnWidth={columnWidth};rowHeight={rowHeight}");
 
 
@@ -221,7 +207,7 @@ namespace WriteEverywhere.Rendering
             Vector3 targetPos = textDescriptor.PlacingConfig.Position;
 
 
-            DrawTextBri(refID, boardIdx, secIdx, propMatrix, textDescriptor, materialPropertyBlock, renderInfo, GetTextColor(refID, boardIdx, secIdx, descriptor, propLayout, textDescriptor), targetPos, textDescriptor.PlacingConfig.Rotation, descriptor.PropScale, textDescriptor.PlacingConfig.m_create180degYClone, textDescriptor.m_textAlign, textDescriptor.MaxWidthMeters, instanceFlags, instanceFlags2, parentColor, srcInfo, ref defaultCallsCounter, targetCamera);
+            DrawTextBri(refID, boardIdx, secIdx, propMatrix, textDescriptor, materialPropertyBlock, renderInfo, GetTextColor(refID, boardIdx, secIdx, descriptor, textDescriptor), targetPos, textDescriptor.PlacingConfig.Rotation, descriptor.PropScale, textDescriptor.PlacingConfig.m_create180degYClone, textDescriptor.m_textAlign, textDescriptor.MaxWidthMeters, instanceFlags, instanceFlags2, parentColor, srcInfo, ref defaultCallsCounter, targetCamera);
         }
 
 
@@ -567,7 +553,7 @@ namespace WriteEverywhere.Rendering
         #region Color rules
 
         private static Randomizer rand = new Randomizer(0);
-        public static Color GetPropColor(ushort refId, int boardIdx, int secIdx, BaseWriteOnXml instance, BoardDescriptorGeneralXml propLayout, out bool found)
+        public static Color GetPropColor(ushort refId, int boardIdx, int secIdx, BaseWriteOnXml instance, out bool found)
         {
 
             //if (instance is BoardInstanceRoadNodeXml)
@@ -625,17 +611,17 @@ namespace WriteEverywhere.Rendering
             //else 
             if (instance is WriteOnNetXml n)
             {
-                found = n.Descriptor != null || n.SimpleProp != null;
-                return n.Descriptor?.FixedColor ?? n.SimpleProp?.m_color0 ?? Color.white;
+                found = n.SimpleProp != null;
+                return n.FixedColor ?? n.SimpleProp?.m_color0 ?? Color.white;
             }
             found = false;
             return default;
         }
-        private static Color GetTextColor(ushort refID, int boardIdx, int secIdx, BaseWriteOnXml descriptor, BoardDescriptorGeneralXml propLayout, BoardTextDescriptorGeneralXml textDescriptor)
+        private static Color GetTextColor(ushort refID, int boardIdx, int secIdx, BaseWriteOnXml descriptor, BoardTextDescriptorGeneralXml textDescriptor)
         {
             if (textDescriptor.ColoringConfig.UseContrastColor)
             {
-                return GetContrastColor(refID, boardIdx, secIdx, descriptor, propLayout);
+                return GetContrastColor(refID, boardIdx, secIdx, descriptor);
             }
             else if (textDescriptor.ColoringConfig.m_cachedColor != null)
             {
@@ -677,7 +663,7 @@ namespace WriteEverywhere.Rendering
             return Color.gray;
         }
 
-        public static Color GetContrastColor(ushort refID, int boardIdx, int secIdx, BaseWriteOnXml instance, BoardDescriptorGeneralXml propLayout)
+        public static Color GetContrastColor(ushort refID, int boardIdx, int secIdx, BaseWriteOnXml instance)
         {
             //if (instance is BoardInstanceRoadNodeXml)
             //{
@@ -687,7 +673,7 @@ namespace WriteEverywhere.Rendering
             //{
             //    return (preview?.Descriptor?.FixedColor ?? GetCurrentSimulationColor()).ContrastColor();
             //}
-            var targetColor = GetPropColor(refID, boardIdx, secIdx, instance, propLayout, out bool colorFound);
+            var targetColor = GetPropColor(refID, boardIdx, secIdx, instance, out bool colorFound);
             return (colorFound ? targetColor : Color.white).ContrastColor();
         }
         #endregion

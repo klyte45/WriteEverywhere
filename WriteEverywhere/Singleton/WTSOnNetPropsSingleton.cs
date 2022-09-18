@@ -35,13 +35,11 @@ namespace WriteEverywhere.Singleton
             for (var i = 0; i < itemGroup.BoardsData.Length; i++)
             {
                 var targetDescriptor = itemGroup.BoardsData[i];
-                if (targetDescriptor?.Descriptor == null)
+                if (targetDescriptor?.SimpleProp is null)
                 {
-                    if (targetDescriptor?.SimpleProp is null)
-                    {
-                        continue;
-                    }
+                    continue;
                 }
+
                 if (targetDescriptor.m_cachedPositions == null || targetDescriptor.m_cachedRotations == null)
                 {
                     bool segmentInverted = (data.m_flags & NetSegment.Flags.Invert) > 0;
@@ -70,7 +68,7 @@ namespace WriteEverywhere.Singleton
                         CreateSegmentRenderInstance(ref data, targetDescriptor, segmentInverted, segPos);
                     }
                 }
-                RenderSign(cameraInfo, segmentId, i, ref targetDescriptor, targetDescriptor?.Descriptor?.CachedProp ?? targetDescriptor.m_simpleCachedProp);
+                RenderSign(cameraInfo, segmentId, i, ref targetDescriptor, targetDescriptor.SimpleCachedProp);
             }
 
         }
@@ -106,26 +104,17 @@ namespace WriteEverywhere.Singleton
             for (var i = 0; i < itemGroup.BoardsData.Length; i++)
             {
                 var targetDescriptor = itemGroup.BoardsData[i];
-                bool rendered;
-                var isSimple = targetDescriptor.Descriptor == null;
-                if (isSimple)
+                if (targetDescriptor?.SimpleProp == null)
                 {
-                    if (targetDescriptor?.SimpleProp == null)
-                    {
-                        continue;
-                    }
-                    WTSDynamicTextRenderingRules.EnsurePropCache(segmentID, i, 0, targetDescriptor.Descriptor, targetDescriptor, out rendered);
+                    continue;
                 }
-                else
-                {
-                    WTSDynamicTextRenderingRules.GetColorForRule(segmentID, i, 0, targetDescriptor.Descriptor, targetDescriptor, out rendered);
-                }
+                WTSDynamicTextRenderingRules.GetColorForRule(segmentID, i, 0, null, targetDescriptor, out bool rendered);
                 if (rendered)
                 {
                     int deltaVertexCount = 0;
                     int deltaTriangleCount = 0;
                     int deltaObjectCount = 0;
-                    PropInstance.CalculateGroupData(isSimple ? targetDescriptor.m_simpleCachedProp : targetDescriptor.Descriptor.CachedProp, layer, ref deltaVertexCount, ref deltaTriangleCount, ref deltaObjectCount, ref vertexArrays);
+                    PropInstance.CalculateGroupData(targetDescriptor.SimpleCachedProp, layer, ref deltaVertexCount, ref deltaTriangleCount, ref deltaObjectCount, ref vertexArrays);
 
                     int multiplier = 1;
 
@@ -156,27 +145,17 @@ namespace WriteEverywhere.Singleton
                     continue;
                 }
 
-                if (targetDescriptor?.Descriptor == null)
+                if (targetDescriptor?.SimpleProp is null)
                 {
-                    if (targetDescriptor?.SimpleProp is null)
-                    {
-                        continue;
-                    }
+                    continue;
                 }
                 if (!(targetDescriptor.m_cachedRotations is null) && !(targetDescriptor.m_cachedPositions is null))
                 {
-                    if (!(targetDescriptor.Descriptor?.CachedProp is null))
+                    if (!(targetDescriptor.SimpleCachedProp is null))
                     {
                         for (int k = 0; k < targetDescriptor.m_cachedPositions.Count; k++)
                         {
-                            WTSDynamicTextRenderingRules.PropInstancePopulateGroupData(targetDescriptor.Descriptor.CachedProp, layer, new InstanceID { NetSegment = segmentID }, targetDescriptor.m_cachedPositions[k], targetDescriptor.Scale, targetDescriptor.m_cachedRotations[k], ref vertexIndex, ref triangleIndex, groupPosition, data, ref min, ref max, ref maxRenderDistance, ref maxInstanceDistance);
-                        }
-                    }
-                    if (!(targetDescriptor.m_simpleCachedProp is null))
-                    {
-                        for (int k = 0; k < targetDescriptor.m_cachedPositions.Count; k++)
-                        {
-                            WTSDynamicTextRenderingRules.PropInstancePopulateGroupData(targetDescriptor.m_simpleCachedProp, layer, new InstanceID { NetSegment = segmentID }, targetDescriptor.m_cachedPositions[k], targetDescriptor.Scale, targetDescriptor.m_cachedRotations[k], ref vertexIndex, ref triangleIndex, groupPosition, data, ref min, ref max, ref maxRenderDistance, ref maxInstanceDistance);
+                            WTSDynamicTextRenderingRules.PropInstancePopulateGroupData(targetDescriptor.SimpleCachedProp, layer, new InstanceID { NetSegment = segmentID }, targetDescriptor.m_cachedPositions[k], targetDescriptor.Scale, targetDescriptor.m_cachedRotations[k], ref vertexIndex, ref triangleIndex, groupPosition, data, ref min, ref max, ref maxRenderDistance, ref maxInstanceDistance);
                         }
                     }
                 }
@@ -194,30 +173,27 @@ namespace WriteEverywhere.Singleton
             {
                 var position = targetDescriptor.m_cachedPositions[i];
                 var rotation = targetDescriptor.m_cachedRotations[i];
-                var isSimple = targetDescriptor.Descriptor == null;
 
-                var propname = isSimple ? targetDescriptor.m_simplePropName : targetDescriptor.Descriptor?.PropName;
+                var propname = targetDescriptor.m_simplePropName;
                 if (propname is null)
                 {
                     return;
                 }
 
-                Color parentColor = WTSDynamicTextRenderingRules.RenderPropMesh(cachedProp, cameraInfo, segmentId, boardIdx, 0, 0xFFFFFFF, 0, position, Vector4.zero, rotation, targetDescriptor.PropScale, targetDescriptor.Descriptor, targetDescriptor, out Matrix4x4 propMatrix, out bool rendered, new InstanceID { NetNode = segmentId });
+                Color parentColor = WTSDynamicTextRenderingRules.RenderPropMesh(cachedProp, cameraInfo, segmentId, boardIdx, 0, 0xFFFFFFF, 0, position, Vector4.zero, rotation, targetDescriptor.PropScale, null, targetDescriptor, out Matrix4x4 propMatrix, out bool rendered, new InstanceID { NetNode = segmentId });
 
 
-                if (rendered && !isSimple)
+
+                for (int j = 0; j < targetDescriptor.TextDescriptors.Length; j++)
                 {
-
-                    for (int j = 0; j < targetDescriptor.Descriptor.TextDescriptors.Length; j++)
+                    if (cameraInfo.CheckRenderDistance(position, WTSDynamicTextRenderingRules.RENDER_DISTANCE_FACTOR * targetDescriptor.TextDescriptors[j].TextLineHeight * (targetDescriptor.TextDescriptors[j].IlluminationConfig.IlluminationType == FontStashSharp.MaterialType.OPAQUE ? 1 : 3)))
                     {
-                        if (cameraInfo.CheckRenderDistance(position, WTSDynamicTextRenderingRules.RENDER_DISTANCE_FACTOR * targetDescriptor.Descriptor.TextDescriptors[j].TextLineHeight * (targetDescriptor.Descriptor.TextDescriptors[j].IlluminationConfig.IlluminationType == FontStashSharp.MaterialType.OPAQUE ? 1 : 3)))
-                        {
-                            MaterialPropertyBlock properties = PropManager.instance.m_materialBlock;
-                            properties.Clear();
-                            WTSDynamicTextRenderingRules.RenderTextMesh(segmentId, boardIdx, i, targetDescriptor, propMatrix, targetDescriptor.Descriptor, ref targetDescriptor.Descriptor.TextDescriptors[j], properties, 0, 0, parentColor, cachedProp, ref NetManager.instance.m_drawCallData.m_batchedCalls);
-                        }
-
+                        MaterialPropertyBlock properties = PropManager.instance.m_materialBlock;
+                        properties.Clear();
+                        WTSDynamicTextRenderingRules.RenderTextMesh(segmentId, boardIdx, i, targetDescriptor, propMatrix, targetDescriptor.Scale, ref targetDescriptor.TextDescriptors[j], properties, 0, 0, parentColor, cachedProp, ref NetManager.instance.m_drawCallData.m_batchedCalls, targetDescriptor.FontName);
                     }
+
+
                 }
 
                 if (WTSOnNetLiteUI.LockSelection && i == WTSOnNetLiteUI.LockSelectionInstanceNum && WTSOnNetLiteUI.Instance.Visible && (WTSOnNetLiteUI.Instance.CurrentSegmentId == segmentId) && WTSOnNetLiteUI.Instance.ListSel == boardIdx && !ModInstance.Controller.RoadSegmentToolInstance.enabled)

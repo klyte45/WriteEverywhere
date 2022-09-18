@@ -199,7 +199,6 @@ namespace WriteEverywhere.UI
         private ExportableBoardInstanceOnNetListXml OnGetCurrentList() => new ExportableBoardInstanceOnNetListXml
         {
             Instances = CurrentEditingInstance.BoardsData.Select((x) => XmlUtils.DefaultXmlDeserialize<WriteOnNetXml>(XmlUtils.DefaultXmlSerialize(x))).ToArray(),
-            Layouts = CurrentEditingInstance.GetLocalLayouts()
         };
 
         private void OnDeleteList()

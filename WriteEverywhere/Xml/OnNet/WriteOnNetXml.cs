@@ -1,6 +1,9 @@
-﻿using Kwytto.Interfaces;
+﻿using ColossalFramework;
+using Kwytto.Interfaces;
+using Kwytto.Utils;
 using System.Xml;
 using System.Xml.Serialization;
+using UnityEngine;
 using WriteEverywhere.Data;
 using WriteEverywhere.Rendering;
 
@@ -68,24 +71,6 @@ namespace WriteEverywhere.Xml
             }
         }
 
-        [XmlAttribute("propLayoutName")]
-        public string PropLayoutName
-        {
-            get => Descriptor?.SaveName;
-            set
-            {
-                m_propLayoutName = value;
-                m_descriptor = null;
-                OnChangeMatrixData();
-            }
-        }
-
-        private string m_propLayoutName;
-
-
-
-        [XmlIgnore]
-        private BoardDescriptorGeneralXml m_descriptor;
         private float m_segmentPosition = 0.5f;
         private float m_segmentPositionStart = 0f;
         private float m_segmentPositionEnd = 1f;
@@ -94,28 +79,18 @@ namespace WriteEverywhere.Xml
         private PivotPosition m_pivotPosition = PivotPosition.Left;
 
         [XmlIgnore]
-        public BoardDescriptorGeneralXml Descriptor
-        {
-            get
-            {
-                if (m_descriptor == null && m_propLayoutName != null)
-                {
-                    m_descriptor = WTSPropLayoutData.Instance.Get(m_propLayoutName);
-                    if (m_descriptor == null || m_descriptor.m_allowedRenderClass != Rendering.TextRenderingClass.PlaceOnNet)
-                    {
-                        m_propLayoutName = null;
-                    }
-                    OnChangeMatrixData();
-                }
-                return m_descriptor;
-            }
-            internal set
-            {
-                m_propLayoutName = value?.SaveName;
-                m_descriptor = WTSPropLayoutData.Instance.Get(m_propLayoutName);
-            }
-        }
+        public Color? FixedColor { get => m_cachedColor; set => m_cachedColor = value; }
+        [XmlIgnore]
+        private Color? m_cachedColor;
+        [XmlAttribute("fixedColor")]
+        public string FixedColorStr { get => m_cachedColor == null ? null : ColorExtensions.ToRGB(FixedColor ?? Color.clear); set => FixedColor = value.IsNullOrWhiteSpace() ? null : (Color?)ColorExtensions.FromRGB(value); }
 
+        [XmlAttribute("fontName")]
+        public string FontName { get; set; }
+
+        [XmlElement("textDescriptor")]
+        public BoardTextDescriptorGeneralXml[] TextDescriptors { get => textDescriptors; set => textDescriptors = value ?? new BoardTextDescriptorGeneralXml[0]; }
+        private BoardTextDescriptorGeneralXml[] textDescriptors = new BoardTextDescriptorGeneralXml[0];
 
         [XmlAttribute("simplePropName")]
         public string m_simplePropName;
@@ -146,11 +121,11 @@ namespace WriteEverywhere.Xml
         [XmlAttribute("saveName")]
         public string SaveName { get; set; }
 
-        public override PrefabInfo TargetAssetParameter => Descriptor?.CachedProp;
+        public override PrefabInfo TargetAssetParameter => SimpleProp;
 
         public override TextRenderingClass RenderingClass => TextRenderingClass.PlaceOnNet;
 
-        public override string DescriptorOverrideFont => Descriptor?.FontName;
+        public override string DescriptorOverrideFont => FontName;
 
         public override TextParameterWrapper GetParameter(int idx) => null;
     }

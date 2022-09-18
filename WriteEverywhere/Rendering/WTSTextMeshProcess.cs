@@ -13,10 +13,10 @@ namespace WriteEverywhere.Rendering
 
     public static class WTSTextMeshProcess
     {
-        internal static BasicRenderInformation GetTextMesh(BoardTextDescriptorGeneralXml textDescriptor, ushort refID, int boardIdx, int secIdx, BaseWriteOnXml instance, BoardDescriptorGeneralXml propLayout, out IEnumerable<BasicRenderInformation> multipleOutput, PrefabInfo refPrefab)
+        internal static BasicRenderInformation GetTextMesh(BoardTextDescriptorGeneralXml textDescriptor, ushort refID, int boardIdx, int secIdx, BaseWriteOnXml instance, string layoutFontName, out IEnumerable<BasicRenderInformation> multipleOutput, PrefabInfo refPrefab)
         {
             multipleOutput = null;
-            DynamicSpriteFont baseFont = FontServer.instance[WTSEtcData.Instance.FontSettings.GetTargetFont(textDescriptor.m_fontClass)] ?? FontServer.instance[propLayout?.FontName];
+            DynamicSpriteFont baseFont = FontServer.instance[WTSEtcData.Instance.FontSettings.GetTargetFont(textDescriptor.m_fontClass)] ?? FontServer.instance[layoutFontName];
 
             //if (instance is BoardPreviewInstanceXml preview)
             //{

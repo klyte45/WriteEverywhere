@@ -7,9 +7,7 @@ using System;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
-using WriteEverywhere.Data;
 using WriteEverywhere.Libraries;
-using WriteEverywhere.Rendering;
 using WriteEverywhere.Xml;
 
 namespace WriteEverywhere.UI
@@ -43,7 +41,6 @@ namespace WriteEverywhere.UI
             GetLayout
         }
 
-        private int m_currentModelType;
         private readonly string[] m_modelTypesStr = new string[] { Str.WTS_ONNETEDITOR_PROPLAYOUT, Str.WTS_ONNETEDITOR_PROPMODELSELECT };
         private Vector2 m_tabViewScroll;
         private readonly Wrapper<IIndexedPrefabData[]> m_searchResultPrefab = new Wrapper<IIndexedPrefabData[]>();
@@ -99,58 +96,28 @@ namespace WriteEverywhere.UI
             m_onImportFromLib = onImportFromLib;
             m_onDelete = onDelete;
 
-            m_layoutFilter = new GUIFilterItemsScreen<State>(Str.WTS_BUILDINGEDITOR_MODELLAYOUTSELECT, ModInstance.Controller, OnFilterLayouts, OnModelSet, GoTo, State.Normal, State.GetLayout, otherFilters: DrawExtraFilter);
+            m_layoutFilter = new GUIFilterItemsScreen<State>(Str.WTS_BUILDINGEDITOR_MODELLAYOUTSELECT, ModInstance.Controller, OnFilterLayouts, OnModelSet, GoTo, State.Normal, State.GetLayout);
             this.baseContainer = baseContainer;
         }
 
         #region Layout Selection
         private void GoTo(State obj) => m_currentState = obj;
 
-        private float DrawExtraFilter(out bool hasChanged)
-        {
-            hasChanged = false;
-            using (new GUILayout.HorizontalScope())
-            {
-                GUI.SetNextControlName(f_ModelSelectType);
-                var modelType = GUILayout.SelectionGrid(m_currentModelType, m_modelTypesStr, m_modelTypesStr.Length);
-                hasChanged = m_currentModelType != modelType;
-                m_currentModelType = modelType;
-            };
-            return 25;
-        }
-
         private IEnumerator OnFilterLayouts(string input, Action<string[]> setOptions)
         {
-            if (m_currentModelType == 0)
-            {
-                yield return WTSPropLayoutData.Instance.FilterBy(input, TextRenderingClass.PlaceOnNet, m_searchResultLayouts);
-                setOptions(m_searchResultLayouts.Value);
-            }
-            else
-            {
-                yield return PropIndexes.instance.BasicInputFiltering(input, m_searchResultPrefab);
-                setOptions(m_searchResultPrefab.Value.Select(x => x.DisplayName).ToArray());
-            }
+            yield return PropIndexes.instance.BasicInputFiltering(input, m_searchResultPrefab);
+            setOptions(m_searchResultPrefab.Value.Select(x => x.DisplayName).ToArray());
+
         }
         private void OnModelSet(int selectLayout, string _)
         {
-            if (m_currentModelType == 0)
-            {
-                m_lastItem.PropLayoutName = m_searchResultLayouts.Value[selectLayout];
-                m_lastItem.SimpleProp = null;
-            }
-            else
-            {
-                m_lastItem.PropLayoutName = null;
-                m_lastItem.SimpleProp = m_searchResultPrefab.Value[selectLayout]?.Info as PropInfo;
-            }
+            m_lastItem.SimpleProp = m_searchResultPrefab.Value[selectLayout]?.Info as PropInfo;
         }
         #endregion
 
         private void Reset(OnNetInstanceCacheContainerXml item)
         {
             m_lastItem = item;
-            m_currentModelType = m_lastItem?.SimpleProp is null ? 0 : 1;
             GoTo(State.Normal);
             xmlLibItem.ResetStatus();
         }
@@ -192,7 +159,7 @@ namespace WriteEverywhere.UI
                 }
             };
 
-            m_layoutFilter.DrawButton(areaRect.x, (m_currentModelType != 1 ? item.PropLayoutName : PropIndexes.GetListName(item.SimpleProp)));
+            m_layoutFilter.DrawButton(areaRect.x, PropIndexes.GetListName(item.SimpleProp));
 
             using (new GUILayout.HorizontalScope())
             {
