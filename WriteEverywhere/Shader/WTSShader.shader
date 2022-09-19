@@ -1,11 +1,3 @@
-// Upgrade NOTE: replaced '_World2Object' with 'unity_WorldToObject'
-// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
-
-// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
-
-// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
-
-
 Shader "Custom/WriteEverything/Default" {
     Properties
     {
@@ -26,71 +18,18 @@ Shader "Custom/WriteEverything/Default" {
         Tags
         {
            "QUEUE" = "AlphaTest"
-           "RenderType" = "TransparentCutout"
-        }
+        }        
+       
+        UsePass "Custom/WriteEverything/Default/Back/FORWARD"
+        UsePass "Custom/WriteEverything/Default/Back/PREPASS"
+        UsePass "Custom/WriteEverything/Default/Back/DEFERRED"
+        UsePass "Custom/WriteEverything/Default/Back/META"
 
-        Cull Back
-        ZTest LEqual
-        ZWrite On
-
-        CGPROGRAM
-        #pragma surface surf Deferred alphatest:_Cutout vertex:vert
-        #include "UnityLightingCommon.cginc"
-        #include "WTSShared.cginc"
-
-        uniform 	fixed4 _SimulationTime;
-        uniform 	fixed4 _WeatherParams; // Temp, Rain, Fog, Wetness
-
-        half4 LightingDeferred_PrePass(inout SurfaceOutput s, half4 light)
-        {
-            half4 c;
-            c.rgb = s.Albedo * clamp(light.rgb, 0, 1) * clamp(light.rgb, 0, 1);
-            c.a = round(s.Alpha);
-            return c;
-        }
-    
-         half4 LightingDeferred(inout SurfaceOutput s)
-        {
-            return (1,1,1,1);
-        }
-
-        void surf(Input IN, inout SurfaceOutput o)
-        {
-            surfFront(IN, o);        
-        }
-        ENDCG
-        Cull Front
-        ZTest LEqual
-        ZWrite On
-
-        CGPROGRAM
-        #pragma surface surf Deferred alphatest:_Cutout vertex:vert
-        #include "UnityLightingCommon.cginc"
-        #include "WTSShared.cginc"
-
-        uniform 	fixed4 _SimulationTime;
-        uniform 	fixed4 _WeatherParams; // Temp, Rain, Fog, Wetness
-
-        half4 LightingDeferred_PrePass(inout SurfaceOutput s, half4 light)
-        {
-            half4 c;
-            c.rgb = s.Albedo * clamp(light.rgb, 0, 1) * clamp(light.rgb, 0, 1);
-            c.a = round(s.Alpha);
-            return c;
-        }       
-         half4 LightingDeferred(inout SurfaceOutput s)
-        {
-            return (1,1,1,1);
-        }
-
-
-        void surf(Input IN, inout SurfaceOutput o)
-        {
-            surfBack(IN, o);           
-        }
-        ENDCG
+        
+        UsePass "Custom/WriteEverything/Default/Front/FORWARD"
+        UsePass "Custom/WriteEverything/Default/Front/PREPASS"
+        UsePass "Custom/WriteEverything/Default/Front/DEFERRED"
+        UsePass "Custom/WriteEverything/Default/Front/SHADOWCASTER"
+        UsePass "Custom/WriteEverything/Default/Front/META"
     }
-
-
-
 }

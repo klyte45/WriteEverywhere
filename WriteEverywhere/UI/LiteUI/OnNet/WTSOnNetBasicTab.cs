@@ -1,5 +1,4 @@
 ﻿using ColossalFramework;
-using WriteEverywhere.Localization;
 using Kwytto.LiteUI;
 using Kwytto.UI;
 using Kwytto.Utils;
@@ -8,6 +7,8 @@ using System.Collections;
 using System.Linq;
 using UnityEngine;
 using WriteEverywhere.Libraries;
+using WriteEverywhere.Localization;
+using WriteEverywhere.Utils;
 using WriteEverywhere.Xml;
 
 namespace WriteEverywhere.UI

@@ -49,14 +49,6 @@ fixed2 calculateUV(fixed2 uvInput){
 	return uvInput;
 }
 
-void vert(inout appdata_full v, out Input o)
-{
-	#if defined(PIXELSNAP_ON)
-		v.vertex = UnityPixelSnap (v.vertex);
-	#endif
-	UNITY_INITIALIZE_OUTPUT(Input, o);
-}
-
 void surfBack(Input IN, inout SurfaceOutput o){
 	fixed2 uv =  IN.uv_MainTex;
 	if(_MirrorBack){
@@ -64,7 +56,7 @@ void surfBack(Input IN, inout SurfaceOutput o){
 	}
 	uv = calculateUV(uv);
 	fixed4 t = tex2D(_MainTex, uv);
-	o.Albedo = _BackfaceColor;
+	o.Albedo =saturate(_BackfaceColor+0.01) ;
 	o.Alpha = t.a;
 	normalPass(t, IN.uv_MainTex, o);
 }
@@ -72,12 +64,27 @@ void surfBack(Input IN, inout SurfaceOutput o){
 void surfFront(Input IN, inout SurfaceOutput o){
 	fixed4 t = tex2D(_MainTex, IN.uv_MainTex);
 	fixed4 effectiveColor = saturate(_Color+0.01);
-	o.Albedo = t * _Color;
+	o.Albedo = t * effectiveColor;
 	o.Alpha = t.a;
 	o.Emission = t * _Color * _SurfProperties.z * t.a * 10;
-	o.Specular = 0;
-	o.Gloss = 50;
+
 	normalPass(t, IN.uv_MainTex, o);
+}
+
+void Unity_RotateAboutAxis_Degrees_float(float3 In, float3 Axis, float Rotation, out float3 Out)
+{
+    Rotation = radians(Rotation);
+    float s = sin(Rotation);
+    float c = cos(Rotation);
+    float one_minus_c = 1.0 - c;
+
+    Axis = normalize(Axis);
+    float3x3 rot_mat = 
+    {   one_minus_c * Axis.x * Axis.x + c, one_minus_c * Axis.x * Axis.y - Axis.z * s, one_minus_c * Axis.z * Axis.x + Axis.y * s,
+        one_minus_c * Axis.x * Axis.y + Axis.z * s, one_minus_c * Axis.y * Axis.y + c, one_minus_c * Axis.y * Axis.z - Axis.x * s,
+        one_minus_c * Axis.z * Axis.x - Axis.y * s, one_minus_c * Axis.y * Axis.z + Axis.x * s, one_minus_c * Axis.z * Axis.z + c
+    };
+    Out = mul(rot_mat,  In);
 }
 
 #endif // SHARED_WTS_SHARED
