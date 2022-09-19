@@ -30,8 +30,8 @@ namespace WriteEverywhere.UI
                         var contentTypes = kv.Value.GroupBy(x => x.textContent).Select(x => x.Key);
                         if (contentTypes.Count() > 1)
                         {
-                            GUILayout.Label(string.Format(Locale.Get(Str.WTS_ONNETEDITOR_TEXTPARAM), kv.Key));
-                            GUILayout.Label(Locale.Get(Str.WTS_ONNETEDITOR_INVALIDPARAMSETTINGS_DIFFERENTKINDSAMEPARAM), new GUIStyle(GUI.skin.label)
+                            GUILayout.Label(string.Format(Str.WTS_ONNETEDITOR_TEXTPARAM, kv.Key));
+                            GUILayout.Label(Str.WTS_ONNETEDITOR_INVALIDPARAMSETTINGS_DIFFERENTKINDSAMEPARAM, new GUIStyle(GUI.skin.label)
                             {
                                 alignment = TextAnchor.MiddleCenter
                             });
@@ -55,7 +55,7 @@ namespace WriteEverywhere.UI
                         var usedByText = string.Join("\n", kv.Value.Select(x => $"\u2022{(x.ParameterDisplayName.IsNullOrWhiteSpace() ? x.SaveName : x.ParameterDisplayName)} ({(x.DefaultParameterValueAsString is null ? GUIKwyttoCommons.v_empty : $"<color=#{target}>{x.DefaultParameterValueAsString}</color>")})").ToArray());
                         using (new GUILayout.HorizontalScope())
                         {
-                            GUILayout.Label(string.Format(Locale.Get(Str.WTS_ONNETEDITOR_TEXTPARAM), kv.Key) + $"\n<color=#{target}>{targetContentType.ValueToI18n()}</color>\n\n{usedByText}");
+                            GUILayout.Label(string.Format(Str.WTS_ONNETEDITOR_TEXTPARAM, kv.Key) + $"\n<color=#{target}>{targetContentType.ValueToI18n()}</color>\n\n{usedByText}");
                             var param = item.GetParameter(kv.Key);
                             if (GUILayout.Button(param is null ? GUIKwyttoCommons.v_null : param.IsEmpty ? GUIKwyttoCommons.v_empty : param.ToString(), GUILayout.ExpandHeight(true)))
                             {

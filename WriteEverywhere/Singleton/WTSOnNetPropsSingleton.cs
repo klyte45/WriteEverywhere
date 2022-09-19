@@ -1,6 +1,4 @@
 ﻿extern alias ADR;
-
-using ColossalFramework;
 using ColossalFramework.Math;
 using Kwytto.Utils;
 using System.Collections.Generic;
@@ -208,7 +206,7 @@ namespace WriteEverywhere.Singleton
                     {
                         ToolsModifierControl.cameraController.m_targetPosition.x = position.X;
                         ToolsModifierControl.cameraController.m_targetPosition.z = position.Z;
-                        targetHeight = position.Y + cachedProp.m_mesh.bounds.size.y / 2;
+                        targetHeight = position.Y + cachedProp.m_mesh.bounds.center.y * targetDescriptor.PropScale.y;
                         lastFrameOverriden = SimulationManager.instance.m_currentTickIndex;
                     }
                 }
@@ -217,16 +215,6 @@ namespace WriteEverywhere.Singleton
         private static float targetHeight;
         private uint lastFrameOverriden;
 
-        private static float OverrideCameraHeightCalculation(Vector3 worldPos, float distance)
-        {
-            float num = Singleton<TerrainManager>.instance.SampleRawHeightSmoothWithWater(worldPos, true, 2f);
-            float num2 = num - targetHeight;
-            distance *= 0.45f;
-            num2 = Mathf.Max(num2, -distance);
-            num2 += distance * 0.375f * Mathf.Pow(1f + 1f / distance, -num2);
-            num = targetHeight + Mathf.Max(0f, num2);
-            return targetHeight - num;
-        }
         public static void AfterUpdateTransformOverride(CameraController __instance)
         {
             if (LoadingManager.instance.m_loadingComplete && SimulationManager.instance.m_currentTickIndex - ModInstance.Controller.OnNetPropsSingleton.lastFrameOverriden > 60)
@@ -236,7 +224,7 @@ namespace WriteEverywhere.Singleton
             __instance.m_minDistance = 1;
 
             Vector3 vector = __instance.transform.position;
-            vector.y = targetHeight;// OverrideCameraHeightCalculation(vector, num);
+            vector.y = targetHeight + (Mathf.Sin(__instance.m_currentAngle.y * Mathf.Deg2Rad) * __instance.m_targetSize);
             __instance.transform.position = vector;
         }
     }

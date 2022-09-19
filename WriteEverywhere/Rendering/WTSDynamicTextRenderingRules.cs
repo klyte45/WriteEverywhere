@@ -234,7 +234,7 @@ namespace WriteEverywhere.Rendering
                 defaultCallsCounter++;
                 Graphics.DrawMesh(renderInfo.m_mesh, matrix, targetMaterial, 10, targetCamera, 0, materialPropertyBlock);
 
-                result = matrix.GetColumn(3);
+                result = matrix.GetColumn(3) + new Vector4(0, renderInfo.m_mesh.bounds.center.y * matrix.GetColumn(1).y);
 
                 if (((Vector2)textDescriptor.BackgroundMeshSettings.Size).sqrMagnitude != 0)
                 {
