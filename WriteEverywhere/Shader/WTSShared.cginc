@@ -9,7 +9,6 @@ struct Input
 
 sampler2D _MainTex;
 fixed4 _Color;
-float4 _MainTex_TexelSize;
 fixed4 _SurfProperties;
 fixed4 _BackfaceColor;
 bool _MirrorBack;
@@ -19,6 +18,7 @@ fixed2 _Dimensions;
 half3 lightDir;
 uniform 	fixed4 hlslcc_mtx4x4unity_ObjectToWorld[4];
 uniform 	fixed4 hlslcc_mtx4x4unity_MatrixVP[4];
+uniform float4 _MainTex_TexelSize;
 
 void normalPass(fixed4 textureColor, fixed2 uv, inout SurfaceOutput o) {
 	float sample_l;
@@ -43,14 +43,35 @@ void normalPass(fixed4 textureColor, fixed2 uv, inout SurfaceOutput o) {
 }
 
 fixed2 calculateUV(fixed2 uvInput){
-	if(length(_Border)>0){
-		return fixed2(0,0);
+	if(length(_Border) > 0){
+		
+		fixed2 ratio = _MainTex_TexelSize.zw/_PixelsPerMeters/_Dimensions.xy;
+		fixed2 bT=_Border.xy*ratio;
+		fixed2 BT=_Border.zw*ratio;
+		fixed2 deltaLgt = (1-_Border.xy-_Border.zw)/(1-bT-BT);
+
+		fixed2 result = fixed2(0,0);
+		if(uvInput.x<bT.x){
+			result.x= uvInput.x/ratio.x;
+		}else if(uvInput.x>1-BT.x){
+			result.x= 1-((1-uvInput.x)/ratio.x);
+		}else{
+			result.x= _Border.x+(uvInput.x-bT.x)*deltaLgt.x;
+		}
+		if(uvInput.y<bT.y){
+			result.y= uvInput.y/ratio.y;
+		}else if(uvInput.y>1-BT.y){
+			result.y= 1-((1-uvInput.y)/ratio.y);
+		}else{
+			result.y= _Border.y+(uvInput.y-bT.y)*deltaLgt.y;
+		}
+		return saturate(result);
 	}
 	return uvInput;
 }
 
 void surfBack(Input IN, inout SurfaceOutput o){
-	fixed2 uv =  IN.uv_MainTex;
+	fixed2 uv =  calculateUV(IN.uv_MainTex);
 	if(_MirrorBack){
 		uv.x = 1 - uv.x;
 	}
@@ -62,7 +83,8 @@ void surfBack(Input IN, inout SurfaceOutput o){
 }
 
 void surfFront(Input IN, inout SurfaceOutput o){
-	fixed4 t = tex2D(_MainTex, IN.uv_MainTex);
+	fixed2 uv =  calculateUV(IN.uv_MainTex);
+	fixed4 t = tex2D(_MainTex, uv);
 	fixed4 effectiveColor = saturate(_Color+0.01);
 	o.Albedo = t * effectiveColor;
 	o.Alpha = t.a;
