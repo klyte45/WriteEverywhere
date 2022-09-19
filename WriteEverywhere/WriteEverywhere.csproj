@@ -80,7 +80,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Str.resx</DependentUpon>
     </Compile>
-  </ItemGroup>
+  </ItemGroup> 
   <ItemGroup>
     <EmbeddedResource Include="Shader\**\*.unity3d" />
     <None Include="packages.config" />

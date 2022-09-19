@@ -31,9 +31,9 @@ namespace WriteEverywhere.UI
 
         //private readonly GUIXmlLib<WTSLibVehicleTextItem, BoardTextDescriptorGeneralXml> m_vehicleTextLib = new GUIXmlLib<WTSLibVehicleTextItem, BoardTextDescriptorGeneralXml>()
         //{
-        //    DeleteQuestionI18n = "K45_WTS_PROPEDIT_CONFIGDELETE_MESSAGE",
-        //    NameAskingI18n = "K45_WTS_EXPORTDATA_NAMEASKING",
-        //    NameAskingOverwriteI18n = "K45_WTS_EXPORTDATA_NAMEASKING_OVERWRITE"
+        //    DeleteQuestionI18n = Str.WTS_PROPEDIT_CONFIGDELETE_MESSAGE,
+        //    NameAskingI18n = Str.WTS_EXPORTDATA_NAMEASKING,
+        //    NameAskingOverwriteI18n = Str.WTS_EXPORTDATA_NAMEASKING_OVERWRITE
         //};
 
         public Texture TabIcon { get; } = KResourceLoader.LoadTextureKwytto(CommonsSpriteNames.K45_Settings);

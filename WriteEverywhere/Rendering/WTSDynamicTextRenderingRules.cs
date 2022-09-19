@@ -114,7 +114,7 @@ namespace WriteEverywhere.Rendering
             return propColor;
         }
 
-        public static void RenderTextMesh(ushort refID, int boardIdx, int secIdx, BaseWriteOnXml descriptor, Matrix4x4 propMatrix,
+        public static Vector3 RenderTextMesh(ushort refID, int boardIdx, int secIdx, BaseWriteOnXml descriptor, Matrix4x4 propMatrix,
             Vector3 propScale, ref BoardTextDescriptorGeneralXml textDescriptor, MaterialPropertyBlock materialPropertyBlock,
             int instanceFlags, int instanceFlags2, Color parentColor, PrefabInfo srcInfo, ref int defaultCallsCounter, string fontName, Camera targetCamera = null)
         {
@@ -184,43 +184,45 @@ namespace WriteEverywhere.Rendering
 
                             BasicRenderInformation currentItem = resultArray[i];
                             Vector3 targetPosA = (i >= firstItemIdxLastRowOrColumn ? lastRowOrColumnStartPoint : startPoint) - new Vector3(columnWidth * x, rowHeight * y);
-                            DrawTextBri(refID, boardIdx, secIdx, propMatrix, textDescriptor, materialPropertyBlock, currentItem, colorToSet, targetPosA, textDescriptor.PlacingConfig.Rotation, descriptor.PropScale, false, textDescriptor.m_textAlign, 0, instanceFlags, instanceFlags2, parentColor, srcInfo, ref defaultCallsCounter, targetCamera);
+                            var result = DrawTextBri(refID, boardIdx, secIdx, propMatrix, textDescriptor, materialPropertyBlock, currentItem, colorToSet, targetPosA, textDescriptor.PlacingConfig.Rotation, descriptor.PropScale, false, textDescriptor.m_textAlign, 0, instanceFlags, instanceFlags2, parentColor, srcInfo, ref defaultCallsCounter, targetCamera);
                             if (textDescriptor.PlacingConfig.m_create180degYClone)
                             {
                                 targetPosA = startPointClone - new Vector3(columnWidth * (maxItemsInARow - x - 1), rowHeight * y);
                                 targetPosA.z *= -1;
                                 DrawTextBri(refID, boardIdx, secIdx, propMatrix, textDescriptor, materialPropertyBlock, currentItem, colorToSet, targetPosA, textDescriptor.PlacingConfig.Rotation + new Vector3(0, 180), descriptor.PropScale, false, textDescriptor.m_textAlign, 0, instanceFlags, instanceFlags2, parentColor, srcInfo, ref defaultCallsCounter, targetCamera);
                             }
+                            return result;
                         }
                     }
                 }
                 else
                 {
-                    return;
+                    return default;
                 }
             }
             if (renderInfo?.m_mesh is null || renderInfo?.m_generatedMaterial is null)
             {
-                return;
+                return default;
             }
 
             Vector3 targetPos = textDescriptor.PlacingConfig.Position;
 
 
-            DrawTextBri(refID, boardIdx, secIdx, propMatrix, textDescriptor, materialPropertyBlock, renderInfo, GetTextColor(refID, boardIdx, secIdx, descriptor, textDescriptor), targetPos, textDescriptor.PlacingConfig.Rotation, descriptor.PropScale, textDescriptor.PlacingConfig.m_create180degYClone, textDescriptor.m_textAlign, textDescriptor.MaxWidthMeters, instanceFlags, instanceFlags2, parentColor, srcInfo, ref defaultCallsCounter, targetCamera);
+            return DrawTextBri(refID, boardIdx, secIdx, propMatrix, textDescriptor, materialPropertyBlock, renderInfo, GetTextColor(refID, boardIdx, secIdx, descriptor, textDescriptor), targetPos, textDescriptor.PlacingConfig.Rotation, descriptor.PropScale, textDescriptor.PlacingConfig.m_create180degYClone, textDescriptor.m_textAlign, textDescriptor.MaxWidthMeters, instanceFlags, instanceFlags2, parentColor, srcInfo, ref defaultCallsCounter, targetCamera);
         }
 
 
-        private static void DrawTextBri(ushort refID, int boardIdx, int secIdx, Matrix4x4 propMatrix, BoardTextDescriptorGeneralXml textDescriptor,
+        private static Vector3 DrawTextBri(ushort refID, int boardIdx, int secIdx, Matrix4x4 propMatrix, BoardTextDescriptorGeneralXml textDescriptor,
             MaterialPropertyBlock materialPropertyBlock, BasicRenderInformation renderInfo, Color colorToSet, Vector3 targetPos, Vector3 targetRotation,
             Vector3 baseScale, bool placeClone180Y, UIHorizontalAlignment targetTextAlignment, float maxWidth, int instanceFlags, int instanceFlags2, Color parentColor,
             PrefabInfo srcInfo, ref int defaultCallsCounter, Camera targetCamera = null)
         {
 
             var textMatrixes = CalculateTextMatrix(targetPos, targetRotation, baseScale, targetTextAlignment, maxWidth, textDescriptor, renderInfo, placeClone180Y);
-
-            foreach (var textMatrixTuple in textMatrixes)
+            Vector3 result = default;
+            for (int t = 0; t < textMatrixes.Count; t++)
             {
+                Tuple<Matrix4x4, Tuple<Matrix4x4, Matrix4x4, Matrix4x4, Matrix4x4>> textMatrixTuple = textMatrixes[t];
                 Matrix4x4 matrix = propMatrix * textMatrixTuple.First;
 
                 materialPropertyBlock.Clear();
@@ -230,7 +232,9 @@ namespace WriteEverywhere.Rendering
 
 
                 defaultCallsCounter++;
-                Graphics.DrawMesh(renderInfo.m_mesh, matrix, targetMaterial, 10, targetCamera, 0, materialPropertyBlock, false);
+                Graphics.DrawMesh(renderInfo.m_mesh, matrix, targetMaterial, 10, targetCamera, 0, materialPropertyBlock);
+
+                result = matrix.GetColumn(3);
 
                 if (((Vector2)textDescriptor.BackgroundMeshSettings.Size).sqrMagnitude != 0)
                 {
@@ -245,6 +249,7 @@ namespace WriteEverywhere.Rendering
                     }
                 }
             }
+            return result;
         }
 
 
@@ -270,7 +275,7 @@ namespace WriteEverywhere.Rendering
                 * Matrix4x4.Scale(new Vector3(textDescriptor.BackgroundMeshSettings.Size.X / bgBri.m_mesh.bounds.size.x, textDescriptor.BackgroundMeshSettings.Size.Y / bgBri.m_mesh.bounds.size.y, 1))
                 * textMatrixTuple.Second.Fourth;
             defaultCallsCounter++;
-            Graphics.DrawMesh(bgBri.m_mesh, bgMatrix, bgBri.m_generatedMaterial, 10, targetCamera, 0, materialPropertyBlock, false);
+            Graphics.DrawMesh(bgBri.m_mesh, bgMatrix, bgBri.m_generatedMaterial, 10, targetCamera, 0, materialPropertyBlock);
             return containerMatrix;
         }
         private static void DrawTextFrame(BoardTextDescriptorGeneralXml textDescriptor, MaterialPropertyBlock materialPropertyBlock, ref Vector3 targetPos, ref Vector3 targetRotation, ref Vector3 baseScale, ref Color parentColor, PrefabInfo srcInfo, Camera targetCamera, ref Matrix4x4 containerMatrix, ref int defaultCallsCounter)
@@ -388,10 +393,10 @@ namespace WriteEverywhere.Rendering
 
             materialPropertyBlock.Clear();
             var color = frameConfig.m_inheritColor ? parentColor : frameConfig.OutsideColor;
-            materialPropertyBlock.SetColor(WTSDynamicTextRenderingRules.SHADER_PROP_COLOR, color);
+            materialPropertyBlock.SetColor(SHADER_PROP_COLOR, color);
             materialPropertyBlock.SetVector(SHADER_PROP_SURF_PROPERTIES, new Vector4());
             defaultCallsCounter++;
-            Graphics.DrawMesh(frameConfig.meshOuterContainer, containerMatrix, m_outsideMaterial, srcInfo.m_prefabDataIndex, targetCamera, 0, materialPropertyBlock, true, true);
+            Graphics.DrawMesh(frameConfig.meshOuterContainer, containerMatrix, m_outsideMaterial, srcInfo.m_prefabDataIndex, targetCamera, 0, materialPropertyBlock);
         }
         #endregion
         #region Illumination handling

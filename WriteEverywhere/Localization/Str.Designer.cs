@@ -349,6 +349,15 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Background color.
+        /// </summary>
+        internal static string WTS_BG_COLOR {
+            get {
+                return ResourceManager.GetString("WTS_BG_COLOR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Highway shield.
         /// </summary>
         internal static string WTS_BOARD_TEXT_TYPE_DESC__HwShield {
@@ -430,6 +439,24 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Back mesh tilt offset (from Center/Bottom).
+        /// </summary>
+        internal static string WTS_BOXMESH_BACKOFFSETFROMCENTERBOTTOM {
+            get {
+                return ResourceManager.GetString("WTS_BOXMESH_BACKOFFSETFROMCENTERBOTTOM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Back mesh rectangle size.
+        /// </summary>
+        internal static string WTS_BOXMESH_BACKSIZE {
+            get {
+                return ResourceManager.GetString("WTS_BOXMESH_BACKSIZE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Colors.
         /// </summary>
         internal static string WTS_BOXMESH_COLORSGROUP_LABEL {
@@ -439,11 +466,38 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Depth BG-&gt;Back mesh.
+        /// </summary>
+        internal static string WTS_BOXMESH_DEPTH_BACK {
+            get {
+                return ResourceManager.GetString("WTS_BOXMESH_DEPTH_BACK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Depth BG-&gt;Front mesh.
+        /// </summary>
+        internal static string WTS_BOXMESH_DEPTH_FRONT {
+            get {
+                return ResourceManager.GetString("WTS_BOXMESH_DEPTH_FRONT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Effects.
         /// </summary>
         internal static string WTS_BOXMESH_EFFECTSGROUP_LABEL {
             get {
                 return ResourceManager.GetString("WTS_BOXMESH_EFFECTSGROUP_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Box outer color.
+        /// </summary>
+        internal static string WTS_BOXMESH_OUTERCOLOR {
+            get {
+                return ResourceManager.GetString("WTS_BOXMESH_OUTERCOLOR", resourceCulture);
             }
         }
         
@@ -484,11 +538,38 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Font class.
+        /// </summary>
+        internal static string WTS_CLASS_FONT {
+            get {
+                return ResourceManager.GetString("WTS_CLASS_FONT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Invert text horizontal align on clone.
+        /// </summary>
+        internal static string WTS_CLONE_180DEG_INVERT_TEXT_HOR_ALIGN {
+            get {
+                return ResourceManager.GetString("WTS_CLONE_180DEG_INVERT_TEXT_HOR_ALIGN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Parameter value.
         /// </summary>
         internal static string WTS_CONTENT_TEXTVALUE {
             get {
                 return ResourceManager.GetString("WTS_CONTENT_TEXTVALUE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Create cloned text rotated 180° on Y (inverse Z distance - use for simmetric 2 face props).
+        /// </summary>
+        internal static string WTS_CREATE_CLONE_180DEG {
+            get {
+                return ResourceManager.GetString("WTS_CREATE_CLONE_180DEG", resourceCulture);
             }
         }
         
@@ -624,6 +705,15 @@ namespace WriteEverywhere.Localization {
         internal static string WTS_INVERT_SIGN_SIDE {
             get {
                 return ResourceManager.GetString("WTS_INVERT_SIGN_SIDE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Line dimensions (meters) (width, height).
+        /// </summary>
+        internal static string WTS_LINEDIMENSIONS {
+            get {
+                return ResourceManager.GetString("WTS_LINEDIMENSIONS", resourceCulture);
             }
         }
         
@@ -1222,6 +1312,33 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Relative position.
+        /// </summary>
+        internal static string WTS_RELATIVE_POS {
+            get {
+                return ResourceManager.GetString("WTS_RELATIVE_POS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Relative rotation.
+        /// </summary>
+        internal static string WTS_RELATIVE_ROT {
+            get {
+                return ResourceManager.GetString("WTS_RELATIVE_ROT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Adjust text height if width is reduced by max width.
+        /// </summary>
+        internal static string WTS_RESIZE_Y_TEXT_OVERFLOW {
+            get {
+                return ResourceManager.GetString("WTS_RESIZE_Y_TEXT_OVERFLOW", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Clear items.
         /// </summary>
         internal static string WTS_SEGMENT_CLEARDATA {
@@ -1285,6 +1402,87 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Horizontal align.
+        /// </summary>
+        internal static string WTS_TEXT_ALIGN_HOR {
+            get {
+                return ResourceManager.GetString("WTS_TEXT_ALIGN_HOR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Blink type.
+        /// </summary>
+        internal static string WTS_TEXT_BLINKTYPE {
+            get {
+                return ResourceManager.GetString("WTS_TEXT_BLINKTYPE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Text color.
+        /// </summary>
+        internal static string WTS_TEXT_COLOR {
+            get {
+                return ResourceManager.GetString("WTS_TEXT_COLOR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Front border thickness.
+        /// </summary>
+        internal static string WTS_TEXT_CONTAINERFRONTBORDERTHICKNESS {
+            get {
+                return ResourceManager.GetString("WTS_TEXT_CONTAINERFRONTBORDERTHICKNESS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Glass color.
+        /// </summary>
+        internal static string WTS_TEXT_CONTAINERGLASSCOLOR {
+            get {
+                return ResourceManager.GetString("WTS_TEXT_CONTAINERGLASSCOLOR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Glass specularity.
+        /// </summary>
+        internal static string WTS_TEXT_CONTAINERGLASSSPECULARITY {
+            get {
+                return ResourceManager.GetString("WTS_TEXT_CONTAINERGLASSSPECULARITY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Glass transparency.
+        /// </summary>
+        internal static string WTS_TEXT_CONTAINERGLASSTRANSPARENCY {
+            get {
+                return ResourceManager.GetString("WTS_TEXT_CONTAINERGLASSTRANSPARENCY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Use vehicle color in outer color.
+        /// </summary>
+        internal static string WTS_TEXT_CONTAINERUSEVEHICLECOLOR {
+            get {
+                return ResourceManager.GetString("WTS_TEXT_CONTAINERUSEVEHICLECOLOR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Text content type.
+        /// </summary>
+        internal static string WTS_TEXT_CONTENT {
+            get {
+                return ResourceManager.GetString("WTS_TEXT_CONTENT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Text contents.
         /// </summary>
         internal static string WTS_TEXT_CONTENTVALUE_TAB {
@@ -1294,11 +1492,47 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Custom blink parameters.
+        /// </summary>
+        internal static string WTS_TEXT_CUSTOMBLINKPARAMS {
+            get {
+                return ResourceManager.GetString("WTS_TEXT_CUSTOMBLINKPARAMS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Depth.
+        /// </summary>
+        internal static string WTS_TEXT_DEPTH {
+            get {
+                return ResourceManager.GetString("WTS_TEXT_DEPTH", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Illumination attributes.
         /// </summary>
         internal static string WTS_TEXT_ILLUMINATION_ATTRIBUTES {
             get {
                 return ResourceManager.GetString("WTS_TEXT_ILLUMINATION_ATTRIBUTES", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Illumination Strength.
+        /// </summary>
+        internal static string WTS_TEXT_ILLUMINATIONSTRENGTH {
+            get {
+                return ResourceManager.GetString("WTS_TEXT_ILLUMINATIONSTRENGTH", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Material brightness.
+        /// </summary>
+        internal static string WTS_TEXT_MATERIALTYPE {
+            get {
+                return ResourceManager.GetString("WTS_TEXT_MATERIALTYPE", resourceCulture);
             }
         }
         
@@ -1317,6 +1551,33 @@ namespace WriteEverywhere.Localization {
         internal static string WTS_TEXT_TAB_TITLE {
             get {
                 return ResourceManager.GetString("WTS_TEXT_TAB_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Create box around background.
+        /// </summary>
+        internal static string WTS_TEXT_USEFRAME {
+            get {
+                return ResourceManager.GetString("WTS_TEXT_USEFRAME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Background size.
+        /// </summary>
+        internal static string WTS_TEXTBACKGROUNDSIZEGENERATED {
+            get {
+                return ResourceManager.GetString("WTS_TEXTBACKGROUNDSIZEGENERATED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Use contrast color (refers to prop color).
+        /// </summary>
+        internal static string WTS_USE_CONTRAST_COLOR {
+            get {
+                return ResourceManager.GetString("WTS_USE_CONTRAST_COLOR", resourceCulture);
             }
         }
         

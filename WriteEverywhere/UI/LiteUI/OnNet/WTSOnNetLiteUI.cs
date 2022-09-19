@@ -1,6 +1,7 @@
 ﻿using Kwytto.LiteUI;
 using Kwytto.UI;
 using Kwytto.Utils;
+using System;
 using System.Linq;
 using UnityEngine;
 using WriteEverywhere.Data;
@@ -15,6 +16,8 @@ namespace WriteEverywhere.UI
     {
         public static WTSOnNetLiteUI Instance { get; private set; }
         private GUIBasicListingTabsContainer<OnNetInstanceCacheContainerXml> m_tabsContainer;
+        private WTSOnNetTextTab m_textEditorTab;
+        private int m_textEditorTabIdx;
 
         private GUIStyle m_redButton;
         private GUIStyle RedButton
@@ -44,29 +47,31 @@ namespace WriteEverywhere.UI
         public void Awake()
         {
             Instance = this;
-            Instance.Init("On Net Editor", new Rect(128, 128, 680, 420), resizable: true, minSize: new Vector2(340, 260));
+            Init("On Net Editor", new Rect(128, 128, 680, 420), resizable: true, minSize: new Vector2(340, 260));
             m_colorPicker = GameObjectUtils.CreateElement<GUIColorPicker>(transform).Init();
             m_colorPicker.Visible = false;
-            Instance.m_tabsContainer = new GUIBasicListingTabsContainer<OnNetInstanceCacheContainerXml>(new IGUITab<OnNetInstanceCacheContainerXml>[] {
+            var tabs = new IGUITab<OnNetInstanceCacheContainerXml>[] {
                 new WTSOnNetBasicTab(Instance.OnImportSingle, Instance.OnDelete, this),
                 new WTSOnNetTargetsTab(),
                 new WTSOnNetParamsTab(),
-                new WTSOnNetTextTab(m_colorPicker, () => CurrentEditingInstance?.BoardsData[ListSel]?.SimpleCachedProp, () =>
+                m_textEditorTab =  new WTSOnNetTextTab(m_colorPicker, () => CurrentEditingInstance?.BoardsData[ListSel]?.SimpleCachedProp, () =>
                 {
-                    if( CurrentEditingInstance?.BoardsData[ListSel] != null)
+                    if(ListSel>=0 && CurrentEditingInstance?.BoardsData[ListSel] != null)
                     {
                         return ref CurrentEditingInstance.BoardsData[ListSel].RefTextDescriptors;
                     }
                     throw new System.Exception("Invalid call!!!");
                 }, () =>
                 {
-                    if( CurrentEditingInstance?.BoardsData[ListSel] != null)
+                    if(ListSel>=0 && CurrentEditingInstance?.BoardsData[ListSel] != null)
                     {
                         return ref CurrentEditingInstance.BoardsData[ListSel].RefFontName;
                     }
                     throw new System.Exception("Invalid call!!!");
                 })
-            }, Instance.OnAdd, Instance.GetSideList, Instance.GetSelectedItem, Instance.OnSetCurrentItem);
+            };
+            m_tabsContainer = new GUIBasicListingTabsContainer<OnNetInstanceCacheContainerXml>(tabs, Instance.OnAdd, Instance.GetSideList, Instance.GetSelectedItem, Instance.OnSetCurrentItem);
+            m_textEditorTabIdx = Array.IndexOf(tabs, m_textEditorTab);
         }
         public static void Destroy()
         {
@@ -98,7 +103,7 @@ namespace WriteEverywhere.UI
 
         public static bool LockSelection { get; internal set; } = true;
         public static int LockSelectionInstanceNum => WTSOnNetBasicTab.LockSelectionInstanceNum;
-        public static int LockSelectionTextInstanceNum => WTSOnNetTextTab.LockSelectionInstanceNum;
+        public static int LockSelectionTextIdx => Instance.m_textEditorTab.SelectedTextItem;
         private WriteOnNetGroupXml CurrentEditingInstance { get; set; }
         public ushort CurrentSegmentId
         {
@@ -126,6 +131,9 @@ namespace WriteEverywhere.UI
         }
 
         public int ListSel => m_tabsContainer.ListSel;
+        public int CurrentTabIdx => m_tabsContainer.CurrentTabIdx;
+
+        public bool IsOnTextEditor => CurrentTabIdx == m_textEditorTabIdx;
 
         protected override void DrawWindow()
         {

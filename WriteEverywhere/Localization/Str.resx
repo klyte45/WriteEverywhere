@@ -436,6 +436,35 @@
   <data name="WTS_TEXT_ILLUMINATION_ATTRIBUTES" xml:space="preserve">    <value>Illumination attributes</value>  </data>
   <data name="WTS_TEXT_SIZE_ATTRIBUTES" xml:space="preserve">    <value>Text size attributes</value>  </data>
   <data name="WTS_TEXT_TAB_TITLE" xml:space="preserve">    <value>Text mesh title</value>  </data>
+  <data name="WTS_BG_COLOR" xml:space="preserve">    <value>Background color</value>  </data>
+  <data name="WTS_BOXMESH_BACKOFFSETFROMCENTERBOTTOM" xml:space="preserve">    <value>Back mesh tilt offset (from Center/Bottom)</value>  </data>
+  <data name="WTS_BOXMESH_BACKSIZE" xml:space="preserve">    <value>Back mesh rectangle size</value>  </data>
+  <data name="WTS_BOXMESH_DEPTH_BACK" xml:space="preserve">    <value>Depth BG-&gt;Back mesh</value>  </data>
+  <data name="WTS_BOXMESH_DEPTH_FRONT" xml:space="preserve">    <value>Depth BG-&gt;Front mesh</value>  </data>
+  <data name="WTS_BOXMESH_OUTERCOLOR" xml:space="preserve">    <value>Box outer color</value>  </data>
+  <data name="WTS_CLASS_FONT" xml:space="preserve">    <value>Font class</value>  </data>
+  <data name="WTS_CLONE_180DEG_INVERT_TEXT_HOR_ALIGN" xml:space="preserve">    <value>Invert text horizontal align on clone</value>  </data>
+  <data name="WTS_CREATE_CLONE_180DEG" xml:space="preserve">    <value>Create cloned text rotated 180° on Y (inverse Z distance - use for simmetric 2 face props)</value>  </data>
+  <data name="WTS_LINEDIMENSIONS" xml:space="preserve">    <value>Line dimensions (meters) (width, height)</value>  </data>
+  <data name="WTS_RELATIVE_POS" xml:space="preserve">    <value>Relative position</value>  </data>
+  <data name="WTS_RELATIVE_ROT" xml:space="preserve">    <value>Relative rotation</value>  </data>
+  <data name="WTS_RESIZE_Y_TEXT_OVERFLOW" xml:space="preserve">    <value>Adjust text height if width is reduced by max width</value>  </data>
+  <data name="WTS_TEXT_ALIGN_HOR" xml:space="preserve">    <value>Horizontal align</value>  </data>
+  <data name="WTS_TEXT_BLINKTYPE" xml:space="preserve">    <value>Blink type</value>  </data>
+  <data name="WTS_TEXT_COLOR" xml:space="preserve">    <value>Text color</value>  </data>
+  <data name="WTS_TEXT_CONTAINERFRONTBORDERTHICKNESS" xml:space="preserve">    <value>Front border thickness</value>  </data>
+  <data name="WTS_TEXT_CONTAINERGLASSCOLOR" xml:space="preserve">    <value>Glass color</value>  </data>
+  <data name="WTS_TEXT_CONTAINERGLASSSPECULARITY" xml:space="preserve">    <value>Glass specularity</value>  </data>
+  <data name="WTS_TEXT_CONTAINERGLASSTRANSPARENCY" xml:space="preserve">    <value>Glass transparency</value>  </data>
+  <data name="WTS_TEXT_CONTAINERUSEVEHICLECOLOR" xml:space="preserve">    <value>Use vehicle color in outer color</value>  </data>
+  <data name="WTS_TEXT_CONTENT" xml:space="preserve">    <value>Text content type</value>  </data>
+  <data name="WTS_TEXT_CUSTOMBLINKPARAMS" xml:space="preserve">    <value>Custom blink parameters</value>  </data>
+  <data name="WTS_TEXT_DEPTH" xml:space="preserve">    <value>Depth</value>  </data>
+  <data name="WTS_TEXT_ILLUMINATIONSTRENGTH" xml:space="preserve">    <value>Illumination Strength</value>  </data>
+  <data name="WTS_TEXT_MATERIALTYPE" xml:space="preserve">    <value>Material brightness</value>  </data>
+  <data name="WTS_TEXT_USEFRAME" xml:space="preserve">    <value>Create box around background</value>  </data>
+  <data name="WTS_TEXTBACKGROUNDSIZEGENERATED" xml:space="preserve">    <value>Background size</value>  </data>
+  <data name="WTS_USE_CONTRAST_COLOR" xml:space="preserve">    <value>Use contrast color (refers to prop color)</value>  </data>
 
 
 </root>

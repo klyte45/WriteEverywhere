@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using UnityEngine;
 using WriteEverywhere.Localization;
+using WriteEverywhere.Rendering;
 using WriteEverywhere.Xml;
 
 namespace WriteEverywhere.UI
@@ -18,11 +19,13 @@ namespace WriteEverywhere.UI
 
         private readonly GUIRootWindowBase m_root;
         private readonly Func<PrefabInfo> infoGetter;
+        private readonly TextRenderingClass m_targetRenderingClass;
 
-        public GeneralWritingEditorContentTab(GUIColorPicker colorPicker, Func<PrefabInfo> infoGetter)
+        public GeneralWritingEditorContentTab(GUIColorPicker colorPicker, Func<PrefabInfo> infoGetter, TextRenderingClass targetRenderingClass)
         {
             m_root = colorPicker.GetComponentInParent<GUIRootWindowBase>();
             this.infoGetter = infoGetter;
+            this.m_targetRenderingClass = targetRenderingClass;
         }
 
         protected override void DrawListing(Vector2 tabAreaSize, BoardTextDescriptorGeneralXml currentItem)
@@ -30,7 +33,7 @@ namespace WriteEverywhere.UI
             GUILayout.Label($"<i>{Str.WTS_TEXT_CONTENTVALUE_TAB}</i>");
             var item = currentItem;
             bool isEditable = true;
-            GUIKwyttoCommons.AddComboBox(tabAreaSize.x, "K45_WTS_TEXT_CONTENT", ref item.textContent, m_optionsContent, m_contents, m_root, isEditable);
+            GUIKwyttoCommons.AddComboBox(tabAreaSize.x, Str.WTS_TEXT_CONTENT, ref item.textContent, m_optionsContent, m_contents, m_root, isEditable);
             switch (item.textContent)
             {
 
@@ -43,7 +46,7 @@ namespace WriteEverywhere.UI
                 case TextContent.TextParameterSequence:
                     if (item.ParameterSequence is null)
                     {
-                        item.ParameterSequence = new TextParameterSequence(new[] { new TextParameterSequenceItem("NEW", Rendering.TextRenderingClass.Vehicle) }, Rendering.TextRenderingClass.Vehicle);
+                        item.ParameterSequence = new TextParameterSequence(new[] { new TextParameterSequenceItem("NEW", m_targetRenderingClass) }, m_targetRenderingClass);
                     }
                     var paramSeq = item.ParameterSequence;
                     using (new GUILayout.HorizontalScope())
@@ -70,7 +73,7 @@ namespace WriteEverywhere.UI
                             if (isEditable)
                             {
                                 int newLenght;
-                                if ((newLenght = GUIIntField.IntField("K45_WTS_PARAMSEQ_STEPLENGTH_" + line, (int)seqItem.m_length, 0)) != seqItem.m_length)
+                                if ((newLenght = GUIIntField.IntField($"{Str.WTS_PARAMSEQ_STEPLENGTH} " + line, (int)seqItem.m_length, 0)) != seqItem.m_length)
                                 {
                                     paramSeq.SetLengthAt(line, newLenght);
                                 }
@@ -135,11 +138,11 @@ namespace WriteEverywhere.UI
         {
             if (currentEditingParam == -1)
             {
-                item.SetDefaultParameterValueAsString(paramValue, Rendering.TextRenderingClass.Vehicle);
+                item.SetDefaultParameterValueAsString(paramValue, m_targetRenderingClass);
             }
             else if (item.ParameterSequence is TextParameterSequence tps && currentEditingParam >= 0 && currentEditingParam < tps.TotalItems)
             {
-                tps.SetTextAt(currentEditingParam, paramValue, Rendering.TextRenderingClass.Vehicle);
+                tps.SetTextAt(currentEditingParam, paramValue, m_targetRenderingClass);
             }
         }
     }

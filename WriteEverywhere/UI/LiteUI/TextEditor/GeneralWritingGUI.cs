@@ -10,6 +10,7 @@ using System.Globalization;
 using System.Linq;
 using UnityEngine;
 using WriteEverywhere.Localization;
+using WriteEverywhere.Rendering;
 using WriteEverywhere.Xml;
 
 namespace WriteEverywhere.UI
@@ -34,9 +35,9 @@ namespace WriteEverywhere.UI
         private float m_offsetYContent;
         //private readonly GUIXmlLib<WTSLibVehicleLayout, LayoutDescriptorVehicleXml> m_vehicleLib = new GUIXmlLib<WTSLibVehicleLayout, LayoutDescriptorVehicleXml>()
         //{
-        //    DeleteQuestionI18n = "K45_WTS_PROPEDIT_CONFIGDELETE_MESSAGE",
-        //    NameAskingI18n = "K45_WTS_EXPORTDATA_NAMEASKING",
-        //    NameAskingOverwriteI18n = "K45_WTS_EXPORTDATA_NAMEASKING_OVERWRITE"
+        //    DeleteQuestionI18n = Str.WTS_PROPEDIT_CONFIGDELETE_MESSAGE,
+        //    NameAskingI18n = Str.WTS_EXPORTDATA_NAMEASKING,
+        //    NameAskingOverwriteI18n = Str.WTS_EXPORTDATA_NAMEASKING_OVERWRITE
         //};
 
         private FooterBarStatus CurrentLibState => FooterBarStatus.Normal;
@@ -44,12 +45,14 @@ namespace WriteEverywhere.UI
 
         private readonly RefGetter<BoardTextDescriptorGeneralXml[]> GetDescriptorArray;
         private readonly RefGetter<string> GetFont;
+        public int SelectedTextItem => m_tabsContainer.ListSel;
+        public readonly TextRenderingClass m_targetRenderingClass;
 
-        public GeneralWritingGUI(GUIColorPicker colorPicker, Func<PrefabInfo> infoGetter, RefGetter<BoardTextDescriptorGeneralXml[]> getDescriptorArray, RefGetter<string> getFont)
+        public GeneralWritingGUI(GUIColorPicker colorPicker, TextRenderingClass targetRenderingClass, Func<PrefabInfo> infoGetter, RefGetter<BoardTextDescriptorGeneralXml[]> getDescriptorArray, RefGetter<string> getFont)
         {
             var viewAtlas = UIView.GetAView().defaultAtlas;
 
-
+            m_targetRenderingClass = targetRenderingClass;
             m_colorPicker = colorPicker;
             this.getInfo = infoGetter;
             m_fontFilter = new GUIFilterItemsScreen<State>(Str.WTS_OVERRIDE_FONT, ModInstance.Controller, OnFilterParam, OnSelectFont, GoTo, State.Normal, State.GeneralFontPicker, acceptsNull: true);
@@ -61,7 +64,7 @@ namespace WriteEverywhere.UI
                     new GeneralWritingEditorForegroundTab(m_colorPicker),
                     new GeneralWritingEditorBoxSettingsTab(m_colorPicker),
                     new GeneralWritingEditorIlluminationTab(m_colorPicker),
-                    new GeneralWritingEditorContentTab(m_colorPicker,infoGetter)
+                    new GeneralWritingEditorContentTab(m_colorPicker,infoGetter,targetRenderingClass)
                     },
                 OnAddItem,
                 GetList,
@@ -73,10 +76,11 @@ namespace WriteEverywhere.UI
 
         private BoardTextDescriptorGeneralXml GetCurrentItem(int arg) => GetDescriptorArray()[arg];
         private string[] GetList() => m_cachedItemList;
+        public void ReloadList() => m_cachedItemList = GetDescriptorArray().Select(x => x.SaveName).ToArray();
         private void OnAddItem()
         {
-            GetDescriptorArray() = GetDescriptorArray().Concat(new[] { new BoardTextDescriptorGeneralXml() { SaveName = "NEW" } }).ToArray();
-            m_cachedItemList = GetDescriptorArray().Select(x => x.SaveName).ToArray();
+            GetDescriptorArray() = GetDescriptorArray().Concat(new[] { new BoardTextDescriptorGeneralXml() { SaveName = "NEW", } }).ToArray();
+            ReloadList();
         }
 
         private void SetCurrentItem(int arg, BoardTextDescriptorGeneralXml val)
@@ -90,7 +94,7 @@ namespace WriteEverywhere.UI
             {
                 GetDescriptorArray()[arg] = val;
             }
-            m_cachedItemList = GetDescriptorArray().Select(x => x.SaveName).ToArray();
+            ReloadList();
         }
 
         public void DoDraw(Rect area)

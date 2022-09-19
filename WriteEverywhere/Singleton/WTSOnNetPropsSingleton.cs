@@ -1,4 +1,6 @@
 ﻿extern alias ADR;
+
+using ColossalFramework;
 using ColossalFramework.Math;
 using Kwytto.Utils;
 using System.Collections.Generic;
@@ -182,25 +184,60 @@ namespace WriteEverywhere.Singleton
 
                 Color parentColor = WTSDynamicTextRenderingRules.RenderPropMesh(cachedProp, cameraInfo, segmentId, boardIdx, 0, 0xFFFFFFF, 0, position, Vector4.zero, rotation, targetDescriptor.PropScale, null, targetDescriptor, out Matrix4x4 propMatrix, out bool rendered, new InstanceID { NetNode = segmentId });
 
-
-
-                for (int j = 0; j < targetDescriptor.TextDescriptors.Length; j++)
+                if (rendered)
                 {
-                    if (cameraInfo.CheckRenderDistance(position, WTSDynamicTextRenderingRules.RENDER_DISTANCE_FACTOR * targetDescriptor.TextDescriptors[j].TextLineHeight * (targetDescriptor.TextDescriptors[j].IlluminationConfig.IlluminationType == FontStashSharp.MaterialType.OPAQUE ? 1 : 3)))
+
+                    for (int j = 0; j < targetDescriptor.TextDescriptors.Length; j++)
                     {
-                        MaterialPropertyBlock properties = PropManager.instance.m_materialBlock;
-                        properties.Clear();
-                        WTSDynamicTextRenderingRules.RenderTextMesh(segmentId, boardIdx, i, targetDescriptor, propMatrix, targetDescriptor.Scale, ref targetDescriptor.TextDescriptors[j], properties, 0, 0, parentColor, cachedProp, ref NetManager.instance.m_drawCallData.m_batchedCalls, targetDescriptor.FontName);
+                        if (cameraInfo.CheckRenderDistance(position, WTSDynamicTextRenderingRules.RENDER_DISTANCE_FACTOR * targetDescriptor.TextDescriptors[j].TextLineHeight * (targetDescriptor.TextDescriptors[j].IlluminationConfig.IlluminationType == FontStashSharp.MaterialType.OPAQUE ? 1 : 3)))
+                        {
+                            MaterialPropertyBlock properties = PropManager.instance.m_materialBlock;
+                            properties.Clear();
+                            var textPos = WTSDynamicTextRenderingRules.RenderTextMesh(segmentId, boardIdx, i, targetDescriptor, propMatrix, targetDescriptor.Scale, ref targetDescriptor.TextDescriptors[j], properties, 0, 0, parentColor, cachedProp, ref NetManager.instance.m_drawCallData.m_batchedCalls, targetDescriptor.FontName);
+                            if (textPos != default && WTSOnNetLiteUI.LockSelection && WTSOnNetLiteUI.Instance.IsOnTextEditor && i == WTSOnNetLiteUI.LockSelectionInstanceNum && j == WTSOnNetLiteUI.LockSelectionTextIdx && WTSOnNetLiteUI.Instance.Visible && (WTSOnNetLiteUI.Instance.CurrentSegmentId == segmentId) && WTSOnNetLiteUI.Instance.ListSel == boardIdx && !ModInstance.Controller.RoadSegmentToolInstance.enabled)
+                            {
+                                ToolsModifierControl.cameraController.m_targetPosition.x = textPos.x;
+                                ToolsModifierControl.cameraController.m_targetPosition.z = textPos.z;
+                                targetHeight = textPos.y;
+                                lastFrameOverriden = SimulationManager.instance.m_currentTickIndex;
+                            }
+                        }
                     }
 
-
-                }
-
-                if (WTSOnNetLiteUI.LockSelection && i == WTSOnNetLiteUI.LockSelectionInstanceNum && WTSOnNetLiteUI.Instance.Visible && (WTSOnNetLiteUI.Instance.CurrentSegmentId == segmentId) && WTSOnNetLiteUI.Instance.ListSel == boardIdx && !ModInstance.Controller.RoadSegmentToolInstance.enabled)
-                {
-                    ToolsModifierControl.cameraController.m_targetPosition = position;
+                    if (WTSOnNetLiteUI.LockSelection && !WTSOnNetLiteUI.Instance.IsOnTextEditor && i == WTSOnNetLiteUI.LockSelectionInstanceNum && WTSOnNetLiteUI.Instance.Visible && (WTSOnNetLiteUI.Instance.CurrentSegmentId == segmentId) && WTSOnNetLiteUI.Instance.ListSel == boardIdx && !ModInstance.Controller.RoadSegmentToolInstance.enabled)
+                    {
+                        ToolsModifierControl.cameraController.m_targetPosition.x = position.X;
+                        ToolsModifierControl.cameraController.m_targetPosition.z = position.Z;
+                        targetHeight = position.Y + cachedProp.m_mesh.bounds.size.y / 2;
+                        lastFrameOverriden = SimulationManager.instance.m_currentTickIndex;
+                    }
                 }
             }
+        }
+        private static float targetHeight;
+        private uint lastFrameOverriden;
+
+        private static float OverrideCameraHeightCalculation(Vector3 worldPos, float distance)
+        {
+            float num = Singleton<TerrainManager>.instance.SampleRawHeightSmoothWithWater(worldPos, true, 2f);
+            float num2 = num - targetHeight;
+            distance *= 0.45f;
+            num2 = Mathf.Max(num2, -distance);
+            num2 += distance * 0.375f * Mathf.Pow(1f + 1f / distance, -num2);
+            num = targetHeight + Mathf.Max(0f, num2);
+            return targetHeight - num;
+        }
+        public static void AfterUpdateTransformOverride(CameraController __instance)
+        {
+            if (LoadingManager.instance.m_loadingComplete && SimulationManager.instance.m_currentTickIndex - ModInstance.Controller.OnNetPropsSingleton.lastFrameOverriden > 60)
+            {
+                return;
+            }
+            __instance.m_minDistance = 1;
+
+            Vector3 vector = __instance.transform.position;
+            vector.y = targetHeight;// OverrideCameraHeightCalculation(vector, num);
+            __instance.transform.position = vector;
         }
     }
 }

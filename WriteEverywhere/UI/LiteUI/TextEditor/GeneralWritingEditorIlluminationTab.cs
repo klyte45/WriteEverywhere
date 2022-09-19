@@ -89,21 +89,21 @@ namespace WriteEverywhere.UI
             var item = currentItem;
             bool isEditable = true;
 
-            if (GUIKwyttoCommons.AddComboBox(tabAreaSize.x, "K45_WTS_TEXT_MATERIALTYPE", (int)item.IlluminationConfig.IlluminationType, m_materialTypes, out var newVal, m_root, isEditable))
+            if (GUIKwyttoCommons.AddComboBox(tabAreaSize.x, Str.WTS_TEXT_MATERIALTYPE, (int)item.IlluminationConfig.IlluminationType, m_materialTypes, out var newVal, m_root, isEditable))
             {
                 item.IlluminationConfig.IlluminationType = (MaterialType)newVal;
             }
             if (item.IlluminationConfig.IlluminationType != MaterialType.OPAQUE)
             {
 
-                GUIKwyttoCommons.AddSlider(tabAreaSize.x, "K45_WTS_TEXT_ILLUMINATIONSTRENGTH", ref item.IlluminationConfig.m_illuminationStrength, 0, 10, isEditable);
-                if (GUIKwyttoCommons.AddComboBox(tabAreaSize.x, "K45_WTS_TEXT_BLINKTYPE", (int)item.IlluminationConfig.BlinkType, m_blinkTypes, out newVal, m_root, isEditable))
+                GUIKwyttoCommons.AddSlider(tabAreaSize.x, Str.WTS_TEXT_ILLUMINATIONSTRENGTH, ref item.IlluminationConfig.m_illuminationStrength, 0, 10, isEditable);
+                if (GUIKwyttoCommons.AddComboBox(tabAreaSize.x, Str.WTS_TEXT_BLINKTYPE, (int)item.IlluminationConfig.BlinkType, m_blinkTypes, out newVal, m_root, isEditable))
                 {
                     item.IlluminationConfig.BlinkType = (BlinkType)newVal;
                 }
                 if (item.IlluminationConfig.BlinkType == BlinkType.Custom)
                 {
-                    GUIKwyttoCommons.AddVector4Field(tabAreaSize.x, item.IlluminationConfig.CustomBlink, "K45_WTS_TEXT_CUSTOMBLINKPARAMS", "K45_WTS_TEXT_CUSTOMBLINKPARAMS", isEditable);
+                    GUIKwyttoCommons.AddVector4Field(tabAreaSize.x, item.IlluminationConfig.CustomBlink, Str.WTS_TEXT_CUSTOMBLINKPARAMS, Str.WTS_TEXT_CUSTOMBLINKPARAMS, isEditable);
                 }
             }
             if (item.IlluminationConfig.IlluminationType == MaterialType.FLAGS)

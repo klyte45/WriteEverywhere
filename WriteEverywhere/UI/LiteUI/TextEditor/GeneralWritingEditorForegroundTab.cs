@@ -55,21 +55,21 @@ namespace WriteEverywhere.UI
         {
             GUILayout.Label($"<i>{Str.WTS_FONTFACE_SETTINGS}</i>");
             bool useContrast = item.ColoringConfig.UseContrastColor;
-            if (GUIKwyttoCommons.AddToggle("K45_WTS_USE_CONTRAST_COLOR", ref useContrast, isEditable))
+            if (GUIKwyttoCommons.AddToggle(Str.WTS_USE_CONTRAST_COLOR, ref useContrast, isEditable))
             {
                 item.ColoringConfig.UseContrastColor = useContrast;
             }
             if (!useContrast)
             {
-                GUIKwyttoCommons.AddColorPicker("K45_WTS_TEXT_COLOR", m_picker, ref item.ColoringConfig.m_cachedColor, isEditable);
+                GUIKwyttoCommons.AddColorPicker(Str.WTS_TEXT_COLOR, m_picker, ref item.ColoringConfig.m_cachedColor, isEditable);
             }
             else
             {
                 GUILayout.Space(12);
             }
-            GUIKwyttoCommons.AddSlider(tabAreaSize.x, "K45_WTS_TEXT_DEPTH", ref item.IlluminationConfig.m_illuminationDepth, -1, 1, isEditable);
+            GUIKwyttoCommons.AddSlider(tabAreaSize.x, Str.WTS_TEXT_DEPTH, ref item.IlluminationConfig.m_illuminationDepth, -1, 1, isEditable);
 
-            if (GUIKwyttoCommons.AddComboBox(tabAreaSize.x, "K45_WTS_TEXT_ALIGN_HOR", (int)item.m_textAlign, m_alignmentOptions, out var newVal, m_root, isEditable))
+            if (GUIKwyttoCommons.AddComboBox(tabAreaSize.x, Str.WTS_TEXT_ALIGN_HOR, (int)item.m_textAlign, m_alignmentOptions, out var newVal, m_root, isEditable))
             {
                 item.m_textAlign = (UIHorizontalAlignment)newVal;
             }
@@ -83,7 +83,7 @@ namespace WriteEverywhere.UI
             }
             if (item.m_overrideFont is null)
             {
-                if (GUIKwyttoCommons.AddComboBox(tabAreaSize.x, "K45_WTS_CLASS_FONT", (int)item.m_fontClass, m_fontClasses, out var newVal1, m_root, isEditable))
+                if (GUIKwyttoCommons.AddComboBox(tabAreaSize.x, Str.WTS_CLASS_FONT, (int)item.m_fontClass, m_fontClasses, out var newVal1, m_root, isEditable))
                 {
                     item.m_fontClass = (FontClass)newVal1;
                 }

@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using WriteEverywhere.Utils;
 
 namespace FontStashSharp
 {
@@ -374,7 +375,7 @@ namespace FontStashSharp
 
 
             bri.m_mesh.RecalculateNormals();
-            SolveTangents(bri.m_mesh);
+            WTSUtils.SolveTangents(bri.m_mesh);
             _currentAtlas.UpdateMaterial();
 
             bri.m_generatedMaterial = _currentAtlas.Material;
@@ -433,13 +434,7 @@ namespace FontStashSharp
             AddUVCoords(uvs, glyph);
         }
 
-        public static void SolveTangents(Mesh mesh)
-        {
-            mesh.tangents = mesh.vertices.Select(x => new Vector4(0, 0, 1, -1)).ToArray();
-            mesh.RecalculateNormals();
-        }
-
-
+   
 
         private static void AddTriangleIndices(PoolList<Vector3> verts, PoolList<int> triangles)
         {
