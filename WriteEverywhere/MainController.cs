@@ -86,11 +86,19 @@ namespace WriteEverywhere
         internal WTSOnNetPropsSingleton OnNetPropsSingleton { get; private set; }
         #endregion
 
+        #region uncategorized...
+        public const string DEFAULT_GAME_BUILDINGS_CONFIG_FOLDER = "BuildingsDefaultPlacing";
+        public const string DEFAULT_GAME_VEHICLES_CONFIG_FOLDER = "VehiclesDefaultPlacing";
+        public static string DefaultBuildingsConfigurationFolder { get; } = FOLDER_PATH + Path.DirectorySeparatorChar + DEFAULT_GAME_BUILDINGS_CONFIG_FOLDER;
+        public static string DefaultVehiclesConfigurationFolder { get; } = FOLDER_PATH + Path.DirectorySeparatorChar + DEFAULT_GAME_VEHICLES_CONFIG_FOLDER;
+        #endregion
+
         public void Awake()
         {
             ToolsModifierControl.toolController.AddExtraToolToController<SegmentEditorPickerTool>();
             ToolsModifierControl.toolController.AddExtraToolToController<RoadSegmentTool>();
             FontServer.Ensure();
+            FontServer.instance.SetQualityMultiplier(WESettingsQualityTab.m_qualityArray[ModInstance.FontQuality]);
             ReloadFontsFromPath();
             OnNetPropsSingleton = gameObject.AddComponent<WTSOnNetPropsSingleton>();
             HighwayShieldsSingleton = gameObject.AddComponent<WTSHighwayShieldsSingleton>();

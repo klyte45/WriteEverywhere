@@ -13,7 +13,8 @@
     Example:
     
     ... ado.net/XML headers & schema ...
-    <resheader name="resmimetype">text/microsoft-resx</resheader><resheader name="version">2.0</resheader>
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
     <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
     <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
     <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
@@ -216,7 +217,8 @@
     <value>There's already a rule with this name. Overwrite?</value>
   </data>
   <data name="WTS_ONNETEDITOR_INVALIDPARAMSETTINGS_DIFFERENTKINDSAMEPARAM" xml:space="preserve">
-    <value>&lt;color=#FF0000&gt;Wrong settings in this parameter!&lt;/color&gt;\nThere are more than one text entry of different kind pointing to this parameter. Please check your layout settings.</value>
+    <value>&lt;color=#FF0000&gt;Wrong settings in this parameter!&lt;/color&gt;
+There are more than one text entry of different kind pointing to this parameter. Please check your layout settings.</value>
   </data>
   <data name="WTS_ONNETEDITOR_TEXTPARAM" xml:space="preserve">
     <value>Parameter {0}</value>
@@ -258,37 +260,57 @@
     <value>City name.</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableCitySubType_CityPopulation" xml:space="preserve">
-    <value> City population.\n\nSelect for formatting options.</value>
+    <value> City population.
+
+Select for formatting options.</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_Direction" xml:space="preserve">
     <value>Road direction - acronym in current language loaded in the mod. (English will be used as fallback)</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistanceFromReferenceKilometers" xml:space="preserve">
-    <value>Distance from zero marker of the city (in kilometers)\n\nSelect for formatting options.</value>
+    <value>Distance from zero marker of the city (in kilometers)
+
+Select for formatting options.</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistanceFromReferenceMeters" xml:space="preserve">
-    <value>Distance from zero marker of the city (in meters)\n\nSelect for formatting options.</value>
+    <value>Distance from zero marker of the city (in meters)
+
+Select for formatting options.</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistanceFromReferenceMiles" xml:space="preserve">
-    <value>Distance from zero marker of the city (in miles)\n\nSelect for formatting options.</value>
+    <value>Distance from zero marker of the city (in miles)
+
+Select for formatting options.</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_District" xml:space="preserve">
-    <value>District name, or the outside connection city if at map edge. City name will be used as fallback.\n\nTIP: Outside connection names may be customized using the &lt;color=#00FF00&gt;Addresses Mod&lt;/color&gt;.</value>
+    <value>District name, or the outside connection city if at map edge. City name will be used as fallback.
+
+TIP: Outside connection names may be customized using the &lt;color=#00FF00&gt;Addresses Mod&lt;/color&gt;.</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistrictAreaKm2" xml:space="preserve">
-    <value>Current district size in square kilometers. City area size if not inside one.\n\nSelect for formatting options.</value>
+    <value>Current district size in square kilometers. City area size if not inside one.
+
+Select for formatting options.</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistrictAreaM2" xml:space="preserve">
-    <value>Current district size in square meters. City area size if not inside one.\n\nSelect for formatting options.</value>
+    <value>Current district size in square meters. City area size if not inside one.
+
+Select for formatting options.</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistrictAreaMi2" xml:space="preserve">
-    <value>Current district size in square miles. City area size if not inside one.\n\nSelect for formatting options.</value>
+    <value>Current district size in square miles. City area size if not inside one.
+
+Select for formatting options.</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistrictOrPark" xml:space="preserve">
-    <value>District name, or the outside connection city if at map edge. If none available, the Sub-area name will be used if the segment inside one of them. City name will be used as fallback.\n\nTIP: Outside connection names may be customized using the &lt;color=#00FF00&gt;Addresses Mod&lt;/color&gt;.</value>
+    <value>District name, or the outside connection city if at map edge. If none available, the Sub-area name will be used if the segment inside one of them. City name will be used as fallback.
+
+TIP: Outside connection names may be customized using the &lt;color=#00FF00&gt;Addresses Mod&lt;/color&gt;.</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistrictPopulation" xml:space="preserve">
-    <value>District population. City population if not inside one.\n\nSelect for formatting options.</value>
+    <value>District population. City population if not inside one.
+
+Select for formatting options.</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_HwCodeLong" xml:space="preserve">
     <value>Long highway code (if available)</value>
@@ -303,34 +325,54 @@
     <value>Highway identifier (if available)</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_MileageKilometers" xml:space="preserve">
-    <value>Current mileage in kilometers.\n\nSelect for formatting options.</value>
+    <value>Current mileage in kilometers.
+
+Select for formatting options.</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_MileageMeters" xml:space="preserve">
-    <value>Current mileage in meters.\n\nSelect for formatting options.</value>
+    <value>Current mileage in meters.
+
+Select for formatting options.</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_MileageMiles" xml:space="preserve">
-    <value>Current mileage in miles.\n\nSelect for formatting options.</value>
+    <value>Current mileage in miles.
+
+Select for formatting options.</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_None" xml:space="preserve">
     <value>Select the data type to be extracted from the selected segment.</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_Park" xml:space="preserve">
-    <value>Sub-area name, or empty if not in one.\n\nSub-areas are called internally as "Park" because they were introduced at Parklife DLC, then after used by the Industries, Campus and Airport DLC without changing name.</value>
+    <value>Sub-area name, or empty if not in one.
+
+Sub-areas are called internally as "Park" because they were introduced at Parklife DLC, then after used by the Industries, Campus and Airport DLC without changing name.</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_ParkAreaKm2" xml:space="preserve">
-    <value>Sub-area size in square kilometers. 0 if not inside one.\n\nSelect for formatting options.</value>
+    <value>Sub-area size in square kilometers. 0 if not inside one.
+
+Select for formatting options.</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_ParkAreaM2" xml:space="preserve">
-    <value>Sub-area size in square meters. 0 if not inside one.\n\nSelect for formatting options.</value>
+    <value>Sub-area size in square meters. 0 if not inside one.
+
+Select for formatting options.</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_ParkAreaMi2" xml:space="preserve">
-    <value>Sub-area size in square miles. 0 if not inside one.\n\nSelect for formatting options.</value>
+    <value>Sub-area size in square miles. 0 if not inside one.
+
+Select for formatting options.</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_ParkOrDistrict" xml:space="preserve">
-    <value>Sub-area name, then District/OutSide Connection/City name if none available.\n\nSub-areas are called internally as "Park" because they were introduced at Parklife DLC, then after used by the Industries, Campus and Airport DLC without changing name.\n\nTIP: Outside connection names may be customized using the &lt;color=#00FF00&gt;Addresses Mod&lt;/color&gt;.</value>
+    <value>Sub-area name, then District/OutSide Connection/City name if none available.
+
+Sub-areas are called internally as "Park" because they were introduced at Parklife DLC, then after used by the Industries, Campus and Airport DLC without changing name.
+
+TIP: Outside connection names may be customized using the &lt;color=#00FF00&gt;Addresses Mod&lt;/color&gt;.</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_PostalCode" xml:space="preserve">
-    <value>Postal code.\n\nTIP: Can be customized by using the &lt;color=#00FF00&gt;Addresses Mod&lt;/color&gt;.</value>
+    <value>Postal code.
+
+TIP: Can be customized by using the &lt;color=#00FF00&gt;Addresses Mod&lt;/color&gt;.</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_StreetNameComplete" xml:space="preserve">
     <value>Segment full name.</value>
@@ -383,88 +425,322 @@
   <data name="WTS_PARAMVARS_DESC__VariableVehicleSubType_PrevStopLine" xml:space="preserve">
     <value>Previous stop of line</value>
   </data>
-  <data name="WTS_ONNETEDITOR_POSITIONOFFSET" xml:space="preserve">    <value>Position offset</value>  </data>
-  <data name="WTS_ONNETEDITOR_ROTATION" xml:space="preserve">    <value>Rotation</value>  </data>
-  <data name="WTS_ONNETEDITOR_SCALE" xml:space="preserve">    <value>Scale</value>  </data>
-  <data name="WTS_PROPEDIT_CONFIGDELETE_MESSAGE" xml:space="preserve">    <value>Are you sure that you want to delete "{0}"?</value>  </data>
-  <data name="we_PivotPosition__Left" xml:space="preserve">    <value>Left side</value>  </data>
-  <data name="we_PivotPosition__Right" xml:space="preserve">    <value>Right side</value>  </data>
-  <data name="we_PivotPosition__Center" xml:space="preserve">    <value>Center (looking front)</value>  </data>
-  <data name="we_PivotPosition__LeftInvert" xml:space="preserve">    <value>Left side (inverse traffic)</value>  </data>
-  <data name="we_PivotPosition__RightInvert" xml:space="preserve">    <value>Right side (inverse traffic)</value>  </data>
-  <data name="we_PivotPosition__CenterInvert" xml:space="preserve">    <value>Center (looking behind)</value>  </data>
-  <data name="we_PivotPosition__CenterLookingLeft" xml:space="preserve">    <value>Center (looking left)</value>  </data>
-  <data name="we_PivotPosition__CenterLookingRight" xml:space="preserve">    <value>Center (looking right)</value>  </data>
-  <data name="we_roadEditor_pivotPosition" xml:space="preserve">    <value>Pivot Position</value>  </data>
-  <data name="we_roadEditor_lockCameraAtInstance" xml:space="preserve">    <value>Lock camera at instance # (starting at 0)</value>  </data>
-  <data name="we_Enum__UIHorizontalAlignment_Center" xml:space="preserve">    <value>Center</value>  </data>
-  <data name="we_Enum__UIHorizontalAlignment_Right" xml:space="preserve">    <value>Right</value>  </data>
-  <data name="we_Enum__UIHorizontalAlignment_Left" xml:space="preserve">    <value>Left</value>  </data>
-  <data name="we_Enum__FontClass_Regular" xml:space="preserve">    <value>Regular</value>  </data>
-  <data name="we_Enum__FontClass_PublicTransport" xml:space="preserve">    <value>Public Transport</value>  </data>
-  <data name="we_Enum__FontClass_ElectronicBoards" xml:space="preserve">    <value>Electronic Boards</value>  </data>
-  <data name="we_Enum__FontClass_Stencil" xml:space="preserve">    <value>Stencil</value>  </data>
-  <data name="we_Enum__FontClass_HighwayShields" xml:space="preserve">    <value>Highway Shields</value>  </data>
-  <data name="we_Enum__BlinkType_Custom" xml:space="preserve">    <value>Custom</value>  </data>
-  <data name="we_Enum__MaterialType_OPAQUE" xml:space="preserve">    <value>Opaque</value>  </data>
-  <data name="we_Enum__MaterialType_DAYNIGHT" xml:space="preserve">    <value>Day/Night illumination</value>  </data>
-  <data name="we_Enum__MaterialType_FLAGS" xml:space="preserve">    <value>By flags</value>  </data>
-  <data name="we_Enum__MaterialType_BRIGHT" xml:space="preserve">    <value>Always bright</value>  </data>
-  <data name="we_Enum__BlinkType_None" xml:space="preserve">    <value>None</value>  </data>
-  <data name="we_Enum__BlinkType_Blink_050_050" xml:space="preserve">    <value>Blink 500ms</value>  </data>
-  <data name="we_Enum__BlinkType_MildFade_0125_0125" xml:space="preserve">    <value>Mild fade</value>  </data>
-  <data name="we_Enum__BlinkType_MediumFade_500_500" xml:space="preserve">    <value>Medium fade</value>  </data>
-  <data name="we_Enum__BlinkType_StrongBlaze_0125_0125" xml:space="preserve">    <value>Strong blaze (neon)</value>  </data>
-  <data name="we_Enum__BlinkType_StrongFade_250_250" xml:space="preserve">    <value>Strong fade</value>  </data>
-  <data name="we_Enum__BlinkType_Blink_025_025" xml:space="preserve">    <value>Blink 250ms</value>  </data>
-  <data name="WTS_BACKGROUNDANDBOX_SETTINGS" xml:space="preserve">    <value>Background &amp; box </value>  </data>
-  <data name="WTS_BOXMESH_COLORSGROUP_LABEL" xml:space="preserve">    <value>Colors</value>  </data>
-  <data name="WTS_BOXMESH_EFFECTSGROUP_LABEL" xml:space="preserve">    <value>Effects</value>  </data>
-  <data name="WTS_BOXMESH_SIZESGROUP_LABEL" xml:space="preserve">    <value>Sizes</value>  </data>
-  <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_COPYTOCLIPBOARD" xml:space="preserve">    <value>Copy to clipboard</value>  </data>
-  <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_PASTEFROMCLIPBOARD" xml:space="preserve">    <value>Paste from clipboard</value>  </data>
-  <data name="WTS_CONTENT_TEXTVALUE" xml:space="preserve">    <value>Parameter value</value>  </data>
-  <data name="WTS_DELETETEXTITEM" xml:space="preserve">    <value>Delete this text item</value>  </data>
-  <data name="WTS_FLAGSREQUREDFORBIDDEN" xml:space="preserve">    <value>Flags required/forbidden</value>  </data>
-  <data name="WTS_FONTFACE_SETTINGS" xml:space="preserve">    <value>Font face settings</value>  </data>
-  <data name="WTS_GENERAL_SETTINGS" xml:space="preserve">    <value>General settings</value>  </data>
-  <data name="WTS_OVERRIDE_FONT" xml:space="preserve">    <value>Text font for override</value>  </data>
-  <data name="WTS_PARAMSEQ_ACTIONS" xml:space="preserve">    <value>Actions</value>  </data>
-  <data name="WTS_PARAMSEQ_STEPLENGTH" xml:space="preserve">    <value>Duration</value>  </data>
-  <data name="WTS_TEXT_CONTENTVALUE_TAB" xml:space="preserve">    <value>Text contents</value>  </data>
-  <data name="WTS_TEXT_ILLUMINATION_ATTRIBUTES" xml:space="preserve">    <value>Illumination settings</value>  </data>
-  <data name="WTS_TEXT_ILLUMINATION_ATTRIBUTES" xml:space="preserve">    <value>Illumination attributes</value>  </data>
-  <data name="WTS_TEXT_SIZE_ATTRIBUTES" xml:space="preserve">    <value>Text size attributes</value>  </data>
-  <data name="WTS_TEXT_TAB_TITLE" xml:space="preserve">    <value>Text mesh title</value>  </data>
-  <data name="WTS_BG_COLOR" xml:space="preserve">    <value>Background color</value>  </data>
-  <data name="WTS_BOXMESH_BACKOFFSETFROMCENTERBOTTOM" xml:space="preserve">    <value>Back mesh tilt offset (from Center/Bottom)</value>  </data>
-  <data name="WTS_BOXMESH_BACKSIZE" xml:space="preserve">    <value>Back mesh rectangle size</value>  </data>
-  <data name="WTS_BOXMESH_DEPTH_BACK" xml:space="preserve">    <value>Depth BG-&gt;Back mesh</value>  </data>
-  <data name="WTS_BOXMESH_DEPTH_FRONT" xml:space="preserve">    <value>Depth BG-&gt;Front mesh</value>  </data>
-  <data name="WTS_BOXMESH_OUTERCOLOR" xml:space="preserve">    <value>Box outer color</value>  </data>
-  <data name="WTS_CLASS_FONT" xml:space="preserve">    <value>Font class</value>  </data>
-  <data name="WTS_CLONE_180DEG_INVERT_TEXT_HOR_ALIGN" xml:space="preserve">    <value>Invert text horizontal align on clone</value>  </data>
-  <data name="WTS_CREATE_CLONE_180DEG" xml:space="preserve">    <value>Create cloned text rotated 180° on Y (inverse Z distance - use for simmetric 2 face props)</value>  </data>
-  <data name="WTS_LINEDIMENSIONS" xml:space="preserve">    <value>Line dimensions (meters) (width, height)</value>  </data>
-  <data name="WTS_RELATIVE_POS" xml:space="preserve">    <value>Relative position</value>  </data>
-  <data name="WTS_RELATIVE_ROT" xml:space="preserve">    <value>Relative rotation</value>  </data>
-  <data name="WTS_RESIZE_Y_TEXT_OVERFLOW" xml:space="preserve">    <value>Adjust text height if width is reduced by max width</value>  </data>
-  <data name="WTS_TEXT_ALIGN_HOR" xml:space="preserve">    <value>Horizontal align</value>  </data>
-  <data name="WTS_TEXT_BLINKTYPE" xml:space="preserve">    <value>Blink type</value>  </data>
-  <data name="WTS_TEXT_COLOR" xml:space="preserve">    <value>Text color</value>  </data>
-  <data name="WTS_TEXT_CONTAINERFRONTBORDERTHICKNESS" xml:space="preserve">    <value>Front border thickness</value>  </data>
-  <data name="WTS_TEXT_CONTAINERGLASSCOLOR" xml:space="preserve">    <value>Glass color</value>  </data>
-  <data name="WTS_TEXT_CONTAINERGLASSSPECULARITY" xml:space="preserve">    <value>Glass specularity</value>  </data>
-  <data name="WTS_TEXT_CONTAINERGLASSTRANSPARENCY" xml:space="preserve">    <value>Glass transparency</value>  </data>
-  <data name="WTS_TEXT_CONTAINERUSEVEHICLECOLOR" xml:space="preserve">    <value>Use vehicle color in outer color</value>  </data>
-  <data name="WTS_TEXT_CONTENT" xml:space="preserve">    <value>Text content type</value>  </data>
-  <data name="WTS_TEXT_CUSTOMBLINKPARAMS" xml:space="preserve">    <value>Custom blink parameters</value>  </data>
-  <data name="WTS_TEXT_DEPTH" xml:space="preserve">    <value>Depth</value>  </data>
-  <data name="WTS_TEXT_ILLUMINATIONSTRENGTH" xml:space="preserve">    <value>Illumination Strength</value>  </data>
-  <data name="WTS_TEXT_MATERIALTYPE" xml:space="preserve">    <value>Material brightness</value>  </data>
-  <data name="WTS_TEXT_USEFRAME" xml:space="preserve">    <value>Create box around background</value>  </data>
-  <data name="WTS_TEXTBACKGROUNDSIZEGENERATED" xml:space="preserve">    <value>Background size</value>  </data>
-  <data name="WTS_USE_CONTRAST_COLOR" xml:space="preserve">    <value>Use contrast color (refers to prop color)</value>  </data>
-
-
+  <data name="WTS_ONNETEDITOR_POSITIONOFFSET" xml:space="preserve">
+    <value>Position offset</value>
+  </data>
+  <data name="WTS_ONNETEDITOR_ROTATION" xml:space="preserve">
+    <value>Rotation</value>
+  </data>
+  <data name="WTS_ONNETEDITOR_SCALE" xml:space="preserve">
+    <value>Scale</value>
+  </data>
+  <data name="WTS_PROPEDIT_CONFIGDELETE_MESSAGE" xml:space="preserve">
+    <value>Are you sure that you want to delete "{0}"?</value>
+  </data>
+  <data name="we_PivotPosition__Left" xml:space="preserve">
+    <value>Left side</value>
+  </data>
+  <data name="we_PivotPosition__Right" xml:space="preserve">
+    <value>Right side</value>
+  </data>
+  <data name="we_PivotPosition__Center" xml:space="preserve">
+    <value>Center (looking front)</value>
+  </data>
+  <data name="we_PivotPosition__LeftInvert" xml:space="preserve">
+    <value>Left side (inverse traffic)</value>
+  </data>
+  <data name="we_PivotPosition__RightInvert" xml:space="preserve">
+    <value>Right side (inverse traffic)</value>
+  </data>
+  <data name="we_PivotPosition__CenterInvert" xml:space="preserve">
+    <value>Center (looking behind)</value>
+  </data>
+  <data name="we_PivotPosition__CenterLookingLeft" xml:space="preserve">
+    <value>Center (looking left)</value>
+  </data>
+  <data name="we_PivotPosition__CenterLookingRight" xml:space="preserve">
+    <value>Center (looking right)</value>
+  </data>
+  <data name="we_roadEditor_pivotPosition" xml:space="preserve">
+    <value>Pivot Position</value>
+  </data>
+  <data name="we_roadEditor_lockCameraAtInstance" xml:space="preserve">
+    <value>Lock camera at instance # (starting at 0)</value>
+  </data>
+  <data name="we_Enum__UIHorizontalAlignment_Center" xml:space="preserve">
+    <value>Center</value>
+  </data>
+  <data name="we_Enum__UIHorizontalAlignment_Right" xml:space="preserve">
+    <value>Right</value>
+  </data>
+  <data name="we_Enum__UIHorizontalAlignment_Left" xml:space="preserve">
+    <value>Left</value>
+  </data>
+  <data name="we_Enum__FontClass_Regular" xml:space="preserve">
+    <value>Regular</value>
+  </data>
+  <data name="we_Enum__FontClass_PublicTransport" xml:space="preserve">
+    <value>Public Transport</value>
+  </data>
+  <data name="we_Enum__FontClass_ElectronicBoards" xml:space="preserve">
+    <value>Electronic Boards</value>
+  </data>
+  <data name="we_Enum__FontClass_Stencil" xml:space="preserve">
+    <value>Stencil</value>
+  </data>
+  <data name="we_Enum__FontClass_HighwayShields" xml:space="preserve">
+    <value>Highway Shields</value>
+  </data>
+  <data name="we_Enum__BlinkType_Custom" xml:space="preserve">
+    <value>Custom</value>
+  </data>
+  <data name="we_Enum__MaterialType_OPAQUE" xml:space="preserve">
+    <value>Opaque</value>
+  </data>
+  <data name="we_Enum__MaterialType_DAYNIGHT" xml:space="preserve">
+    <value>Day/Night illumination</value>
+  </data>
+  <data name="we_Enum__MaterialType_FLAGS" xml:space="preserve">
+    <value>By flags</value>
+  </data>
+  <data name="we_Enum__MaterialType_BRIGHT" xml:space="preserve">
+    <value>Always bright</value>
+  </data>
+  <data name="we_Enum__BlinkType_None" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="we_Enum__BlinkType_Blink_050_050" xml:space="preserve">
+    <value>Blink 500ms</value>
+  </data>
+  <data name="we_Enum__BlinkType_MildFade_0125_0125" xml:space="preserve">
+    <value>Mild fade</value>
+  </data>
+  <data name="we_Enum__BlinkType_MediumFade_500_500" xml:space="preserve">
+    <value>Medium fade</value>
+  </data>
+  <data name="we_Enum__BlinkType_StrongBlaze_0125_0125" xml:space="preserve">
+    <value>Strong blaze (neon)</value>
+  </data>
+  <data name="we_Enum__BlinkType_StrongFade_250_250" xml:space="preserve">
+    <value>Strong fade</value>
+  </data>
+  <data name="we_Enum__BlinkType_Blink_025_025" xml:space="preserve">
+    <value>Blink 250ms</value>
+  </data>
+  <data name="WTS_BACKGROUNDANDBOX_SETTINGS" xml:space="preserve">
+    <value>Background &amp; box </value>
+  </data>
+  <data name="WTS_BOXMESH_COLORSGROUP_LABEL" xml:space="preserve">
+    <value>Colors</value>
+  </data>
+  <data name="WTS_BOXMESH_EFFECTSGROUP_LABEL" xml:space="preserve">
+    <value>Effects</value>
+  </data>
+  <data name="WTS_BOXMESH_SIZESGROUP_LABEL" xml:space="preserve">
+    <value>Sizes</value>
+  </data>
+  <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_COPYTOCLIPBOARD" xml:space="preserve">
+    <value>Copy to clipboard</value>
+  </data>
+  <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_PASTEFROMCLIPBOARD" xml:space="preserve">
+    <value>Paste from clipboard</value>
+  </data>
+  <data name="WTS_CONTENT_TEXTVALUE" xml:space="preserve">
+    <value>Parameter value</value>
+  </data>
+  <data name="WTS_DELETETEXTITEM" xml:space="preserve">
+    <value>Delete this text item</value>
+  </data>
+  <data name="WTS_FLAGSREQUREDFORBIDDEN" xml:space="preserve">
+    <value>Flags required/forbidden</value>
+  </data>
+  <data name="WTS_FONTFACE_SETTINGS" xml:space="preserve">
+    <value>Font face settings</value>
+  </data>
+  <data name="WTS_GENERAL_SETTINGS" xml:space="preserve">
+    <value>General settings</value>
+  </data>
+  <data name="WTS_OVERRIDE_FONT" xml:space="preserve">
+    <value>Text font for override</value>
+  </data>
+  <data name="WTS_PARAMSEQ_ACTIONS" xml:space="preserve">
+    <value>Actions</value>
+  </data>
+  <data name="WTS_PARAMSEQ_STEPLENGTH" xml:space="preserve">
+    <value>Duration</value>
+  </data>
+  <data name="WTS_TEXT_CONTENTVALUE_TAB" xml:space="preserve">
+    <value>Text contents</value>
+  </data>
+  <data name="WTS_TEXT_ILLUMINATION_ATTRIBUTES" xml:space="preserve">
+    <value>Illumination attributes</value>
+  </data>
+  <data name="WTS_TEXT_SIZE_ATTRIBUTES" xml:space="preserve">
+    <value>Text size attributes</value>
+  </data>
+  <data name="WTS_TEXT_TAB_TITLE" xml:space="preserve">
+    <value>Text mesh title</value>
+  </data>
+  <data name="WTS_BG_COLOR" xml:space="preserve">
+    <value>Background color</value>
+  </data>
+  <data name="WTS_BOXMESH_BACKOFFSETFROMCENTERBOTTOM" xml:space="preserve">
+    <value>Back mesh tilt offset (from Center/Bottom)</value>
+  </data>
+  <data name="WTS_BOXMESH_BACKSIZE" xml:space="preserve">
+    <value>Back mesh rectangle size</value>
+  </data>
+  <data name="WTS_BOXMESH_DEPTH_BACK" xml:space="preserve">
+    <value>Depth BG-&gt;Back mesh</value>
+  </data>
+  <data name="WTS_BOXMESH_DEPTH_FRONT" xml:space="preserve">
+    <value>Depth BG-&gt;Front mesh</value>
+  </data>
+  <data name="WTS_BOXMESH_OUTERCOLOR" xml:space="preserve">
+    <value>Box outer color</value>
+  </data>
+  <data name="WTS_CLASS_FONT" xml:space="preserve">
+    <value>Font class</value>
+  </data>
+  <data name="WTS_CLONE_180DEG_INVERT_TEXT_HOR_ALIGN" xml:space="preserve">
+    <value>Invert text horizontal align on clone</value>
+  </data>
+  <data name="WTS_CREATE_CLONE_180DEG" xml:space="preserve">
+    <value>Create cloned text rotated 180° on Y (inverse Z distance - use for simmetric 2 face props)</value>
+  </data>
+  <data name="WTS_LINEDIMENSIONS" xml:space="preserve">
+    <value>Line dimensions (meters) (width, height)</value>
+  </data>
+  <data name="WTS_RELATIVE_POS" xml:space="preserve">
+    <value>Relative position</value>
+  </data>
+  <data name="WTS_RELATIVE_ROT" xml:space="preserve">
+    <value>Relative rotation</value>
+  </data>
+  <data name="WTS_RESIZE_Y_TEXT_OVERFLOW" xml:space="preserve">
+    <value>Adjust text height if width is reduced by max width</value>
+  </data>
+  <data name="WTS_TEXT_ALIGN_HOR" xml:space="preserve">
+    <value>Horizontal align</value>
+  </data>
+  <data name="WTS_TEXT_BLINKTYPE" xml:space="preserve">
+    <value>Blink type</value>
+  </data>
+  <data name="WTS_TEXT_COLOR" xml:space="preserve">
+    <value>Text color</value>
+  </data>
+  <data name="WTS_TEXT_CONTAINERFRONTBORDERTHICKNESS" xml:space="preserve">
+    <value>Front border thickness</value>
+  </data>
+  <data name="WTS_TEXT_CONTAINERGLASSCOLOR" xml:space="preserve">
+    <value>Glass color</value>
+  </data>
+  <data name="WTS_TEXT_CONTAINERGLASSSPECULARITY" xml:space="preserve">
+    <value>Glass specularity</value>
+  </data>
+  <data name="WTS_TEXT_CONTAINERGLASSTRANSPARENCY" xml:space="preserve">
+    <value>Glass transparency</value>
+  </data>
+  <data name="WTS_TEXT_CONTAINERUSEVEHICLECOLOR" xml:space="preserve">
+    <value>Use vehicle color in outer color</value>
+  </data>
+  <data name="WTS_TEXT_CONTENT" xml:space="preserve">
+    <value>Text content type</value>
+  </data>
+  <data name="WTS_TEXT_CUSTOMBLINKPARAMS" xml:space="preserve">
+    <value>Custom blink parameters</value>
+  </data>
+  <data name="WTS_TEXT_DEPTH" xml:space="preserve">
+    <value>Depth</value>
+  </data>
+  <data name="WTS_TEXT_ILLUMINATIONSTRENGTH" xml:space="preserve">
+    <value>Illumination Strength</value>
+  </data>
+  <data name="WTS_TEXT_MATERIALTYPE" xml:space="preserve">
+    <value>Material brightness</value>
+  </data>
+  <data name="WTS_TEXT_USEFRAME" xml:space="preserve">
+    <value>Create box around background</value>
+  </data>
+  <data name="WTS_TEXTBACKGROUNDSIZEGENERATED" xml:space="preserve">
+    <value>Background size</value>
+  </data>
+  <data name="WTS_USE_CONTRAST_COLOR" xml:space="preserve">
+    <value>Use contrast color (refers to prop color)</value>
+  </data>
+  <data name="we_roadEditor_windowTitle" xml:space="preserve">
+    <value>On Net Editor</value>
+  </data>
+  <data name="we_settings_windowTitle" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="WTS_DEFAULT_BUILDINGS_CONFIG_PATH_TITLE" xml:space="preserve">
+    <value>Default configurations for buildings folder</value>
+  </data>
+  <data name="WTS_DEFAULT_HWSHIELDS_CONFIG_PATH_TITLE" xml:space="preserve">
+    <value>Folder with pre-saved highway shields configuration (only active if Addresses mod is active)</value>
+  </data>
+  <data name="WTS_DEFAULT_PROP_LAYOUTS_PATH_TITLE" xml:space="preserve">
+    <value>Default prop layouts</value>
+  </data>
+  <data name="WTS_DEFAULT_VEHICLES_CONFIG_PATH_TITLE" xml:space="preserve">
+    <value>Global vehicles text layout files folder</value>
+  </data>
+  <data name="WTS_EXTRA_SPRITES_PATH_TITLE" xml:space="preserve">
+    <value>Extra sprites folder (max 400x400) to use in layouts</value>
+  </data>
+  <data name="WTS_FONT_FILES_PATH_TITLE" xml:space="preserve">
+    <value>Fonts folder</value>
+  </data>
+  <data name="WTS_FONT_QUALITY" xml:space="preserve">
+    <value>Font quality
+(high values may cause glitches)</value>
+  </data>
+  <data name="WTS_INITIAL_TEXTURE_SIZE_FONT" xml:space="preserve">
+    <value>Initial texture size
+(raise it only if you get undesired "black letters" when zooming in)</value>
+  </data>
+  <data name="WTS_MAX_PARALLEL_WORD_PROCESSES" xml:space="preserve">
+    <value>Max words being draw in background per font</value>
+  </data>
+  <data name="WTS_REFRESH_IMAGES_FOLDER" xml:space="preserve">
+    <value>Reload images</value>
+  </data>
+  <data name="we_settings_folders" xml:space="preserve">
+    <value>Custom file folders</value>
+  </data>
+  <data name="we_settings_reloadFonts" xml:space="preserve">
+    <value>Reload fonts</value>
+  </data>
+  <data name="we_settings_quality" xml:space="preserve">
+    <value>Rendering quality</value>
+  </data>
+  <data name="we_settings_btnLabel" xml:space="preserve">
+    <value>Mod settings</value>
+  </data>
+  <data name="WTS_CLOCK_12H_CLOCK" xml:space="preserve">
+    <value>12h clock</value>
+  </data>
+  <data name="WTS_CLOCK_MINUTES_PRECISION" xml:space="preserve">
+    <value>Precision (in minutes)
+Note that very low values are recommended only with Real Time mod or alike!</value>
+  </data>
+  <data name="WTS_GENERATED_CLOCK_OPTIONS" xml:space="preserve">
+    <value>Clock meshes options</value>
+  </data>
+  <data name="WTS_CLOCK_SHOW_LEADING_ZERO" xml:space="preserve">
+    <value>Show leading zero of hours</value>
+  </data>
+  <data name="we_settings_applyUiScale" xml:space="preserve">
+    <value>Apply UI Scale</value>
+  </data>
+  <data name="we_settings_goToFolderShort" xml:space="preserve">
+    <value>Go To</value>
+  </data>
+  <data name="we_settings_ui" xml:space="preserve">
+    <value>UI</value>
+  </data>
+  <data name="we_settings_uiScale" xml:space="preserve">
+    <value>UI general scale</value>
+  </data>
 </root>

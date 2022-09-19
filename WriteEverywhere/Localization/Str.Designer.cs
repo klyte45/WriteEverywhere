@@ -340,6 +340,96 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a On Net Editor.
+        /// </summary>
+        internal static string we_roadEditor_windowTitle {
+            get {
+                return ResourceManager.GetString("we_roadEditor_windowTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Apply UI Scale.
+        /// </summary>
+        internal static string we_settings_applyUiScale {
+            get {
+                return ResourceManager.GetString("we_settings_applyUiScale", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Mod settings.
+        /// </summary>
+        internal static string we_settings_btnLabel {
+            get {
+                return ResourceManager.GetString("we_settings_btnLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Custom file folders.
+        /// </summary>
+        internal static string we_settings_folders {
+            get {
+                return ResourceManager.GetString("we_settings_folders", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Go To.
+        /// </summary>
+        internal static string we_settings_goToFolderShort {
+            get {
+                return ResourceManager.GetString("we_settings_goToFolderShort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Rendering quality.
+        /// </summary>
+        internal static string we_settings_quality {
+            get {
+                return ResourceManager.GetString("we_settings_quality", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Reload fonts.
+        /// </summary>
+        internal static string we_settings_reloadFonts {
+            get {
+                return ResourceManager.GetString("we_settings_reloadFonts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a UI.
+        /// </summary>
+        internal static string we_settings_ui {
+            get {
+                return ResourceManager.GetString("we_settings_ui", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a UI general scale.
+        /// </summary>
+        internal static string we_settings_uiScale {
+            get {
+                return ResourceManager.GetString("we_settings_uiScale", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Settings.
+        /// </summary>
+        internal static string we_settings_windowTitle {
+            get {
+                return ResourceManager.GetString("we_settings_windowTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Background &amp; box .
         /// </summary>
         internal static string WTS_BACKGROUNDANDBOX_SETTINGS {
@@ -547,6 +637,34 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a 12h clock.
+        /// </summary>
+        internal static string WTS_CLOCK_12H_CLOCK {
+            get {
+                return ResourceManager.GetString("WTS_CLOCK_12H_CLOCK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Precision (in minutes)
+        ///Note that very low values are recommended only with Real Time mod or alike!.
+        /// </summary>
+        internal static string WTS_CLOCK_MINUTES_PRECISION {
+            get {
+                return ResourceManager.GetString("WTS_CLOCK_MINUTES_PRECISION", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Show leading zero of hours.
+        /// </summary>
+        internal static string WTS_CLOCK_SHOW_LEADING_ZERO {
+            get {
+                return ResourceManager.GetString("WTS_CLOCK_SHOW_LEADING_ZERO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Invert text horizontal align on clone.
         /// </summary>
         internal static string WTS_CLONE_180DEG_INVERT_TEXT_HOR_ALIGN {
@@ -601,11 +719,47 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Default configurations for buildings folder.
+        /// </summary>
+        internal static string WTS_DEFAULT_BUILDINGS_CONFIG_PATH_TITLE {
+            get {
+                return ResourceManager.GetString("WTS_DEFAULT_BUILDINGS_CONFIG_PATH_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Default game font.
         /// </summary>
         internal static string WTS_DEFAULT_FONT_LABEL {
             get {
                 return ResourceManager.GetString("WTS_DEFAULT_FONT_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Folder with pre-saved highway shields configuration (only active if Addresses mod is active).
+        /// </summary>
+        internal static string WTS_DEFAULT_HWSHIELDS_CONFIG_PATH_TITLE {
+            get {
+                return ResourceManager.GetString("WTS_DEFAULT_HWSHIELDS_CONFIG_PATH_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Default prop layouts.
+        /// </summary>
+        internal static string WTS_DEFAULT_PROP_LAYOUTS_PATH_TITLE {
+            get {
+                return ResourceManager.GetString("WTS_DEFAULT_PROP_LAYOUTS_PATH_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Global vehicles text layout files folder.
+        /// </summary>
+        internal static string WTS_DEFAULT_VEHICLES_CONFIG_PATH_TITLE {
+            get {
+                return ResourceManager.GetString("WTS_DEFAULT_VEHICLES_CONFIG_PATH_TITLE", resourceCulture);
             }
         }
         
@@ -637,6 +791,15 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Extra sprites folder (max 400x400) to use in layouts.
+        /// </summary>
+        internal static string WTS_EXTRA_SPRITES_PATH_TITLE {
+            get {
+                return ResourceManager.GetString("WTS_EXTRA_SPRITES_PATH_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Flags required/forbidden.
         /// </summary>
         internal static string WTS_FLAGSREQUREDFORBIDDEN {
@@ -664,6 +827,25 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Fonts folder.
+        /// </summary>
+        internal static string WTS_FONT_FILES_PATH_TITLE {
+            get {
+                return ResourceManager.GetString("WTS_FONT_FILES_PATH_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Font quality
+        ///(high values may cause glitches).
+        /// </summary>
+        internal static string WTS_FONT_QUALITY {
+            get {
+                return ResourceManager.GetString("WTS_FONT_QUALITY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Font face settings.
         /// </summary>
         internal static string WTS_FONTFACE_SETTINGS {
@@ -678,6 +860,15 @@ namespace WriteEverywhere.Localization {
         internal static string WTS_GENERAL_SETTINGS {
             get {
                 return ResourceManager.GetString("WTS_GENERAL_SETTINGS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Clock meshes options.
+        /// </summary>
+        internal static string WTS_GENERATED_CLOCK_OPTIONS {
+            get {
+                return ResourceManager.GetString("WTS_GENERATED_CLOCK_OPTIONS", resourceCulture);
             }
         }
         
@@ -700,6 +891,16 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Initial texture size
+        ///(raise it only if you get undesired &quot;black letters&quot; when zooming in).
+        /// </summary>
+        internal static string WTS_INITIAL_TEXTURE_SIZE_FONT {
+            get {
+                return ResourceManager.GetString("WTS_INITIAL_TEXTURE_SIZE_FONT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Invert road side.
         /// </summary>
         internal static string WTS_INVERT_SIGN_SIDE {
@@ -718,7 +919,17 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a &lt;color=#FF0000&gt;Wrong settings in this parameter!&lt;/color&gt;\nThere are more than one text entry of different kind pointing to this parameter. Please check your layout settings..
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Max words being draw in background per font.
+        /// </summary>
+        internal static string WTS_MAX_PARALLEL_WORD_PROCESSES {
+            get {
+                return ResourceManager.GetString("WTS_MAX_PARALLEL_WORD_PROCESSES", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a &lt;color=#FF0000&gt;Wrong settings in this parameter!&lt;/color&gt;
+        ///There are more than one text entry of different kind pointing to this parameter. Please check your layout settings..
         /// </summary>
         internal static string WTS_ONNETEDITOR_INVALIDPARAMSETTINGS_DIFFERENTKINDSAMEPARAM {
             get {
@@ -907,7 +1118,9 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a  City population.\n\nSelect for formatting options..
+        ///   Consulta uma cadeia de caracteres localizada semelhante a  City population.
+        ///
+        ///Select for formatting options..
         /// </summary>
         internal static string WTS_PARAMVARS_DESC__VariableCitySubType_CityPopulation {
             get {
@@ -934,7 +1147,9 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Distance from zero marker of the city (in kilometers)\n\nSelect for formatting options..
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Distance from zero marker of the city (in kilometers)
+        ///
+        ///Select for formatting options..
         /// </summary>
         internal static string WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistanceFromReferenceKilometers {
             get {
@@ -943,7 +1158,9 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Distance from zero marker of the city (in meters)\n\nSelect for formatting options..
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Distance from zero marker of the city (in meters)
+        ///
+        ///Select for formatting options..
         /// </summary>
         internal static string WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistanceFromReferenceMeters {
             get {
@@ -952,7 +1169,9 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Distance from zero marker of the city (in miles)\n\nSelect for formatting options..
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Distance from zero marker of the city (in miles)
+        ///
+        ///Select for formatting options..
         /// </summary>
         internal static string WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistanceFromReferenceMiles {
             get {
@@ -961,7 +1180,9 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a District name, or the outside connection city if at map edge. City name will be used as fallback.\n\nTIP: Outside connection names may be customized using the &lt;color=#00FF00&gt;Addresses Mod&lt;/color&gt;..
+        ///   Consulta uma cadeia de caracteres localizada semelhante a District name, or the outside connection city if at map edge. City name will be used as fallback.
+        ///
+        ///TIP: Outside connection names may be customized using the &lt;color=#00FF00&gt;Addresses Mod&lt;/color&gt;..
         /// </summary>
         internal static string WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_District {
             get {
@@ -970,7 +1191,9 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Current district size in square kilometers. City area size if not inside one.\n\nSelect for formatting options..
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Current district size in square kilometers. City area size if not inside one.
+        ///
+        ///Select for formatting options..
         /// </summary>
         internal static string WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistrictAreaKm2 {
             get {
@@ -979,7 +1202,9 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Current district size in square meters. City area size if not inside one.\n\nSelect for formatting options..
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Current district size in square meters. City area size if not inside one.
+        ///
+        ///Select for formatting options..
         /// </summary>
         internal static string WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistrictAreaM2 {
             get {
@@ -988,7 +1213,9 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Current district size in square miles. City area size if not inside one.\n\nSelect for formatting options..
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Current district size in square miles. City area size if not inside one.
+        ///
+        ///Select for formatting options..
         /// </summary>
         internal static string WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistrictAreaMi2 {
             get {
@@ -997,7 +1224,9 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a District name, or the outside connection city if at map edge. If none available, the Sub-area name will be used if the segment inside one of them. City name will be used as fallback.\n\nTIP: Outside connection names may be customized using the &lt;color=#00FF00&gt;Addresses Mod&lt;/color&gt;..
+        ///   Consulta uma cadeia de caracteres localizada semelhante a District name, or the outside connection city if at map edge. If none available, the Sub-area name will be used if the segment inside one of them. City name will be used as fallback.
+        ///
+        ///TIP: Outside connection names may be customized using the &lt;color=#00FF00&gt;Addresses Mod&lt;/color&gt;..
         /// </summary>
         internal static string WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistrictOrPark {
             get {
@@ -1006,7 +1235,9 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a District population. City population if not inside one.\n\nSelect for formatting options..
+        ///   Consulta uma cadeia de caracteres localizada semelhante a District population. City population if not inside one.
+        ///
+        ///Select for formatting options..
         /// </summary>
         internal static string WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistrictPopulation {
             get {
@@ -1051,7 +1282,9 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Current mileage in kilometers.\n\nSelect for formatting options..
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Current mileage in kilometers.
+        ///
+        ///Select for formatting options..
         /// </summary>
         internal static string WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_MileageKilometers {
             get {
@@ -1060,7 +1293,9 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Current mileage in meters.\n\nSelect for formatting options..
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Current mileage in meters.
+        ///
+        ///Select for formatting options..
         /// </summary>
         internal static string WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_MileageMeters {
             get {
@@ -1069,7 +1304,9 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Current mileage in miles.\n\nSelect for formatting options..
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Current mileage in miles.
+        ///
+        ///Select for formatting options..
         /// </summary>
         internal static string WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_MileageMiles {
             get {
@@ -1087,7 +1324,9 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Sub-area name, or empty if not in one.\n\nSub-areas are called internally as &quot;Park&quot; because they were introduced at Parklife DLC, then after used by the Industries, Campus and Airport DLC without changing name..
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Sub-area name, or empty if not in one.
+        ///
+        ///Sub-areas are called internally as &quot;Park&quot; because they were introduced at Parklife DLC, then after used by the Industries, Campus and Airport DLC without changing name..
         /// </summary>
         internal static string WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_Park {
             get {
@@ -1096,7 +1335,9 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Sub-area size in square kilometers. 0 if not inside one.\n\nSelect for formatting options..
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Sub-area size in square kilometers. 0 if not inside one.
+        ///
+        ///Select for formatting options..
         /// </summary>
         internal static string WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_ParkAreaKm2 {
             get {
@@ -1105,7 +1346,9 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Sub-area size in square meters. 0 if not inside one.\n\nSelect for formatting options..
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Sub-area size in square meters. 0 if not inside one.
+        ///
+        ///Select for formatting options..
         /// </summary>
         internal static string WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_ParkAreaM2 {
             get {
@@ -1114,7 +1357,9 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Sub-area size in square miles. 0 if not inside one.\n\nSelect for formatting options..
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Sub-area size in square miles. 0 if not inside one.
+        ///
+        ///Select for formatting options..
         /// </summary>
         internal static string WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_ParkAreaMi2 {
             get {
@@ -1123,7 +1368,11 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Sub-area name, then District/OutSide Connection/City name if none available.\n\nSub-areas are called internally as &quot;Park&quot; because they were introduced at Parklife DLC, then after used by the Industries, Campus and Airport DLC without changing name.\n\nTIP: Outside connection names may be customized using the &lt;color=#00FF00&gt;Addresses Mod&lt;/color&gt;..
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Sub-area name, then District/OutSide Connection/City name if none available.
+        ///
+        ///Sub-areas are called internally as &quot;Park&quot; because they were introduced at Parklife DLC, then after used by the Industries, Campus and Airport DLC without changing name.
+        ///
+        ///TIP: Outside connection names may be customized using the &lt;color=#00FF00&gt;Addresses Mod&lt;/color&gt;..
         /// </summary>
         internal static string WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_ParkOrDistrict {
             get {
@@ -1132,7 +1381,9 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Postal code.\n\nTIP: Can be customized by using the &lt;color=#00FF00&gt;Addresses Mod&lt;/color&gt;..
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Postal code.
+        ///
+        ///TIP: Can be customized by using the &lt;color=#00FF00&gt;Addresses Mod&lt;/color&gt;..
         /// </summary>
         internal static string WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_PostalCode {
             get {
@@ -1308,6 +1559,15 @@ namespace WriteEverywhere.Localization {
         internal static string WTS_PROPEDIT_CONFIGDELETE_MESSAGE {
             get {
                 return ResourceManager.GetString("WTS_PROPEDIT_CONFIGDELETE_MESSAGE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Reload images.
+        /// </summary>
+        internal static string WTS_REFRESH_IMAGES_FOLDER {
+            get {
+                return ResourceManager.GetString("WTS_REFRESH_IMAGES_FOLDER", resourceCulture);
             }
         }
         

@@ -47,7 +47,7 @@ namespace WriteEverywhere.UI
         public void Awake()
         {
             Instance = this;
-            Init("On Net Editor", new Rect(128, 128, 680, 420), resizable: true, minSize: new Vector2(340, 260));
+            Init(Str.we_roadEditor_windowTitle, new Rect(128, 128, 680, 420), resizable: true, minSize: new Vector2(340, 260));
             m_colorPicker = GameObjectUtils.CreateElement<GUIColorPicker>(transform).Init();
             m_colorPicker.Visible = false;
             var tabs = new IGUITab<OnNetInstanceCacheContainerXml>[] {
@@ -204,7 +204,7 @@ namespace WriteEverywhere.UI
             {
                 xmlLibList.Draw(RedButton, OnDeleteList, OnGetCurrentList);
             }
-            m_tabsContainer.DrawListTabs(new Rect(0, 44, WindowRect.width, WindowRect.height - 40));
+            m_tabsContainer.DrawListTabs(new Rect(0, 25, WindowRect.width, WindowRect.height - 25));
         }
 
         private OnNetInstanceCacheContainerXml GetSelectedItem(int listSel) => CurrentEditingInstance.BoardsData[listSel];
