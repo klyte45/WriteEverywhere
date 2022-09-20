@@ -108,7 +108,7 @@ namespace WriteEverywhere.Singleton
                 {
                     continue;
                 }
-                WTSDynamicTextRenderingRules.GetColorForRule(segmentID, i, 0, null, targetDescriptor, out bool rendered);
+                WEDynamicTextRenderingRules.GetColorForRule(segmentID, i, 0, null, targetDescriptor, out bool rendered);
                 if (rendered)
                 {
                     int deltaVertexCount = 0;
@@ -155,7 +155,7 @@ namespace WriteEverywhere.Singleton
                     {
                         for (int k = 0; k < targetDescriptor.m_cachedPositions.Count; k++)
                         {
-                            WTSDynamicTextRenderingRules.PropInstancePopulateGroupData(targetDescriptor.SimpleCachedProp, layer, new InstanceID { NetSegment = segmentID }, targetDescriptor.m_cachedPositions[k], targetDescriptor.Scale, targetDescriptor.m_cachedRotations[k], ref vertexIndex, ref triangleIndex, groupPosition, data, ref min, ref max, ref maxRenderDistance, ref maxInstanceDistance);
+                            WEDynamicTextRenderingRules.PropInstancePopulateGroupData(targetDescriptor.SimpleCachedProp, layer, new InstanceID { NetSegment = segmentID }, targetDescriptor.m_cachedPositions[k], targetDescriptor.Scale, targetDescriptor.m_cachedRotations[k], ref vertexIndex, ref triangleIndex, groupPosition, data, ref min, ref max, ref maxRenderDistance, ref maxInstanceDistance);
                         }
                     }
                 }
@@ -180,18 +180,18 @@ namespace WriteEverywhere.Singleton
                     return;
                 }
 
-                Color parentColor = WTSDynamicTextRenderingRules.RenderPropMesh(cachedProp, cameraInfo, segmentId, boardIdx, 0, 0xFFFFFFF, 0, position, Vector4.zero, rotation, targetDescriptor.PropScale, null, targetDescriptor, out Matrix4x4 propMatrix, out bool rendered, new InstanceID { NetNode = segmentId });
+                Color parentColor = WEDynamicTextRenderingRules.RenderPropMesh(cachedProp, cameraInfo, segmentId, boardIdx, 0, 0xFFFFFFF, 0, position, Vector4.zero, rotation, targetDescriptor.PropScale, null, targetDescriptor, out Matrix4x4 propMatrix, out bool rendered, new InstanceID { NetNode = segmentId });
 
                 if (rendered)
                 {
 
                     for (int j = 0; j < targetDescriptor.TextDescriptors.Length; j++)
                     {
-                        if (cameraInfo.CheckRenderDistance(position, WTSDynamicTextRenderingRules.RENDER_DISTANCE_FACTOR * targetDescriptor.TextDescriptors[j].TextLineHeight * (targetDescriptor.TextDescriptors[j].IlluminationConfig.IlluminationType == FontStashSharp.MaterialType.OPAQUE ? 1 : 3)))
+                        if (cameraInfo.CheckRenderDistance(position, WEDynamicTextRenderingRules.RENDER_DISTANCE_FACTOR * targetDescriptor.TextDescriptors[j].TextLineHeight * (targetDescriptor.TextDescriptors[j].IlluminationConfig.IlluminationType == FontStashSharp.MaterialType.OPAQUE ? 1 : 3)))
                         {
                             MaterialPropertyBlock properties = PropManager.instance.m_materialBlock;
                             properties.Clear();
-                            var textPos = WTSDynamicTextRenderingRules.RenderTextMesh(segmentId, boardIdx, i, targetDescriptor, propMatrix, targetDescriptor.Scale, ref targetDescriptor.TextDescriptors[j], properties, 0, 0, parentColor, cachedProp, ref NetManager.instance.m_drawCallData.m_batchedCalls, targetDescriptor.FontName);
+                            var textPos = WETextRenderer.RenderTextMesh(segmentId, boardIdx, i, targetDescriptor, targetDescriptor.TextDescriptors[j], propMatrix, 0, 0, ref NetManager.instance.m_drawCallData.m_batchedCalls);
                             if (textPos != default && WTSOnNetLiteUI.LockSelection && WTSOnNetLiteUI.Instance.IsOnTextEditor && i == WTSOnNetLiteUI.LockSelectionInstanceNum && j == WTSOnNetLiteUI.LockSelectionTextIdx && WTSOnNetLiteUI.Instance.Visible && (WTSOnNetLiteUI.Instance.CurrentSegmentId == segmentId) && WTSOnNetLiteUI.Instance.ListSel == boardIdx && !ModInstance.Controller.RoadSegmentToolInstance.enabled)
                             {
                                 ToolsModifierControl.cameraController.m_targetPosition.x = textPos.x;

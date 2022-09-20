@@ -21,7 +21,7 @@ uniform 	fixed4 hlslcc_mtx4x4unity_MatrixVP[4];
 uniform float4 _MainTex_TexelSize;
 
  void commonVert(inout appdata_full v){
-	v.vertex.xyz *= _Dimensions;
+	//v.vertex.xyz *= _Dimensions;
 	#if defined(PIXELSNAP_ON)
 		v.vertex = UnityPixelSnap (v.vertex);
 	#endif

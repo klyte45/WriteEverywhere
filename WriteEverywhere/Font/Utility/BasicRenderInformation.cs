@@ -10,6 +10,7 @@ namespace SpriteFontPlus.Utility
         public Material m_generatedMaterial;
         public RangeVector m_YAxisOverflows;
         public RangeVector m_fontBaseLimits;
+        public float m_refY = 1f;
         public string m_refText;
         public Vector4 m_borders;
         public bool m_useShadersVariables = false;

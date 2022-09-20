@@ -357,7 +357,7 @@ namespace WriteEverywhere.Sprites
                     yield return null;
                 }
                 LineLogoParameter lineParams = line.ZeroLine ? new LineLogoParameter(LineIconTest.ToString(), (Color)ColorExtensions.FromRGB(0x5e35b1), "K")
-                : line.lineId < 0 ? new LineLogoParameter(((CommonsSpriteNames)((-line.lineId % (Enum.GetValues(typeof(CommonsSpriteNames)).Length - 1)) + 1)).ToString(), WTSDynamicTextRenderingRules.m_spectreSteps[(-line.lineId) % WTSDynamicTextRenderingRules.m_spectreSteps.Length], $"{-line.lineId}")
+                : line.lineId < 0 ? new LineLogoParameter(((CommonsSpriteNames)((-line.lineId % (Enum.GetValues(typeof(CommonsSpriteNames)).Length - 1)) + 1)).ToString(), WEDynamicTextRenderingRules.m_spectreSteps[(-line.lineId) % WEDynamicTextRenderingRules.m_spectreSteps.Length], $"{-line.lineId}")
                 : ModInstance.Controller.ConnectorTLM.GetLineLogoParameters(line);
                 if (lineParams == null || lineParams.color == Color.clear)
                 {
@@ -565,9 +565,9 @@ namespace WriteEverywhere.Sprites
         internal static void BuildMeshFromAtlas(BasicRenderInformation bri, SpriteInfo spriteInfo)
         {
             bri.m_mesh = basicMesh;
-            bri.m_fontBaseLimits = new RangeVector { min = 0, max = 1 * WTSDynamicTextRenderingRules.SCALING_FACTOR };
+            bri.m_fontBaseLimits = new RangeVector { min = 0, max = 1  };
             bri.m_YAxisOverflows = new RangeVector { min = -.5f, max = .5f };
-            bri.m_sizeMetersUnscaled = new Vector2(spriteInfo.width / spriteInfo.height, 1) / WTSDynamicTextRenderingRules.SCALING_FACTOR;
+            bri.m_sizeMetersUnscaled = new Vector2(spriteInfo.width / spriteInfo.height, 1);
             bri.m_generatedMaterial = new Material(ModInstance.Controller.defaultTextShader)
             {
                 mainTexture = spriteInfo.texture

@@ -1,7 +1,10 @@
 ﻿extern alias TLM;
+
+using Kwytto.Utils;
 using SpriteFontPlus;
 using SpriteFontPlus.Utility;
 using System.Collections.Generic;
+using UnityEngine;
 using WriteEverywhere.Data;
 using WriteEverywhere.Singleton;
 using WriteEverywhere.Xml;
@@ -11,10 +14,9 @@ namespace WriteEverywhere.Rendering
 
     public static class WTSTextMeshProcess
     {
-        internal static BasicRenderInformation GetTextMesh(BoardTextDescriptorGeneralXml textDescriptor, ushort refID, int boardIdx, int secIdx, BaseWriteOnXml instance, string layoutFontName, out IEnumerable<BasicRenderInformation> multipleOutput, PrefabInfo refPrefab)
+        internal static BasicRenderInformation GetTextMesh(BoardTextDescriptorGeneralXml textDescriptor, ushort refID, int boardIdx, int secIdx, BaseWriteOnXml instance)
         {
-            multipleOutput = null;
-            DynamicSpriteFont baseFont = FontServer.instance[WTSEtcData.Instance.FontSettings.GetTargetFont(textDescriptor.m_fontClass)] ?? FontServer.instance[layoutFontName];
+            DynamicSpriteFont baseFont = FontServer.instance[WTSEtcData.Instance.FontSettings.GetTargetFont(textDescriptor.m_fontClass)] ?? FontServer.instance[instance.DescriptorOverrideFont];
 
             //if (instance is BoardPreviewInstanceXml preview)
             //{
@@ -35,7 +37,7 @@ namespace WriteEverywhere.Rendering
             //else 
             if (instance is OnNetInstanceCacheContainerXml onNet)
             {
-                return GetTextForOnNet(textDescriptor, refID, boardIdx, secIdx, onNet, ref baseFont, out multipleOutput);
+                return GetTextForOnNet(textDescriptor, refID, boardIdx, secIdx, onNet, ref baseFont, out _);
             }
             return WTSCacheSingleton.GetTextData(textDescriptor.Value?.ToString() ?? "", textDescriptor.m_prefix, textDescriptor.m_suffix, null, textDescriptor.m_overrideFont);
         }
@@ -269,7 +271,7 @@ namespace WriteEverywhere.Rendering
         //            return null;
         //    }
         //}
-
+     
 
         #endregion
 

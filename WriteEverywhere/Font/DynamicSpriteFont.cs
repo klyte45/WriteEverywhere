@@ -80,6 +80,7 @@ namespace SpriteFontPlus
             };
 
             _fontSystem.AddFontMem(ttf);
+
         }
 
         public BasicRenderInformation DrawString(MonoBehaviour referenceGO, string text, Vector2 pos) => DrawString(referenceGO, text, pos, Vector2.one);
@@ -87,7 +88,6 @@ namespace SpriteFontPlus
         public BasicRenderInformation DrawString(MonoBehaviour referenceGO, string text, Vector2 pos, Vector2 scale)
         {
             BasicRenderInformation result = _fontSystem.DrawText(referenceGO, pos.x, pos.y, text, scale);
-
             return result;
         }
 

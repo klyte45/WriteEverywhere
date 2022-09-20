@@ -36,6 +36,8 @@ namespace FontStashSharp
             return size;
         }
 
+        public float ReferenceHeight { get; private set; }
+
         public int FontHeight
         {
             get => _fontHeight;
@@ -116,6 +118,9 @@ namespace FontStashSharp
             var font = Font.FromMemory(data);
             font.RecalculateBasedOnHeight(FontHeight);
             _fonts.Add(font);
+            var bounds = new Bounds();
+            TextBounds(0, 0, "A", 1, ref bounds);
+            ReferenceHeight = bounds.maxY - bounds.minY;
         }
 
         private Dictionary<int, FontGlyph> GetGlyphsCollection(int size)
@@ -362,6 +367,7 @@ namespace FontStashSharp
                 bri.m_materialGeneratedTick = LastUpdateAtlas;
                 bri.m_fontBaseLimits = new RangeVector { min = prevGlyph.Font.Descent, max = prevGlyph.Font.Ascent };
                 bri.m_refText = str;
+                bri.m_refY = ReferenceHeight;
             }
             finally
             {
@@ -434,7 +440,7 @@ namespace FontStashSharp
             AddUVCoords(uvs, glyph);
         }
 
-   
+
 
         private static void AddTriangleIndices(PoolList<Vector3> verts, PoolList<int> triangles)
         {
