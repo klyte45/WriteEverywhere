@@ -2,7 +2,6 @@
 using ColossalFramework.UI;
 using Kwytto.Interfaces;
 using Kwytto.Utils;
-using System.Linq;
 using System.Xml;
 using System.Xml.Serialization;
 using WriteEverywhere.Rendering;
@@ -10,11 +9,11 @@ using WriteEverywhere.Rendering;
 namespace WriteEverywhere.Xml
 {
     [XmlRoot("textDescriptor")]
-    public class BoardTextDescriptorGeneralXml : ILibable
+    public class BoardTextDescriptorGeneralXml : IParameterizableVariable, ILibable
     {
         #region Line dimensions
         [XmlElement("WriteLineMaxDimensions")]
-        public Vector2Xml LineMaxDimensions { get; set; } = new Vector2Xml();
+        public Vector2Xml LineMaxDimensions { get; set; } = new Vector2Xml { X = 2, Y = .5f };
         public float TextLineHeight => LineMaxDimensions.Y;
         public float MaxWidthMeters => LineMaxDimensions.X;
         #endregion
@@ -88,13 +87,11 @@ namespace WriteEverywhere.Xml
         [XmlElement("ParameterDisplayName")]
         public string ParameterDisplayName { get; set; } = "";
 
-        public bool IsParameter() => ParameterizedTextContents.Contains(textContent);
-        private static readonly TextContent[] ParameterizedTextContents = new[]
-        {
-        TextContent.ParameterizedText,
-        TextContent.ParameterizedSpriteFolder,
-        TextContent.ParameterizedSpriteSingle,
-        };
-    }
+        public string GetParameterDisplayName() => ParameterDisplayName ?? SaveName;
 
+        public TextContent GetTextContent() => textContent;
+
+        public object GetValueAsUri() => Value?.ToString();
+        public int GetParamIdx() => Value?.GetParamIdx ?? -1;
+    }
 }

@@ -9,7 +9,7 @@ using static WriteEverywhere.Xml.TextParameterVariableWrapper;
 namespace WriteEverywhere.Xml
 {
 
-    internal class CommandLevel
+    public class CommandLevel
     {
 
         public Enum defaultValue;

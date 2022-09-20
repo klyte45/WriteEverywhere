@@ -11,7 +11,7 @@ namespace WriteEverywhere.Xml
         [XmlAttribute("useContrastColor")]
         public bool UseContrastColor { get => ColorSource == ColoringSource.Contrast; set => ColorSource = value ? ColoringSource.Contrast : ColoringSource.Fixed; }
         [XmlIgnore]
-        public Color m_cachedColor = Color.clear;
+        public Color m_cachedColor = Color.white;
         [XmlAttribute("color")]
         public string FixedColor { get => m_cachedColor == Color.clear ? null : ColorExtensions.ToRGB(m_cachedColor); set => m_cachedColor = value.IsNullOrWhiteSpace() ? Color.clear : (Color)ColorExtensions.FromRGB(value); }
         [XmlAttribute("colorSource")]
@@ -22,7 +22,6 @@ namespace WriteEverywhere.Xml
             Fixed,
             Contrast,
             Parent
-
         }
     }
 

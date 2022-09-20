@@ -808,4 +808,10 @@ A text to succeed the variable value. Use the backslash to scape the slashes (&l
   <data name="we_roadEditor_importReplacing" xml:space="preserve">
     <value>Replace items from lib</value>
   </data>
+  <data name="we_generalTextEditor_useBackground" xml:space="preserve">
+    <value>Create background</value>
+  </data>
+  <data name="we_generalTextEditor_usePrefabColor" xml:space="preserve">
+    <value>Use prefab color</value>
+  </data>
 </root>

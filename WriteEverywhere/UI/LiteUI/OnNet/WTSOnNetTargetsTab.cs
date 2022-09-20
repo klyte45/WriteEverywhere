@@ -31,7 +31,7 @@ namespace WriteEverywhere.UI
 
         private void DrawTargetSegmentSelectionList(OnNetInstanceCacheContainerXml item, Vector2 areaRect)
         {
-            for (int i = 0; i <= 4; i++)
+            for (int i = 0; i <= 9; i++)
             {
                 using (new GUILayout.HorizontalScope(GUILayout.Width(areaRect.x)))
                 {
@@ -52,7 +52,7 @@ namespace WriteEverywhere.UI
                 return Locale.Get("ANIMAL_STATUS_WAITING");
             }
             var targSeg = item.GetTargetSegment(i);
-            if (cachedSegmentNames[i] is null || targSeg != cachedSegmentNames[i].First)
+            if (!cachedSegmentNames.ContainsKey(i) || targSeg != cachedSegmentNames[i].First)
             {
                 if (targSeg == 0)
                 {
@@ -77,6 +77,6 @@ namespace WriteEverywhere.UI
         }
 
         private int CurrentSegmentInSelect = -1;
-        private Tuple<ushort, string>[] cachedSegmentNames = new Tuple<ushort, string>[5];
+        private readonly SimpleNonSequentialList<Tuple<ushort, string>> cachedSegmentNames = new SimpleNonSequentialList<Tuple<ushort, string>>();
     }
 }

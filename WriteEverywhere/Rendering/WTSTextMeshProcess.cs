@@ -194,6 +194,8 @@ namespace WriteEverywhere.Rendering
                 case TextContent.HwShield:
                     break;
                 case TextContent.TimeTemperature: return GetTimeTemperatureText(textDescriptor, ref baseFont, segmentId, boardIdx, secIdx);
+                case TextContent.TextParameterSequence:
+                    return TextParameterWrapper.GetRenderInfo(textDescriptor.ParameterSequence?.GetAt(SimulationManager.instance.m_referenceFrameIndex, segmentId), propDescriptor, textDescriptor, segmentId, boardIdx, secIdx, out _);
             }
             return null;
         }

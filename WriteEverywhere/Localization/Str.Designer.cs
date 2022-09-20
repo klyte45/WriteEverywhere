@@ -277,6 +277,24 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Create background.
+        /// </summary>
+        internal static string we_generalTextEditor_useBackground {
+            get {
+                return ResourceManager.GetString("we_generalTextEditor_useBackground", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Use prefab color.
+        /// </summary>
+        internal static string we_generalTextEditor_usePrefabColor {
+            get {
+                return ResourceManager.GetString("we_generalTextEditor_usePrefabColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Center (looking front).
         /// </summary>
         internal static string we_PivotPosition__Center {

@@ -1,8 +1,8 @@
-﻿using ColossalFramework.Globalization;
-using WriteEverywhere.Localization;
-using System;
+﻿using System;
 using System.Linq;
 using UnityEngine;
+using WriteEverywhere.Localization;
+using WriteEverywhere.Xml;
 
 namespace WriteEverywhere.UI
 {
@@ -12,7 +12,9 @@ namespace WriteEverywhere.UI
 
         public bool IsText { get; } = false;
 
-        public void DrawTop(WTSBaseParamsTab<T> tab, Vector2 areaRect)
+        public int HoverIdx => 0;
+
+        public float DrawTop(WTSBaseParamsTab<T> tab, Vector2 areaRect)
         {
             bool dirtyType = false;
             if (ulong.TryParse(tab.SearchPropName?.Split('.')[0] ?? "", out _))
@@ -47,8 +49,9 @@ namespace WriteEverywhere.UI
 
             if (dirtyInput || dirtyType)
             {
-                tab.RestartFilterCoroutine();
+                tab.RestartFilterCoroutine(this);
             }
+            return 50;
         }
 
         public void DrawLeftPanel(WTSBaseParamsTab<T> tab, Vector2 areaRect)
@@ -106,6 +109,10 @@ namespace WriteEverywhere.UI
                         : ModInstance.Controller.AtlasesLibrary.HasAtlas(ulong.TryParse(tab.SearchPropName?.Split('.')[0] ?? "", out ulong wId2) ? wId2 : 0) ? new string[] { "<ROOT>" } : new string[0];
             }
             return null;
+        }
+
+        public void OnHoverVar(WTSBaseParamsTab<T> wTSBaseParamsTab, int autoSelectVal, CommandLevel commandLevel)
+        {
         }
     }
 }

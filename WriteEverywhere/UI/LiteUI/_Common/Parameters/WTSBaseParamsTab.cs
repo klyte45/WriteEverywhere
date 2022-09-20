@@ -4,11 +4,11 @@ using ColossalFramework.UI;
 using Kwytto.LiteUI;
 using Kwytto.UI;
 using Kwytto.Utils;
-using WriteEverywhere.Xml;
 using System;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
+using WriteEverywhere.Xml;
 
 namespace WriteEverywhere.UI
 {
@@ -19,7 +19,8 @@ namespace WriteEverywhere.UI
             List,
             GettingImage,
             GettingFolder,
-            GettingText
+            GettingText,
+            GettingAny
         }
 
         public abstract Texture TabIcon { get; }
@@ -30,10 +31,12 @@ namespace WriteEverywhere.UI
         internal readonly string Text = Color.green.ToRGB();
         internal readonly string Image = Color.cyan.ToRGB();
         internal readonly string Folder = Color.yellow.ToRGB();
+        internal readonly string Any = Color.blue.ToRGB();
 
         internal readonly WTSParameterVariableEditor<T> TextVarEditor = new WTSParameterVariableEditor<T>();
         internal readonly WTSParameterImageEditor<T> ImageVarEditor = new WTSParameterImageEditor<T>();
         internal readonly WTSParameterFolderEditor<T> FolderVarEditor = new WTSParameterFolderEditor<T>();
+        internal readonly WTSParameterAnyEditor<T> AnyVarEditor = new WTSParameterAnyEditor<T>();
 
         #region Basic Behavior
         internal bool ShowTabsOnTop() => CurrentState == State.List;
@@ -59,6 +62,9 @@ namespace WriteEverywhere.UI
                 case State.GettingText:
                     DrawVariablePicker(item, areaRect);
                     break;
+                case State.GettingAny:
+                    DrawAnyPicker(item, areaRect);
+                    break;
             }
             return false;
         }
@@ -68,12 +74,13 @@ namespace WriteEverywhere.UI
         private void DrawFolderPicker(T item, Vector2 areaRect) => DrawSelectorView(item, areaRect, FolderVarEditor);
 
         private void DrawVariablePicker(T item, Vector2 areaRect) => DrawSelectorView(item, areaRect, TextVarEditor, IsVariable);
+        private void DrawAnyPicker(T item, Vector2 areaRect) => DrawSelectorView(item, areaRect, AnyVarEditor, IsVariable || !IsTextVariable);
 
         #endregion
 
         #region Param editor commons
 
-        private void OnClearSearch(bool isText)
+        private void OnClearSearch(IWTSParameterEditor<T> paramEditor, bool isText)
         {
             SelectedFolder = null;
             SelectedValue = null;
@@ -83,25 +90,25 @@ namespace WriteEverywhere.UI
                 SearchText = "";
                 if (IsVariable)
                 {
-                    RestartFilterCoroutine();
+                    RestartFilterCoroutine(paramEditor);
                 }
             }
             else
             {
-                RestartFilterCoroutine();
+                RestartFilterCoroutine(paramEditor);
             }
         }
         private void DrawSelectorView(T item, Vector2 areaRect, IWTSParameterEditor<T> paramEditor, bool showRightPanel = true)
         {
-            paramEditor.DrawTop(this, areaRect);
+            var topHeight = paramEditor.DrawTop(this, areaRect);
             using (new GUILayout.HorizontalScope())
             {
-                using (var scroll = new GUILayout.ScrollViewScope(m_leftPanelScroll, false, true, GUILayout.Width(areaRect.x / 2), GUILayout.Height(areaRect.y - 80)))
+                using (var scroll = new GUILayout.ScrollViewScope(m_leftPanelScroll, false, true, GUILayout.Width(areaRect.x / 2), GUILayout.Height(areaRect.y - topHeight - 30)))
                 {
                     paramEditor.DrawLeftPanel(this, areaRect);
                     m_leftPanelScroll = scroll.scrollPosition;
                 };
-                using (new GUILayout.VerticalScope(GUILayout.Width(areaRect.x / 2), GUILayout.Height(areaRect.y - 80)))
+                using (new GUILayout.VerticalScope(GUILayout.Width(areaRect.x / 2), GUILayout.Height(areaRect.y - topHeight - 30)))
                 {
                     if (showRightPanel)
                     {
@@ -123,11 +130,11 @@ namespace WriteEverywhere.UI
                 }
                 if (GUILayout.Button(Locale.Get("DEBUG_CLEAR"), GUILayout.Width(areaRect.x / 3)))
                 {
-                    OnClearSearch(paramEditor.IsText);
+                    OnClearSearch(paramEditor, paramEditor.IsText);
                 }
                 if (GUILayout.Button("OK"))
                 {
-                    GetBackToList(item);
+                    GetBackToList(item, paramEditor);
                 }
             };
         }
@@ -137,16 +144,22 @@ namespace WriteEverywhere.UI
             switch (CurrentState)
             {
                 case State.GettingImage:
+                ImageVar:
                     return $"{(IsLocal ? "image" : "assetImage")}://{(SelectedFolder is null ? "" : (SelectedFolder == "" ? "<ROOT>" : SelectedFolder) + "/")}{SelectedValue}";
                 case State.GettingFolder:
                     return $"{(IsLocal ? "folder" : "assetFolder")}://{(SelectedFolder == "" ? "<ROOT>" : SelectedFolder)}";
                 case State.GettingText:
+                TextVar:
                     return IsVariable ? $"var://{SelectedValue}" : SearchText;
+                case State.GettingAny:
+                    if (IsTextVariable) goto TextVar;
+                    else goto ImageVar;
             }
             return null;
         }
         protected void GoToPicker(int key, TextContent targetContentType, TextParameterWrapper paramVal, T item)
         {
+            IWTSParameterEditor<T> paramEditor;
             switch (targetContentType)
             {
                 case TextContent.ParameterizedSpriteSingle:
@@ -155,15 +168,16 @@ namespace WriteEverywhere.UI
                     SelectedFolder = paramVal.AtlasName.TrimToNull();
                     SelectedValue = paramVal.TextOrSpriteValue;
                     CurrentState = State.GettingImage;
+                    paramEditor = ImageVarEditor;
                     break;
                 case TextContent.ParameterizedSpriteFolder:
                     SearchText = "";
                     IsLocal = paramVal.IsLocal;
                     SelectedFolder = paramVal.AtlasName.TrimToNull();
                     CurrentState = State.GettingFolder;
+                    paramEditor = FolderVarEditor;
                     break;
                 case TextContent.ParameterizedText:
-                case TextContent.TextParameterSequence:
                     IsVariable = paramVal.ParamType == TextParameterWrapper.ParameterType.VARIABLE;
                     CurrentState = State.GettingText;
                     if (IsVariable)
@@ -176,25 +190,55 @@ namespace WriteEverywhere.UI
                         SearchText = paramVal.TextOrSpriteValue ?? "";
                         SelectedValue = null;
                     }
+                    paramEditor = TextVarEditor;
                     break;
+                case TextContent.Any:
+                case TextContent.TextParameterSequence:
+                default:
+                    CurrentState = State.GettingAny;
+                    if (IsVariable)
+                    {
+                        SearchText = "";
+                        SelectedValue = paramVal.GetOriginalVariableParam();
+                    }
+                    else
+                    {
+                        if (paramVal.ParamType.Equals(TextParameterWrapper.ParameterType.IMAGE))
+                        {
+                            SearchText = "";
+                            IsLocal = paramVal.IsLocal;
+                            SelectedFolder = paramVal.AtlasName.TrimToNull();
+                            SelectedValue = paramVal.TextOrSpriteValue;
+                            CurrentState = State.GettingImage;
+                        }
+                        else
+                        {
+                            SearchText = paramVal.TextOrSpriteValue ?? "";
+                            SelectedValue = null;
+                        }
+                    }
+                    paramEditor = AnyVarEditor;
+                    break;
+
+
             }
             SearchPropName = GetAssetName(item);
             m_searchResult.Value = new string[0];
-            RestartFilterCoroutine();
+            RestartFilterCoroutine(paramEditor);
             m_currentEditingParam = key;
         }
-        private void GetBackToList(T item)
+        private void GetBackToList(T item, IWTSParameterEditor<T> parameterEditor)
         {
-            if (CurrentState == State.GettingText && IsVariable)
+            if ((CurrentState == State.GettingText || (CurrentState == State.GettingAny && IsTextVariable)) && IsVariable)
             {
                 var cl = CommandLevel.OnFilterParamByText(GetCurrentParamString(), out _);
                 if (m_searchResult.Value.Contains(SearchText))
                 {
                     SelectedValue = CommandLevel.FromParameterPath(CommandLevel.GetParameterPath(SelectedValue ?? "").Take(cl.level).Concat(new[] { SearchText }));
                 }
-                if (TextVarEditor.HoverIdx > 0 && TextVarEditor.HoverIdx < m_searchResult.Value.Length)
+                if (parameterEditor.HoverIdx > 0 && parameterEditor.HoverIdx < m_searchResult.Value.Length)
                 {
-                    SelectedValue = CommandLevel.FromParameterPath(CommandLevel.GetParameterPath(SelectedValue ?? "").Take(cl.level).Concat(new[] { m_searchResult.Value[TextVarEditor.HoverIdx] }));
+                    SelectedValue = CommandLevel.FromParameterPath(CommandLevel.GetParameterPath(SelectedValue ?? "").Take(cl.level).Concat(new[] { m_searchResult.Value[parameterEditor.HoverIdx] }));
                 }
                 SetTextParameter(item, m_currentEditingParam, GetCurrentParamString());
             }
@@ -205,32 +249,26 @@ namespace WriteEverywhere.UI
             CurrentState = State.List;
         }
 
-        internal void RestartFilterCoroutine(string autoselect = null)
+        internal void RestartFilterCoroutine(IWTSParameterEditor<T> paramEditor, string autoselect = null)
         {
             if (m_searchCoroutine != null)
             {
                 ModInstance.Controller.StopCoroutine(m_searchCoroutine);
             }
-            m_searchCoroutine = ModInstance.Controller.StartCoroutine(OnFilterParam(autoselect));
+            m_searchCoroutine = ModInstance.Controller.StartCoroutine(OnFilterParam(paramEditor, autoselect));
         }
 
-        private IEnumerator OnFilterParam(string autoselect)
+        private IEnumerator OnFilterParam(IWTSParameterEditor<T> paramEditor, string autoselect)
         {
             yield return 0;
-            if (CurrentState == State.GettingImage || CurrentState == State.GettingFolder)
+            var baseArr = GetCurrentParamString().Count(x => x == '/') >= 3 ? new[] { "<color=#FFFF00><<</color>" } : new string[0];
+            yield return m_searchResult.Value = baseArr.Concat(paramEditor.OnFilterParam(this)?.Select(x => x.IsNullOrWhiteSpace() ? GUIKwyttoCommons.v_empty : x) ?? new string[0]).ToArray();
+            if (autoselect != null)
             {
-                yield return m_searchResult.Value = ImageVarEditor.OnFilterParam(this);
-            }
-            else if (CurrentState == State.GettingText)
-            {
-                yield return m_searchResult.Value = new[] { "<color=#FFFF00><<</color>" }.Concat(TextVarEditor.OnFilterParam(this)?.Select(x => x.IsNullOrWhiteSpace() ? GUIKwyttoCommons.v_empty : x) ?? new string[0]).ToArray();
-                if (autoselect != null)
+                var autoSelectVal = Array.IndexOf(m_searchResult.Value, autoselect);
+                if (autoSelectVal > 0)
                 {
-                    var autoSelectVal = Array.IndexOf(m_searchResult.Value, autoselect);
-                    if (autoSelectVal > 0)
-                    {
-                        TextVarEditor.OnHoverVar(this, autoSelectVal, CommandLevel.OnFilterParamByText(GetCurrentParamString(), out _));
-                    }
+                    paramEditor.OnHoverVar(this, autoSelectVal, CommandLevel.OnFilterParamByText(GetCurrentParamString(), out _));
                 }
             }
         }
@@ -242,6 +280,7 @@ namespace WriteEverywhere.UI
         public UITextureAtlas currentFolderAtlas;
 
         public bool IsLocal { get; private set; } = false;
+        public bool IsTextVariable { get; set; } = false;
         public string SearchText { get; set; }
         public string SelectedFolder { get; private set; }
         public string SearchPropName { get; private set; }

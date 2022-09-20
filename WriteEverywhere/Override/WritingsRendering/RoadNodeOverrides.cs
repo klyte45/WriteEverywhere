@@ -20,9 +20,9 @@ namespace WriteEverywhere.Overrides
 
             LogUtils.DoLog($"Patching: {orig} => {postRenderMeshs} ");
             AddRedirect(orig, null, postRenderMeshs);
-            LogUtils.DoErrorLog($"PatchingC: {calcGroup} => {AfterCalculateGroupData} ");
+            LogUtils.DoLog($"PatchingC: {calcGroup} => {AfterCalculateGroupData} ");
             AddRedirect(calcGroup, null, AfterCalculateGroupData);
-            LogUtils.DoErrorLog($"PatchingP: {popGroup} => {AfterPopulateGroupData} ");
+            LogUtils.DoLog($"PatchingP: {popGroup} => {AfterPopulateGroupData} ");
             AddRedirect(popGroup, null, AfterPopulateGroupData);
             #endregion
         }

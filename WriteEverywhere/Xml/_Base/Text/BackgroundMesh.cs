@@ -29,7 +29,6 @@ namespace WriteEverywhere.Xml
 
         [XmlAttribute("useFrame")]
         public bool m_useFrame = false;
-        [XmlElement("frane")]
         [XmlElement("frame")]
         public FrameMesh FrameMeshSettings { get; set; } = new FrameMesh();
 

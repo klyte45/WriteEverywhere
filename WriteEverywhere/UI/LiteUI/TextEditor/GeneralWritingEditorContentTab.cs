@@ -27,7 +27,7 @@ namespace WriteEverywhere.UI
             this.infoGetter = infoGetter;
             this.m_targetRenderingClass = targetRenderingClass;
         }
-
+        private Vector2 scrollParamsPos;
         protected override void DrawListing(Vector2 tabAreaSize, BoardTextDescriptorGeneralXml currentItem)
         {
             GUILayout.Label($"<i>{Str.WTS_TEXT_CONTENTVALUE_TAB}</i>");
@@ -46,14 +46,18 @@ namespace WriteEverywhere.UI
                 case TextContent.TextParameterSequence:
                     if (item.ParameterSequence is null)
                     {
-                        item.ParameterSequence = new TextParameterSequence(new[] { new TextParameterSequenceItem("NEW", m_targetRenderingClass) }, m_targetRenderingClass);
+                        item.ParameterSequence = new TextParameterSequence(new[] { new TextParameterSequenceItem("", m_targetRenderingClass) }, m_targetRenderingClass);
                     }
                     var paramSeq = item.ParameterSequence;
                     using (new GUILayout.HorizontalScope())
                     {
                         GUILayout.Label("#", GUILayout.Width(25));
                         GUILayout.Label(Str.WTS_CONTENT_TEXTVALUE);
-                        GUILayout.Label(Str.WTS_PARAMSEQ_STEPLENGTH, GUILayout.Width(100));
+                        GUILayout.Label(Str.WTS_PARAMSEQ_STEPLENGTH, new GUIStyle(GUI.skin.label)
+                        {
+                            alignment = TextAnchor.MiddleRight,
+                            wordWrap = false,
+                        }, GUILayout.Width(100));
                         GUILayout.Label(Str.WTS_PARAMSEQ_ACTIONS, GUILayout.Width(60));
                         GUILayout.Space(30);
                         var rect = GUILayoutUtility.GetLastRect();
@@ -63,48 +67,56 @@ namespace WriteEverywhere.UI
                             AddItem(paramSeq);
                         }
                     }
-                    var line = 0;
-                    foreach (var seqItem in paramSeq)
+                    using (var scrollPanel = new GUILayout.ScrollViewScope(scrollParamsPos))
                     {
-                        using (new GUILayout.HorizontalScope())
+                        var line = 0;
+                        foreach (var seqItem in paramSeq)
                         {
-                            GUILayout.Label((line + 1).ToString(), GUILayout.Width(25));
-                            GUIKwyttoCommons.AddButtonSelector(seqItem?.Value?.ToString(), () => OnGoToPicker(currentItem, line), isEditable);
-                            if (isEditable)
+                            using (new GUILayout.HorizontalScope())
                             {
-                                int newLenght;
-                                if ((newLenght = GUIIntField.IntField($"{Str.WTS_PARAMSEQ_STEPLENGTH} " + line, (int)seqItem.m_length, 0)) != seqItem.m_length)
+                                GUILayout.Label((line + 1).ToString(), GUILayout.Width(25));
+                                GUIKwyttoCommons.AddButtonSelector(seqItem?.Value?.ToString(), () => OnGoToPicker(currentItem, line), isEditable, new GUIStyle(GUI.skin.button)
                                 {
-                                    paramSeq.SetLengthAt(line, newLenght);
+                                    alignment = TextAnchor.MiddleLeft,
+                                    wordWrap = false,
+                                });
+                                if (isEditable)
+                                {
+                                    int newLenght;
+                                    if ((newLenght = GUIIntField.IntField($"{Str.WTS_PARAMSEQ_STEPLENGTH} " + line, (int)seqItem.m_length, 0)) != seqItem.m_length)
+                                    {
+                                        paramSeq.SetLengthAt(line, newLenght);
+                                    }
+                                }
+                                else
+                                {
+                                    GUILayout.Label(seqItem.m_length.ToString("#,##0") + "Fr.", GUILayout.Width(25));
+                                }
+                                GUILayout.Space(30);
+                                var rect = GUILayoutUtility.GetLastRect();
+                                rect.height = 18;
+                                if (isEditable && line > 0 && GUI.Button(rect, "↑"))
+                                {
+                                    MoveUp(paramSeq, line);
+                                }
+                                GUILayout.Space(30);
+                                rect = GUILayoutUtility.GetLastRect();
+                                rect.height = 18;
+                                if (isEditable && line < paramSeq.TotalItems - 1 && GUI.Button(rect, "↓"))
+                                {
+                                    MoveDown(paramSeq, line);
+                                }
+                                GUILayout.Space(30);
+                                rect = GUILayoutUtility.GetLastRect();
+                                rect.height = 18;
+                                if (isEditable && line > 0 && GUI.Button(rect, "X"))
+                                {
+                                    RemoveAt(paramSeq, line);
                                 }
                             }
-                            else
-                            {
-                                GUILayout.Label(seqItem.m_length.ToString("#,##0") + "Fr.", GUILayout.Width(25));
-                            }
-                            GUILayout.Space(30);
-                            var rect = GUILayoutUtility.GetLastRect();
-                            rect.height = 18;
-                            if (isEditable && line > 0 && GUI.Button(rect, "↑"))
-                            {
-                                MoveUp(paramSeq, line);
-                            }
-                            GUILayout.Space(30);
-                            rect = GUILayoutUtility.GetLastRect();
-                            rect.height = 18;
-                            if (isEditable && line < paramSeq.TotalItems - 1 && GUI.Button(rect, "↓"))
-                            {
-                                MoveDown(paramSeq, line);
-                            }
-                            GUILayout.Space(30);
-                            rect = GUILayoutUtility.GetLastRect();
-                            rect.height = 18;
-                            if (isEditable && line > 0 && GUI.Button(rect, "X"))
-                            {
-                                RemoveAt(paramSeq, line);
-                            }
+                            line++;
                         }
-                        line++;
+                        scrollParamsPos = scrollPanel.scrollPosition;
                     }
                     break;
 

@@ -40,6 +40,7 @@ namespace WriteEverywhere.Xml
             }
         }
         public ParameterType ParamType { get; private set; }
+        public TextContent VariableValueTextContent => ParamType == ParameterType.VARIABLE ? VariableValue.m_varType.ToContent() : TextContent.None;
         public bool IsEmpty { get; private set; }
         public bool IsParameter => VariableValue?.m_varType == VariableType.CurrentSegmentParameter;
 
@@ -97,12 +98,6 @@ namespace WriteEverywhere.Xml
                         SetPlainString(value);
                         return;
                 }
-            }
-            else if (acceptLegacy && (inputMatches = Regex.Match(value, "^IMG_(.*)$")).Success)
-            {
-                ParamType = ParameterType.IMAGE;
-                isLocal = true;
-                TextOrSpriteValue = inputMatches.Groups[1].Value;
             }
             else
             {
@@ -269,18 +264,37 @@ namespace WriteEverywhere.Xml
                     LogUtils.DoWarnLog("INVALID TEXT CONTENT: NONE!\n" + Environment.StackTrace);
                     return null;
                 case TextContent.ParameterizedText:
-                case TextContent.TextParameterSequence:
+                Text:
                     return !(tpw is null)
                         ? tpw.GetTargetText(instance, textDescriptor, GetTargetFont(instance, textDescriptor), refId, secIdx, tercIdx, out multipleOutput)
-                        : GetTargetFont(instance, textDescriptor)?.DrawString(ModInstance.Controller, $"<PARAM IS NOT SET>", default, FontServer.instance.ScaleEffective);
+                        : GetTargetFont(instance, textDescriptor).DrawString(ModInstance.Controller, $"<PARAM IS NOT SET>", default, FontServer.instance.ScaleEffective);
                 case TextContent.ParameterizedSpriteFolder:
+                ImageFolder:
                     return !(tpw is null)
                         ? tpw.GetSpriteFromCycle(textDescriptor, instance.TargetAssetParameter, refId, secIdx, tercIdx)
                         : ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(null, "FrameParamsNotSet");
                 case TextContent.ParameterizedSpriteSingle:
+                ImageSingle:
                     return !(tpw is null)
                         ? tpw.GetSpriteFromParameter(instance.TargetAssetParameter)
                         : ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(null, "FrameParamsNotSet");
+                case TextContent.TextParameterSequence:
+                    if (!(tpw is null))
+                    {
+                        switch (tpw.ParamType)
+                        {
+                            case ParameterType.TEXT:
+                            case ParameterType.VARIABLE:
+                                goto Text;
+                            case ParameterType.IMAGE:
+                                goto ImageSingle;
+                            case ParameterType.FOLDER:
+                                goto ImageFolder;
+                            case ParameterType.EMPTY:
+                                break;
+                        }
+                    }
+                    return GetTargetFont(instance, textDescriptor).DrawString(ModInstance.Controller, $"<SEQ PARAM IS NOT SET>", default, FontServer.instance.ScaleEffective); ;
                 case TextContent.LinesNameList:
                     break;
                 case TextContent.HwShield:

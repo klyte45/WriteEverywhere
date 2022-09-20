@@ -37,6 +37,23 @@ namespace WriteEverywhere.Xml
                     return true;
             }
         }
+        public static TextContent ToContent(this VariableType var)
+        {
+            switch (var)
+            {
+                case VariableType.CurrentBuilding:
+                case VariableType.SegmentTarget:
+                case VariableType.CurrentVehicle:
+                case VariableType.CurrentSegment:
+                case VariableType.CityData:
+                    return TextContent.ParameterizedText;
+                case VariableType.CurrentSegmentParameter:
+                    return TextContent.Any;
+                case VariableType.Invalid:
+                default:
+                    return TextContent.None;
+            }
+        }
 
         public static CommandLevel GetCommandTree(this VariableType var)
         {
@@ -46,7 +63,7 @@ namespace WriteEverywhere.Xml
                     return new CommandLevel
                     {
                         descriptionKey = () => Str.WTS_PARAMVARS_DESC__SegmentTarget__SelectReference,
-                        regexValidValues = "[0-4]",
+                        regexValidValues = "^[0-9]$",
                         nextLevelByRegex = new CommandLevel
                         {
                             defaultValue = VariableSegmentTargetSubType.None,

@@ -79,7 +79,13 @@ namespace WriteEverywhere.Xml
             m_textParameters[idx] = null;
         }
 
-        public Dictionary<int, List<BoardTextDescriptorGeneralXml>> GetAllParametersUsedWithData() => TextDescriptors.Where(x => x.Value.IsParameter).GroupBy(x => x.Value.GetParamIdx).ToDictionary(x => x.Key, x => x.ToList());
+        public Dictionary<int, List<IParameterizableVariable>> GetAllParametersUsedWithData() =>
+            TextDescriptors
+            .Where(x =>
+                x.Value.IsParameter
+                || (x.ParameterSequence?.Any(y => y.Value?.IsParameter ?? false) ?? false)
+            ).SelectMany(x => x.Value.IsParameter ? new[] { Tuple.New(x as IParameterizableVariable, x.Value) } : x.ParameterSequence.Select(y => Tuple.New(y as IParameterizableVariable, y.Value)))
+            .GroupBy(x => x.First.GetParamIdx()).ToDictionary(x => x.Key, x => x.Select(y => y.First).ToList());
 
         [XmlIgnore]
         public SimpleNonSequentialList<TextParameterWrapper> m_textParameters = new SimpleNonSequentialList<TextParameterWrapper>();

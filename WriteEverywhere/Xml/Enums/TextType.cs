@@ -10,6 +10,7 @@
         LinesNameList,
         HwShield,
         TimeTemperature,
-        TextParameterSequence
+        TextParameterSequence,
+        Any = -1
     }
 }
