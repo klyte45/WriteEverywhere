@@ -18,7 +18,7 @@ namespace WriteEverywhere
 {
     public class MainController : BaseController<ModInstance, MainController>
     {
-        public static readonly string FOLDER_PATH = KFileUtils.BASE_FOLDER_PATH + ModInstance.Instance.SafeName;
+        public static string FOLDER_PATH => ModInstance.ModSettingsRootFolder;
 
         #region Events
         public event Action EventFontsReloadedFromFolder;

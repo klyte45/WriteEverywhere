@@ -3,6 +3,7 @@ using Kwytto.Libraries;
 using Kwytto.Utils;
 using WriteEverywhere.Xml;
 using System.Xml.Serialization;
+using System.Collections.Generic;
 
 namespace WriteEverywhere.Libraries
 {
@@ -15,7 +16,8 @@ namespace WriteEverywhere.Libraries
     //[XmlRoot("LibBuildingPropLayoutList")] public class WTSLibBuildingPropLayoutList : LibBaseFile<WTSLibBuildingPropLayoutList, ExportableBoardInstanceBuildingListXml> { protected override string XmlName => "LibBuildingPropLayoutList"; }
     //[XmlRoot("LibBuildingPropLayout")] public class WTSLibBuildingPropLayout : LibBaseFile<WTSLibBuildingPropLayout, BoardInstanceBuildingXml> { protected override string XmlName => "LibBuildingPropLayout"; }
     //[XmlRoot("LibVehicleLayout")] public class WTSLibVehicleLayout : LibBaseFile<WTSLibVehicleLayout, LayoutDescriptorVehicleXml> { protected override string XmlName => "LibVehicleLayout"; }
-    //[XmlRoot("LibVehicleTextItem")] public class WTSLibVehicleTextItem : LibBaseFile<WTSLibVehicleTextItem, BoardTextDescriptorGeneralXml> { protected override string XmlName => "LibVehicleTextItem"; }
+    [XmlRoot("LibTextList")] public class WTSLibTextList : LibBaseFile<WTSLibTextList, ILibableAsContainer<BoardTextDescriptorGeneralXml>> { protected override string XmlName => "WTSLibTextList"; }
+    [XmlRoot("LibTextItem")] public class WTSLibTextItem : LibBaseFile<WTSLibTextItem, BoardTextDescriptorGeneralXml> { protected override string XmlName => "WTSLibTextItem"; }
     [XmlRoot("LibOnNetPropLayout")] public class WTSLibOnNetPropLayout : LibBaseFile<WTSLibOnNetPropLayout, WriteOnNetXml> { protected override string XmlName => "LibOnNetPropLayout"; }
     [XmlRoot("LibOnNetPropLayoutList")] public class WTSLibOnNetPropLayoutList : LibBaseFile<WTSLibOnNetPropLayoutList, ExportableBoardInstanceOnNetListXml> { protected override string XmlName => "LibOnNetPropLayoutList"; }
     //[XmlRoot("LibHighwayShieldLayout")] public class WTSLibHighwayShieldLayout : LibBaseFile<WTSLibHighwayShieldLayout, HighwayShieldDescriptor> { protected override string XmlName => "LibHighwayShieldLayout"; }

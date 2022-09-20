@@ -250,6 +250,33 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Export whole list to library.
+        /// </summary>
+        internal static string we_generalLib_exportFullList {
+            get {
+                return ResourceManager.GetString("we_generalLib_exportFullList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Import adding all items into current list.
+        /// </summary>
+        internal static string we_generalLib_importAdditive {
+            get {
+                return ResourceManager.GetString("we_generalLib_importAdditive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Import whole list from library.
+        /// </summary>
+        internal static string we_generalLib_importFullList {
+            get {
+                return ResourceManager.GetString("we_generalLib_importFullList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Center (looking front).
         /// </summary>
         internal static string we_PivotPosition__Center {
@@ -318,6 +345,24 @@ namespace WriteEverywhere.Localization {
         internal static string we_PivotPosition__RightInvert {
             get {
                 return ResourceManager.GetString("we_PivotPosition__RightInvert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Import items into list.
+        /// </summary>
+        internal static string we_roadEditor_importAdding {
+            get {
+                return ResourceManager.GetString("we_roadEditor_importAdding", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Replace items from lib.
+        /// </summary>
+        internal static string we_roadEditor_importReplacing {
+            get {
+                return ResourceManager.GetString("we_roadEditor_importReplacing", resourceCulture);
             }
         }
         
@@ -791,6 +836,15 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Export layout to library.
+        /// </summary>
+        internal static string WTS_EXPORTLAYOUT_LIB {
+            get {
+                return ResourceManager.GetString("WTS_EXPORTLAYOUT_LIB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Extra sprites folder (max 400x400) to use in layouts.
         /// </summary>
         internal static string WTS_EXTRA_SPRITES_PATH_TITLE {
@@ -887,6 +941,15 @@ namespace WriteEverywhere.Localization {
         internal static string WTS_IMAGESRC_LOCAL {
             get {
                 return ResourceManager.GetString("WTS_IMAGESRC_LOCAL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Import layout from library.
+        /// </summary>
+        internal static string WTS_IMPORTLAYOUT_LIB {
+            get {
+                return ResourceManager.GetString("WTS_IMPORTLAYOUT_LIB", resourceCulture);
             }
         }
         
@@ -1688,7 +1751,7 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Adjust text height if width is reduced by max width.
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Keep aspect ratio of image/font.
         /// </summary>
         internal static string WTS_RESIZE_Y_TEXT_OVERFLOW {
             get {

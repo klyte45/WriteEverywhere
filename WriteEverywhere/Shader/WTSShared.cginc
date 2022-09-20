@@ -77,7 +77,7 @@ void surfBack(Input IN, inout SurfaceOutput o){
 	}
 	uv = calculateUV(uv);
 	fixed4 t = tex2D(_MainTex, uv);
-	o.Albedo =saturate(_BackfaceColor+0.01) ;
+	o.Albedo =saturate(_BackfaceColor) ;
 	o.Alpha = t.a;
 	normalPass(t, IN.uv_MainTex, o);
 }
@@ -85,7 +85,7 @@ void surfBack(Input IN, inout SurfaceOutput o){
 void surfFront(Input IN, inout SurfaceOutput o){
 	fixed2 uv =  calculateUV(IN.uv_MainTex);
 	fixed4 t = tex2D(_MainTex, uv);
-	fixed4 effectiveColor = saturate(_Color+0.01);
+	fixed4 effectiveColor = saturate(_Color);
 	o.Albedo = t * effectiveColor;
 	o.Alpha = t.a;
 	o.Emission = t * _Color * _SurfProperties.z * t.a * 10;

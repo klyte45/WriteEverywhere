@@ -217,7 +217,7 @@ namespace WriteEverywhere.Singleton
 
         public static void AfterUpdateTransformOverride(CameraController __instance)
         {
-            if (LoadingManager.instance.m_loadingComplete && SimulationManager.instance.m_currentTickIndex - ModInstance.Controller.OnNetPropsSingleton.lastFrameOverriden > 60)
+            if (LoadingManager.instance.m_loadingComplete && SimulationManager.instance.m_currentTickIndex - ModInstance.Controller.OnNetPropsSingleton.lastFrameOverriden > 10)
             {
                 return;
             }

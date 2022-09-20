@@ -1,6 +1,7 @@
 ﻿using ColossalFramework;
 using ColossalFramework.Globalization;
 using ColossalFramework.UI;
+using Kwytto.Interfaces;
 using Kwytto.LiteUI;
 using Kwytto.UI;
 using SpriteFontPlus;
@@ -9,9 +10,11 @@ using System.Collections;
 using System.Globalization;
 using System.Linq;
 using UnityEngine;
+using WriteEverywhere.Libraries;
 using WriteEverywhere.Localization;
 using WriteEverywhere.Rendering;
 using WriteEverywhere.Xml;
+using static Kwytto.Utils.XmlUtils;
 
 namespace WriteEverywhere.UI
 {
@@ -30,18 +33,25 @@ namespace WriteEverywhere.UI
         private readonly GUIBasicListingTabsContainer<BoardTextDescriptorGeneralXml> m_tabsContainer;
 
 
-        private string m_clipboard;
         private string[] m_cachedItemList;
-        private float m_offsetYContent;
-        //private readonly GUIXmlLib<WTSLibVehicleLayout, LayoutDescriptorVehicleXml> m_vehicleLib = new GUIXmlLib<WTSLibVehicleLayout, LayoutDescriptorVehicleXml>()
-        //{
-        //    DeleteQuestionI18n = Str.WTS_PROPEDIT_CONFIGDELETE_MESSAGE,
-        //    NameAskingI18n = Str.WTS_EXPORTDATA_NAMEASKING,
-        //    NameAskingOverwriteI18n = Str.WTS_EXPORTDATA_NAMEASKING_OVERWRITE
-        //};
+        private readonly GUIXmlLib<WTSLibTextList, ILibableAsContainer<BoardTextDescriptorGeneralXml>> m_textGroupLib = new GUIXmlLib<WTSLibTextList, ILibableAsContainer<BoardTextDescriptorGeneralXml>>()
+        {
+            NameAskingI18n = Str.WTS_EXPORTDATA_NAMEASKING,
+            NameAskingOverwriteI18n = Str.WTS_EXPORTDATA_NAMEASKING_OVERWRITE,
+            DeleteButtonI18n = Str.WTS_SEGMENT_CLEARDATA,
+            ExportI18n = Str.we_generalLib_exportFullList,
+            ImportI18n = Str.we_generalLib_importFullList,
+            DeleteQuestionI18n = Str.WTS_SEGMENT_CLEARDATA_AYS,
+            ImportAdditiveI18n = Str.we_generalLib_importAdditive,
+        };
 
-        private FooterBarStatus CurrentLibState => FooterBarStatus.Normal;
+        private FooterBarStatus CurrentLibState => m_textGroupLib.Status;
         private State CurrentLocalState { get; set; } = State.Normal;
+
+        public void Reset()
+        {
+            m_textGroupLib.ResetStatus();
+        }
 
         private readonly RefGetter<BoardTextDescriptorGeneralXml[]> GetDescriptorArray;
         private readonly RefGetter<string> GetFont;
@@ -71,7 +81,6 @@ namespace WriteEverywhere.UI
                 GetCurrentItem, SetCurrentItem);
             GetDescriptorArray = getDescriptorArray;
             GetFont = getFont;
-            // m_tabsContainer.EventListItemChanged += OnTabChanged;
         }
 
         private BoardTextDescriptorGeneralXml GetCurrentItem(int arg) => GetDescriptorArray()[arg];
@@ -105,9 +114,18 @@ namespace WriteEverywhere.UI
             }
             switch (CurrentLibState)
             {
-                case FooterBarStatus.Normal:
-                case FooterBarStatus.AskingToExport:
-                case FooterBarStatus.AskingToExportOverwrite:
+                case FooterBarStatus.AskingToImport:
+                case FooterBarStatus.AskingToImportAdditive:
+                    using (new GUILayout.AreaScope(new Rect(5, 30, area.width - 10, area.height - 30)))
+                    {
+                        m_textGroupLib.DrawImportView((x, y) =>
+                        {
+                            GetDescriptorArray() = x.m_dataArray.Concat(y ? GetDescriptorArray() : new BoardTextDescriptorGeneralXml[0]).ToArray();
+                            ReloadList();
+                        });
+                    }
+                    break;
+                default:
                     switch (CurrentLocalState)
                     {
                         case State.Normal:
@@ -118,16 +136,20 @@ namespace WriteEverywhere.UI
                             break;
                     }
                     break;
-                case FooterBarStatus.AskingToImport:
-                    //m_vehicleLib.DrawImportView((x) => GeneralWritingEditorTextsSingleton.SetCityDescriptor(m_currentInfo, x));
-                    break;
             }
 
         }
 
         private void RegularDraw(Vector2 size)
         {
-            m_tabsContainer.DrawListTabs(new Rect(0, 0, size.x, size.y), true);
+            m_tabsContainer.DrawListTabs(new Rect(0, 0, size.x, size.y - 25), true);
+            using (new GUILayout.AreaScope(new Rect(0, size.y - 25, size.x, 25)))
+            {
+                using (new GUILayout.HorizontalScope())
+                {
+                    m_textGroupLib.Draw(RedButton, () => GetDescriptorArray() = new BoardTextDescriptorGeneralXml[0], () => new ILibableAsContainer<BoardTextDescriptorGeneralXml> { Data = new ListWrapper<BoardTextDescriptorGeneralXml>() { listVal = GetDescriptorArray().ToList() } }, m_textGroupLib.FooterDraw);
+                }
+            }
         }
 
         private void GoTo(State newState) => CurrentLocalState = newState;
@@ -136,6 +158,7 @@ namespace WriteEverywhere.UI
         #region Search font
 
         private readonly GUIFilterItemsScreen<State> m_fontFilter;
+
         private IEnumerator OnFilterParam(string searchText, Action<string[]> setResult)
         {
             setResult(FontServer.instance.GetAllFonts().Where(x => searchText.IsNullOrWhiteSpace() || LocaleManager.cultureInfo.CompareInfo.IndexOf(x, searchText, CompareOptions.IgnoreCase) >= 0).OrderBy(x => x).ToArray());
@@ -143,5 +166,32 @@ namespace WriteEverywhere.UI
         }
         private void OnSelectFont(int _, string fontName) => GetFont() = fontName;
         #endregion
+
+
+        private GUIStyle m_redButton;
+        private GUIStyle RedButton
+        {
+            get
+            {
+                if (m_redButton is null)
+                {
+                    m_redButton = new GUIStyle(GUI.skin.button)
+                    {
+                        normal = new GUIStyleState()
+                        {
+                            background = GUIKwyttoCommons.darkRedTexture,
+                            textColor = Color.white
+                        },
+                        hover = new GUIStyleState()
+                        {
+                            background = GUIKwyttoCommons.redTexture,
+                            textColor = Color.white
+                        },
+                    };
+                }
+                return m_redButton;
+            }
+        }
+
     }
 }

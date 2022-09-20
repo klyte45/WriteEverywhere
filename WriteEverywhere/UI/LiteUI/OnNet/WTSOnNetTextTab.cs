@@ -24,6 +24,8 @@ namespace WriteEverywhere.UI
             return true;
         }
 
+
+
         public void Reset()
         {
             ReloadList();

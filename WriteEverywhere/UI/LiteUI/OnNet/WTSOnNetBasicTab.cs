@@ -8,7 +8,6 @@ using System.Linq;
 using UnityEngine;
 using WriteEverywhere.Libraries;
 using WriteEverywhere.Localization;
-using WriteEverywhere.Utils;
 using WriteEverywhere.Xml;
 
 namespace WriteEverywhere.UI
@@ -42,13 +41,12 @@ namespace WriteEverywhere.UI
             GetLayout
         }
 
-        private readonly string[] m_modelTypesStr = new string[] { Str.WTS_ONNETEDITOR_PROPLAYOUT, Str.WTS_ONNETEDITOR_PROPMODELSELECT };
         private Vector2 m_tabViewScroll;
         private readonly Wrapper<IIndexedPrefabData[]> m_searchResultPrefab = new Wrapper<IIndexedPrefabData[]>();
         private readonly Wrapper<string[]> m_searchResultLayouts = new Wrapper<string[]>();
         private OnNetInstanceCacheContainerXml m_lastItem;
         private State m_currentState = State.Normal;
-        private readonly Action<OnNetInstanceCacheContainerXml> m_onImportFromLib;
+        private readonly Action<OnNetInstanceCacheContainerXml, bool> m_onImportFromLib;
         private readonly Action m_onDelete;
         private readonly GUIFilterItemsScreen<State> m_layoutFilter;
         private readonly GUIXmlLib<WTSLibOnNetPropLayout, WriteOnNetXml, OnNetInstanceCacheContainerXml> xmlLibItem = new GUIXmlLib<WTSLibOnNetPropLayout, WriteOnNetXml, OnNetInstanceCacheContainerXml>()
@@ -92,7 +90,7 @@ namespace WriteEverywhere.UI
         private GUIRootWindowBase baseContainer;
         private static int lockSelectionInstanceNum;
 
-        public WTSOnNetBasicTab(Action<OnNetInstanceCacheContainerXml> onImportFromLib, Action onDelete, GUIRootWindowBase baseContainer)
+        public WTSOnNetBasicTab(Action<OnNetInstanceCacheContainerXml, bool> onImportFromLib, Action onDelete, GUIRootWindowBase baseContainer)
         {
             m_onImportFromLib = onImportFromLib;
             m_onDelete = onDelete;

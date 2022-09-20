@@ -25,7 +25,6 @@ namespace WriteEverywhere.Xml
     public class ExportableBoardInstanceOnNetListXml : ILibable
     {
         public WriteOnNetXml[] Instances { get; set; }
-        public SimpleXmlDictionary<string, LibableWriteOnXml> Layouts { get; set; }
         [XmlAttribute("saveName")]
         public string SaveName { get; set; }
     }

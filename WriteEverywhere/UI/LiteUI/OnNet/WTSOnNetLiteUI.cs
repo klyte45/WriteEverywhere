@@ -142,7 +142,7 @@ namespace WriteEverywhere.UI
                 Visible = false;
                 return;
             }
-            if (xmlLibList.Status != FooterBarStatus.AskingToImport)
+            if (xmlLibList.Status != FooterBarStatus.AskingToImport && xmlLibList.Status != FooterBarStatus.AskingToImportAdditive)
             {
                 RegularDraw();
             }
@@ -171,19 +171,11 @@ namespace WriteEverywhere.UI
                     {
                         LockSelection = GUILayout.Toggle(LockSelection, Str.WTS_SEGMENTEDITOR_BUTTONROWACTION_LOCKCAMERASELECTION);
                         GUILayout.FlexibleSpace();
-                        if (GUILayout.Button("RL SHD"))
+                        if (GUILayout.Button(Str.we_roadEditor_importAdding))
                         {
-                            MainController.___RELOADSH = true;
+                            xmlLibList.GoToImportAdditive();
                         }
-                        if (GUILayout.Button("RL IMG"))
-                        {
-                            ModInstance.Controller.AtlasesLibrary.LoadImagesFromLocalFolders();
-                        }
-                        if (GUILayout.Button("RL FNT"))
-                        {
-                            MainController.ReloadFontsFromPath();
-                        }
-                        if (GUILayout.Button(Str.WTS_SEGMENT_IMPORTDATA))
+                        if (GUILayout.Button(Str.we_roadEditor_importReplacing))
                         {
                             xmlLibList.GoToImport();
                         }
@@ -222,17 +214,10 @@ namespace WriteEverywhere.UI
             }
         }
 
-        private void OnSelectBoardList(ExportableBoardInstanceOnNetListXml obj)
+        private void OnSelectBoardList(ExportableBoardInstanceOnNetListXml obj, bool additive)
         {
-            CurrentEditingInstance.BoardsData = CurrentEditingInstance.BoardsData.Concat(obj.Instances.Select(x => XmlUtils.TransformViaXml<WriteOnNetXml, OnNetInstanceCacheContainerXml>(x)).Where(x => !(x?.SaveName is null))).ToArray();
-            foreach (var x in obj.Layouts)
-            {
-                if (WTSPropLayoutData.Instance.Get(x.Key) is null)
-                {
-                    var value = XmlUtils.CloneViaXml(x.Value);
-                    WTSPropLayoutData.Instance.Add(x.Key, value);
-                }
-            };
+            var arrImport = obj.Instances.Select(x => XmlUtils.TransformViaXml<WriteOnNetXml, OnNetInstanceCacheContainerXml>(x)).Where(x => !(x?.SaveName is null));
+            CurrentEditingInstance.BoardsData = additive ? CurrentEditingInstance.BoardsData.Concat(arrImport).ToArray() : arrImport.ToArray();
             m_tabsContainer.Reset();
         }
         private ExportableBoardInstanceOnNetListXml OnGetCurrentList() => new ExportableBoardInstanceOnNetListXml
@@ -252,7 +237,7 @@ namespace WriteEverywhere.UI
             m_tabsContainer.Reset();
         }
 
-        private void OnImportSingle(OnNetInstanceCacheContainerXml data)
+        private void OnImportSingle(OnNetInstanceCacheContainerXml data, bool _)
         {
             data.SaveName = CurrentEditingInstance.BoardsData[m_tabsContainer.ListSel].SaveName;
             CurrentEditingInstance.BoardsData[m_tabsContainer.ListSel] = data;

@@ -618,7 +618,7 @@ TIP: Can be customized by using the &lt;color=#00FF00&gt;Addresses Mod&lt;/color
     <value>Relative rotation</value>
   </data>
   <data name="WTS_RESIZE_Y_TEXT_OVERFLOW" xml:space="preserve">
-    <value>Adjust text height if width is reduced by max width</value>
+    <value>Keep aspect ratio of image/font</value>
   </data>
   <data name="WTS_TEXT_ALIGN_HOR" xml:space="preserve">
     <value>Horizontal align</value>
@@ -786,5 +786,26 @@ A text to succeed the variable value. Use the backslash to scape the slashes (&l
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableType_CurrentSegmentParameter" xml:space="preserve">
     <value>Use an local variable of the instance at segment to determine its value (on segment only)</value>
+  </data>
+  <data name="WTS_EXPORTLAYOUT_LIB" xml:space="preserve">
+    <value>Export layout to library</value>
+  </data>
+  <data name="WTS_IMPORTLAYOUT_LIB" xml:space="preserve">
+    <value>Import layout from library</value>
+  </data>
+  <data name="we_generalLib_exportFullList" xml:space="preserve">
+    <value>Export whole list to library</value>
+  </data>
+  <data name="we_generalLib_importAdditive" xml:space="preserve">
+    <value>Import adding all items into current list</value>
+  </data>
+  <data name="we_generalLib_importFullList" xml:space="preserve">
+    <value>Import whole list from library</value>
+  </data>
+  <data name="we_roadEditor_importAdding" xml:space="preserve">
+    <value>Import items into list</value>
+  </data>
+  <data name="we_roadEditor_importReplacing" xml:space="preserve">
+    <value>Replace items from lib</value>
   </data>
 </root>

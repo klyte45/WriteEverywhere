@@ -380,10 +380,6 @@ namespace WriteEverywhere.Rendering
                 var qtr = Quaternion.Euler(targetRotation);
                 value = vi.m_vehicleAI.CalculateTyreMatrix(Vehicle.Flags.Created | Vehicle.Flags.Spawned | Vehicle.Flags.TransferToTarget, ref targetPos, ref qtr, ref baseScale, ref idt);
             }
-            else
-            {
-                return;
-            }
 
             materialPropertyBlock.Clear();
             materialPropertyBlock.SetTexture(instance2.ID_XYSMap, frameConfig.cachedGlassXYS);

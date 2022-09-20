@@ -1,9 +1,9 @@
-﻿using ColossalFramework.Globalization;
-using ColossalFramework.UI;
+﻿using ColossalFramework.UI;
 using Kwytto.LiteUI;
 using Kwytto.UI;
 using Kwytto.Utils;
 using UnityEngine;
+using WriteEverywhere.Libraries;
 using WriteEverywhere.Localization;
 using WriteEverywhere.Xml;
 
@@ -27,14 +27,14 @@ namespace WriteEverywhere.UI
         private readonly Texture2D m_importLib;
         private readonly Texture2D m_exportLib;
         private string m_clipboard;
-        private FooterBarStatus CurrentLibState => FooterBarStatus.Normal;
+        private FooterBarStatus CurrentLibState => m_textItemLib.Status;
 
-        //private readonly GUIXmlLib<WTSLibVehicleTextItem, BoardTextDescriptorGeneralXml> m_vehicleTextLib = new GUIXmlLib<WTSLibVehicleTextItem, BoardTextDescriptorGeneralXml>()
-        //{
-        //    DeleteQuestionI18n = Str.WTS_PROPEDIT_CONFIGDELETE_MESSAGE,
-        //    NameAskingI18n = Str.WTS_EXPORTDATA_NAMEASKING,
-        //    NameAskingOverwriteI18n = Str.WTS_EXPORTDATA_NAMEASKING_OVERWRITE
-        //};
+        private readonly GUIXmlLib<WTSLibTextItem, BoardTextDescriptorGeneralXml> m_textItemLib = new GUIXmlLib<WTSLibTextItem, BoardTextDescriptorGeneralXml>()
+        {
+            NameAskingI18n = Str.WTS_EXPORTDATA_NAMEASKING,
+            NameAskingOverwriteI18n = Str.WTS_EXPORTDATA_NAMEASKING_OVERWRITE,
+            DeleteQuestionI18n = Str.WTS_SEGMENT_REMOVEITEM,
+        };
 
         public Texture TabIcon { get; } = KResourceLoader.LoadTextureKwytto(CommonsSpriteNames.K45_Settings);
 
@@ -48,7 +48,7 @@ namespace WriteEverywhere.UI
 
             if (CurrentLibState == FooterBarStatus.AskingToImport)
             {
-                //  m_vehicleTextLib.DrawImportView((x) => wrapper.Value = x);
+                m_textItemLib.DrawImportView((x, _) => wrapper.Value = x);
             }
             else
             {
@@ -66,13 +66,13 @@ namespace WriteEverywhere.UI
                             GUILayout.FlexibleSpace();
                             GUIKwyttoCommons.SquareTextureButton(m_copy, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_COPYTOCLIPBOARD, () => CopyToClipboard(item));
                             GUIKwyttoCommons.SquareTextureButton(m_paste, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_PASTEFROMCLIPBOARD, () => PasteFromClipboard(wrapper), canEdit && !(m_clipboard is null));
-                            //GUILayout.FlexibleSpace();
-                            //GUIKwyttoCommons.SquareTextureButton(m_importLib, Str.WTS_IMPORTLAYOUT_LIB, ImportLayout, canEdit);
-                            //GUIKwyttoCommons.SquareTextureButton(m_exportLib, Str.WTS_EXPORTLAYOUT_LIB, ExportLayout);
+                            GUILayout.FlexibleSpace();
+                            GUIKwyttoCommons.SquareTextureButton(m_importLib, Str.WTS_IMPORTLAYOUT_LIB, ImportLayout, canEdit);
+                            GUIKwyttoCommons.SquareTextureButton(m_exportLib, Str.WTS_EXPORTLAYOUT_LIB, ExportLayout);
                         }
                         else
                         {
-                            //m_vehicleTextLib.Draw(null, null, () => item);
+                            m_textItemLib.Draw(null, null, () => item);
                         }
                     }
                     using (new GUILayout.HorizontalScope())
@@ -100,11 +100,11 @@ namespace WriteEverywhere.UI
 
         private void ChangeName(string x, BoardTextDescriptorGeneralXml item) => item.SaveName = x;
 
-        public void Reset() { }// => m_vehicleTextLib.ResetStatus();
+        public void Reset() => m_textItemLib.ResetStatus();
 
         #region Action buttons
-        private void ExportLayout() { }//=> m_vehicleTextLib.GoToExport();
-        private void ImportLayout() { }//=> m_vehicleTextLib.GoToImport();
+        private void ExportLayout() => m_textItemLib.GoToExport();
+        private void ImportLayout() => m_textItemLib.GoToImport();
         private void PasteFromClipboard(Wrapper<BoardTextDescriptorGeneralXml> wrapper)
         {
             var item = XmlUtils.DefaultXmlDeserialize<BoardTextDescriptorGeneralXml>(m_clipboard);
