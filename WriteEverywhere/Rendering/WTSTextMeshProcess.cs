@@ -2,8 +2,6 @@
 using SpriteFontPlus;
 using SpriteFontPlus.Utility;
 using System.Collections.Generic;
-using System.Linq;
-using TLM::Bridge_WE2TLM;
 using WriteEverywhere.Data;
 using WriteEverywhere.Singleton;
 using WriteEverywhere.Xml;
@@ -39,7 +37,7 @@ namespace WriteEverywhere.Rendering
             {
                 return GetTextForOnNet(textDescriptor, refID, boardIdx, secIdx, onNet, ref baseFont, out multipleOutput);
             }
-            return WTSCacheSingleton.GetTextData(textDescriptor.m_fixedText ?? "", textDescriptor.m_prefix, textDescriptor.m_suffix, null, textDescriptor.m_overrideFont);
+            return WTSCacheSingleton.GetTextData(textDescriptor.Value?.ToString() ?? "", textDescriptor.m_prefix, textDescriptor.m_suffix, null, textDescriptor.m_overrideFont);
         }
 
         //private static BasicRenderInformation GetTextForRoadNode(BoardTextDescriptorGeneralXml textDescriptor, ushort refID, int boardIdx, int secIdx, ref DynamicSpriteFont baseFont)
@@ -270,7 +268,7 @@ namespace WriteEverywhere.Rendering
         //    }
         //}
 
-       
+
         #endregion
 
 

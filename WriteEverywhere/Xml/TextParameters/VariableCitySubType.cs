@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using WriteEverywhere.Singleton;
+using static WriteEverywhere.Xml.TextParameterVariableWrapper;
 
 namespace WriteEverywhere.Xml
 {
@@ -41,15 +42,16 @@ namespace WriteEverywhere.Xml
                     return null;
             }
         }
-        public static bool ReadData(this VariableCitySubType var, string[] relativeParams, ref Enum subtype, ref string numberFormat, ref string stringFormat, ref string prefix, ref string suffix)
+        public static bool ReadData(this VariableCitySubType var, string[] relativeParams, ref Enum subtype, out VariableExtraParameterContainer extraParams)
         {
             var cmdLevel = var.GetCommandLevel();
             if (cmdLevel is null)
             {
+                extraParams = default;
                 return false;
             }
 
-            cmdLevel.ParseFormatting(relativeParams, ref numberFormat, ref stringFormat, ref prefix, ref suffix);
+            cmdLevel.ParseFormatting(relativeParams, out extraParams);
             subtype = var;
             return true;
         }

@@ -204,7 +204,7 @@ namespace WriteEverywhere.UI
             {
                 xmlLibList.Draw(RedButton, OnDeleteList, OnGetCurrentList);
             }
-            m_tabsContainer.DrawListTabs(new Rect(0, 25, WindowRect.width, WindowRect.height - 25));
+            m_tabsContainer.DrawListTabs(new Rect(0, 44, WindowRect.width, WindowRect.height - 50));
         }
 
         private OnNetInstanceCacheContainerXml GetSelectedItem(int listSel) => CurrentEditingInstance.BoardsData[listSel];

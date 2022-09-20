@@ -1,6 +1,4 @@
-﻿using WriteEverywhere.Utils;
-
-namespace WriteEverywhere.Rendering
+﻿namespace WriteEverywhere.Rendering
 {
     public class FormatableString
     {
@@ -19,11 +17,13 @@ namespace WriteEverywhere.Rendering
                 : abbreviated ? Abbreviated : Value;
 
         public string GetFormatted(string format)
-            => format.Contains("U")
-                ? format.Contains("A") ? UpperAbbreviated : Upper
-                : format.Contains("L")
-                    ? format.Contains("A") ? LowerAbbreviated : Lower
-                    : format.Contains("A") ? Abbreviated : Value;
+            => format is null 
+                ? Value
+                : format.Contains("U")
+                    ? format.Contains("A") ? UpperAbbreviated : Upper
+                    : format.Contains("L")
+                        ? format.Contains("A") ? LowerAbbreviated : Lower
+                        : format.Contains("A") ? Abbreviated : Value;
 
         public string Value
         {

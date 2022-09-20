@@ -1,4 +1,5 @@
-﻿using SpriteFontPlus;
+﻿using Kwytto.Utils;
+using SpriteFontPlus;
 using SpriteFontPlus.Utility;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ namespace WriteEverywhere.Xml
     public class TextParameterVariableWrapper
     {
         public readonly string m_originalCommand;
+        internal readonly VariableType m_varType;
 
         internal TextParameterVariableWrapper(string input, TextRenderingClass renderingClass = TextRenderingClass.Any)
         {
@@ -17,17 +19,17 @@ namespace WriteEverywhere.Xml
             var parameterPath = CommandLevel.GetParameterPath(input);
             if (parameterPath.Length > 0)
             {
-                VariableType varType = VariableType.Invalid;
+                m_varType = VariableType.Invalid;
                 try
                 {
-                    varType = (VariableType)Enum.Parse(typeof(VariableType), parameterPath[0]);
+                    m_varType = (VariableType)Enum.Parse(typeof(VariableType), parameterPath[0]);
                 }
                 catch { }
-                if (!varType.Supports(renderingClass))
+                if (!m_varType.Supports(renderingClass))
                 {
                     return;
                 }
-                switch (varType)
+                switch (m_varType)
                 {
                     case VariableType.SegmentTarget:
                         if (parameterPath.Length >= 3 && byte.TryParse(parameterPath[1], out byte targIdx) && targIdx <= 4)
@@ -35,7 +37,7 @@ namespace WriteEverywhere.Xml
                             try
                             {
                                 if (Enum.Parse(typeof(VariableSegmentTargetSubType), parameterPath[2]) is VariableSegmentTargetSubType tt
-                                    && tt.ReadData(parameterPath.Skip(3).ToArray(), ref subtype, ref numberFormat, ref stringFormat, ref prefix, ref suffix))
+                                    && tt.ReadData(parameterPath.Skip(3).ToArray(), ref subtype, out paramContainer))
                                 {
                                     index = targIdx;
                                     type = VariableType.SegmentTarget;
@@ -50,7 +52,7 @@ namespace WriteEverywhere.Xml
                             try
                             {
                                 if (Enum.Parse(typeof(VariableSegmentTargetSubType), parameterPath[1]) is VariableSegmentTargetSubType tt
-                                    && tt.ReadData(parameterPath.Skip(2).ToArray(), ref subtype, ref numberFormat, ref stringFormat, ref prefix, ref suffix))
+                                    && tt.ReadData(parameterPath.Skip(2).ToArray(), ref subtype, out paramContainer))
                                 {
                                     type = VariableType.CurrentSegment;
                                 }
@@ -64,7 +66,7 @@ namespace WriteEverywhere.Xml
                             try
                             {
                                 if (Enum.Parse(typeof(VariableCitySubType), parameterPath[1]) is VariableCitySubType tt
-                                    && tt.ReadData(parameterPath.Skip(2).ToArray(), ref subtype, ref numberFormat, ref stringFormat, ref prefix, ref suffix))
+                                    && tt.ReadData(parameterPath.Skip(2).ToArray(), ref subtype, out paramContainer))
                                 {
                                     type = VariableType.CityData;
                                     break;
@@ -79,7 +81,7 @@ namespace WriteEverywhere.Xml
                             try
                             {
                                 if (Enum.Parse(typeof(VariableBuildingSubType), parameterPath[1]) is VariableBuildingSubType tt
-                                    && tt.ReadData(parameterPath.Skip(2).ToArray(), ref subtype, ref numberFormat, ref stringFormat, ref prefix, ref suffix))
+                                    && tt.ReadData(parameterPath.Skip(2).ToArray(), ref subtype, out paramContainer))
                                 {
                                     type = VariableType.CurrentBuilding;
                                     break;
@@ -94,9 +96,24 @@ namespace WriteEverywhere.Xml
                             try
                             {
                                 if (Enum.Parse(typeof(VariableVehicleSubType), parameterPath[1]) is VariableVehicleSubType tt
-                                    && tt.ReadData(parameterPath.Skip(2).ToArray(), ref subtype, ref numberFormat, ref stringFormat, ref prefix, ref suffix))
+                                    && tt.ReadData(parameterPath.Skip(2).ToArray(), ref subtype, out paramContainer))
                                 {
                                     type = VariableType.CurrentVehicle;
+                                    break;
+                                }
+                            }
+                            catch { }
+                        }
+                        break;
+                    case VariableType.CurrentSegmentParameter:
+                        if (parameterPath.Length >= 2)
+                        {
+                            try
+                            {
+                                if (int.TryParse(parameterPath[1],out var idx))
+                                {
+                                    paramContainer.paramIdx = idx;
+                                    type = VariableType.CurrentSegmentParameter;
                                     break;
                                 }
                             }
@@ -111,11 +128,16 @@ namespace WriteEverywhere.Xml
         private VariableType type = VariableType.Invalid;
         private byte index = 0;
         private Enum subtype = VariableSegmentTargetSubType.None;
-        private string numberFormat = "0";
-        private string stringFormat = "";
-        private string prefix = "";
-        private string suffix = "";
+        public readonly VariableExtraParameterContainer paramContainer = default;
 
+        public struct VariableExtraParameterContainer
+        {
+            public string numberFormat;
+            public string stringFormat;
+            public string prefix;
+            public string suffix;
+            public int paramIdx;
+        }
 
 
         public BasicRenderInformation GetTargetText(BaseWriteOnXml instance, BoardTextDescriptorGeneralXml textDescriptor, DynamicSpriteFont targetFont, ushort refId, int secRefId, int tercRefId, out IEnumerable<BasicRenderInformation> multipleOutput)
@@ -213,48 +235,68 @@ namespace WriteEverywhere.Xml
                 case VariableType.SegmentTarget:
                     var targId = propDescriptor?.GetTargetSegment(index) ?? 0;
                     return targId == 0 || !(subtype is VariableSegmentTargetSubType targetSubtype) || targetSubtype == VariableSegmentTargetSubType.None
-                        ? $"{prefix}{subtype}@targ{index}{suffix}"
-                        : $"{prefix}{targetSubtype.GetFormattedString(propDescriptor, targId, this) ?? m_originalCommand}{suffix}";
+                        ? $"{paramContainer.prefix}{subtype}@targ{index}{paramContainer.suffix}"
+                        : $"{paramContainer.prefix}{targetSubtype.GetFormattedString(propDescriptor, targId, this) ?? m_originalCommand}{paramContainer.suffix}";
                 case VariableType.CurrentSegment:
                     return segmentId == 0 || !(subtype is VariableSegmentTargetSubType targetSubtype2) || targetSubtype2 == VariableSegmentTargetSubType.None
-                        ? $"{prefix}{subtype}@currSeg"
-                        : $"{prefix}{targetSubtype2.GetFormattedString(propDescriptor, segmentId, this) ?? m_originalCommand}{suffix}";
+                        ? $"{paramContainer.prefix}{subtype}@currSeg"
+                        : $"{paramContainer.prefix}{targetSubtype2.GetFormattedString(propDescriptor, segmentId, this) ?? m_originalCommand}{paramContainer.suffix}";
                 case VariableType.CityData:
                     if ((subtype is VariableCitySubType targetCitySubtype))
                     {
-                        return $"{prefix}{targetCitySubtype.GetFormattedString(this) ?? m_originalCommand}{suffix}";
+                        return $"{paramContainer.prefix}{targetCitySubtype.GetFormattedString(this) ?? m_originalCommand}{paramContainer.suffix}";
                     }
                     break;
                 case VariableType.Invalid:
                     return $"<UNSUPPORTED PATH: {m_originalCommand}>";
+                case VariableType.CurrentSegmentParameter:
+                    var paramIdx = paramContainer.paramIdx;
+                    switch (textDescriptor.textContent)
+                    {
+                        case TextContent.None:
+                            LogUtils.DoWarnLog("INVALID TEXT CONTENT: NONE!\n" + Environment.StackTrace);
+                            return null;
+                        case TextContent.ParameterizedText:
+                            if (descriptor.GetParameter(paramIdx) is TextParameterWrapper tpw)
+                            {
+                                var result = tpw.GetTargetText(descriptor, textDescriptor, TextParameterWrapper.GetTargetFont(descriptor, textDescriptor), segmentId, 0, 0, out multipleOutput);
+                                if (result is null && (multipleOutput is null || multipleOutput?.Count() == 0))
+                                {
+                                    return $"<EMPTY PARAM#{paramIdx} NOT SET>";
+                                }
+                                if (multipleOutput is null)
+                                {
+                                    multipleOutput = new[] { result };
+                                }
+                                return null;
+                            }
+                            return $"<PARAM#{paramIdx} NOT SET>";
+                        case TextContent.ParameterizedSpriteFolder:
+                            multipleOutput = descriptor.GetParameter(paramIdx) is TextParameterWrapper tpw2
+                                ? (new[] { tpw2.GetSpriteFromCycle(textDescriptor, descriptor.TargetAssetParameter, segmentId, 0, 0) })
+                                : (IEnumerable<BasicRenderInformation>)(new[] { ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(null, "FrameParamsNotSet") });
+                            return null;
+                        case TextContent.ParameterizedSpriteSingle:
+                            multipleOutput = new[] {descriptor.GetParameter(paramIdx)  is TextParameterWrapper tpw3
+                                ? tpw3.GetSpriteFromParameter(descriptor.TargetAssetParameter)
+                                : ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(null, "FrameParamsNotSet") };
+                            return null;
+                        case TextContent.LinesNameList:
+                            break;
+                        case TextContent.HwShield:
+                            break;
+                        case TextContent.TimeTemperature:
+                            break;
+                        case TextContent.LinesSymbols:
+                            break;
+                    }
+                    break;
             }
             return m_originalCommand;
         }
 
-        internal string TryFormat(float value, float multiplier)
-        {
-            try
-            {
-                return (value * multiplier).ToString(numberFormat);
-            }
-            catch
-            {
-                numberFormat = "0";
-                return (value * multiplier).ToString(numberFormat);
-            }
-        }
-        internal string TryFormat(long value)
-        {
-            try
-            {
-                return value.ToString(numberFormat);
-            }
-            catch
-            {
-                numberFormat = "0";
-                return value.ToString(numberFormat);
-            }
-        }
-        internal string TryFormat(FormatableString value) => value.GetFormatted(stringFormat);
+        internal string TryFormat(float value, float multiplier) => (value * multiplier).ToString(paramContainer.numberFormat);
+        internal string TryFormat(long value) => value.ToString(paramContainer.numberFormat);
+        internal string TryFormat(FormatableString value) => value.GetFormatted(paramContainer.stringFormat);
     }
 }

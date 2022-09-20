@@ -1,5 +1,4 @@
 ﻿using ColossalFramework;
-using ColossalFramework.Globalization;
 using Kwytto.LiteUI;
 using Kwytto.UI;
 using Kwytto.Utils;
@@ -13,6 +12,8 @@ namespace WriteEverywhere.UI
     public class WTSOnNetParamsTab : WTSBaseParamsTab<OnNetInstanceCacheContainerXml>
     {
         private Vector2 m_tabViewScroll;
+        private uint lastTickDraw;
+        private System.Collections.Generic.Dictionary<int, System.Collections.Generic.List<BoardTextDescriptorGeneralXml>> m_cachedParamsUsed;
 
         public override Texture TabIcon { get; } = KResourceLoader.LoadTextureKwytto(CommonsSpriteNames.K45_AbsoluteMode);
 
@@ -22,10 +23,14 @@ namespace WriteEverywhere.UI
         {
             using (var scroll = new GUILayout.ScrollViewScope(m_tabViewScroll))
             {
-                var paramsUsed = item.GetAllParametersUsedWithData();
-                if ((paramsUsed?.Count ?? 0) > 0)
+                if (SimulationManager.instance.m_currentTickIndex - lastTickDraw > 5)
                 {
-                    foreach (var kv in paramsUsed.OrderBy(x => x.Key))
+                    m_cachedParamsUsed = item.GetAllParametersUsedWithData();
+                }
+                lastTickDraw = SimulationManager.instance.m_currentTickIndex;
+                if ((m_cachedParamsUsed?.Count ?? 0) > 0)
+                {
+                    foreach (var kv in m_cachedParamsUsed.OrderBy(x => x.Key))
                     {
                         var contentTypes = kv.Value.GroupBy(x => x.textContent).Select(x => x.Key);
                         if (contentTypes.Count() > 1)
@@ -52,7 +57,7 @@ namespace WriteEverywhere.UI
                                 target = Text;
                                 break;
                         }
-                        var usedByText = string.Join("\n", kv.Value.Select(x => $"\u2022{(x.ParameterDisplayName.IsNullOrWhiteSpace() ? x.SaveName : x.ParameterDisplayName)} ({(x.DefaultParameterValueAsString is null ? GUIKwyttoCommons.v_empty : $"<color=#{target}>{x.DefaultParameterValueAsString}</color>")})").ToArray());
+                        var usedByText = string.Join("\n", kv.Value.Select(x => $"\u2022{(x.ParameterDisplayName.IsNullOrWhiteSpace() ? x.SaveName : x.ParameterDisplayName)} ({(x.ValueAsUri is null ? GUIKwyttoCommons.v_empty : $"<color=#{target}>{x.ValueAsUri}</color>")})").ToArray());
                         using (new GUILayout.HorizontalScope())
                         {
                             GUILayout.Label(string.Format(Str.WTS_ONNETEDITOR_TEXTPARAM, kv.Key) + $"\n<color=#{target}>{targetContentType.ValueToI18n()}</color>\n\n{usedByText}");

@@ -41,6 +41,9 @@ namespace WriteEverywhere.Xml
         }
         public ParameterType ParamType { get; private set; }
         public bool IsEmpty { get; private set; }
+        public bool IsParameter => VariableValue?.m_varType == VariableType.CurrentSegmentParameter;
+
+        public int GetParamIdx => VariableValue?.paramContainer.paramIdx ?? -1;
 
         private UITextureAtlas m_cachedAtlas;
         private string atlasName;
@@ -220,13 +223,14 @@ namespace WriteEverywhere.Xml
 
         #region renderingInfo
 
-        private static DynamicSpriteFont GetTargetFont(BaseWriteOnXml instance, BoardTextDescriptorGeneralXml textDescriptor)
+        public static DynamicSpriteFont GetTargetFont(BaseWriteOnXml instance, BoardTextDescriptorGeneralXml textDescriptor)
             => FontServer.instance.FirstOf(new[]
             {
                         textDescriptor.m_overrideFont,
                         WTSEtcData.Instance.FontSettings.GetTargetFont(textDescriptor.m_fontClass),
                         instance.DescriptorOverrideFont,
                         WTSEtcData.Instance.FontSettings.GetTargetFont(instance.RenderingClass),
+                        MainController.DEFAULT_FONT_KEY,
             }.Where(x => !x.IsNullOrWhiteSpace()));
 
         public static BasicRenderInformation GetRenderInfo(BaseWriteOnXml instance, BoardTextDescriptorGeneralXml textDescriptor, ushort refId, int secIdx, int tercIdx, out IEnumerable<BasicRenderInformation> multipleOutput)
@@ -238,17 +242,11 @@ namespace WriteEverywhere.Xml
                     LogUtils.DoWarnLog("INVALID TEXT CONTENT: NONE!\n" + Environment.StackTrace);
                     return null;
                 case TextContent.ParameterizedText:
-                    return (instance.GetParameter(textDescriptor.m_parameterIdx) ?? textDescriptor.DefaultParameterValue) is TextParameterWrapper tpw
-                        ? tpw.GetTargetText(instance, textDescriptor, GetTargetFont(instance, textDescriptor), refId, secIdx, tercIdx, out multipleOutput)
-                        : GetTargetFont(instance, textDescriptor)?.DrawString(ModInstance.Controller, $"<PARAM#{textDescriptor.m_parameterIdx} NOT SET>", default, FontServer.instance.ScaleEffective);
+                    return textDescriptor.Value?.GetTargetText(instance, textDescriptor, GetTargetFont(instance, textDescriptor), refId, secIdx, tercIdx, out multipleOutput);
                 case TextContent.ParameterizedSpriteFolder:
-                    return (instance.GetParameter(textDescriptor.m_parameterIdx) ?? textDescriptor.DefaultParameterValue) is TextParameterWrapper tpw2
-                        ? tpw2.GetSpriteFromCycle(textDescriptor, instance.TargetAssetParameter, refId, secIdx, tercIdx)
-                        : ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(null, "FrameParamsNotSet");
+                    return textDescriptor.Value?.GetSpriteFromCycle(textDescriptor, instance.TargetAssetParameter, refId, secIdx, tercIdx);
                 case TextContent.ParameterizedSpriteSingle:
-                    return (instance.GetParameter(textDescriptor.m_parameterIdx) ?? textDescriptor.DefaultParameterValue) is TextParameterWrapper tpw3
-                        ? tpw3.GetSpriteFromParameter(instance.TargetAssetParameter)
-                        : ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(null, "FrameParamsNotSet");
+                    return textDescriptor.Value?.GetSpriteFromParameter(instance.TargetAssetParameter);
                 case TextContent.LinesNameList:
                     break;
                 case TextContent.HwShield:
@@ -274,7 +272,7 @@ namespace WriteEverywhere.Xml
                 case TextContent.TextParameterSequence:
                     return !(tpw is null)
                         ? tpw.GetTargetText(instance, textDescriptor, GetTargetFont(instance, textDescriptor), refId, secIdx, tercIdx, out multipleOutput)
-                        : GetTargetFont(instance, textDescriptor)?.DrawString(ModInstance.Controller, $"<PARAM#{textDescriptor.m_parameterIdx} NOT SET>", default, FontServer.instance.ScaleEffective);
+                        : GetTargetFont(instance, textDescriptor)?.DrawString(ModInstance.Controller, $"<PARAM IS NOT SET>", default, FontServer.instance.ScaleEffective);
                 case TextContent.ParameterizedSpriteFolder:
                     return !(tpw is null)
                         ? tpw.GetSpriteFromCycle(textDescriptor, instance.TargetAssetParameter, refId, secIdx, tercIdx)
@@ -295,7 +293,7 @@ namespace WriteEverywhere.Xml
             return null;
         }
 
-        private BasicRenderInformation GetSpriteFromParameter(PrefabInfo prop)
+        public BasicRenderInformation GetSpriteFromParameter(PrefabInfo prop)
             => IsEmpty
                     ? null
                     : GetImageBRI(prop);
@@ -336,7 +334,7 @@ namespace WriteEverywhere.Xml
         public string GetOriginalVariableParam() => ParamType != ParameterType.VARIABLE ? null : VariableValue.m_originalCommand;
 
 
-        private BasicRenderInformation GetSpriteFromCycle(BoardTextDescriptorGeneralXml textDescriptor, PrefabInfo cachedPrefab, ushort refId, int boardIdx, int secIdx)
+        public BasicRenderInformation GetSpriteFromCycle(BoardTextDescriptorGeneralXml textDescriptor, PrefabInfo cachedPrefab, ushort refId, int boardIdx, int secIdx)
         {
             if (IsEmpty)
             {

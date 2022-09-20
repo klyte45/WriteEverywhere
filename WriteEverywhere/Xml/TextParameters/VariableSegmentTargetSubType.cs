@@ -1,7 +1,10 @@
-﻿using System;
+﻿using Kwytto.Utils;
+using SpriteFontPlus.Utility;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using WriteEverywhere.Singleton;
+using static WriteEverywhere.Xml.TextParameterVariableWrapper;
 
 namespace WriteEverywhere.Xml
 {
@@ -91,20 +94,21 @@ namespace WriteEverywhere.Xml
             }
         }
 
-        public static bool ReadData(this VariableSegmentTargetSubType var, string[] relativeParams, ref Enum subtype, ref string numberFormat, ref string stringFormat, ref string prefix, ref string suffix)
+        public static bool ReadData(this VariableSegmentTargetSubType var, string[] relativeParams, ref Enum subtype, out VariableExtraParameterContainer extraParams)
         {
             var cmdLevel = var.GetCommandLevel();
             if (cmdLevel is null)
             {
+                extraParams = default;
                 return false;
             }
 
-            cmdLevel.ParseFormatting(relativeParams, ref numberFormat, ref stringFormat, ref prefix, ref suffix);
+            cmdLevel.ParseFormatting(relativeParams, out extraParams);
             subtype = var;
             return true;
         }
 
-        public static string GetFormattedString(this VariableSegmentTargetSubType var, OnNetInstanceCacheContainerXml propDescriptor, ushort targId, TextParameterVariableWrapper varWrapper)
+        public static string GetFormattedString(this VariableSegmentTargetSubType var, OnNetInstanceCacheContainerXml instance, ushort targId, TextParameterVariableWrapper varWrapper)
         {
             var multiplier = 1f;
             switch (var)
@@ -138,7 +142,7 @@ namespace WriteEverywhere.Xml
                     multiplier = 1 / 1609f;
                     goto case VariableSegmentTargetSubType.MileageMeters;
                 case VariableSegmentTargetSubType.MileageMeters:
-                    return varWrapper.TryFormat(WTSCacheSingleton.instance.GetSegment(targId).GetMetersAt(propDescriptor.SegmentPosition), multiplier);
+                    return varWrapper.TryFormat(WTSCacheSingleton.instance.GetSegment(targId).GetMetersAt(instance.SegmentPosition), multiplier);
 
                 case VariableSegmentTargetSubType.DistanceFromReferenceKilometers:
                     multiplier = 0.001f;
@@ -175,8 +179,7 @@ namespace WriteEverywhere.Xml
                 case VariableSegmentTargetSubType.HwCodeShort: return WTSCacheSingleton.instance.GetSegment(targId).HwCodeShort;
                 case VariableSegmentTargetSubType.HwCodeLong: return WTSCacheSingleton.instance.GetSegment(targId).HwCodeLong;
                 case VariableSegmentTargetSubType.HwDettachedPrefix: return WTSCacheSingleton.instance.GetSegment(targId).HwDettachedPrefix;
-                case VariableSegmentTargetSubType.HwIdentifierSuffix: return WTSCacheSingleton.instance.GetSegment(targId).HwIdentifierSuffix;
-
+                case VariableSegmentTargetSubType.HwIdentifierSuffix: return WTSCacheSingleton.instance.GetSegment(targId).HwIdentifierSuffix;               
                 default:
                     return null;
             }

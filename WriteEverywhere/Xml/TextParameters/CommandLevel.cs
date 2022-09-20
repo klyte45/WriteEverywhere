@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using WriteEverywhere.Localization;
+using static WriteEverywhere.Xml.TextParameterVariableWrapper;
 
 namespace WriteEverywhere.Xml
 {
@@ -15,23 +16,32 @@ namespace WriteEverywhere.Xml
         public Dictionary<Enum, CommandLevel> nextLevelOptions;
         public string regexValidValues;
         public CommandLevel nextLevelByRegex;
-        public string descriptionKey;
+        public Func<string> descriptionKey;
 
         public int level;
 
-        public void ParseFormatting(string[] relativeParams, ref string numberFormat, ref string stringFormat, ref string prefix, ref string suffix)
+        public void ParseFormatting(string[] relativeParams, out VariableExtraParameterContainer extraParameterContainer)
         {
+            extraParameterContainer = default;
             if (this == m_numberFormatFloat || this == m_numberFormatInt)
             {
                 if (relativeParams.Length >= 1)
                 {
-                    numberFormat = relativeParams[0];
+                    try
+                    {
+                        var test = (this == m_numberFormatFloat ? 1f.ToString(relativeParams[0]) : 1.ToString(relativeParams[0]));
+                        extraParameterContainer.numberFormat = relativeParams[0];
+                    }
+                    catch
+                    {
+                        extraParameterContainer.numberFormat = this == m_numberFormatFloat ? "0.0" : "0";
+                    }
                     if (relativeParams.Length >= 2)
                     {
-                        prefix = relativeParams[1];
+                        extraParameterContainer.prefix = relativeParams[1];
                         if (relativeParams.Length >= 3)
                         {
-                            suffix = relativeParams[2];
+                            extraParameterContainer.suffix = relativeParams[2];
                         }
                     }
                 }
@@ -40,13 +50,13 @@ namespace WriteEverywhere.Xml
             {
                 if (relativeParams.Length >= 1)
                 {
-                    stringFormat = relativeParams[0];
+                    extraParameterContainer.stringFormat = relativeParams[0];
                     if (relativeParams.Length >= 2)
                     {
-                        prefix = relativeParams[1];
+                        extraParameterContainer.prefix = relativeParams[1];
                         if (relativeParams.Length >= 3)
                         {
-                            suffix = relativeParams[2];
+                            extraParameterContainer.suffix = relativeParams[2];
                         }
                     }
                 }
@@ -55,11 +65,18 @@ namespace WriteEverywhere.Xml
             {
                 if (relativeParams.Length >= 1)
                 {
-                    prefix = relativeParams[0];
+                    extraParameterContainer.prefix = relativeParams[0];
                     if (relativeParams.Length >= 2)
                     {
-                        suffix = relativeParams[1];
+                        extraParameterContainer.suffix = relativeParams[1];
                     }
+                }
+            }
+            if (this == m_numberSet)
+            {
+                if (relativeParams.Length >= 1)
+                {
+                    extraParameterContainer.paramIdx = int.TryParse(relativeParams[0], out int param) ? param : -1;
                 }
             }
         }
@@ -71,33 +88,39 @@ namespace WriteEverywhere.Xml
 
         public static readonly CommandLevel m_appendSuffix = new CommandLevel
         {
-            descriptionKey = "COMMON_SUFFIX",
+            descriptionKey = () => Str.WTS_PARAMVARS_DESC__COMMON_SUFFIX,
             regexValidValues = ".*",
             nextLevelByRegex = m_endLevel
         };
         public static readonly CommandLevel m_appendPrefix = new CommandLevel
         {
-            descriptionKey = "COMMON_PREFIX",
+            descriptionKey = () => Str.WTS_PARAMVARS_DESC__COMMON_PREFIX,
             regexValidValues = ".*",
             nextLevelByRegex = m_appendSuffix
         };
         public static readonly CommandLevel m_numberFormatFloat = new CommandLevel
         {
-            descriptionKey = "COMMON_NUMBERFORMAT_FLOAT",
+            descriptionKey = () => Str.WTS_PARAMVARS_DESC__COMMON_NUMBERFORMAT_FLOAT,
             regexValidValues = ".*",
             nextLevelByRegex = m_appendPrefix
         };
         public static readonly CommandLevel m_numberFormatInt = new CommandLevel
         {
-            descriptionKey = "COMMON_NUMBERFORMAT_INT",
+            descriptionKey = () => Str.WTS_PARAMVARS_DESC__COMMON_NUMBERFORMAT_INT,
             regexValidValues = ".*",
             nextLevelByRegex = m_appendPrefix
         };
         public static readonly CommandLevel m_stringFormat = new CommandLevel
         {
-            descriptionKey = "COMMON_STRINGFORMAT",
-            regexValidValues = "[ULA]{0,2}",
+            descriptionKey = () => Str.WTS_PARAMVARS_DESC__COMMON_STRINGFORMAT,
+            regexValidValues = "^[ULA]{0,2}$",
             nextLevelByRegex = m_appendPrefix
+        };
+        public static readonly CommandLevel m_numberSet = new CommandLevel
+        {
+            descriptionKey = () => Str.WTS_PARAMVARS_DESC__COMMON_PARAMNUM,
+            regexValidValues = "^[0-9]{1,2}$",
+            nextLevelByRegex = m_endLevel
         };
         public static readonly CommandLevel m_endLevel = new CommandLevel
         {
@@ -126,7 +149,7 @@ namespace WriteEverywhere.Xml
                 var parameterPath = GetParameterPath(inputText.Substring(PROTOCOL_VARIABLE.Length));
                 return IterateInCommandTree(out currentLocaleDesc, parameterPath, null, new CommandLevel
                 {
-                    descriptionKey = "_VarLevelRoot",
+                    descriptionKey = () => Str.WTS_PARAMVARS_DESC__VarLevelRoot,
                     nextLevelOptions = commandTree,
                     defaultValue = VariableType.Invalid
                 }, 0);
@@ -178,7 +201,7 @@ namespace WriteEverywhere.Xml
                 }
             }
             currentLocaleDesc = !(currentLevel.descriptionKey is null)
-                ? currentLevel.descriptionKey
+                ? currentLevel.descriptionKey()
                 : !(levelKey is null)
                     ? levelKey.ValueToI18n()
                     : !(currentLevel.defaultValue is null)

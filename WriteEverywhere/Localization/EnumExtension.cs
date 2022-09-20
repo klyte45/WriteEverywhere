@@ -1,5 +1,6 @@
 ﻿using ColossalFramework.UI;
 using FontStashSharp;
+using Kwytto.Utils;
 using System;
 using System.Linq;
 using WriteEverywhere.Xml;
@@ -21,6 +22,7 @@ namespace WriteEverywhere.Localization
                         case VariableType.CurrentSegment: return Str.WTS_PARAMVARS_DESC__VariableType_CurrentSegment;
                         case VariableType.CurrentVehicle: return Str.WTS_PARAMVARS_DESC__VariableType_CurrentVehicle;
                         case VariableType.Invalid: return Str.WTS_PARAMVARS_DESC__VariableType_Invalid;
+                        case VariableType.CurrentSegmentParameter: return Str.WTS_PARAMVARS_DESC__VariableType_CurrentSegmentParameter;
                     }
                     break;
                 case VariableCitySubType tp:
@@ -131,6 +133,7 @@ namespace WriteEverywhere.Localization
                     }
                     break;
             }
+            LogUtils.DoLog($"<data name=\".e_Enum__{variable?.GetType()}_{variable}\" xml:space=\"preserve\">    <value>???????</value>  </data>\r\n");
             return $"{variable?.GetType()}|{variable}";
         }
 

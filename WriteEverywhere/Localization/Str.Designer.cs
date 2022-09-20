@@ -1109,6 +1109,86 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Use the decimal number formatting. Examples for the number &lt;color=#FFFF00&gt;1250.65&lt;/color&gt;:
+        ///&lt;color=#FFFF00&gt;0&lt;/color&gt; =&gt; &lt;color=#00FF00&gt;1251&lt;/color&gt;
+        ///&lt;color=#FFFF00&gt;0.000&lt;/color&gt; =&gt; &lt;color=#00FF00&gt;1250.650&lt;/color&gt;
+        ///&lt;color=#FFFF00&gt;#,##0.0&lt;/color&gt; =&gt; &lt;color=#00FF00&gt;1,250.7&lt;/color&gt;
+        ///
+        ///Search by the C# number formatting reference for more details..
+        /// </summary>
+        internal static string WTS_PARAMVARS_DESC__COMMON_NUMBERFORMAT_FLOAT {
+            get {
+                return ResourceManager.GetString("WTS_PARAMVARS_DESC__COMMON_NUMBERFORMAT_FLOAT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Use the integer number formatting. Examples for the number &lt;color=#FFFF00&gt;1251&lt;/color&gt;:
+        ///&lt;color=#FFFF00&gt;0&lt;/color&gt; =&gt; &lt;color=#00FF00&gt;1251&lt;/color&gt;
+        ///&lt;color=#FFFF00&gt;X&lt;/color&gt; =&gt; &lt;color=#00FF00&gt;4E3&lt;/color&gt; (Hexadecimal)
+        ///&lt;color=#FFFF00&gt;#,##0&lt;/color&gt; =&gt; &lt;color=#00FF00&gt;1.251&lt;/color&gt;
+        ///
+        ///Search by the C# number formatting reference for more details..
+        /// </summary>
+        internal static string WTS_PARAMVARS_DESC__COMMON_NUMBERFORMAT_INT {
+            get {
+                return ResourceManager.GetString("WTS_PARAMVARS_DESC__COMMON_NUMBERFORMAT_INT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Set up the parameter that will be get the value..
+        /// </summary>
+        internal static string WTS_PARAMVARS_DESC__COMMON_PARAMNUM {
+            get {
+                return ResourceManager.GetString("WTS_PARAMVARS_DESC__COMMON_PARAMNUM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a (OPTIONAL) Can be left in blank.
+        ///A text to precede the variable value. Use the backslash to scape the slashes (&lt;color=#FF00FF&gt;/&lt;/color&gt;)..
+        /// </summary>
+        internal static string WTS_PARAMVARS_DESC__COMMON_PREFIX {
+            get {
+                return ResourceManager.GetString("WTS_PARAMVARS_DESC__COMMON_PREFIX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a (OPTIONAL) Can be left in blank.
+        ///&lt;color=#FFFF00&gt;U&lt;/color&gt; Will make the text be transformed to all in uppercase
+        ///&lt;color=#FFFF00&gt;L&lt;/color&gt; Will make the text be transformed to all in lowercase
+        ///&lt;color=#FFFF00&gt;A&lt;/color&gt; Will apply abbreviations in the text.
+        /// </summary>
+        internal static string WTS_PARAMVARS_DESC__COMMON_STRINGFORMAT {
+            get {
+                return ResourceManager.GetString("WTS_PARAMVARS_DESC__COMMON_STRINGFORMAT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a (OPTIONAL) Can be left in blank.
+        ///A text to succeed the variable value. Use the backslash to scape the slashes (&lt;color=#FF00FF&gt;/&lt;/color&gt;)..
+        /// </summary>
+        internal static string WTS_PARAMVARS_DESC__COMMON_SUFFIX {
+            get {
+                return ResourceManager.GetString("WTS_PARAMVARS_DESC__COMMON_SUFFIX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Type a value between 0 and 4, and select in the list to continue.
+        ///
+        ///&amp;lt;color=#FFFF00&amp;gt;0 to 4&amp;lt;/color&amp;gt; means that the segments selected at reference tab will be used.
+        /// </summary>
+        internal static string WTS_PARAMVARS_DESC__SegmentTarget__SelectReference {
+            get {
+                return ResourceManager.GetString("WTS_PARAMVARS_DESC__SegmentTarget__SelectReference", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a City name..
         /// </summary>
         internal static string WTS_PARAMVARS_DESC__VariableCitySubType_CityName {
@@ -1446,6 +1526,15 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Use an local variable of the instance at segment to determine its value (on segment only).
+        /// </summary>
+        internal static string WTS_PARAMVARS_DESC__VariableType_CurrentSegmentParameter {
+            get {
+                return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableType_CurrentSegmentParameter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Variables about current vehicle (vehicle layouts only).
         /// </summary>
         internal static string WTS_PARAMVARS_DESC__VariableType_CurrentVehicle {
@@ -1532,6 +1621,15 @@ namespace WriteEverywhere.Localization {
         internal static string WTS_PARAMVARS_DESC__VariableVehicleSubType_PrevStopLine {
             get {
                 return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableVehicleSubType_PrevStopLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Click once in an item to get information; Click twice to select..
+        /// </summary>
+        internal static string WTS_PARAMVARS_DESC__VarLevelRoot {
+            get {
+                return ResourceManager.GetString("WTS_PARAMVARS_DESC__VarLevelRoot", resourceCulture);
             }
         }
         

@@ -40,7 +40,7 @@ namespace WriteEverywhere.UI
                 case TextContent.ParameterizedText:
                 case TextContent.ParameterizedSpriteFolder:
                 case TextContent.ParameterizedSpriteSingle:
-                    var param = item.DefaultParameterValue;
+                    var param = item.Value;
                     GUIKwyttoCommons.AddButtonSelector(tabAreaSize.x, Str.WTS_CONTENT_TEXTVALUE, param is null ? GUIKwyttoCommons.v_null : param.IsEmpty ? GUIKwyttoCommons.v_empty : param.ToString(), () => OnGoToPicker(currentItem, -1), isEditable);
                     break;
                 case TextContent.TextParameterSequence:
@@ -120,7 +120,7 @@ namespace WriteEverywhere.UI
             TextParameterWrapper value;
             if (key == -1)
             {
-                value = currentItem.DefaultParameterValue ?? new TextParameterWrapper();
+                value = currentItem.Value ?? new TextParameterWrapper();
             }
             else if (currentItem.ParameterSequence is TextParameterSequence tps && key >= 0 && key < tps.TotalItems)
             {

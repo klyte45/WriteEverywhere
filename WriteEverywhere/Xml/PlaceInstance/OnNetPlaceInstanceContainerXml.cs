@@ -35,23 +35,21 @@ namespace WriteEverywhere.Xml
             get
             {
                 var res = new SimpleNonSequentialList<TextParameterXmlContainer>();
-                for (int i = 0; i < m_textParameters.Length; i++)
+                foreach (var k in m_textParameters?.Keys)
                 {
-                    if (m_textParameters[i] != null)
+                    if (m_textParameters[k] != null)
                     {
-                        res[i] = TextParameterXmlContainer.FromWrapper(m_textParameters[i]);
+                        res[k] = TextParameterXmlContainer.FromWrapper(m_textParameters[k]);
                     }
                 }
                 return res;
             }
             set
             {
+                m_textParameters?.Clear();
                 foreach (var k in value?.Keys)
                 {
-                    if (k < m_textParameters.Length)
-                    {
-                        m_textParameters[k] = value[k]?.ToWrapper(RenderingClass);
-                    }
+                    SetTextParameter((int)k, value[k]?.Value);
                 }
             }
         }
@@ -60,24 +58,32 @@ namespace WriteEverywhere.Xml
         {
             if (m_textParameters == null)
             {
-                m_textParameters = new TextParameterWrapper[TEXT_PARAMETERS_COUNT];
+                m_textParameters = new SimpleNonSequentialList<TextParameterWrapper>();
             }
-            return m_textParameters[idx] = new TextParameterWrapper(val, RenderingClass);
+            var result = new TextParameterWrapper(val, RenderingClass);
+            if (result.IsParameter)
+            {
+                return m_textParameters[idx] = new TextParameterWrapper("<CANNOT SET PARAMETER AS PARAMETER!>", RenderingClass);
+            }
+            else
+            {
+                return m_textParameters[idx] = result;
+            }
         }
         public void DeleteTextParameter(int idx)
         {
             if (m_textParameters == null)
             {
-                m_textParameters = new TextParameterWrapper[TEXT_PARAMETERS_COUNT];
+                m_textParameters = new SimpleNonSequentialList<TextParameterWrapper>();
             }
             m_textParameters[idx] = null;
         }
 
-        public Dictionary<int, List<BoardTextDescriptorGeneralXml>> GetAllParametersUsedWithData() => TextDescriptors.Where(x => x.IsParameter()).GroupBy(x => x.m_parameterIdx).ToDictionary(x => x.Key, x => x.ToList());
+        public Dictionary<int, List<BoardTextDescriptorGeneralXml>> GetAllParametersUsedWithData() => TextDescriptors.Where(x => x.Value.IsParameter).GroupBy(x => x.Value.GetParamIdx).ToDictionary(x => x.Key, x => x.ToList());
 
         [XmlIgnore]
-        public TextParameterWrapper[] m_textParameters = new TextParameterWrapper[TEXT_PARAMETERS_COUNT];
+        public SimpleNonSequentialList<TextParameterWrapper> m_textParameters = new SimpleNonSequentialList<TextParameterWrapper>();
 
-        public override TextParameterWrapper GetParameter(int idx) => m_textParameters?[idx];
+        public override TextParameterWrapper GetParameter(int idx) => m_textParameters.TryGetValue(idx, out var val) ? val : null;
     }
 }

@@ -29,21 +29,11 @@ namespace WriteEverywhere.Xml
 
         [XmlAttribute("textContentV2")]
         public TextContent textContent = TextContent.None;
-        [XmlAttribute("destinationReference")]
-        public DestinationReference m_destinationRelative = DestinationReference.Self;
-        [XmlAttribute("parameterIdx")]
-        public int m_parameterIdx = 0;
         [XmlIgnore]
         private TextParameterWrapper parameterValue;
-        [XmlAttribute("spriteNameV2")]
-        public string OLD__SpriteName
-        {
-            get => null;
-            set => DefaultParameterValueAsString = value;
-        }
 
-        [XmlAttribute("defaultParameterValue")]
-        public string DefaultParameterValueAsString
+        [XmlAttribute("value")]
+        public string ValueAsUri
         {
             get => parameterValue?.ToString().TrimToNull();
             set => SetDefaultParameterValueAsString(value);
@@ -51,11 +41,8 @@ namespace WriteEverywhere.Xml
 
         public string SetDefaultParameterValueAsString(string value, TextRenderingClass renderingClass = TextRenderingClass.Any) => (parameterValue = value.IsNullOrWhiteSpace() ? null : new TextParameterWrapper(value, renderingClass))?.ToString();
 
-        [XmlAttribute("parameterDisplayName")]
-        public string ParameterDisplayName { get; set; }
-
         [XmlIgnore]
-        public TextParameterWrapper DefaultParameterValue => parameterValue;
+        public TextParameterWrapper Value => parameterValue;
         [XmlIgnore]
         public TextParameterSequence ParameterSequence { get; set; }
 
@@ -67,8 +54,6 @@ namespace WriteEverywhere.Xml
         }
 
 
-        [XmlAttribute("fixedText")]
-        public string m_fixedText = "Text";
         [XmlIgnore]
         public TextParameterWrapper m_spriteParam;
 
@@ -100,6 +85,9 @@ namespace WriteEverywhere.Xml
         public BackgroundMesh BackgroundMeshSettings { get; set; } = new BackgroundMesh();
         [XmlElement("AnimationSettings")]
         public AnimationSettings AnimationSettings { get; set; } = new AnimationSettings();
+        [XmlElement("ParameterDisplayName")]
+        public string ParameterDisplayName { get; set; } = "";
+
         public bool IsParameter() => ParameterizedTextContents.Contains(textContent);
         private static readonly TextContent[] ParameterizedTextContents = new[]
         {
