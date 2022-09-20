@@ -19,6 +19,12 @@ namespace WriteEverywhere.Rendering
         public const float RENDER_DISTANCE_FACTOR = 1500;
         public static readonly int SHADER_PROP_COLOR = Shader.PropertyToID("_Color");
         public static readonly int SHADER_PROP_SURF_PROPERTIES = Shader.PropertyToID("_SurfProperties");
+        public static readonly int SHADER_PROP_BACK_COLOR = Shader.PropertyToID("_BackfaceColor");
+        public static readonly int SHADER_PROP_BACK_MIRRORED = Shader.PropertyToID("_MirrorBack");
+        public static readonly int SHADER_PROP_BORDERS = Shader.PropertyToID("_Border");
+        public static readonly int SHADER_PROP_PIXELS_METERS = Shader.PropertyToID("_PixelsPerMeters");
+        public static readonly int SHADER_PROP_DIMENSIONS = Shader.PropertyToID("_Dimensions");
+
         private static readonly float m_daynightOffTime = 6 * Convert.ToSingle(Math.Pow(Convert.ToDouble((6 - (15 / 2.5)) / 6), Convert.ToDouble(1 / 1.09)));
 
         internal static Material m_rotorMaterial;
@@ -229,10 +235,20 @@ namespace WriteEverywhere.Rendering
 
                 Material targetMaterial = renderInfo.m_generatedMaterial;
                 PropManager instance = CalculateIllumination(refID, boardIdx, secIdx, textDescriptor, materialPropertyBlock, ref colorToSet, instanceFlags, instanceFlags2);
-
+                if (renderInfo.m_useShadersVariables)
+                {
+                    materialPropertyBlock.SetVector(SHADER_PROP_DIMENSIONS, (Vector2)textDescriptor.LineMaxDimensions);
+                    materialPropertyBlock.SetFloat(SHADER_PROP_PIXELS_METERS, renderInfo.m_pixelDensityMeters);
+                    materialPropertyBlock.SetVector(SHADER_PROP_BORDERS, renderInfo.m_borders);
+                }
 
                 defaultCallsCounter++;
                 Graphics.DrawMesh(renderInfo.m_mesh, matrix, targetMaterial, 10, targetCamera, 0, materialPropertyBlock);
+                if (renderInfo.m_useShadersVariables)
+                {
+                    materialPropertyBlock.Clear();
+                }
+
 
                 result = matrix.GetColumn(3) + new Vector4(0, renderInfo.m_mesh.bounds.center.y * matrix.GetColumn(1).y);
 
@@ -271,7 +287,7 @@ namespace WriteEverywhere.Rendering
             var bgMatrix = propMatrix
                 * Matrix4x4.Translate(targetPos)
                 * textMatrixTuple.Second.Second
-                * Matrix4x4.Translate(lineAdjustmentVector)
+                * Matrix4x4.Translate(lineAdjustmentVector + new Vector3(0, textDescriptor.BackgroundMeshSettings.Size.Y / 2))
                 * Matrix4x4.Scale(new Vector3(textDescriptor.BackgroundMeshSettings.Size.X / bgBri.m_mesh.bounds.size.x, textDescriptor.BackgroundMeshSettings.Size.Y / bgBri.m_mesh.bounds.size.y, 1))
                 * textMatrixTuple.Second.Fourth;
             defaultCallsCounter++;
@@ -542,13 +558,13 @@ namespace WriteEverywhere.Rendering
             }
             targetRelativePosition += rotationMatrix.MultiplyPoint(new Vector3(0, -(renderInfo.m_YAxisOverflows.min + renderInfo.m_YAxisOverflows.max) / 2 * defaultMultiplierY * overflowScaleY));
 
-            var scaleVector = centerReference ? new Vector3(SCALING_FACTOR, SCALING_FACTOR, SCALING_FACTOR) : new Vector3(defaultMultiplierX * overflowScaleX / propScale.x, defaultMultiplierY * overflowScaleY / propScale.y, mirrored ? -1 : 1);
+            var scaleVector = centerReference ? new Vector3(SCALING_FACTOR, SCALING_FACTOR, SCALING_FACTOR) : new Vector3(defaultMultiplierX * overflowScaleX / propScale.x, defaultMultiplierY * overflowScaleY / propScale.y, 1 / propScale.z);
             Matrix4x4 textMatrix =
                 Matrix4x4.Translate(targetRelativePosition) *
                 rotationMatrix *
-                Matrix4x4.Scale(scaleVector) * Matrix4x4.Scale(propScale)
+                Matrix4x4.Scale(scaleVector)
                ;
-            return Tuple.New(textMatrix, Tuple.New(Matrix4x4.Translate(targetRelativePosition), rotationMatrix, Matrix4x4.Scale(scaleVector), Matrix4x4.Scale(propScale)));
+            return Tuple.New(textMatrix, Tuple.New(Matrix4x4.Translate(targetRelativePosition), rotationMatrix, Matrix4x4.Scale(scaleVector), Matrix4x4.identity));
         }
         #endregion
         #region Color rules

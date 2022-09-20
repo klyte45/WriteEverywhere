@@ -1,11 +1,8 @@
 ﻿extern alias ADR;
-
-using ColossalFramework.Threading;
 using ColossalFramework.UI;
 using Kwytto.Utils;
 using SpriteFontPlus;
 using SpriteFontPlus.Utility;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,8 +22,6 @@ namespace WriteEverywhere.Sprites
 
         #region Highway shields
         private UITextureAtlas m_hwShieldsAtlas;
-        private Material m_hwShieldsMaterial;
-        private bool HwShieldIsDirty { get; set; }
         private Dictionary<ushort, BasicRenderInformation> HighwayShieldsCache { get; } = new Dictionary<ushort, BasicRenderInformation>();
 
         private void ResetHwShieldAtlas()
@@ -38,8 +33,6 @@ namespace WriteEverywhere.Sprites
         {
             HighwayShieldsCache.Clear();
             ResetHwShieldAtlas();
-            m_hwShieldsMaterial = null;
-            HwShieldIsDirty = true;
         }
 
         public BasicRenderInformation DrawHwShield(ushort seedId)
@@ -102,8 +95,6 @@ namespace WriteEverywhere.Sprites
                         texture = drawingCoroutine.result
                     }
                 });
-                HwShieldIsDirty = true;
-                m_hwShieldsMaterial = null;
                 HighwayShieldsCache.Clear();
                 StopAllCoroutines();
                 yield break;
@@ -115,17 +106,8 @@ namespace WriteEverywhere.Sprites
             };
 
             yield return 0;
-            WTSAtlasesLibrary.BuildMeshFromAtlas(id, bri, m_hwShieldsAtlas);
-            yield return 0;
-            if (m_hwShieldsMaterial is null)
-            {
-                m_hwShieldsMaterial = new Material(m_hwShieldsAtlas.material)
-                {
-                    shader = ModInstance.Controller.defaultTextShader,
-                };
-            }
-            WTSAtlasesLibrary.RegisterMeshSingle(seedId, bri, HighwayShieldsCache, m_hwShieldsAtlas, HwShieldIsDirty, m_hwShieldsMaterial);
-            HwShieldIsDirty = false;
+            WTSAtlasesLibrary.BuildMeshFromAtlas(bri, m_hwShieldsAtlas[id]);
+            WTSAtlasesLibrary.RegisterMeshSingle(seedId, bri, HighwayShieldsCache);
             yield break;
         }
         private static bool CheckHwShieldCoroutineCanContinue()

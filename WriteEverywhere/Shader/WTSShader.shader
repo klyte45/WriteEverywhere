@@ -10,7 +10,7 @@ Shader "Custom/WriteEverything/Default" {
         _MirrorBack("Mirror backface", Int) = 0
         _Border("Border Offsets", Vector) = (0,0,0,0)
         _PixelsPerMeters("Pixels per meters", float) = 100
-        _Dimensions("Width and Height", Vector) = (0,0,0,0)
+        _Dimensions("Size", Vector) = (1,1,1,0)
     }
 
     SubShader

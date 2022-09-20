@@ -46,21 +46,18 @@ namespace WriteEverywhere
         public override void Group9SettingsUI(UIHelper group9)
         {
             base.Group9SettingsUI(group9);
-            if (WESettingsGUI.Instance is null)
-            {
-                GameObjectUtils.CreateElement<WESettingsGUI>(UIView.GetAView().transform);
-                WESettingsGUI.Instance.Visible = false;
-            }
             group9.AddButton(Str.we_settings_btnLabel, () =>
             {
-                if (WESettingsGUI.Instance is null)
-                {
-                    GameObjectUtils.CreateElement<WESettingsGUI>(UIView.GetAView().transform);
-                }
-                else
+                if (WESettingsGUI.Instance != null)
                 {
                     WESettingsGUI.Instance.Visible = true;
                 }
+                else
+                {
+                    GameObjectUtils.CreateElement<WESettingsGUI>(UIView.GetAView().transform);
+                }
+
+
             });
         }
     }

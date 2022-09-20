@@ -14,11 +14,18 @@ fixed4 _BackfaceColor;
 bool _MirrorBack;
 fixed4 _Border;
 float _PixelsPerMeters;
-fixed2 _Dimensions;
+fixed3 _Dimensions;
 half3 lightDir;
 uniform 	fixed4 hlslcc_mtx4x4unity_ObjectToWorld[4];
 uniform 	fixed4 hlslcc_mtx4x4unity_MatrixVP[4];
 uniform float4 _MainTex_TexelSize;
+
+ void commonVert(inout appdata_full v){
+	v.vertex.xyz *= _Dimensions;
+	#if defined(PIXELSNAP_ON)
+		v.vertex = UnityPixelSnap (v.vertex);
+	#endif
+ }
 
 void normalPass(fixed4 textureColor, fixed2 uv, inout SurfaceOutput o) {
 	float sample_l;

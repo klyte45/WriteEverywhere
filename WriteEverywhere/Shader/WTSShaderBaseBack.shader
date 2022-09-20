@@ -10,7 +10,7 @@ Shader "Custom/WriteEverything/Default/Back" {
         _MirrorBack("Mirror backface", Int) = 0
         _Border("Border Offsets", Vector) = (0,0,0,0)
         _PixelsPerMeters("Pixels per meters", float) = 1
-        _Dimensions("Width and Height", Vector) = (0,0,0,0)
+        _Dimensions("Width and Height", Vector) = (1,1,1,0)
     }
 
     SubShader
@@ -34,9 +34,7 @@ Shader "Custom/WriteEverything/Default/Back" {
         
         void vert(inout appdata_full v, out Input o)
         {
-            #if defined(PIXELSNAP_ON)
-                v.vertex = UnityPixelSnap (v.vertex);
-            #endif
+            commonVert(v);
             Unity_RotateAboutAxis_Degrees_float(v.normal, float3 (0,1,0), 90,  v.normal.xyz);
             Unity_RotateAboutAxis_Degrees_float(v.tangent, float3 (0,1,0), 90,  v.tangent.xyz);
             UNITY_INITIALIZE_OUTPUT(Input, o);

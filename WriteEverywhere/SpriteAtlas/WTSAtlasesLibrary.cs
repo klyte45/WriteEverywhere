@@ -52,8 +52,6 @@ namespace WriteEverywhere.Sprites
 
         private Dictionary<string, UITextureAtlas> LocalAtlases { get; } = new Dictionary<string, UITextureAtlas>();
         private Dictionary<ulong, UITextureAtlas> AssetAtlases { get; } = new Dictionary<ulong, UITextureAtlas>();
-        private Dictionary<string, Material> LocalRenderMaterial { get; } = new Dictionary<string, Material>();
-        private Dictionary<ulong, Material> AssetRenderMaterial { get; } = new Dictionary<ulong, Material>();
         private Dictionary<string, Dictionary<string, BasicRenderInformation>> LocalAtlasesCache { get; } = new Dictionary<string, Dictionary<string, BasicRenderInformation>>();
         private Dictionary<ulong, Dictionary<string, BasicRenderInformation>> AssetAtlasesCache { get; } = new Dictionary<ulong, Dictionary<string, BasicRenderInformation>>();
 
@@ -94,7 +92,7 @@ namespace WriteEverywhere.Sprites
 
             LocalAtlasesCache[atlasName ?? string.Empty][spriteName] = null;
 
-            StartCoroutine(CreateItemAtlasCoroutine(LocalAtlases, LocalRenderMaterial, LocalAtlasesCache, atlasName ?? string.Empty, spriteName));
+            StartCoroutine(CreateItemAtlasCoroutine(LocalAtlases, LocalAtlasesCache, atlasName ?? string.Empty, spriteName));
             return null;
         }
         public BasicRenderInformation GetSlideFromLocal(string atlasName, Func<int, int> idxFunc, bool fallbackOnInvalid = false) => !LocalAtlases.TryGetValue(atlasName ?? string.Empty, out UITextureAtlas atlas)
@@ -124,10 +122,10 @@ namespace WriteEverywhere.Sprites
             }
 
             AssetAtlasesCache[assetId][spriteName] = null;
-            StartCoroutine(CreateItemAtlasCoroutine(AssetAtlases, AssetRenderMaterial, AssetAtlasesCache, assetId, spriteName));
+            StartCoroutine(CreateItemAtlasCoroutine(AssetAtlases, AssetAtlasesCache, assetId, spriteName));
             return null;
         }
-        private IEnumerator CreateItemAtlasCoroutine<T>(Dictionary<T, UITextureAtlas> spriteDict, Dictionary<T, Material> materialDict, Dictionary<T, Dictionary<string, BasicRenderInformation>> spriteDictCache, T assetId, string spriteName)
+        private IEnumerator CreateItemAtlasCoroutine<T>(Dictionary<T, UITextureAtlas> spriteDict, Dictionary<T, Dictionary<string, BasicRenderInformation>> spriteDictCache, T assetId, string spriteName)
         {
             yield return 0;
             if (!spriteDict.TryGetValue(assetId, out UITextureAtlas targetAtlas))
@@ -145,8 +143,8 @@ namespace WriteEverywhere.Sprites
                 m_YAxisOverflows = new RangeVector { min = 0, max = 20 },
                 m_refText = $"<sprite asset,{assetId},{spriteName}>"
             };
-            BuildMeshFromAtlas(spriteName, bri, targetAtlas, targetAtlas[spriteName].width / targetAtlas[spriteName].height);
-            RegisterMesh(assetId, spriteName, bri, spriteDictCache[assetId], materialDict, targetAtlas);
+            BuildMeshFromAtlas(bri, targetAtlas[spriteName]);
+            RegisterMesh(spriteName, bri, spriteDictCache[assetId]);
             yield break;
         }
         #endregion
@@ -230,7 +228,6 @@ namespace WriteEverywhere.Sprites
                 }
             }
             LocalAtlasesCache.Clear();
-            LocalRenderMaterial.Clear();
             if (errors.Count > 0)
             {
                 KwyttoDialog.ShowModal(new KwyttoDialog.BindProperties
@@ -286,7 +283,6 @@ namespace WriteEverywhere.Sprites
 
         #region Transport lines
         private UITextureAtlas m_transportLineAtlas;
-        private Material m_transportLineMaterial;
         private Dictionary<int, BasicRenderInformation> TransportLineCache { get; } = new Dictionary<int, BasicRenderInformation>();
         private Dictionary<int, BasicRenderInformation> RegionalTransportLineCache { get; } = new Dictionary<int, BasicRenderInformation>();
 
@@ -311,7 +307,6 @@ namespace WriteEverywhere.Sprites
             TransportLineCache.Clear();
             RegionalTransportLineCache.Clear();
             ResetTransportAtlas();
-            m_transportLineMaterial = null;
             TransportIsDirty = true;
         }
         public CommonsSpriteNames LineIconTest
@@ -387,7 +382,6 @@ namespace WriteEverywhere.Sprites
                 });
                 TransportIsDirty = true;
                 StopAllCoroutines();
-                m_transportLineMaterial = null;
                 TransportLineCache.Clear();
                 RegionalTransportLineCache.Clear();
                 yield break;
@@ -399,16 +393,9 @@ namespace WriteEverywhere.Sprites
             };
 
             yield return 0;
-            BuildMeshFromAtlas(id, bri, m_transportLineAtlas);
+            BuildMeshFromAtlas(bri, m_transportLineAtlas[id]);
             yield return 0;
-            if (m_transportLineMaterial is null)
-            {
-                m_transportLineMaterial = new Material(m_transportLineAtlas.material)
-                {
-                    shader = ModInstance.Controller.defaultTextShader,
-                };
-            }
-            RegisterMeshSingle(line.lineId, bri, line.regional ? RegionalTransportLineCache : TransportLineCache, m_transportLineAtlas, TransportIsDirty, m_transportLineMaterial);
+            RegisterMeshSingle(line.lineId, bri, line.regional ? RegionalTransportLineCache : TransportLineCache);
             TransportIsDirty = false;
             yield break;
         }
@@ -550,97 +537,56 @@ namespace WriteEverywhere.Sprites
             2
         };
 
-
-        internal static void BuildMeshFromAtlas(string id, BasicRenderInformation bri, UITextureAtlas referenceAtlas, float proportion = 1f)
+        private static readonly Mesh basicMesh = new Mesh
         {
-            var uirenderData = UIRenderData.Obtain();
-            try
+            vertices = new[]
             {
-                uirenderData.Clear();
-                PoolList<Vector3> vertices = uirenderData.vertices;
-                PoolList<Vector3> normals = uirenderData.normals;
-                PoolList<Color32> colors = uirenderData.colors;
-                PoolList<Vector2> uvs = uirenderData.uvs;
-                PoolList<int> triangles = uirenderData.triangles;
-
-                SpriteInfo spriteInfo = referenceAtlas[id];
-
-                triangles.EnsureCapacity(triangles.Count + kTriangleIndices.Length);
-                triangles.AddRange(kTriangleIndices);
-
-                float x = 0f;
-                float y = 0f;
-                float x2 = 64 * proportion;
-                float y2 = -64;
-                vertices.Add(new Vector3(x, y2, 0f));
-                vertices.Add(new Vector3(x2, y2, 0f));
-                vertices.Add(new Vector3(x2, y, 0f));
-                vertices.Add(new Vector3(x, y, 0f));
-
-                Rect region = spriteInfo.region;
-                uvs.Add(new Vector2(region.xMax, region.y));
-                uvs.Add(new Vector2(region.x, region.y));
-                uvs.Add(new Vector2(region.x, region.yMax));
-                uvs.Add(new Vector2(region.xMax, region.yMax));
-                Vector2 value = Vector2.zero;
-
-                for (int i = 0; i < 4; i++)
-                {
-                    colors.Add(Color.yellow);
-                }
-
-                if (bri.m_mesh is null)
-                {
-                    bri.m_mesh = new Mesh();
-                }
-                bri.m_mesh.Clear();
-                bri.m_mesh.vertices = AlignVertices(vertices);
-                bri.m_mesh.normals = normals.ToArray();
-                bri.m_mesh.colors32 = colors.Select(z => new Color32(z.a, z.a, z.a, z.a)).ToArray();
-                bri.m_mesh.uv = uvs.ToArray();
-                bri.m_mesh.triangles = triangles.ToArray();
-                bri.m_fontBaseLimits = new RangeVector { min = 0, max = referenceAtlas[id].texture.height };
-            }
-            finally
+                new Vector3(-.5f, -.5f, 0f),
+                new Vector3(0.5f, -.5f, 0f),
+                new Vector3(0.5f, 0.5f, 0f),
+                new Vector3(-.5f, 0.5f, 0f),
+            },
+            uv = new[]
             {
-                uirenderData.Release();
-            }
-        }
-        private static Vector3[] AlignVertices(PoolList<Vector3> points)
+                new Vector2(1, 0),
+                new Vector2(0, 0),
+                new Vector2(0, 1),
+                new Vector2(1, 1)
+            },
+            triangles = kTriangleIndices
+        };
+
+        static WTSAtlasesLibrary()
         {
-            if (points.Count == 0)
-            {
-                return points.ToArray();
-            }
-
-            var max = new Vector3(points.Select(x => x.x).Max() / 2, points.Select(x => x.y).Max(), points.Select(x => x.z).Max());
-            var min = new Vector3(points.Select(x => x.x).Min() / 2, points.Select(x => x.y).Min(), points.Select(x => x.z).Min());
-            Vector3 offset = (max + min);
-
-            return points.Select(p => p - offset).ToArray();
+            WTSUtils.SolveTangents(basicMesh);
         }
 
 
-        private static void RegisterMesh<T>(T idx, string sprite, BasicRenderInformation bri, Dictionary<string, BasicRenderInformation> cache, Dictionary<T, Material> materialIndex, UITextureAtlas referenceAtlas, bool isDirty = false)
+        internal static void BuildMeshFromAtlas(BasicRenderInformation bri, SpriteInfo spriteInfo)
+        {
+            bri.m_mesh = basicMesh;
+            bri.m_fontBaseLimits = new RangeVector { min = 0, max = 1 * WTSDynamicTextRenderingRules.SCALING_FACTOR };
+            bri.m_YAxisOverflows = new RangeVector { min = -.5f, max = .5f };
+            bri.m_sizeMetersUnscaled = new Vector2(spriteInfo.width / spriteInfo.height, 1) / WTSDynamicTextRenderingRules.SCALING_FACTOR;
+            bri.m_generatedMaterial = new Material(ModInstance.Controller.defaultTextShader)
+            {
+                mainTexture = spriteInfo.texture
+            };
+            bri.m_borders = new Vector4(spriteInfo.border.left, spriteInfo.border.top, spriteInfo.border.right, spriteInfo.border.bottom);
+            bri.m_pixelDensityMeters = 100f;
+            bri.m_useShadersVariables = true;
+        }
+
+
+        private static void RegisterMesh(string sprite, BasicRenderInformation bri, Dictionary<string, BasicRenderInformation> cache)
         {
             WTSUtils.SolveTangents(bri.m_mesh);
-            if (!materialIndex.TryGetValue(idx, out Material material))
-            {
-                material = new Material(referenceAtlas.material)
-                {
-                    shader = ModInstance.Controller.defaultTextShader,
-                };
-                materialIndex[idx] = material;
-            }
-            RegisterMeshSingle(sprite, bri, cache, referenceAtlas, isDirty, material);
+            RegisterMeshSingle(sprite, bri, cache);
         }
 
-        internal static void RegisterMeshSingle<T>(T sprite, BasicRenderInformation bri, Dictionary<T, BasicRenderInformation> cache, UITextureAtlas referenceAtlas, bool isDirty, Material material)
+        internal static void RegisterMeshSingle<T>(T sprite, BasicRenderInformation bri, Dictionary<T, BasicRenderInformation> cache)
         {
-            UpdateMaterial(referenceAtlas, material, isDirty);
             WTSUtils.SolveTangents(bri.m_mesh);
-            bri.m_generatedMaterial = material;
-            bri.m_sizeMetersUnscaled = bri.m_mesh.bounds.size;
             if (cache.TryGetValue(sprite, out BasicRenderInformation currentVal) && currentVal == null)
             {
                 cache[sprite] = bri;
@@ -651,16 +597,6 @@ namespace WriteEverywhere.Sprites
             }
         }
 
-        public static void UpdateMaterial(UITextureAtlas referenceAtlas, Material material, bool isDirty)
-        {
-            if (isDirty || referenceAtlas.material.GetTexture("_ACIMap") is null)
-            {
-                var aciTex = new Texture2D(referenceAtlas.texture.width, referenceAtlas.texture.height);
-                aciTex.SetPixels(referenceAtlas.texture.GetPixels().Select(x => new Color(1 - x.a, 0, 1f, 1)).ToArray());
-                aciTex.Apply();
-                material.SetTexture("_ACIMap", aciTex);
-            }
-        }
         #endregion
     }
 }

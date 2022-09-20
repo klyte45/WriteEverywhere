@@ -135,6 +135,10 @@ namespace WriteEverywhere.UI
 
         public bool IsOnTextEditor => CurrentTabIdx == m_textEditorTabIdx;
 
+        protected override bool showOverModals => false;
+
+        protected override bool requireModal => false;
+
         protected override void DrawWindow()
         {
             if (currentSegmentId == 0)
