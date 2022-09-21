@@ -48,7 +48,7 @@ namespace FontStashSharp
         ~FontAtlas()
         {
             UnityEngine.Object.Destroy(Texture);
-            UnityEngine.Object.Destroy(Material);
+            UnityEngine.Object.Destroy(m_materialBright);
         }
 
         public FontAtlas(int w, int h, int count)

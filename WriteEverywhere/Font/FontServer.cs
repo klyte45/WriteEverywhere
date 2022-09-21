@@ -71,7 +71,7 @@ namespace SpriteFontPlus
                 {
                     m_fontRegistered[name].Reset(1, 1);
                 }
-                m_fontRegistered[name] = DynamicSpriteFont.FromTtf(fontData, name, FontSizeEffective, textureSize, textureSize);
+                m_fontRegistered[name] = DynamicSpriteFont.FromTtf(fontData, name, FontSizeEffective, textureSize, textureSize, m_qualityMultiplier);
             }
             catch (FontCreationException)
             {

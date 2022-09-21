@@ -72,14 +72,14 @@ namespace SpriteFontPlus
             }
         }
 
-        private DynamicSpriteFont(byte[] ttf, string name, int defaultTargetHeight, int textureWidth, int textureHeight, int blur)
+        private DynamicSpriteFont(byte[] ttf, string name, int defaultTargetHeight, int textureWidth, int textureHeight, float qualityMultiplier, int blur)
         {
             _fontSystem = new FontSystem(textureWidth, textureHeight, blur)
             {
                 FontHeight = defaultTargetHeight
             };
 
-            _fontSystem.AddFontMem(ttf);
+            _fontSystem.AddFontMem(ttf, qualityMultiplier);
 
         }
 
@@ -91,9 +91,9 @@ namespace SpriteFontPlus
             return result;
         }
 
-        public void AddTtf(byte[] ttf) => _fontSystem.AddFontMem(ttf);
+        public void AddTtf(byte[] ttf, float qualityMultiplier) => _fontSystem.AddFontMem(ttf, qualityMultiplier);
 
-        public void AddTtf(Stream ttfStream) => AddTtf(ttfStream.ToByteArray());
+        public void AddTtf(Stream ttfStream, float qualityMultiplier) => AddTtf(ttfStream.ToByteArray(), qualityMultiplier);
 
         public Vector2 MeasureString(string text)
         {
@@ -118,7 +118,7 @@ namespace SpriteFontPlus
         public void Reset() => _fontSystem.Reset();
 
 
-        public static DynamicSpriteFont FromTtf(byte[] ttf, string name, int defaultTargetHeight, int textureWidth, int textureHeight, int blur = 0) => new DynamicSpriteFont(ttf, name, defaultTargetHeight, textureWidth, textureHeight, blur);
+        public static DynamicSpriteFont FromTtf(byte[] ttf, string name, int defaultTargetHeight, int textureWidth, int textureHeight, float qualityMultiplier, int blur = 0) => new DynamicSpriteFont(ttf, name, defaultTargetHeight, textureWidth, textureHeight, qualityMultiplier, blur);
 
         public static DynamicSpriteFont FromTtf(Stream ttfStream, string name, int defaultTargetHeight, int textureWidth, int textureHeight, int blur = 0) => FromTtf(ttfStream.ToByteArray(), name, defaultTargetHeight, textureWidth, textureHeight, blur);
 

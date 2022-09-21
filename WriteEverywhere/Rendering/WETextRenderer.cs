@@ -1,6 +1,7 @@
 ﻿using ColossalFramework;
 using ColossalFramework.Math;
 using ColossalFramework.UI;
+using Kwytto.UI;
 using Kwytto.Utils;
 using SpriteFontPlus.Utility;
 using System;
@@ -52,25 +53,54 @@ namespace WriteEverywhere.Rendering
                 defaultCallsCounter++;
                 Graphics.DrawMesh(renderInfo.m_mesh, matrix, targetMaterial, 10, null, 0, block, false);
                 positionAccumulator += (Vector3)matrix.GetColumn(3) + new Vector3(0, renderInfo.m_mesh.bounds.center.y * matrix.GetColumn(1).y);
-                //if (((Vector2)textDescriptor.BackgroundMeshSettings.Size).sqrMagnitude != 0)
-                //{
-                //    BasicRenderInformation bgBri = WriteTheSignsMod.Controller.AtlasesLibrary.GetFromLocalAtlases(null, KlyteResourceLoader.GetDefaultSpriteNameFor(LineIconSpriteNames.K45_SquareIcon));
-                //    if (bgBri != null)
-                //    {
-                //        Matrix4x4 containerMatrix = DrawBgMesh(ref propMatrix, textDescriptor, block, ref targetPos, ref targetRotation, ref baseScale, targetTextAlignment, targetCamera, textMatrixTuple, instance, bgBri, ref defaultCallsCounter);
-                //        if (textDescriptor.BackgroundMeshSettings.m_useFrame)
-                //        {
-                //            DrawTextFrame(textDescriptor, block, ref targetPos, ref targetRotation, ref baseScale, ref parentColor, srcInfo, targetCamera, ref containerMatrix, ref defaultCallsCounter);
-                //        }
-                //    }
-                //}
+                if (((Vector2)textDescriptor.BackgroundMeshSettings.Size).sqrMagnitude != 0)
+                {
+                    BasicRenderInformation bgBri = ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(null, CommonsSpriteNames.K45_SquareIcon.ToString());
+                    if (bgBri != null)
+                    {
+                        Matrix4x4 containerMatrix = DrawBgMesh(ref propMatrix, textDescriptor, block, ref targetPos, ref targetRotation, ref baseScale, targetTextAlignment, textItem, instance, bgBri, ref defaultCallsCounter);
+                        //        if (textDescriptor.BackgroundMeshSettings.m_useFrame)
+                        //        {
+                        //            DrawTextFrame(textDescriptor, block, ref targetPos, ref targetRotation, ref baseScale, ref parentColor, srcInfo, targetCamera, ref containerMatrix, ref defaultCallsCounter);
+                        //        }
+                    }
+                }
             }
             return positionAccumulator / textMatrixes.Count;
+        }
+
+        private static Matrix4x4 DrawBgMesh(ref Matrix4x4 propMatrix, BoardTextDescriptorGeneralXml textDescriptor, MaterialPropertyBlock materialPropertyBlock, ref Vector3 targetPos,
+            ref Vector3 targetRotation, ref Vector3 baseScale, UIHorizontalAlignment targetTextAlignment, TextRenderDescriptor textMatrixTuple,
+            PropManager instance, BasicRenderInformation bgBri, ref int defaultCallsCounter)
+        {
+            materialPropertyBlock.SetColor(SHADER_PROP_COLOR, textDescriptor.BackgroundMeshSettings.BackgroundColor * new Color(1, 1, 1, 0));
+            materialPropertyBlock.SetVector(SHADER_PROP_SURF_PROPERTIES, new Vector4());
+            ApplyTextAdjustments(targetPos, targetRotation, bgBri, baseScale, textDescriptor.BackgroundMeshSettings.Size.Y, targetTextAlignment, textDescriptor.BackgroundMeshSettings.Size.X, false, false, false);
+
+            var lineAdjustmentVector = new Vector3(0, .5f * (textMatrixTuple.scaleMatrix * propMatrix.inverse).m11  * textDescriptor.TextLineHeight, -0.001f);
+            var containerMatrix = propMatrix
+                * Matrix4x4.Translate(targetPos)
+                * textMatrixTuple.rotationMatrix
+                * Matrix4x4.Translate(lineAdjustmentVector)
+                * textMatrixTuple.scaleMatrix
+                ;
+            var bgMatrix = propMatrix
+                * Matrix4x4.Translate(targetPos)
+                * textMatrixTuple.rotationMatrix
+                * textMatrixTuple.scaleMatrix
+                * Matrix4x4.Translate(lineAdjustmentVector)
+                * Matrix4x4.Scale(new Vector3(textDescriptor.BackgroundMeshSettings.Size.X / bgBri.m_mesh.bounds.size.x, textDescriptor.BackgroundMeshSettings.Size.Y / bgBri.m_mesh.bounds.size.y, 1))
+                ;
+            defaultCallsCounter++;
+            Graphics.DrawMesh(bgBri.m_mesh, bgMatrix, bgBri.m_generatedMaterial, 10, null, 0, materialPropertyBlock);
+            return containerMatrix;
         }
 
         private class TextRenderDescriptor
         {
             public Matrix4x4 baseMatrix;
+            public Matrix4x4 rotationMatrix;
+            public Matrix4x4 scaleMatrix;
         }
 
         private static List<TextRenderDescriptor> CalculateTextMatrix(Vector3 targetPosition, Vector3 targetRotation, Vector3 baseScale, UIHorizontalAlignment targetTextAlignment, float maxWidth, BoardTextDescriptorGeneralXml textDescriptor, BasicRenderInformation renderInfo, bool placeClone180Y, bool centerReference = false)
@@ -133,8 +163,10 @@ namespace WriteEverywhere.Rendering
                ;
             return new TextRenderDescriptor
             {
-                baseMatrix = textMatrix
-            };// Tuple.New(textMatrix, Tuple.New(Matrix4x4.Translate(targetRelativePosition), rotationMatrix, Matrix4x4.Scale(scaleVector), Matrix4x4.Scale(propScale)));
+                baseMatrix = textMatrix,
+                scaleMatrix = Matrix4x4.Scale(propScale),
+                rotationMatrix = rotationMatrix
+            };
         }
 
         #region Illumination handling

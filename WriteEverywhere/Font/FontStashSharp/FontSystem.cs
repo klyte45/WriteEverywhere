@@ -113,14 +113,14 @@ namespace FontStashSharp
             m_lastCoroutineStep = 0;
         }
 
-        public void AddFontMem(byte[] data)
+        public void AddFontMem(byte[] data, float qualityMultiplier)
         {
             var font = Font.FromMemory(data);
             font.RecalculateBasedOnHeight(FontHeight);
             _fonts.Add(font);
             var bounds = new Bounds();
             TextBounds(0, 0, "A", 1, ref bounds);
-            ReferenceHeight = bounds.maxY - bounds.minY;
+            ReferenceHeight = (bounds.maxY - bounds.minY) / qualityMultiplier;
         }
 
         private Dictionary<int, FontGlyph> GetGlyphsCollection(int size)
