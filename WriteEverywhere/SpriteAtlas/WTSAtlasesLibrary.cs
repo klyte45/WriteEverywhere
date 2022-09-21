@@ -219,7 +219,7 @@ namespace WriteEverywhere.Sprites
                 {
                     var atlasName = isRoot ? string.Empty : Path.GetFileNameWithoutExtension(dir);
                     LocalAtlases[atlasName] = ScriptableObject.CreateInstance<UITextureAtlas>();
-                    LocalAtlases[atlasName].material = new Material(UIView.GetAView().defaultAtlas.material.shader);
+                    LocalAtlases[atlasName].material = new Material(ModInstance.Controller.defaultTextShader);
                     if (isRoot)
                     {
                         spritesToAdd.AddRange(UIView.GetAView().defaultAtlas.sprites.Select(x => CloneSpriteInfo(x)).ToList());
@@ -290,7 +290,7 @@ namespace WriteEverywhere.Sprites
         private void ResetTransportAtlas()
         {
             m_transportLineAtlas = ScriptableObject.CreateInstance<UITextureAtlas>();
-            m_transportLineAtlas.material = new Material(UIView.GetAView().defaultAtlas.material.shader);
+            m_transportLineAtlas.material = new Material(ModInstance.Controller.defaultTextShader);
         }
         internal void PurgeLine(WTSLine line)
         {
@@ -537,7 +537,7 @@ namespace WriteEverywhere.Sprites
             2
         };
 
-        private static readonly Mesh basicMesh = new Mesh
+        public static readonly Mesh basicMesh = new Mesh
         {
             vertices = new[]
             {
@@ -568,13 +568,13 @@ namespace WriteEverywhere.Sprites
             bri.m_fontBaseLimits = new RangeVector { min = 0, max = 1 };
             bri.m_YAxisOverflows = new RangeVector { min = -.5f, max = .5f };
             bri.m_sizeMetersUnscaled = new Vector2(spriteInfo.width / spriteInfo.height, 1);
-            bri.m_generatedMaterial = new Material(ModInstance.Controller.defaultTextShader)
+            bri.m_offsetScaleX = spriteInfo.width / spriteInfo.height;
+            bri.m_generatedMaterial = new Material(FontServer.instance.DefaultShader)
             {
                 mainTexture = spriteInfo.texture
             };
             bri.m_borders = new Vector4(spriteInfo.border.left, spriteInfo.border.top, spriteInfo.border.right, spriteInfo.border.bottom);
             bri.m_pixelDensityMeters = 100f;
-            bri.m_useShadersVariables = true;
             bri.m_lineOffset = .5f;
             bri.m_expandXIfAlone = true;
         }
@@ -599,6 +599,33 @@ namespace WriteEverywhere.Sprites
             }
         }
 
+        private BasicRenderInformation m_bgTexture;
+        public BasicRenderInformation GetWhiteTextureBRI()
+        {
+            if (m_bgTexture == null)
+            {
+                m_bgTexture = new BasicRenderInformation
+                {
+                    m_mesh = WTSAtlasesLibrary.basicMesh,
+                    m_fontBaseLimits = new RangeVector { min = 0, max = 1 },
+                    m_YAxisOverflows = new RangeVector { min = -.5f, max = .5f },
+                    m_sizeMetersUnscaled = new Vector2(1, 1),
+                    m_offsetScaleX = 1,
+                    m_generatedMaterial = new Material(ModInstance.Controller.defaultTextShader)
+                    {
+                        mainTexture = Texture2D.whiteTexture
+                    },
+                    m_borders = default,
+                    m_pixelDensityMeters = 100f,
+                    m_lineOffset = .5f,
+                    m_expandXIfAlone = true
+                };
+                m_bgTexture.m_mesh.RecalculateBounds();
+                m_bgTexture.m_mesh.RecalculateNormals();
+                m_bgTexture.m_mesh.RecalculateTangents();
+            }
+            return m_bgTexture;
+        }
         #endregion
     }
 }

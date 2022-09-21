@@ -134,8 +134,7 @@ namespace WriteEverywhere.Localization
                     }
                     break;
             }
-            LogUtils.DoLog($"<data name=\".e_Enum__{variable?.GetType()}_{variable}\" xml:space=\"preserve\">    <value>???????</value>  </data>\r\n");
-            return $"{variable?.GetType()}|{variable}";
+            return variable.ValueToI18nKwytto();
         }
 
         public static string[] GetAllValuesI18n<T>() where T : Enum => Enum.GetValues(typeof(T)).Cast<Enum>().Select(x => x.ValueToI18n()).ToArray();

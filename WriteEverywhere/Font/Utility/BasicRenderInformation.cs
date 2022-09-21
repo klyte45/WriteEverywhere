@@ -14,10 +14,10 @@ namespace SpriteFontPlus.Utility
         public string m_refText;
         public float m_baselineOffset = 0;
         public Vector4 m_borders;
-        public bool m_useShadersVariables = false;
         public float m_pixelDensityMeters;
         public float m_lineOffset;
         public bool m_expandXIfAlone;
+        public float m_offsetScaleX = 1f;
 
         public override string ToString() => $"BRI [m={m_mesh?.bounds};sz={m_sizeMetersUnscaled}]";
 

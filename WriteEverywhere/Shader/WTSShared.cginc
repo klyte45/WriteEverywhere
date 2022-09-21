@@ -78,26 +78,20 @@ fixed2 calculateUV(fixed2 uvInput){
 }
 
 void surfBack(Input IN, inout SurfaceOutput o){
-	fixed2 uv =  calculateUV(IN.uv_MainTex);
-	if(_MirrorBack){
-		uv.x = 1 - uv.x;
-	}
-	uv = calculateUV(uv);
+	fixed2 uv = calculateUV(IN.uv_MainTex);
 	fixed4 t = tex2D(_MainTex, uv);
-	o.Albedo =saturate(_BackfaceColor) ;
+	o.Albedo = _BackfaceColor;
 	o.Alpha = t.a;
-	normalPass(t, IN.uv_MainTex, o);
+	normalPass(t, uv, o);
 }
 
 void surfFront(Input IN, inout SurfaceOutput o){
 	fixed2 uv =  calculateUV(IN.uv_MainTex);
 	fixed4 t = tex2D(_MainTex, uv);
-	fixed4 effectiveColor = saturate(_Color);
-	o.Albedo = t * effectiveColor;
+	o.Albedo = t * _Color;
 	o.Alpha = t.a;
 	o.Emission = t * _Color * _SurfProperties.z * t.a * 10;
-
-	normalPass(t, IN.uv_MainTex, o);
+	normalPass(t, uv, o);
 }
 
 void Unity_RotateAboutAxis_Degrees_float(float3 In, float3 Axis, float Rotation, out float3 Out)

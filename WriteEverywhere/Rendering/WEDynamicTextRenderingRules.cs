@@ -1,5 +1,4 @@
 ﻿using ColossalFramework.Math;
-using System;
 using UnityEngine;
 using WriteEverywhere.Xml;
 
@@ -7,24 +6,6 @@ namespace WriteEverywhere.Rendering
 {
     internal static class WEDynamicTextRenderingRules
     {
-        public const float SCALING_FACTOR = 0.025f;
-        public const float RENDER_DISTANCE_FACTOR = 1500;
-        public static readonly int SHADER_PROP_COLOR = Shader.PropertyToID("_Color");
-        public static readonly int SHADER_PROP_SURF_PROPERTIES = Shader.PropertyToID("_SurfProperties");
-        public static readonly int SHADER_PROP_BACK_COLOR = Shader.PropertyToID("_BackfaceColor");
-        public static readonly int SHADER_PROP_BACK_MIRRORED = Shader.PropertyToID("_MirrorBack");
-        public static readonly int SHADER_PROP_BORDERS = Shader.PropertyToID("_Border");
-        public static readonly int SHADER_PROP_PIXELS_METERS = Shader.PropertyToID("_PixelsPerMeters");
-        public static readonly int SHADER_PROP_DIMENSIONS = Shader.PropertyToID("_Dimensions");
-
-        private static readonly float m_daynightOffTime = 6 * Convert.ToSingle(Math.Pow(Convert.ToDouble((6 - (15 / 2.5)) / 6), Convert.ToDouble(1 / 1.09)));
-
-        internal static Material m_rotorMaterial;
-        private static Material m_outsideMaterial;
-
-        private static Mesh m_genMesh;
-        private static Mesh m_genMeshGlass;
-
 
         #region Main flow
         public static void PropInstancePopulateGroupData(PropInfo info, int layer, InstanceID id, Vector3 position, Vector3 scale, Vector3 angle, ref int vertexIndex, ref int triangleIndex, Vector3 groupPosition, RenderGroup.MeshData data, ref Vector3 min, ref Vector3 max, ref float maxRenderDistance, ref float maxInstanceDistance)

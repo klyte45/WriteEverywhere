@@ -1,5 +1,4 @@
-﻿using ColossalFramework;
-using Kwytto.Utils;
+﻿using Kwytto.Utils;
 using System.Xml;
 using System.Xml.Serialization;
 using UnityEngine;
@@ -13,8 +12,15 @@ namespace WriteEverywhere.Xml
         public Color OutsideColor { get => m_cachedOutsideColor; set => m_cachedOutsideColor = value; }
         [XmlIgnore]
         public Color m_cachedOutsideColor = Color.gray;
-        [XmlAttribute("color")]
-        public string OutsideColorStr { get => m_cachedOutsideColor == null ? null : ColorExtensions.ToRGB(OutsideColor); set => OutsideColor = value.IsNullOrWhiteSpace() ? default : ColorExtensions.FromRGB(value); }
+        [XmlAttribute("outsideColor")]
+        public string OutsideColorStr { get => m_cachedOutsideColor == null ? null : ColorExtensions.ToRGB(OutsideColor); set => OutsideColor = ColorExtensions.FromRGBSafe(value) ?? Color.gray; }
+
+        [XmlIgnore]
+        public Color InsideColor { get => m_cachedInsideColor; set => m_cachedInsideColor = value; }
+        [XmlIgnore]
+        public Color m_cachedInsideColor = Color.black;
+        [XmlAttribute("insideColor")]
+        public string InsideColorStr { get => m_cachedInsideColor == null ? null : ColorExtensions.ToRGB(InsideColor); set => InsideColor = ColorExtensions.FromRGBSafe(value) ?? Color.black; }
 
         [XmlIgnore]
         public Color GlassColor
@@ -25,7 +31,7 @@ namespace WriteEverywhere.Xml
         [XmlIgnore]
         public Color m_cachedGlassColor = Color.black;
         [XmlAttribute("glassColor")]
-        public string GlassColorStr { get => m_cachedGlassColor == null ? null : ColorExtensions.ToRGB(GlassColor); set => GlassColor = value.IsNullOrWhiteSpace() ? default : ColorExtensions.FromRGB(value); }
+        public string GlassColorStr { get => m_cachedGlassColor == null ? null : ColorExtensions.ToRGB(GlassColor); set => GlassColor = ColorExtensions.FromRGBSafe(value) ?? Color.black; }
 
         [XmlAttribute("inheritColor")]
         public bool m_inheritColor = false;

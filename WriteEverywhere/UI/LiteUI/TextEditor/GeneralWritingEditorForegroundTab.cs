@@ -1,7 +1,6 @@
 ﻿
 using ColossalFramework;
 using ColossalFramework.Globalization;
-using ColossalFramework.UI;
 using Kwytto.LiteUI;
 using Kwytto.UI;
 using Kwytto.Utils;
@@ -58,6 +57,11 @@ namespace WriteEverywhere.UI
             {
                 item.ColoringConfig.UseContrastColor = useContrast;
             }
+            bool backFaceIsFrontFace = item.ColoringConfig.UseFrontColorAsBackColor;
+            if (GUIKwyttoCommons.AddToggle(Str.we_generalTextEditor_backfaceFontColorIsSameAsFrontFace, ref backFaceIsFrontFace, isEditable))
+            {
+                item.ColoringConfig.UseFrontColorAsBackColor = backFaceIsFrontFace;
+            }
             if (!useContrast)
             {
                 GUIKwyttoCommons.AddColorPicker(Str.WTS_TEXT_COLOR, m_picker, ref item.ColoringConfig.m_cachedColor, isEditable);
@@ -66,6 +70,15 @@ namespace WriteEverywhere.UI
             {
                 GUILayout.Space(12);
             }
+            if (!backFaceIsFrontFace)
+            {
+                GUIKwyttoCommons.AddColorPicker(Str.we_generalTextEditor_fontBackfaceColor, m_picker, ref item.ColoringConfig.m_cachedBackColor, isEditable);
+            }
+            else
+            {
+                GUILayout.Space(12);
+            }
+
             GUIKwyttoCommons.AddSlider(tabAreaSize.x, Str.WTS_TEXT_DEPTH, ref item.IlluminationConfig.m_illuminationDepth, -1, 1, isEditable);
 
             if (isEditable)

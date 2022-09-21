@@ -825,4 +825,16 @@ A text to succeed the variable value. Use the backslash to scape the slashes (&l
   <data name="WTS_BOARD_TEXT_TYPE_DESC__Any" xml:space="preserve">
     <value>Any kind</value>
   </data>
+  <data name="we_generalTextEditor_backfaceFontColorIsSameAsFrontFace" xml:space="preserve">
+    <value>Use front face color in the back face</value>
+  </data>
+  <data name="we_generalTextEditor_backgroundBackfaceColor" xml:space="preserve">
+    <value>BG backface color</value>
+  </data>
+  <data name="we_generalTextEditor_boxInnerColor" xml:space="preserve">
+    <value>Box inner color</value>
+  </data>
+  <data name="we_generalTextEditor_fontBackfaceColor" xml:space="preserve">
+    <value>Text backface color</value>
+  </data>
 </root>

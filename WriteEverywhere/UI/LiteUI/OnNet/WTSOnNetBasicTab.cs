@@ -84,7 +84,7 @@ namespace WriteEverywhere.UI
             }
         }
 
-        public Texture TabIcon { get; } = GUIKwyttoCommons.GetByNameFromDefaultAtlas("K45_Settings");
+        public Texture TabIcon { get; } = KResourceLoader.LoadTextureKwytto(CommonsSpriteNames.K45_Settings);
         public static int LockSelectionInstanceNum { get => lockSelectionInstanceNum; private set => lockSelectionInstanceNum = value; }
 
         private GUIRootWindowBase baseContainer;

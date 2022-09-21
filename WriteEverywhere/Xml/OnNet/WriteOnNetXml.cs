@@ -1,5 +1,4 @@
-﻿using ColossalFramework;
-using Kwytto.Interfaces;
+﻿using Kwytto.Interfaces;
 using Kwytto.Utils;
 using System.Xml;
 using System.Xml.Serialization;
@@ -82,7 +81,7 @@ namespace WriteEverywhere.Xml
         [XmlIgnore]
         private Color? m_cachedColor;
         [XmlAttribute("fixedColor")]
-        public string FixedColorStr { get => m_cachedColor == null ? null : ColorExtensions.ToRGB(FixedColor ?? Color.clear); set => FixedColor = value.IsNullOrWhiteSpace() ? null : (Color?)ColorExtensions.FromRGB(value); }
+        public string FixedColorStr { get => m_cachedColor == null ? null : ColorExtensions.ToRGB(FixedColor ?? Color.clear); set => FixedColor = ColorExtensions.FromRGBSafe(value); }
 
         [XmlAttribute("fontName")]
         public string FontName { get => fontName; set => fontName = value; }

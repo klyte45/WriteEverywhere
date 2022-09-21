@@ -277,6 +277,42 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Use front face color in the back face.
+        /// </summary>
+        internal static string we_generalTextEditor_backfaceFontColorIsSameAsFrontFace {
+            get {
+                return ResourceManager.GetString("we_generalTextEditor_backfaceFontColorIsSameAsFrontFace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a BG backface color.
+        /// </summary>
+        internal static string we_generalTextEditor_backgroundBackfaceColor {
+            get {
+                return ResourceManager.GetString("we_generalTextEditor_backgroundBackfaceColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Box inner color.
+        /// </summary>
+        internal static string we_generalTextEditor_boxInnerColor {
+            get {
+                return ResourceManager.GetString("we_generalTextEditor_boxInnerColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Text backface color.
+        /// </summary>
+        internal static string we_generalTextEditor_fontBackfaceColor {
+            get {
+                return ResourceManager.GetString("we_generalTextEditor_fontBackfaceColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Create background.
         /// </summary>
         internal static string we_generalTextEditor_useBackground {

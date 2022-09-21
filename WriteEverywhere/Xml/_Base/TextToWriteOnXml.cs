@@ -87,11 +87,8 @@ namespace WriteEverywhere.Xml
         public AnimationSettings AnimationSettings { get; set; } = new AnimationSettings();
         [XmlElement("ParameterDisplayName")]
         public string ParameterDisplayName { get; set; } = "";
-
         public string GetParameterDisplayName() => ParameterDisplayName ?? SaveName;
-
         public TextContent GetTextContent() => textContent;
-
         public object GetValueAsUri() => Value?.ToString();
         public int GetParamIdx() => Value?.GetParamIdx ?? -1;
     }

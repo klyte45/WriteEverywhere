@@ -27,7 +27,7 @@ namespace WriteEverywhere.Sprites
         private void ResetHwShieldAtlas()
         {
             m_hwShieldsAtlas = ScriptableObject.CreateInstance<UITextureAtlas>();
-            m_hwShieldsAtlas.material = new Material(UIView.GetAView().defaultAtlas.material.shader);
+            m_hwShieldsAtlas.material = new Material(ModInstance.Controller.defaultTextShader);
         }
         public void PurgeShields()
         {

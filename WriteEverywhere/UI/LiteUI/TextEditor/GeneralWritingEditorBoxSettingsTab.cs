@@ -35,7 +35,8 @@ namespace WriteEverywhere.UI
                     if (hasBg)
                     {
 
-                        GUIKwyttoCommons.AddColorPicker(Str.WTS_BG_COLOR, m_picker, ref item.BackgroundMeshSettings.m_cachedColor, isEditable);
+                        GUIKwyttoCommons.AddColorPicker(Str.WTS_BG_COLOR, m_picker, ref item.BackgroundMeshSettings.m_bgMainColor, isEditable);
+                        GUIKwyttoCommons.AddColorPicker(Str.we_generalTextEditor_backgroundBackfaceColor, m_picker, ref item.BackgroundMeshSettings.m_cachedBackColor, isEditable);
                         changedFrame |= GUIKwyttoCommons.AddVector2Field(tabAreaSize.x, item.BackgroundMeshSettings.Size, Str.WTS_TEXTBACKGROUNDSIZEGENERATED, Str.WTS_TEXTBACKGROUNDSIZEGENERATED, isEditable, .001f);
                         GUIKwyttoCommons.AddSlider(tabAreaSize.x, Str.we_roadEditor_verticalAlignmentBoxText, ref item.BackgroundMeshSettings.m_verticalAlignment, 0, 1, isEditable);
 
@@ -44,8 +45,8 @@ namespace WriteEverywhere.UI
                         var usingFrame = item.BackgroundMeshSettings.m_useFrame;
                         if (usingFrame)
                         {
-                            changedFrame |= GUIKwyttoCommons.AddVector2Field(tabAreaSize.x, item.BackgroundMeshSettings.FrameMeshSettings.BackSize, Str.WTS_BOXMESH_BACKSIZE, Str.WTS_BOXMESH_BACKSIZE, isEditable);
-                            changedFrame |= GUIKwyttoCommons.AddVector2Field(tabAreaSize.x, item.BackgroundMeshSettings.FrameMeshSettings.BackOffset, Str.WTS_BOXMESH_BACKOFFSETFROMCENTERBOTTOM, Str.WTS_BOXMESH_BACKOFFSETFROMCENTERBOTTOM, isEditable);
+                            changedFrame |= GUIKwyttoCommons.AddVector2Field(tabAreaSize.x, item.BackgroundMeshSettings.FrameMeshSettings.BackSize, Str.WTS_BOXMESH_BACKSIZE, Str.WTS_BOXMESH_BACKSIZE, isEditable, .001f);
+                            changedFrame |= GUIKwyttoCommons.AddVector2Field(tabAreaSize.x, item.BackgroundMeshSettings.FrameMeshSettings.BackOffset, Str.WTS_BOXMESH_BACKOFFSETFROMCENTERBOTTOM, Str.WTS_BOXMESH_BACKOFFSETFROMCENTERBOTTOM, isEditable, .001f);
                             if (GUIKwyttoCommons.AddFloatField(tabAreaSize.x, Str.WTS_BOXMESH_DEPTH_BACK, item.BackgroundMeshSettings.FrameMeshSettings.BackDepth, out var newVal, isEditable, .001f))
                             {
                                 item.BackgroundMeshSettings.FrameMeshSettings.BackDepth = newVal;
@@ -69,7 +70,8 @@ namespace WriteEverywhere.UI
                             {
                                 GUIKwyttoCommons.AddColorPicker(Str.WTS_BOXMESH_OUTERCOLOR, m_picker, ref item.BackgroundMeshSettings.FrameMeshSettings.m_cachedOutsideColor, isEditable);
                             }
-                            GUIKwyttoCommons.AddColorPicker(Str.WTS_TEXT_CONTAINERGLASSCOLOR, m_picker, ref item.BackgroundMeshSettings.FrameMeshSettings.m_cachedGlassColor, isEditable);
+                            GUIKwyttoCommons.AddColorPicker(Str.we_generalTextEditor_boxInnerColor, m_picker, ref item.BackgroundMeshSettings.FrameMeshSettings.m_cachedInsideColor, isEditable);
+                            changedFrame |= GUIKwyttoCommons.AddColorPicker(Str.WTS_TEXT_CONTAINERGLASSCOLOR, m_picker, ref item.BackgroundMeshSettings.FrameMeshSettings.m_cachedGlassColor, isEditable);
 
                             GUILayout.Space(10);
                             GUILayout.Label($"<color=#FFFF00>{Str.WTS_BOXMESH_EFFECTSGROUP_LABEL}</color>");

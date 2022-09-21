@@ -1,9 +1,9 @@
 ﻿extern alias ADR;
 
 using ADR::Bridge_WE2ADR;
-using ColossalFramework.Globalization;
-using Kwytto.Utils;
 using UnityEngine;
+using WriteEverywhere.Localization;
+using static CardinalPoint;
 
 namespace WriteEverywhere.Rendering
 {
@@ -92,7 +92,7 @@ namespace WriteEverywhere.Rendering
                 {
                     direction8 = ModInstance.Controller.ConnectorADR.GetDirection(segmentId);
                 }
-                return Locale.Get("K45_CMNS_CARDINALPOINT_SHORT", CardinalPoint.m_cardinal16[(direction8 ?? 0) * 2]);
+                return ((Cardinal16)((direction8 ?? 0) * 2)).ValueToI18n();
             }
         }
 
