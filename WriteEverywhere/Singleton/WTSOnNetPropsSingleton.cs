@@ -169,6 +169,7 @@ namespace WriteEverywhere.Singleton
             {
                 return;
             }
+            bool hasFixedCamera = false;
             for (int i = 0; i < targetDescriptor.m_cachedPositions.Count; i++)
             {
                 var position = targetDescriptor.m_cachedPositions[i];
@@ -191,7 +192,7 @@ namespace WriteEverywhere.Singleton
                         {
                             MaterialPropertyBlock properties = PropManager.instance.m_materialBlock;
                             properties.Clear();
-                            bool currentTextSelected = WTSOnNetLiteUI.LockSelection && WTSOnNetLiteUI.Instance.IsOnTextEditor && i == WTSOnNetLiteUI.LockSelectionInstanceNum && j == WTSOnNetLiteUI.LockSelectionTextIdx && WTSOnNetLiteUI.Instance.Visible && (WTSOnNetLiteUI.Instance.CurrentSegmentId == segmentId) && WTSOnNetLiteUI.Instance.ListSel == boardIdx && !ModInstance.Controller.RoadSegmentToolInstance.enabled;
+                            bool currentTextSelected = !hasFixedCamera && WTSOnNetLiteUI.LockSelection && WTSOnNetLiteUI.Instance.IsOnTextEditor && i == WTSOnNetLiteUI.LockSelectionInstanceNum && j == WTSOnNetLiteUI.LockSelectionTextIdx && WTSOnNetLiteUI.Instance.Visible && (WTSOnNetLiteUI.Instance.CurrentSegmentId == segmentId) && WTSOnNetLiteUI.Instance.ListSel == boardIdx && !ModInstance.Controller.RoadSegmentToolInstance.enabled;
                             var textPos = WETextRenderer.RenderTextMesh(segmentId, boardIdx, i, ref parentColor, targetDescriptor, targetDescriptor.TextDescriptors[j], ref propMatrix, cachedProp, 0, 0, currentTextSelected && WTSOnNetLiteUI.Instance.IsOnTextEditorSizeView, ref NetManager.instance.m_drawCallData.m_batchedCalls);
                             if (currentTextSelected && textPos != default)
                             {
@@ -199,11 +200,12 @@ namespace WriteEverywhere.Singleton
                                 ToolsModifierControl.cameraController.m_targetPosition.z = textPos.z;
                                 targetHeight = textPos.y;
                                 lastFrameOverriden = SimulationManager.instance.m_currentTickIndex;
+                                hasFixedCamera = true;
                             }
                         }
                     }
 
-                    if (WTSOnNetLiteUI.LockSelection && (!WTSOnNetLiteUI.Instance.IsOnTextEditor || WTSOnNetLiteUI.LockSelectionTextIdx < 0) && i == WTSOnNetLiteUI.LockSelectionInstanceNum && WTSOnNetLiteUI.Instance.Visible && (WTSOnNetLiteUI.Instance.CurrentSegmentId == segmentId) && WTSOnNetLiteUI.Instance.ListSel == boardIdx && !ModInstance.Controller.RoadSegmentToolInstance.enabled)
+                    if (WTSOnNetLiteUI.LockSelection && (!WTSOnNetLiteUI.Instance.IsOnTextEditor || WTSOnNetLiteUI.LockSelectionTextIdx < 0 || !hasFixedCamera) && i == WTSOnNetLiteUI.LockSelectionInstanceNum && WTSOnNetLiteUI.Instance.Visible && (WTSOnNetLiteUI.Instance.CurrentSegmentId == segmentId) && WTSOnNetLiteUI.Instance.ListSel == boardIdx && !ModInstance.Controller.RoadSegmentToolInstance.enabled)
                     {
                         ToolsModifierControl.cameraController.m_targetPosition.x = position.X;
                         ToolsModifierControl.cameraController.m_targetPosition.z = position.Z;

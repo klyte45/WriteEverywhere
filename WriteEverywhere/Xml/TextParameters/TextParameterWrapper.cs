@@ -278,6 +278,7 @@ namespace WriteEverywhere.Xml
                     return !(tpw is null)
                         ? tpw.GetSpriteFromParameter(instance.TargetAssetParameter)
                         : ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(null, "FrameParamsNotSet");
+                case TextContent.Any:
                 case TextContent.TextParameterSequence:
                     if (!(tpw is null))
                     {

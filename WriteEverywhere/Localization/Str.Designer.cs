@@ -531,6 +531,15 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Any kind.
+        /// </summary>
+        internal static string WTS_BOARD_TEXT_TYPE_DESC__Any {
+            get {
+                return ResourceManager.GetString("WTS_BOARD_TEXT_TYPE_DESC__Any", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Highway shield.
         /// </summary>
         internal static string WTS_BOARD_TEXT_TYPE_DESC__HwShield {

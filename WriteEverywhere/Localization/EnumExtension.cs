@@ -107,6 +107,7 @@ namespace WriteEverywhere.Localization
                         case TextContent.HwShield: return Str.WTS_BOARD_TEXT_TYPE_DESC__HwShield;
                         case TextContent.TimeTemperature: return Str.WTS_BOARD_TEXT_TYPE_DESC__TimeTemperature;
                         case TextContent.TextParameterSequence: return Str.WTS_BOARD_TEXT_TYPE_DESC__TextParameterSequence;
+                        case TextContent.Any: return Str.WTS_BOARD_TEXT_TYPE_DESC__Any;
                     }
                     break;
                 case MaterialType x:

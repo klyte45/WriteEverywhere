@@ -79,13 +79,17 @@ namespace WriteEverywhere.Xml
             m_textParameters[idx] = null;
         }
 
-        public Dictionary<int, List<IParameterizableVariable>> GetAllParametersUsedWithData() =>
+        public Dictionary<int, List<Tuple<IParameterizableVariable, string>>> GetAllParametersUsedWithData() =>
             TextDescriptors
             .Where(x =>
                 x.Value.IsParameter
                 || (x.ParameterSequence?.Any(y => y.Value?.IsParameter ?? false) ?? false)
-            ).SelectMany(x => x.Value.IsParameter ? new[] { Tuple.New(x as IParameterizableVariable, x.Value) } : x.ParameterSequence.Select(y => Tuple.New(y as IParameterizableVariable, y.Value)))
-            .GroupBy(x => x.First.GetParamIdx()).ToDictionary(x => x.Key, x => x.Select(y => y.First).ToList());
+            )
+            .SelectMany(x =>
+            x.textContent != TextContent.TextParameterSequence
+                    ? new[] { Tuple.New(x as IParameterizableVariable, x.SaveName, x.Value) }
+                    : x.ParameterSequence.Where(y => y.Value?.IsParameter ?? false).Select(y => Tuple.New(y as IParameterizableVariable, x.SaveName, y.Value)))
+            .GroupBy(x => x.First.GetParamIdx()).ToDictionary(x => x.Key, x => x.Select(y => Tuple.New(y.First, y.Second)).ToList());
 
         [XmlIgnore]
         public SimpleNonSequentialList<TextParameterWrapper> m_textParameters = new SimpleNonSequentialList<TextParameterWrapper>();

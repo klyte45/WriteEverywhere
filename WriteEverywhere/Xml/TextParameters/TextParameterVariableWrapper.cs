@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using WriteEverywhere.Rendering;
+using static WriteEverywhere.Xml.TextParameterWrapper;
 
 namespace WriteEverywhere.Xml
 {
@@ -32,7 +33,7 @@ namespace WriteEverywhere.Xml
                 switch (m_varType)
                 {
                     case VariableType.SegmentTarget:
-                        if (parameterPath.Length >= 3 && byte.TryParse(parameterPath[1], out byte targIdx) && targIdx <= 4)
+                        if (parameterPath.Length >= 3 && byte.TryParse(parameterPath[1], out byte targIdx))
                         {
                             try
                             {
@@ -110,7 +111,7 @@ namespace WriteEverywhere.Xml
                         {
                             try
                             {
-                                if (int.TryParse(parameterPath[1],out var idx))
+                                if (int.TryParse(parameterPath[1], out var idx))
                                 {
                                     paramContainer.paramIdx = idx;
                                     type = VariableType.CurrentSegmentParameter;
@@ -257,6 +258,7 @@ namespace WriteEverywhere.Xml
                             LogUtils.DoWarnLog("INVALID TEXT CONTENT: NONE!\n" + Environment.StackTrace);
                             return null;
                         case TextContent.ParameterizedText:
+                        Text:
                             if (descriptor.GetParameter(paramIdx) is TextParameterWrapper tpw)
                             {
                                 var result = tpw.GetTargetText(descriptor, textDescriptor, TextParameterWrapper.GetTargetFont(descriptor, textDescriptor), segmentId, 0, 0, out multipleOutput);
@@ -272,15 +274,35 @@ namespace WriteEverywhere.Xml
                             }
                             return $"<PARAM#{paramIdx} NOT SET>";
                         case TextContent.ParameterizedSpriteFolder:
+                        ImageFolder:
                             multipleOutput = descriptor.GetParameter(paramIdx) is TextParameterWrapper tpw2
                                 ? (new[] { tpw2.GetSpriteFromCycle(textDescriptor, descriptor.TargetAssetParameter, segmentId, 0, 0) })
                                 : (IEnumerable<BasicRenderInformation>)(new[] { ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(null, "FrameParamsNotSet") });
                             return null;
                         case TextContent.ParameterizedSpriteSingle:
+                        ImageSingle:
                             multipleOutput = new[] {descriptor.GetParameter(paramIdx)  is TextParameterWrapper tpw3
                                 ? tpw3.GetSpriteFromParameter(descriptor.TargetAssetParameter)
                                 : ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(null, "FrameParamsNotSet") };
                             return null;
+                        case TextContent.Any:
+                        case TextContent.TextParameterSequence:
+                            if (descriptor.GetParameter(paramIdx) is TextParameterWrapper tpw4)
+                            {
+                                switch (tpw4.ParamType)
+                                {
+                                    case ParameterType.TEXT:
+                                    case ParameterType.VARIABLE:
+                                        goto Text;
+                                    case ParameterType.IMAGE:
+                                        goto ImageSingle;
+                                    case ParameterType.FOLDER:
+                                        goto ImageFolder;
+                                    case ParameterType.EMPTY:
+                                        break;
+                                }
+                            }
+                            return $"<ANY PARAM#{paramIdx} NOT SET>";
                         case TextContent.LinesNameList:
                             break;
                         case TextContent.HwShield:

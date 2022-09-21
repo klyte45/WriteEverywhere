@@ -35,8 +35,8 @@ Shader "Custom/WriteEverything/Default/Front" {
         void vert(inout appdata_full v, out Input o)
         {
             commonVert(v);
-            Unity_RotateAboutAxis_Degrees_float(v.normal, float3 (0,1,0), 270,  v.normal.xyz);
-            Unity_RotateAboutAxis_Degrees_float(v.tangent, float3 (0,1,0), 270,  v.tangent.xyz);
+            // Unity_RotateAboutAxis_Degrees_float(v.normal, float3 (0,1,0), 90,  v.normal.xyz);
+            // Unity_RotateAboutAxis_Degrees_float(v.tangent, float3 (0,1,0), 90,  v.tangent.xyz);
             UNITY_INITIALIZE_OUTPUT(Input, o);
         }
         void surf(Input IN, inout SurfaceOutput o)

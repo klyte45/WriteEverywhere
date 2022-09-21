@@ -1,10 +1,8 @@
 ﻿extern alias TLM;
-
-using Kwytto.Utils;
 using SpriteFontPlus;
 using SpriteFontPlus.Utility;
 using System.Collections.Generic;
-using UnityEngine;
+using System.Linq;
 using WriteEverywhere.Data;
 using WriteEverywhere.Singleton;
 using WriteEverywhere.Xml;
@@ -37,7 +35,7 @@ namespace WriteEverywhere.Rendering
             //else 
             if (instance is OnNetInstanceCacheContainerXml onNet)
             {
-                return GetTextForOnNet(textDescriptor, refID, boardIdx, secIdx, onNet, ref baseFont, out _);
+                return GetTextForOnNet(textDescriptor, refID, boardIdx, secIdx, onNet, ref baseFont, out var multipleOutput) ?? multipleOutput?.FirstOrDefault();
             }
             return WTSCacheSingleton.GetTextData(textDescriptor.Value?.ToString() ?? "", textDescriptor.m_prefix, textDescriptor.m_suffix, null, textDescriptor.m_overrideFont);
         }
@@ -197,7 +195,7 @@ namespace WriteEverywhere.Rendering
                     break;
                 case TextContent.TimeTemperature: return GetTimeTemperatureText(textDescriptor, ref baseFont, segmentId, boardIdx, secIdx);
                 case TextContent.TextParameterSequence:
-                    return TextParameterWrapper.GetRenderInfo(textDescriptor.ParameterSequence?.GetAt(SimulationManager.instance.m_referenceFrameIndex, segmentId), propDescriptor, textDescriptor, segmentId, boardIdx, secIdx, out _);
+                    return TextParameterWrapper.GetRenderInfo(textDescriptor.ParameterSequence?.GetAt(SimulationManager.instance.m_referenceFrameIndex, segmentId), propDescriptor, textDescriptor, segmentId, boardIdx, secIdx, out multipleOutput);
             }
             return null;
         }
@@ -271,7 +269,7 @@ namespace WriteEverywhere.Rendering
         //            return null;
         //    }
         //}
-     
+
 
         #endregion
 

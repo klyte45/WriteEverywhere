@@ -273,7 +273,7 @@ namespace WriteEverywhere.Rendering
             }
             if (renderInfo.m_lineOffset != 0)
             {
-                lineRelativePosition += overflowScaleY * renderInfo.m_lineOffset;
+                lineRelativePosition += overflowScaleY * renderInfo.m_lineOffset * defaultMultiplierY;
             }
             targetRelativePosition += new Vector3(0, lineRelativePosition - (renderInfo.m_YAxisOverflows.min + renderInfo.m_YAxisOverflows.max) * .5f * defaultMultiplierY * overflowScaleY);
 
