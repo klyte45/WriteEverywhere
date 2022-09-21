@@ -50,18 +50,16 @@ namespace WriteEverywhere.Rendering
                 Matrix4x4 matrix = propMatrix * textItem.baseMatrix;
 
                 block.Clear();
-
-                Material targetMaterial = renderInfo.m_generatedMaterial;
                 CalculateIllumination(refID, boardIdx, secIdx, textDescriptor, block, ref colorToSet, instanceFlags, instanceFlags2);
 
                 defaultCallsCounter++;
-                Graphics.DrawMesh(renderInfo.m_mesh, matrix, targetMaterial, 10, null, 0, block, false);
+                Graphics.DrawMesh(renderInfo.m_mesh, matrix, renderInfo.m_generatedMaterial, 10, null, 0, block, false);
 
                 positionAccumulator += (Vector3)matrix.GetColumn(3) + new Vector3(0, renderInfo.m_mesh.bounds.center.y * matrix.GetColumn(1).y);
                 if (currentEditingSizeLine)
                 {
                     BasicRenderInformation bgBri = ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(null, CommonsSpriteNames.K45_SquareIcon.ToString());
-                    DrawBgMesh(ref propMatrix, textDescriptor.LineMaxDimensions, Color.magenta, .5f, block, placingSettings, ref baseScale, targetTextAlignment, textItem, bgBri, textDescriptor.TextLineHeight, ref defaultCallsCounter, 1);
+                    DrawBgMesh(ref propMatrix, textDescriptor.LineMaxDimensions, Color.magenta, .5f, block, textItem.placingSettings, ref baseScale, targetTextAlignment, textItem, bgBri, textDescriptor.TextLineHeight, ref defaultCallsCounter, 1, ModInstance.Controller.highlightMaterial);
                 }
                 if (((Vector2)textDescriptor.BackgroundMeshSettings.Size).sqrMagnitude != 0)
                 {
@@ -81,7 +79,7 @@ namespace WriteEverywhere.Rendering
         }
 
         private static Matrix4x4 DrawBgMesh(ref Matrix4x4 propMatrix, Vector2 size, Color color, float verticalAlignment, MaterialPropertyBlock materialPropertyBlock, PlacingSettings placingSettings, ref Vector3 baseScale, UIHorizontalAlignment targetTextAlignment, TextRenderDescriptor textMatrixTuple,
-             BasicRenderInformation bgBri, float lineHeight, ref int defaultCallsCounter, float zDistanceMultiplier)
+             BasicRenderInformation bgBri, float lineHeight, ref int defaultCallsCounter, float zDistanceMultiplier, Material overrideMaterial = null)
         {
             materialPropertyBlock.SetColor(SHADER_PROP_COLOR, color * new Color(1, 1, 1, 0));
             materialPropertyBlock.SetVector(SHADER_PROP_SURF_PROPERTIES, new Vector4());
@@ -96,7 +94,7 @@ namespace WriteEverywhere.Rendering
                 ;
             var bgMatrix = containerMatrix * Matrix4x4.Scale(size);
             defaultCallsCounter++;
-            Graphics.DrawMesh(bgBri.m_mesh, bgMatrix, bgBri.m_generatedMaterial, 10, null, 0, materialPropertyBlock);
+            Graphics.DrawMesh(bgBri.m_mesh, bgMatrix, overrideMaterial ?? bgBri.m_generatedMaterial, 10, null, 0, materialPropertyBlock);
             return containerMatrix;
         }
 
@@ -251,22 +249,31 @@ namespace WriteEverywhere.Rendering
             //LogUtils.DoWarnLog($"[{renderInfo},{refID},{boardIdx},{secIdx}] realWidth = {realWidth}; realHeight = {realHeight};");
             var rotationMatrix = Matrix4x4.TRS(Vector3.zero, Quaternion.Euler(placingSettings.Rotation), Vector3.one);
             var lineRelativePosition = 0f;
-            if (maxWidth > 0 && maxWidth < realWidth)
+            if (maxWidth > 0)
             {
-                overflowScaleX = maxWidth / realWidth;
-                if (applyResizeOverflowOnY)
+                if (maxWidth < realWidth)
                 {
-                    lineRelativePosition = (lineHeight * defaultMultiplierY * (-verticalAlignment + .5f) * 2) + (verticalAlignment * lineHeight * overflowScaleX * 2);
-                    overflowScaleY = overflowScaleX;
+                    overflowScaleX = maxWidth / realWidth;
+                    if (applyResizeOverflowOnY)
+                    {
+                        lineRelativePosition = lineHeight * (verticalAlignment * (1 - overflowScaleX));
+                        overflowScaleY = overflowScaleX;
+                    }
                 }
-            }
-            else
-            {
-                if (maxWidth > 0 && horizontalAlignment != UIHorizontalAlignment.Center)
+                else if (renderInfo.m_expandXIfAlone && !applyResizeOverflowOnY)
+                {
+                    overflowScaleX = maxWidth / realWidth;
+                }
+                else if (horizontalAlignment != UIHorizontalAlignment.Center)
                 {
                     float factor = horizontalAlignment == UIHorizontalAlignment.Left ? 0.5f : -0.5f;
                     targetRelativePosition += new Vector3((maxWidth - realWidth) * factor, 0, 0);
                 }
+
+            }
+            if (renderInfo.m_lineOffset != 0)
+            {
+                lineRelativePosition += overflowScaleY * renderInfo.m_lineOffset;
             }
             targetRelativePosition += new Vector3(0, lineRelativePosition - (renderInfo.m_YAxisOverflows.min + renderInfo.m_YAxisOverflows.max) * .5f * defaultMultiplierY * overflowScaleY);
 

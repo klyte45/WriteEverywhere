@@ -68,7 +68,7 @@ namespace WriteEverywhere.Xml
         [XmlAttribute("suffix")]
         public string m_suffix = "";
         [XmlAttribute("verticalLineAlignment")]
-        public float m_verticalAlignment;
+        public float m_verticalAlignment = .5f;
 
         [XmlAttribute("saveName")]
         public string SaveName { get; set; }

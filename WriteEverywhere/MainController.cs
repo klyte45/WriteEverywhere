@@ -36,6 +36,9 @@ namespace WriteEverywhere
         #region Shader
         public WTSShaderLibrary ShaderLib => WTSShaderLibrary.instance;
         public Shader defaultTextShader { get; private set; } = WTSShaderLibrary.instance.GetShaders().TryGetValue("klyte/wts/wtsshader", out Shader value) ? value : value;
+        public Shader defaultHighlightShader { get; private set; } = Shader.Find("Hidden/InternalErrorShader");
+
+        public Material highlightMaterial { get; private set; }
         #endregion
 
         #region Fonts
@@ -113,7 +116,9 @@ namespace WriteEverywhere
             var uiGO = new GameObject("WE");
             uiGO.transform.SetParent(UIView.GetAView().gameObject.transform);
             uiGO.AddComponent<WTSOnNetLiteUI>();
+            highlightMaterial = new Material(defaultHighlightShader);
             AtlasesLibrary = gameObject.AddComponent<WTSAtlasesLibrary>();
+
 
         }
         public static FontServer fontServer = FontServer.instance;

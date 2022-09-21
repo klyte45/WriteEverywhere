@@ -565,7 +565,7 @@ namespace WriteEverywhere.Sprites
         internal static void BuildMeshFromAtlas(BasicRenderInformation bri, SpriteInfo spriteInfo)
         {
             bri.m_mesh = basicMesh;
-            bri.m_fontBaseLimits = new RangeVector { min = 0, max = 1  };
+            bri.m_fontBaseLimits = new RangeVector { min = 0, max = 1 };
             bri.m_YAxisOverflows = new RangeVector { min = -.5f, max = .5f };
             bri.m_sizeMetersUnscaled = new Vector2(spriteInfo.width / spriteInfo.height, 1);
             bri.m_generatedMaterial = new Material(ModInstance.Controller.defaultTextShader)
@@ -575,6 +575,8 @@ namespace WriteEverywhere.Sprites
             bri.m_borders = new Vector4(spriteInfo.border.left, spriteInfo.border.top, spriteInfo.border.right, spriteInfo.border.bottom);
             bri.m_pixelDensityMeters = 100f;
             bri.m_useShadersVariables = true;
+            bri.m_lineOffset = .5f;
+            bri.m_expandXIfAlone = true;
         }
 
 

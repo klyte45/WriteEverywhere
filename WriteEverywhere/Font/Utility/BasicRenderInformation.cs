@@ -16,6 +16,8 @@ namespace SpriteFontPlus.Utility
         public Vector4 m_borders;
         public bool m_useShadersVariables = false;
         public float m_pixelDensityMeters;
+        public float m_lineOffset;
+        public bool m_expandXIfAlone;
 
         public override string ToString() => $"BRI [m={m_mesh?.bounds};sz={m_sizeMetersUnscaled}]";
 
