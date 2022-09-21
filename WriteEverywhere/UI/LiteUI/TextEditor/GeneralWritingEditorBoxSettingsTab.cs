@@ -27,15 +27,17 @@ namespace WriteEverywhere.UI
                 {
 
                     bool changedFrame = false;
-                    if (GUIKwyttoCommons.AddToggle(Str.we_generalTextEditor_useBackground, item.BackgroundMeshSettings.Size == default, out var boolVal))
+                    var hasBg = ((Vector2)item.BackgroundMeshSettings.Size).sqrMagnitude >= 0.0000001f;
+                    if (GUIKwyttoCommons.AddToggle(Str.we_generalTextEditor_useBackground, hasBg, out var boolVal))
                     {
-                        item.BackgroundMeshSettings.Size = boolVal ? new Kwytto.Utils.Vector2Xml { X = .1f, Y = .1f } : new Kwytto.Utils.Vector2Xml();
+                        item.BackgroundMeshSettings.Size = boolVal ? new Kwytto.Utils.Vector2Xml { X = .001f, Y = .001f } : new Kwytto.Utils.Vector2Xml();
                     }
-                    if (item.BackgroundMeshSettings.Size != default)
+                    if (hasBg)
                     {
 
                         GUIKwyttoCommons.AddColorPicker(Str.WTS_BG_COLOR, m_picker, ref item.BackgroundMeshSettings.m_cachedColor, isEditable);
                         changedFrame |= GUIKwyttoCommons.AddVector2Field(tabAreaSize.x, item.BackgroundMeshSettings.Size, Str.WTS_TEXTBACKGROUNDSIZEGENERATED, Str.WTS_TEXTBACKGROUNDSIZEGENERATED, isEditable, .001f);
+                        GUIKwyttoCommons.AddSlider(tabAreaSize.x, Str.we_roadEditor_verticalAlignmentBoxText, ref item.BackgroundMeshSettings.m_verticalAlignment, 0, 1, isEditable);
 
                         GUILayout.Space(10);
                         GUIKwyttoCommons.AddToggle(Str.WTS_TEXT_USEFRAME, ref item.BackgroundMeshSettings.m_useFrame, isEditable);

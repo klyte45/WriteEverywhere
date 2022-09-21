@@ -21,7 +21,6 @@ namespace WriteEverywhere.UI
         public Texture TabIcon { get; } = KResourceLoader.LoadTextureKwytto(CommonsSpriteNames.K45_FontIcon);
 
         private readonly GUIColorPicker m_picker;
-        private readonly string[] m_alignmentOptions = EnumI18nExtensions.GetAllValuesI18n<UIHorizontalAlignment>();
         private readonly string[] m_fontClasses = EnumI18nExtensions.GetAllValuesI18n<FontClass>();
         private readonly GUIRootWindowBase m_root;
 
@@ -69,10 +68,6 @@ namespace WriteEverywhere.UI
             }
             GUIKwyttoCommons.AddSlider(tabAreaSize.x, Str.WTS_TEXT_DEPTH, ref item.IlluminationConfig.m_illuminationDepth, -1, 1, isEditable);
 
-            if (GUIKwyttoCommons.AddComboBox(tabAreaSize.x, Str.WTS_TEXT_ALIGN_HOR, (int)item.m_textAlign, m_alignmentOptions, out var newVal, m_root, isEditable))
-            {
-                item.m_textAlign = (UIHorizontalAlignment)newVal;
-            }
             if (isEditable)
             {
                 m_fontFilter.DrawButton(tabAreaSize.x, item.m_overrideFont);

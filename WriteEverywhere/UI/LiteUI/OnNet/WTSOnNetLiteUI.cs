@@ -134,6 +134,7 @@ namespace WriteEverywhere.UI
         public int CurrentTabIdx => m_tabsContainer.CurrentTabIdx;
 
         public bool IsOnTextEditor => CurrentTabIdx == m_textEditorTabIdx;
+        public bool IsOnTextEditorSizeView => IsOnTextEditor && m_textEditorTab.IsOnTextDimensionsView;
 
         protected override bool showOverModals => false;
 

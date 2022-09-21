@@ -12,6 +12,7 @@ namespace SpriteFontPlus.Utility
         public RangeVector m_fontBaseLimits;
         public float m_refY = 1f;
         public string m_refText;
+        public float m_baselineOffset = 0;
         public Vector4 m_borders;
         public bool m_useShadersVariables = false;
         public float m_pixelDensityMeters;

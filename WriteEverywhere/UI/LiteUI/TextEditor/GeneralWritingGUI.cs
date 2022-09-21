@@ -56,6 +56,8 @@ namespace WriteEverywhere.UI
         private readonly RefGetter<BoardTextDescriptorGeneralXml[]> GetDescriptorArray;
         private readonly RefGetter<string> GetFont;
         public int SelectedTextItem => m_tabsContainer.ListSel;
+        public bool IsOnTextDimensionsView => m_tabsContainer.CurrentTabIdx == m_sizeEditorTabIdx;
+        private readonly int m_sizeEditorTabIdx;
         public readonly TextRenderingClass m_targetRenderingClass;
 
         public GeneralWritingGUI(GUIColorPicker colorPicker, TextRenderingClass targetRenderingClass, Func<PrefabInfo> infoGetter, RefGetter<BoardTextDescriptorGeneralXml[]> getDescriptorArray, RefGetter<string> getFont)
@@ -67,18 +69,22 @@ namespace WriteEverywhere.UI
             this.getInfo = infoGetter;
             m_fontFilter = new GUIFilterItemsScreen<State>(Str.WTS_OVERRIDE_FONT, ModInstance.Controller, OnFilterParam, OnSelectFont, GoTo, State.Normal, State.GeneralFontPicker, acceptsNull: true);
             var uicomp = WTSOnNetLiteUI.Instance.GetComponent<UIComponent>();
-            m_tabsContainer = new GUIBasicListingTabsContainer<BoardTextDescriptorGeneralXml>(
-                new IGUITab<BoardTextDescriptorGeneralXml>[]{
+            GeneralWritingEditorPositionsSizesTab positionTab;
+            var tabs = new IGUITab<BoardTextDescriptorGeneralXml>[]{
                     new GeneralWritingEditorGeneralTab(),
-                    new GeneralWritingEditorPositionsSizesTab(),
+                     positionTab = new GeneralWritingEditorPositionsSizesTab(colorPicker.GetComponentInParent<GUIRootWindowBase>()),
                     new GeneralWritingEditorForegroundTab(m_colorPicker),
                     new GeneralWritingEditorBoxSettingsTab(m_colorPicker),
                     new GeneralWritingEditorIlluminationTab(m_colorPicker),
                     new GeneralWritingEditorContentTab(m_colorPicker,infoGetter,targetRenderingClass)
-                    },
+                    };
+            m_tabsContainer = new GUIBasicListingTabsContainer<BoardTextDescriptorGeneralXml>(
+               tabs,
                 OnAddItem,
                 GetList,
                 GetCurrentItem, SetCurrentItem);
+
+            m_sizeEditorTabIdx = Array.IndexOf(tabs, positionTab);
             GetDescriptorArray = getDescriptorArray;
             GetFont = getFont;
         }

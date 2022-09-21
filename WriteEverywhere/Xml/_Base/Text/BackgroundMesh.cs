@@ -29,6 +29,8 @@ namespace WriteEverywhere.Xml
 
         [XmlAttribute("useFrame")]
         public bool m_useFrame = false;
+        [XmlAttribute("textVerticalAlignment")]
+        public float m_verticalAlignment = 0.5f;
         [XmlElement("frame")]
         public FrameMesh FrameMeshSettings { get; set; } = new FrameMesh();
 

@@ -130,7 +130,7 @@ namespace WriteEverywhere.Singleton
             }
         }
 
-        internal void PopulateGroupData(ushort segmentID, int layer, ref int vertexIndex, ref int triangleIndex, Vector3 groupPosition, RenderGroup.MeshData data, ref Vector3 min, ref Vector3 max, ref float maxRenderDistance, ref float maxInstanceDistance)
+        internal void PopulateGroupData(ushort segmentID, int layer, ref int vertexIndex, ref int triangleIndex, ref Vector3 groupPosition, RenderGroup.MeshData data, ref Vector3 min, ref Vector3 max, ref float maxRenderDistance, ref float maxInstanceDistance)
         {
             ref WriteOnNetGroupXml itemGroup = ref Data.m_boardsContainers[segmentID];
             if (itemGroup == null || !itemGroup.HasAnyBoard())
@@ -191,8 +191,9 @@ namespace WriteEverywhere.Singleton
                         {
                             MaterialPropertyBlock properties = PropManager.instance.m_materialBlock;
                             properties.Clear();
-                            var textPos = WETextRenderer.RenderTextMesh(segmentId, boardIdx, i, targetDescriptor, targetDescriptor.TextDescriptors[j], propMatrix, 0, 0, ref NetManager.instance.m_drawCallData.m_batchedCalls);
-                            if (textPos != default && WTSOnNetLiteUI.LockSelection && WTSOnNetLiteUI.Instance.IsOnTextEditor && i == WTSOnNetLiteUI.LockSelectionInstanceNum && j == WTSOnNetLiteUI.LockSelectionTextIdx && WTSOnNetLiteUI.Instance.Visible && (WTSOnNetLiteUI.Instance.CurrentSegmentId == segmentId) && WTSOnNetLiteUI.Instance.ListSel == boardIdx && !ModInstance.Controller.RoadSegmentToolInstance.enabled)
+                            bool currentTextSelected = WTSOnNetLiteUI.LockSelection && WTSOnNetLiteUI.Instance.IsOnTextEditor && i == WTSOnNetLiteUI.LockSelectionInstanceNum && j == WTSOnNetLiteUI.LockSelectionTextIdx && WTSOnNetLiteUI.Instance.Visible && (WTSOnNetLiteUI.Instance.CurrentSegmentId == segmentId) && WTSOnNetLiteUI.Instance.ListSel == boardIdx && !ModInstance.Controller.RoadSegmentToolInstance.enabled;
+                            var textPos = WETextRenderer.RenderTextMesh(segmentId, boardIdx, i, ref parentColor, targetDescriptor, targetDescriptor.TextDescriptors[j], ref propMatrix, cachedProp, 0, 0, currentTextSelected && WTSOnNetLiteUI.Instance.IsOnTextEditorSizeView, ref NetManager.instance.m_drawCallData.m_batchedCalls);
+                            if (currentTextSelected && textPos != default)
                             {
                                 ToolsModifierControl.cameraController.m_targetPosition.x = textPos.x;
                                 ToolsModifierControl.cameraController.m_targetPosition.z = textPos.z;
@@ -202,7 +203,7 @@ namespace WriteEverywhere.Singleton
                         }
                     }
 
-                    if (WTSOnNetLiteUI.LockSelection && !WTSOnNetLiteUI.Instance.IsOnTextEditor && i == WTSOnNetLiteUI.LockSelectionInstanceNum && WTSOnNetLiteUI.Instance.Visible && (WTSOnNetLiteUI.Instance.CurrentSegmentId == segmentId) && WTSOnNetLiteUI.Instance.ListSel == boardIdx && !ModInstance.Controller.RoadSegmentToolInstance.enabled)
+                    if (WTSOnNetLiteUI.LockSelection && (!WTSOnNetLiteUI.Instance.IsOnTextEditor || WTSOnNetLiteUI.LockSelectionTextIdx < 0) && i == WTSOnNetLiteUI.LockSelectionInstanceNum && WTSOnNetLiteUI.Instance.Visible && (WTSOnNetLiteUI.Instance.CurrentSegmentId == segmentId) && WTSOnNetLiteUI.Instance.ListSel == boardIdx && !ModInstance.Controller.RoadSegmentToolInstance.enabled)
                     {
                         ToolsModifierControl.cameraController.m_targetPosition.x = position.X;
                         ToolsModifierControl.cameraController.m_targetPosition.z = position.Z;

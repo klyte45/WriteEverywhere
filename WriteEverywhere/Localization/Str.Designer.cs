@@ -403,6 +403,26 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Vertical alignment relative to base line
+        ///(0 = below with baseline; 1 = top with capital line).
+        /// </summary>
+        internal static string we_roadEditor_verticalAlignmentBoxText {
+            get {
+                return ResourceManager.GetString("we_roadEditor_verticalAlignmentBoxText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Vertical alignment relative to the line when resizing
+        ///(0 = below with baseline; 1 = top with capital line).
+        /// </summary>
+        internal static string we_roadEditor_verticalAlignmentLineText {
+            get {
+                return ResourceManager.GetString("we_roadEditor_verticalAlignmentLineText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a On Net Editor.
         /// </summary>
         internal static string we_roadEditor_windowTitle {

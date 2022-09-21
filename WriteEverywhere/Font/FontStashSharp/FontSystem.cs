@@ -37,6 +37,7 @@ namespace FontStashSharp
         }
 
         public float ReferenceHeight { get; private set; }
+        public float BaselineOffset { get; private set; }
 
         public int FontHeight
         {
@@ -121,6 +122,7 @@ namespace FontStashSharp
             var bounds = new Bounds();
             TextBounds(0, 0, "A", 1, ref bounds);
             ReferenceHeight = (bounds.maxY - bounds.minY) / qualityMultiplier;
+            BaselineOffset = bounds.minY / ReferenceHeight;
         }
 
         private Dictionary<int, FontGlyph> GetGlyphsCollection(int size)
@@ -368,6 +370,7 @@ namespace FontStashSharp
                 bri.m_fontBaseLimits = new RangeVector { min = prevGlyph.Font.Descent, max = prevGlyph.Font.Ascent };
                 bri.m_refText = str;
                 bri.m_refY = ReferenceHeight;
+                bri.m_baselineOffset = BaselineOffset;
             }
             finally
             {

@@ -814,4 +814,12 @@ A text to succeed the variable value. Use the backslash to scape the slashes (&l
   <data name="we_generalTextEditor_usePrefabColor" xml:space="preserve">
     <value>Use prefab color</value>
   </data>
+  <data name="we_roadEditor_verticalAlignmentBoxText" xml:space="preserve">
+    <value>Vertical alignment relative to base line
+(0 = below with baseline; 1 = top with capital line)</value>
+  </data>
+  <data name="we_roadEditor_verticalAlignmentLineText" xml:space="preserve">
+    <value>Vertical alignment relative to the line when resizing
+(0 = below with baseline; 1 = top with capital line)</value>
+  </data>
 </root>

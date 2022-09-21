@@ -136,7 +136,7 @@ namespace WriteEverywhere.Overrides
                     int num10 = 0;
                     while (num9 != 0)
                     {
-                        ModInstance.Controller?.OnNetPropsSingleton?.PopulateGroupData(num9, layer, ref vertexIndex, ref triangleIndex, groupPosition, data, ref min, ref max, ref maxRenderDistance, ref maxInstanceDistance);
+                        ModInstance.Controller?.OnNetPropsSingleton?.PopulateGroupData(num9, layer, ref vertexIndex, ref triangleIndex, ref groupPosition, data, ref min, ref max, ref maxRenderDistance, ref maxInstanceDistance);
                         num9 = __instance.m_segments.m_buffer[num9].m_nextGridSegment;
                         if (++num10 >= 36864)
                         {

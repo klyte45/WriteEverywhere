@@ -12,7 +12,7 @@ namespace WriteEverywhere.Rendering
         public const float FRONT_BORDER_BASE = 0.05f;
 
 
-        public static void GenerateDisplayContainer(Vector2 frontWH, Vector2 backWH, Vector2 backCenterOffset, float frontDepth, float backDepth, float frontBorderThickness, out Vector3[] points, out Vector4[] tangents)
+        public static void GenerateDisplayContainer(Vector2 frontWH, Vector2 backWH, Vector2 backCenterOffset, float frontDepth, float backDepth, float frontBorderThickness, out Vector3[] points)
         {
             /**
              * 
@@ -92,22 +92,22 @@ namespace WriteEverywhere.Rendering
              *  Qz3   |  35 
              */
 
-            var I0 = new Vector3(-frontWH.x / 2 + frontBorderThickness, frontWH.y - frontBorderThickness, frontDepth); //I0
-            var I1 = new Vector3(frontWH.x / 2 - frontBorderThickness, frontWH.y - frontBorderThickness, frontDepth);  //I1
-            var I2 = new Vector3(-frontWH.x / 2 + frontBorderThickness, frontBorderThickness, frontDepth);//I2
-            var I3 = new Vector3(frontWH.x / 2 - frontBorderThickness, frontBorderThickness, frontDepth); //I3                
-            var P0 = new Vector3(-frontWH.x / 2, frontWH.y, frontDepth); //P0
-            var P1 = new Vector3(frontWH.x / 2, frontWH.y, frontDepth);  //P1
-            var P2 = new Vector3(-frontWH.x / 2, 0, frontDepth);//P2
-            var P3 = new Vector3(frontWH.x / 2, 0, frontDepth); //P3
-            var Q0 = new Vector3(-backWH.x / 2, backWH.y, -backDepth) + (Vector3)backCenterOffset; //Q0
-            var Q1 = new Vector3(backWH.x / 2, backWH.y, -backDepth) + (Vector3)backCenterOffset; //Q1
-            var Q2 = new Vector3(-backWH.x / 2, 0, -backDepth) + (Vector3)backCenterOffset;//Q2
-            var Q3 = new Vector3(backWH.x / 2, 0, -backDepth) + (Vector3)backCenterOffset; //Q3
-            var A0 = new Vector3(-frontWH.x / 2, frontWH.y, 0); //A0
-            var A1 = new Vector3(frontWH.x / 2, frontWH.y, 0);  //A1
-            var A2 = new Vector3(-frontWH.x / 2, 0, 0);//A2
-            var A3 = new Vector3(frontWH.x / 2, 0, 0); //A3
+            var I0 = new Vector3(-frontWH.x * .5f + frontBorderThickness, (frontWH.y * .5f - frontBorderThickness), frontDepth); //I0
+            var I1 = new Vector3(frontWH.x * .5f - frontBorderThickness, (frontWH.y * .5f - frontBorderThickness), frontDepth);  //I1
+            var I2 = new Vector3(-frontWH.x * .5f + frontBorderThickness, (frontWH.y * -.5f + frontBorderThickness), frontDepth);//I2
+            var I3 = new Vector3(frontWH.x * .5f - frontBorderThickness, (frontWH.y * -.5f + frontBorderThickness), frontDepth); //I3                
+            var P0 = new Vector3(-frontWH.x * .5f, frontWH.y * .5f, frontDepth); //P0
+            var P1 = new Vector3(frontWH.x * .5f, frontWH.y * .5f, frontDepth);  //P1
+            var P2 = new Vector3(-frontWH.x * .5f, frontWH.y * -.5f, frontDepth);//P2
+            var P3 = new Vector3(frontWH.x * .5f, frontWH.y * -.5f, frontDepth); //P3
+            var Q0 = new Vector3(-backWH.x * .5f, backWH.y * .5f, -backDepth) + (Vector3)backCenterOffset; //Q0
+            var Q1 = new Vector3(backWH.x * .5f, backWH.y * .5f, -backDepth) + (Vector3)backCenterOffset; //Q1
+            var Q2 = new Vector3(-backWH.x * .5f, backWH.y * -.5f, -backDepth) + (Vector3)backCenterOffset;//Q2
+            var Q3 = new Vector3(backWH.x * .5f, backWH.y * -.5f, -backDepth) + (Vector3)backCenterOffset; //Q3
+            var A0 = new Vector3(-frontWH.x * .5f, frontWH.y * .5f, 0); //A0
+            var A1 = new Vector3(frontWH.x * .5f, frontWH.y * .5f, 0);  //A1
+            var A2 = new Vector3(-frontWH.x * .5f, frontWH.y * -.5f, 0);//A2
+            var A3 = new Vector3(frontWH.x * .5f, frontWH.y * -.5f, 0); //A3
 
             points = new Vector3[]
             {
@@ -119,12 +119,12 @@ namespace WriteEverywhere.Rendering
                P1 ,
                P2 ,
                P3 ,
-                  
+
                Q0 ,
                Q1 ,
                Q2 ,
                Q3 ,
-                  
+
                A0 ,
                A1 ,
                A2 ,
@@ -137,7 +137,7 @@ namespace WriteEverywhere.Rendering
                Q1 ,
                Q2 ,
                Q3 ,
-                  
+
                A0 ,
                A1 ,
                A2 ,
@@ -152,50 +152,7 @@ namespace WriteEverywhere.Rendering
                Q3
             };
 
-            tangents = m_tangents;
         }
-        private static readonly Vector4[] m_tangents = new Vector4[]
-            {
-           /* 0 */   new Vector4(1,0,0,1),
-           /* 1 */   new Vector4(1,0,0,1),
-           /* 2 */   new Vector4(1,0,0,1),
-           /* 3 */   new Vector4(1,0,0,1),
-           /* 4 */   new Vector4(1,0,0,1),
-           /* 5 */   new Vector4(1,0,0,1),
-           /* 6 */   new Vector4(1,0,0,1),
-           /* 7 */   new Vector4(1,0,0,1),
-           /*   */
-           /* 8 */   new Vector4(1,0,0,-1),
-           /* 9 */   new Vector4(1,0,0,-1),
-           /*10 */   new Vector4(1,0,0,-1),
-           /*11 */   new Vector4(1,0,0,-1),
-           /*   */
-           /*12 */   new Vector4(0,0,1,-1),
-           /*13 */   new Vector4(0,0,1,1),   
-           /*14 */   new Vector4(0,0,1,-1),   
-           /*15 */   new Vector4(0,0,1,1),   
-           /*16 */   new Vector4(0,0,1,-1),   
-           /*17 */   new Vector4(0,0,1,1),   
-           /*18 */   new Vector4(0,0,1,-1),   
-           /*19 */   new Vector4(0,0,1,1),   
-           /*20 */   new Vector4(0,0,1,-1),   
-           /*21 */   new Vector4(0,0,1,1),   
-           /*22 */   new Vector4(0,0,1,-1),   
-           /*23 */   new Vector4(0,0,1,1),   
-           /*   */   
-           /*24 */   new Vector4(0,1,0,1),
-           /*25 */   new Vector4(0,1,0,1),
-           /*26 */   new Vector4(0,1,0,-1),   
-           /*27 */   new Vector4(0,1,0,-1),   
-           /*28 */   new Vector4(0,1,0,1),   
-           /*29 */   new Vector4(0,1,0,1),   
-           /*30 */   new Vector4(0,1,0,-1),   
-           /*31 */   new Vector4(0,1,0,-1),   
-           /*32 */   new Vector4(0,1,0,1),   
-           /*33 */   new Vector4(0,1,0,1),   
-           /*34 */   new Vector4(0,1,0,-1),   
-           /*35 */   new Vector4(0,1,0,-1),
-            };
 
         public static readonly int[] m_triangles = new int[]
         {
