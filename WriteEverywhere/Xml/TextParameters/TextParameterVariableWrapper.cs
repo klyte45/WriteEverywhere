@@ -12,9 +12,9 @@ namespace WriteEverywhere.Xml
     public class TextParameterVariableWrapper
     {
         public readonly string m_originalCommand;
-        internal readonly VariableType m_varType;
+        public readonly VariableType m_varType;
 
-        internal TextParameterVariableWrapper(string input, TextRenderingClass renderingClass = TextRenderingClass.Any)
+        public TextParameterVariableWrapper(string input, TextRenderingClass renderingClass = TextRenderingClass.Any)
         {
             m_originalCommand = input;
             var parameterPath = CommandLevel.GetParameterPath(input);
@@ -141,7 +141,7 @@ namespace WriteEverywhere.Xml
         }
 
 
-        public BasicRenderInformation GetTargetText(BaseWriteOnXml instance, BoardTextDescriptorGeneralXml textDescriptor, DynamicSpriteFont targetFont, ushort refId, int secRefId, int tercRefId, out IEnumerable<BasicRenderInformation> multipleOutput)
+        internal BasicRenderInformation GetTargetText(BaseWriteOnXml instance, BoardTextDescriptorGeneralXml textDescriptor, DynamicSpriteFont targetFont, ushort refId, int secRefId, int tercRefId, out IEnumerable<BasicRenderInformation> multipleOutput)
         {
             string targetStr = m_originalCommand;
             switch (instance)
@@ -227,7 +227,7 @@ namespace WriteEverywhere.Xml
         //            return m_originalCommand;
         //        }
 
-        public string GetTargetTextForNet(BaseWriteOnXml descriptor, ushort segmentId, BoardTextDescriptorGeneralXml textDescriptor, out IEnumerable<BasicRenderInformation> multipleOutput)
+        internal string GetTargetTextForNet(BaseWriteOnXml descriptor, ushort segmentId, BoardTextDescriptorGeneralXml textDescriptor, out IEnumerable<BasicRenderInformation> multipleOutput)
         {
             multipleOutput = null;
             var propDescriptor = descriptor as OnNetInstanceCacheContainerXml;
@@ -259,7 +259,7 @@ namespace WriteEverywhere.Xml
                             return null;
                         case TextContent.ParameterizedText:
                         Text:
-                            if (descriptor.GetParameter(paramIdx) is TextParameterWrapper tpw)
+                            if (propDescriptor.GetParameter(paramIdx) is TextParameterWrapper tpw)
                             {
                                 var result = tpw.GetTargetText(descriptor, textDescriptor, TextParameterWrapper.GetTargetFont(descriptor, textDescriptor), segmentId, 0, 0, out multipleOutput);
                                 if (result is null && (multipleOutput is null || multipleOutput?.Count() == 0))
@@ -275,19 +275,19 @@ namespace WriteEverywhere.Xml
                             return $"<PARAM#{paramIdx} NOT SET>";
                         case TextContent.ParameterizedSpriteFolder:
                         ImageFolder:
-                            multipleOutput = descriptor.GetParameter(paramIdx) is TextParameterWrapper tpw2
+                            multipleOutput = propDescriptor.GetParameter(paramIdx) is TextParameterWrapper tpw2
                                 ? (new[] { tpw2.GetSpriteFromCycle(textDescriptor, descriptor.TargetAssetParameter, segmentId, 0, 0) })
                                 : (IEnumerable<BasicRenderInformation>)(new[] { ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(null, "FrameParamsNotSet") });
                             return null;
                         case TextContent.ParameterizedSpriteSingle:
                         ImageSingle:
-                            multipleOutput = new[] {descriptor.GetParameter(paramIdx)  is TextParameterWrapper tpw3
+                            multipleOutput = new[] {propDescriptor.GetParameter(paramIdx)  is TextParameterWrapper tpw3
                                 ? tpw3.GetSpriteFromParameter(descriptor.TargetAssetParameter)
                                 : ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(null, "FrameParamsNotSet") };
                             return null;
                         case TextContent.Any:
                         case TextContent.TextParameterSequence:
-                            if (descriptor.GetParameter(paramIdx) is TextParameterWrapper tpw4)
+                            if (propDescriptor.GetParameter(paramIdx) is TextParameterWrapper tpw4)
                             {
                                 switch (tpw4.ParamType)
                                 {
@@ -317,8 +317,8 @@ namespace WriteEverywhere.Xml
             return m_originalCommand;
         }
 
-        internal string TryFormat(float value, float multiplier) => (value * multiplier).ToString(paramContainer.numberFormat);
-        internal string TryFormat(long value) => value.ToString(paramContainer.numberFormat);
-        internal string TryFormat(FormatableString value) => value.GetFormatted(paramContainer.stringFormat);
+        public string TryFormat(float value, float multiplier) => (value * multiplier).ToString(paramContainer.numberFormat);
+        public string TryFormat(long value) => value.ToString(paramContainer.numberFormat);
+        public string TryFormat(FormatableString value) => value.GetFormatted(paramContainer.stringFormat);
     }
 }

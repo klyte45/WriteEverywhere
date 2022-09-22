@@ -70,7 +70,7 @@ namespace WriteEverywhere.Xml
             m_totalLength = m_slides.Select(x => x.m_length).Sum();
         }
 
-        internal TextParameterSequenceXml ToXml()
+        public TextParameterSequenceXml ToXml()
             => new TextParameterSequenceXml
             {
                 Slides = m_slides.Select(x => new TextParameterSequenceSlideXml
@@ -80,13 +80,13 @@ namespace WriteEverywhere.Xml
                 }).ToArray(),
                 RenderingClass = m_renderingClass,
             };
-        internal static TextParameterSequence FromXml(TextParameterSequenceXml input)
+        public static TextParameterSequence FromXml(TextParameterSequenceXml input)
             => input is null
                 ? null
                 : new TextParameterSequence(input.Slides.Select(x => new TextParameterSequenceItem(x.Value, input.RenderingClass, x.Frames)).ToArray(), input.RenderingClass);
         public IEnumerator<TextParameterSequenceItem> GetEnumerator() => m_slides.AsEnumerable().GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-        internal void SetTextAt(int pos, string paramValue, TextRenderingClass vehicle)
+        public void SetTextAt(int pos, string paramValue, TextRenderingClass vehicle)
         {
             var old = m_slides[pos];
             m_slides[pos] = new TextParameterSequenceItem(paramValue, vehicle, old.m_length);

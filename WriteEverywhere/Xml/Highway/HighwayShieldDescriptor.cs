@@ -8,7 +8,7 @@ namespace WriteEverywhere.Xml
     public class HighwayShieldDescriptor : ILibable
     {
         [XmlIgnore]
-        public TextParameterWrapper BackgroundImageParameter { get; private set; } = new TextParameterWrapper("image://K45_WTS_HWSHIELD_00", Rendering.TextRenderingClass.None);
+        public TextParameterWrapper BackgroundImageParameter { get; private set; } = new TextParameterWrapper("image://K45_WTS_HWSHIELD_00", TextRenderingClass.None);
 
         [XmlAttribute("name")]
         public string SaveName { get; set; }
@@ -19,14 +19,14 @@ namespace WriteEverywhere.Xml
             get => BackgroundImageParameter?.ToString();
             set
             {
-                var parameter = new TextParameterWrapper(value, Rendering.TextRenderingClass.None);
-                BackgroundImageParameter = parameter.ParamType == TextParameterWrapper.ParameterType.IMAGE ? parameter : null;
+                var parameter = new TextParameterWrapper(value, TextRenderingClass.None);
+                BackgroundImageParameter = parameter.ParamType == ParameterType.IMAGE ? parameter : null;
             }
         }
         [XmlAttribute("backgroundColorIsFromHighway")]
         public bool BackgroundColorIsFromHighway { get; set; }
         [XmlElement("backgroundColor")]
-        public Color BackgroundColor { get => backgroundColor; set => backgroundColor = value.a < 1 ? Color.white : value; } 
+        public Color BackgroundColor { get => backgroundColor; set => backgroundColor = value.a < 1 ? Color.white : value; }
         [XmlElement("textDescriptor")]
         public List<ImageLayerTextDescriptorXml> TextDescriptors { get; set; } = new List<ImageLayerTextDescriptorXml>();
 
@@ -34,7 +34,7 @@ namespace WriteEverywhere.Xml
         public string FontName { get; internal set; }
 
         [XmlIgnore]
-        internal ConfigurationSource m_configurationSource;
+        public ConfigurationSource m_configurationSource;
         private Color backgroundColor = Color.white;
     }
 }

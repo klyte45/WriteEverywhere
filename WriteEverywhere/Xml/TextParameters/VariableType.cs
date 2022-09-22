@@ -3,7 +3,7 @@ using WriteEverywhere.Rendering;
 
 namespace WriteEverywhere.Xml
 {
-    internal enum VariableType
+    public enum VariableType
     {
         Invalid,
         SegmentTarget,
@@ -14,7 +14,7 @@ namespace WriteEverywhere.Xml
         CurrentSegmentParameter
     }
 
-    internal static class VariableTypeExtension
+    public static class VariableTypeExtension
     {
         public static bool Supports(this VariableType var, TextRenderingClass renderingClass)
         {

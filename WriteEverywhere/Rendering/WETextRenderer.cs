@@ -25,7 +25,7 @@ namespace WriteEverywhere.Rendering
         private static readonly float m_daynightOffTime = 6 * Convert.ToSingle(Math.Pow(Convert.ToDouble((6 - (15 / 2.5)) / 6), Convert.ToDouble(1 / 1.09)));
 
 
-        public static Vector3 RenderTextMesh(ushort refID, int boardIdx, int secIdx, ref Color parentColor, BaseWriteOnXml baseWrite, BoardTextDescriptorGeneralXml textDescriptor, ref Matrix4x4 propMatrix, PrefabInfo srcInfo, int instanceFlags, int instanceFlags2, bool currentEditingSizeLine, ref int defaultCallsCounter)
+        internal static Vector3 RenderTextMesh(ushort refID, int boardIdx, int secIdx, ref Color parentColor, BaseWriteOnXml baseWrite, BoardTextDescriptorGeneralXml textDescriptor, ref Matrix4x4 propMatrix, PrefabInfo srcInfo, int instanceFlags, int instanceFlags2, bool currentEditingSizeLine, ref int defaultCallsCounter)
         {
             BasicRenderInformation bri = WTSTextMeshProcess.GetTextMesh(textDescriptor, refID, boardIdx, secIdx, baseWrite);
             if (bri?.m_mesh is null || bri?.m_generatedMaterial is null)
@@ -126,7 +126,7 @@ namespace WriteEverywhere.Rendering
             var bgMatrix = containerMatrix * Matrix4x4.Scale(new Vector3(size.x, size.y, 1));
 
 
-            if (overrideMaterial is null && bgImage != null && bgImage.ParamType == TextParameterWrapper.ParameterType.IMAGE)
+            if (overrideMaterial is null && bgImage != null && bgImage.ParamType == ParameterType.IMAGE)
             {
                 var image = ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(bgImage.AtlasName, bgImage.TextOrSpriteValue, true);
                 overrideMaterial = image.m_generatedMaterial;
@@ -343,14 +343,14 @@ namespace WriteEverywhere.Rendering
             switch (textDescriptor.IlluminationConfig.IlluminationType)
             {
                 default:
-                case FontStashSharp.MaterialType.OPAQUE:
+                case MaterialType.OPAQUE:
                     surfProperties.z = 0;
                     break;
-                case FontStashSharp.MaterialType.DAYNIGHT:
+                case MaterialType.DAYNIGHT:
                     float num = m_daynightOffTime + (randomizer.Int32(100000u) * 1E-05f);
                     surfProperties.z = MathUtils.SmoothStep(num + 0.01f, num - 0.01f, Singleton<RenderManager>.instance.lightSystem.DayLightIntensity) * textDescriptor.IlluminationConfig.m_illuminationStrength;
                     break;
-                case FontStashSharp.MaterialType.FLAGS:
+                case MaterialType.FLAGS:
                     surfProperties.z
                         = ((instanceFlags & textDescriptor.IlluminationConfig.m_requiredFlags) == textDescriptor.IlluminationConfig.m_requiredFlags)
                         && ((instanceFlags & textDescriptor.IlluminationConfig.m_forbiddenFlags) == 0)
@@ -358,7 +358,7 @@ namespace WriteEverywhere.Rendering
                         && ((instanceFlags2 & textDescriptor.IlluminationConfig.m_forbiddenFlags2) == 0)
                         ? textDescriptor.IlluminationConfig.m_illuminationStrength : 0;
                     break;
-                case FontStashSharp.MaterialType.BRIGHT:
+                case MaterialType.BRIGHT:
                     surfProperties.z = textDescriptor.IlluminationConfig.m_illuminationStrength;
                     break;
             }

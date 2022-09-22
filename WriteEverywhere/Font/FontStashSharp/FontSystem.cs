@@ -846,11 +846,4 @@ namespace FontStashSharp
         }
 
     }
-    public enum MaterialType
-    {
-        OPAQUE,
-        DAYNIGHT,
-        FLAGS,
-        BRIGHT
-    }
 }

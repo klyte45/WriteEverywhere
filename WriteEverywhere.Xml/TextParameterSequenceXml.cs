@@ -1,5 +1,5 @@
-﻿using WriteEverywhere.Rendering;
-using System.Xml.Serialization;
+﻿using System.Xml.Serialization;
+using WriteEverywhere.Xml;
 
 public class TextParameterSequenceXml
 {

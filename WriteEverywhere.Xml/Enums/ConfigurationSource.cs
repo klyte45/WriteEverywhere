@@ -1,6 +1,6 @@
 ﻿namespace WriteEverywhere.Xml
 {
-    internal enum ConfigurationSource
+    public enum ConfigurationSource
     {
         NONE,
         ASSET,

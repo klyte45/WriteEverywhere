@@ -181,7 +181,7 @@ namespace WriteEverywhere.UI
                     paramEditor = FolderVarEditor;
                     break;
                 case TextContent.ParameterizedText:
-                    IsVariable = paramVal?.ParamType == TextParameterWrapper.ParameterType.VARIABLE;
+                    IsVariable = paramVal?.ParamType == ParameterType.VARIABLE;
                     CurrentState = State.GettingText;
                     if (IsVariable)
                     {
@@ -206,7 +206,7 @@ namespace WriteEverywhere.UI
                     }
                     else
                     {
-                        if (paramVal.ParamType.Equals(TextParameterWrapper.ParameterType.IMAGE))
+                        if (paramVal.ParamType.Equals(ParameterType.IMAGE))
                         {
                             SearchText = "";
                             IsLocal = paramVal.IsLocal;

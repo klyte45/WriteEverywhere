@@ -11,7 +11,7 @@ namespace WriteEverywhere.Xml
 
         public TextContent GetTextContent() => Value.VariableValueTextContent;
 
-        public object GetValueAsUri() => Value.ToString();
+        public string GetValueAsUri() => Value.ToString();
 
         public int GetParamIdx() => Value.GetParamIdx;
         public TextParameterSequenceItem(string value, TextRenderingClass clazz, long length = 500)

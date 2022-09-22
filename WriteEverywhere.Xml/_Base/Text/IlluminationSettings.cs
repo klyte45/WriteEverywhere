@@ -1,5 +1,4 @@
-﻿using FontStashSharp;
-using Kwytto.Utils;
+﻿using Kwytto.Utils;
 using System.Xml;
 using System.Xml.Serialization;
 

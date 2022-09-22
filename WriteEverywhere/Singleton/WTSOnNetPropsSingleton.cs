@@ -188,7 +188,7 @@ namespace WriteEverywhere.Singleton
 
                     for (int j = 0; j < targetDescriptor.TextDescriptors.Length; j++)
                     {
-                        if (cameraInfo.CheckRenderDistance(position, WETextRenderer.RENDER_DISTANCE_FACTOR * targetDescriptor.TextDescriptors[j].TextLineHeight * (targetDescriptor.TextDescriptors[j].IlluminationConfig.IlluminationType == FontStashSharp.MaterialType.OPAQUE ? 1 : 3)))
+                        if (cameraInfo.CheckRenderDistance(position, WETextRenderer.RENDER_DISTANCE_FACTOR * targetDescriptor.TextDescriptors[j].TextLineHeight * (targetDescriptor.TextDescriptors[j].IlluminationConfig.IlluminationType == MaterialType.OPAQUE ? 1 : 3)))
                         {
                             MaterialPropertyBlock properties = PropManager.instance.m_materialBlock;
                             properties.Clear();

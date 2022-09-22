@@ -14,6 +14,6 @@ namespace WriteEverywhere.Xml
             IsEmpty = input.IsEmpty,
             Value = input.ToString()
         };
-        public TextParameterWrapper ToWrapper(Rendering.TextRenderingClass renderClass) => new TextParameterWrapper(IsEmpty ? null : Value, renderClass);
+        public TextParameterWrapper ToWrapper(TextRenderingClass renderClass) => new TextParameterWrapper(IsEmpty ? null : Value, renderClass);
     }
 }

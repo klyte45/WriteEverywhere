@@ -13,7 +13,7 @@ namespace WriteEverywhere.Xml
         [XmlAttribute("textScale")]
         public float m_textScale = 1f;
         [XmlAttribute("spacingFactor")]
-        internal float m_charSpacingFactor = 0.85f;
+        public float m_charSpacingFactor = 0.85f;
         [XmlAttribute("maxWidth")]
         public int m_maxWidthPixels = 0;
         [XmlAttribute("fixedHeight")]
@@ -35,7 +35,7 @@ namespace WriteEverywhere.Xml
         public string SpriteParam
         {
             get => m_paramValue?.ToString();
-            set => m_paramValue = new TextParameterWrapper(value, Rendering.TextRenderingClass.None);
+            set => m_paramValue = new TextParameterWrapper(value, TextRenderingClass.None);
         }
 
         [XmlAttribute("overrideFont")] public string m_overrideFont;

@@ -142,7 +142,7 @@ namespace WriteEverywhere.Xml
             return result;
         }
 
-        internal static CommandLevel OnFilterParamByText(string inputText, out string currentLocaleDesc)
+        public static CommandLevel OnFilterParamByText(string inputText, out string currentLocaleDesc)
         {
             if ((inputText?.Length ?? 0) >= 4 && inputText.StartsWith(PROTOCOL_VARIABLE))
             {

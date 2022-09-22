@@ -8,7 +8,7 @@ using static WriteEverywhere.Xml.TextParameterVariableWrapper;
 
 namespace WriteEverywhere.Xml
 {
-    internal enum VariableVehicleSubType
+    public enum VariableVehicleSubType
     {
         None,
         OwnNumber,
@@ -19,7 +19,7 @@ namespace WriteEverywhere.Xml
         LineFullName,
     }
 
-    internal static class VariableVehicleSubTypeExtensions
+    public static class VariableVehicleSubTypeExtensions
     {
         public static Dictionary<Enum, CommandLevel> ReadCommandTree()
         {

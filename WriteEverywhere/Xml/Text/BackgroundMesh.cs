@@ -3,7 +3,6 @@ using Kwytto.Utils;
 using System.Xml;
 using System.Xml.Serialization;
 using UnityEngine;
-using WriteEverywhere.Rendering;
 
 namespace WriteEverywhere.Xml
 {
@@ -52,7 +51,7 @@ namespace WriteEverywhere.Xml
             get => bgImage?.ToString().TrimToNull();
             set => SetBgImage(value);
         }
-        public string SetBgImage(string value) => (bgImage = value.IsNullOrWhiteSpace() ? null : new TextParameterWrapper(value, TextRenderingClass.BgMesh) is TextParameterWrapper tpw && tpw.ParamType == TextParameterWrapper.ParameterType.IMAGE ? tpw : null)?.ToString();
+        public string SetBgImage(string value) => (bgImage = value.IsNullOrWhiteSpace() ? null : new TextParameterWrapper(value, TextRenderingClass.BgMesh) is TextParameterWrapper tpw && tpw.ParamType == ParameterType.IMAGE ? tpw : null)?.ToString();
     }
 }
 

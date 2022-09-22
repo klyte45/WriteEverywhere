@@ -4,11 +4,10 @@ using Kwytto.Utils;
 using System.Xml;
 using System.Xml.Serialization;
 using UnityEngine;
-using WriteEverywhere.Rendering;
 
 namespace WriteEverywhere.Xml
 {
-    public class LibableWriteOnXml : ILibable, IKeyGetter<string>
+    public class LibableWriteOnXml<W> : ILibable, IKeyGetter<string> where W : BaseTextToWriteOnXml
     {
         private const string DEFAULT_PROPNAME = "";
         private string propName;
@@ -52,7 +51,7 @@ namespace WriteEverywhere.Xml
         }
 
         [XmlElement("textDescriptor")]
-        public BoardTextDescriptorGeneralXml[] TextDescriptors { get => textDescriptors; set => textDescriptors = value ?? new BoardTextDescriptorGeneralXml[0]; }
+        public W[] TextDescriptors { get => textDescriptors; set => textDescriptors = value ?? new W[0]; }
         [XmlAttribute("propName")]
         public string PropName
         {
@@ -69,20 +68,20 @@ namespace WriteEverywhere.Xml
         private string m_originalSaveName;
 
         [XmlIgnore]
-        internal PropInfo CachedProp { get; private set; }
+        public PropInfo CachedProp { get; private set; }
 
         public string GetKeyString() => m_saveName;
 
         [XmlIgnore]
-        internal ConfigurationSource m_configurationSource;
-        private BoardTextDescriptorGeneralXml[] textDescriptors = new BoardTextDescriptorGeneralXml[0];
+        public ConfigurationSource m_configurationSource;
+        private W[] textDescriptors = new W[0];
 
         [XmlIgnore]
-        internal string lastLayoutVersion = null;
+        public string lastLayoutVersion = null;
         [XmlAttribute("WE_layoutVersion")]
         public string LayoutVersion
         {
-            get => ModInstance.FullVersion;
+            get => BasicIUserMod.FullVersion;
             set => lastLayoutVersion = value;
         }
     }

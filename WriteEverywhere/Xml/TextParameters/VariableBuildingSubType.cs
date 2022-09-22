@@ -5,7 +5,7 @@ using static WriteEverywhere.Xml.TextParameterVariableWrapper;
 
 namespace WriteEverywhere.Xml
 {
-    internal enum VariableBuildingSubType
+    public enum VariableBuildingSubType
     {
         None,
         OwnName,
@@ -15,7 +15,7 @@ namespace WriteEverywhere.Xml
         PlatformNumber
     }
 
-    internal static class VariableBuildingSubTypeExtensions
+    public static class VariableBuildingSubTypeExtensions
     {
         public static Dictionary<Enum, CommandLevel> ReadCommandTree()
         {

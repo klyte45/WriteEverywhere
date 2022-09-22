@@ -1,8 +1,8 @@
-﻿using Kwytto.Utils;
+﻿using Kwytto.Interfaces;
+using Kwytto.Utils;
 using System.Xml;
 using System.Xml.Serialization;
 using UnityEngine;
-using WriteEverywhere.Rendering;
 
 namespace WriteEverywhere.Xml
 {
@@ -46,16 +46,15 @@ namespace WriteEverywhere.Xml
             }
         }
 
-        public abstract TextParameterWrapper GetParameter(int idx);
         public abstract PrefabInfo TargetAssetParameter { get; }
         public abstract TextRenderingClass RenderingClass { get; }
         public abstract string DescriptorOverrideFont { get; }
         [XmlIgnore]
-        internal string lastLayoutVersion = null;
+        public string lastLayoutVersion = null;
         [XmlAttribute("WE_layoutVersion")]
         public string LayoutVersion
         {
-            get => ModInstance.FullVersion;
+            get => BasicIUserMod.FullVersion;
             set => lastLayoutVersion = value;
         }
     }

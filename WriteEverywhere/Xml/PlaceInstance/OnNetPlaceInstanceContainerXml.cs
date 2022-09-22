@@ -88,12 +88,13 @@ namespace WriteEverywhere.Xml
             .SelectMany(x =>
             x.textContent != TextContent.TextParameterSequence
                     ? new[] { Tuple.New(x as IParameterizableVariable, x.SaveName, x.Value) }
-                    : x.ParameterSequence.Where(y => y.Value?.IsParameter ?? false).Select(y => Tuple.New(y as IParameterizableVariable, x.SaveName, y.Value)))
+                    : x.ParameterSequence.Where(y => y.Value?.IsParameter ?? false).Select(y => Tuple.New(y as IParameterizableVariable, x.SaveName, y.Value))
+            )
             .GroupBy(x => x.First.GetParamIdx()).ToDictionary(x => x.Key, x => x.Select(y => Tuple.New(y.First, y.Second)).ToList());
 
         [XmlIgnore]
         public SimpleNonSequentialList<TextParameterWrapper> m_textParameters = new SimpleNonSequentialList<TextParameterWrapper>();
 
-        public override TextParameterWrapper GetParameter(int idx) => m_textParameters.TryGetValue(idx, out var val) ? val : null;
+        public TextParameterWrapper GetParameter(int idx) => m_textParameters.TryGetValue(idx, out var val) ? val : null;
     }
 }

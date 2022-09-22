@@ -5,6 +5,6 @@
         string GetParameterDisplayName();
         int GetParamIdx();
         TextContent GetTextContent();
-        object GetValueAsUri();
+        string GetValueAsUri();
     }
 }

@@ -225,10 +225,10 @@ namespace WriteEverywhere.Rendering
                     ? null
                     : param.GetImageBRI(prop);
 
-        public static BasicRenderInformation GetFromCacheArray(BoardTextDescriptorGeneralXml textDescriptor, string text, DynamicSpriteFont baseFont) => text is null ? null : WTSCacheSingleton.GetTextData(text, textDescriptor.m_prefix, textDescriptor.m_suffix, baseFont, textDescriptor.m_overrideFont);
-        public static BasicRenderInformation GetFromCacheArray(BoardTextDescriptorGeneralXml textDescriptor, FormatableString text, DynamicSpriteFont baseFont) => text is null ? null : WTSCacheSingleton.GetTextData(text.Get(textDescriptor.m_allCaps, textDescriptor.m_applyAbbreviations), textDescriptor.m_prefix, textDescriptor.m_suffix, baseFont, textDescriptor.m_overrideFont);
-        public static BasicRenderInformation GetFromCacheArray(BoardTextDescriptorGeneralXml textDescriptor, int value, string mask, DynamicSpriteFont baseFont) => WTSCacheSingleton.GetTextData(value.ToString(mask), textDescriptor.m_prefix, textDescriptor.m_suffix, baseFont, textDescriptor.m_overrideFont);
-        public static BasicRenderInformation GetFromCacheArray(BoardTextDescriptorGeneralXml textDescriptor, float value, string mask, DynamicSpriteFont baseFont) => WTSCacheSingleton.GetTextData(value.ToString(mask), textDescriptor.m_prefix, textDescriptor.m_suffix, baseFont, textDescriptor.m_overrideFont);
+        internal static BasicRenderInformation GetFromCacheArray(BoardTextDescriptorGeneralXml textDescriptor, string text, DynamicSpriteFont baseFont) => text is null ? null : WTSCacheSingleton.GetTextData(text, textDescriptor.m_prefix, textDescriptor.m_suffix, baseFont, textDescriptor.m_overrideFont);
+        internal static BasicRenderInformation GetFromCacheArray(BoardTextDescriptorGeneralXml textDescriptor, FormatableString text, DynamicSpriteFont baseFont) => text is null ? null : WTSCacheSingleton.GetTextData(text.Get(textDescriptor.m_allCaps, textDescriptor.m_applyAbbreviations), textDescriptor.m_prefix, textDescriptor.m_suffix, baseFont, textDescriptor.m_overrideFont);
+        internal static BasicRenderInformation GetFromCacheArray(BoardTextDescriptorGeneralXml textDescriptor, int value, string mask, DynamicSpriteFont baseFont) => WTSCacheSingleton.GetTextData(value.ToString(mask), textDescriptor.m_prefix, textDescriptor.m_suffix, baseFont, textDescriptor.m_overrideFont);
+        internal static BasicRenderInformation GetFromCacheArray(BoardTextDescriptorGeneralXml textDescriptor, float value, string mask, DynamicSpriteFont baseFont) => WTSCacheSingleton.GetTextData(value.ToString(mask), textDescriptor.m_prefix, textDescriptor.m_suffix, baseFont, textDescriptor.m_overrideFont);
 
         #region Legacy
 

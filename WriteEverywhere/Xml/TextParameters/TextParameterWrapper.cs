@@ -8,11 +8,10 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using WriteEverywhere.Data;
 using WriteEverywhere.Utils;
-using static ColossalFramework.UI.UITextureAtlas;
 
 namespace WriteEverywhere.Xml
 {
-    public class TextParameterWrapper
+    public class TextParameterWrapper : ITextParameterWrapper
     {
         public string TextOrSpriteValue
         {
@@ -53,20 +52,13 @@ namespace WriteEverywhere.Xml
         private PrefabInfo cachedPrefab;
         private ulong cachedPrefabId;
         private string textOrSpriteValue;
-        public enum ParameterType
-        {
-            TEXT,
-            IMAGE,
-            FOLDER,
-            VARIABLE,
-            EMPTY
-        }
+
         public TextParameterWrapper()
         {
             ParamType = ParameterType.TEXT;
             TextOrSpriteValue = string.Empty;
         }
-        public TextParameterWrapper(string value, Rendering.TextRenderingClass clazz = Rendering.TextRenderingClass.Any, bool acceptLegacy = false) : this()
+        public TextParameterWrapper(string value, TextRenderingClass clazz = TextRenderingClass.Any, bool acceptLegacy = false) : this()
         {
             if (value is null)
             {
@@ -145,7 +137,7 @@ namespace WriteEverywhere.Xml
         }
 
 
-        public void SetVariableFromString(string stringNoProtocol, Rendering.TextRenderingClass clazz = Rendering.TextRenderingClass.Any)
+        public void SetVariableFromString(string stringNoProtocol, TextRenderingClass clazz = TextRenderingClass.Any)
         {
             ParamType = ParameterType.VARIABLE;
             VariableValue = new TextParameterVariableWrapper(stringNoProtocol, clazz);
@@ -218,7 +210,7 @@ namespace WriteEverywhere.Xml
 
         #region renderingInfo
 
-        public static DynamicSpriteFont GetTargetFont(BaseWriteOnXml instance, BoardTextDescriptorGeneralXml textDescriptor)
+        internal static DynamicSpriteFont GetTargetFont(BaseWriteOnXml instance, BoardTextDescriptorGeneralXml textDescriptor)
             => FontServer.instance.FirstOf(new[]
             {
                         textDescriptor.m_overrideFont,
@@ -228,7 +220,7 @@ namespace WriteEverywhere.Xml
                         MainController.DEFAULT_FONT_KEY,
             }.Where(x => !x.IsNullOrWhiteSpace()));
 
-        public static BasicRenderInformation GetRenderInfo(BaseWriteOnXml instance, BoardTextDescriptorGeneralXml textDescriptor, ushort refId, int secIdx, int tercIdx, out IEnumerable<BasicRenderInformation> multipleOutput)
+        internal static BasicRenderInformation GetRenderInfo(BaseWriteOnXml instance, BoardTextDescriptorGeneralXml textDescriptor, ushort refId, int secIdx, int tercIdx, out IEnumerable<BasicRenderInformation> multipleOutput)
         {
             multipleOutput = null;
             switch (textDescriptor.textContent)
@@ -255,7 +247,7 @@ namespace WriteEverywhere.Xml
         }
 
 
-        public static BasicRenderInformation GetRenderInfo(TextParameterWrapper tpw, BaseWriteOnXml instance, BoardTextDescriptorGeneralXml textDescriptor, ushort refId, int secIdx, int tercIdx, out IEnumerable<BasicRenderInformation> multipleOutput)
+        internal static BasicRenderInformation GetRenderInfo(TextParameterWrapper tpw, BaseWriteOnXml instance, BoardTextDescriptorGeneralXml textDescriptor, ushort refId, int secIdx, int tercIdx, out IEnumerable<BasicRenderInformation> multipleOutput)
         {
             multipleOutput = null;
             switch (textDescriptor.textContent)
@@ -333,7 +325,7 @@ namespace WriteEverywhere.Xml
 
         }
 
-        public BasicRenderInformation GetTargetText(BaseWriteOnXml descriptorBuilding, BoardTextDescriptorGeneralXml textDescriptor, DynamicSpriteFont targetFont, ushort refId, int secId, int tercId, out IEnumerable<BasicRenderInformation> multipleOutput)
+        internal BasicRenderInformation GetTargetText(BaseWriteOnXml descriptorBuilding, BoardTextDescriptorGeneralXml textDescriptor, DynamicSpriteFont targetFont, ushort refId, int secId, int tercId, out IEnumerable<BasicRenderInformation> multipleOutput)
         {
             if (ParamType != ParameterType.VARIABLE)
             {
@@ -349,13 +341,13 @@ namespace WriteEverywhere.Xml
         public string GetOriginalVariableParam() => ParamType != ParameterType.VARIABLE ? null : VariableValue.m_originalCommand;
 
 
-        public BasicRenderInformation GetSpriteFromCycle(BoardTextDescriptorGeneralXml textDescriptor, PrefabInfo cachedPrefab, ushort refId, int boardIdx, int secIdx)
+        internal BasicRenderInformation GetSpriteFromCycle(BoardTextDescriptorGeneralXml textDescriptor, PrefabInfo cachedPrefab, ushort refId, int boardIdx, int secIdx)
         {
             if (IsEmpty)
             {
                 return null;
             }
-            if (ParamType != TextParameterWrapper.ParameterType.FOLDER)
+            if (ParamType != ParameterType.FOLDER)
             {
                 return ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(null, "FrameParamsFolderRequired");
             }

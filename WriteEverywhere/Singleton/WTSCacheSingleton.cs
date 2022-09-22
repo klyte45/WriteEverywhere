@@ -13,7 +13,7 @@ using TLM::Bridge_WE2TLM;
 
 namespace WriteEverywhere.Singleton
 {
-    internal class WTSCacheSingleton : SingletonLite<WTSCacheSingleton>
+    public class WTSCacheSingleton : SingletonLite<WTSCacheSingleton>
     {
 
         private readonly NonSequentialList<SegmentItemCache> m_cacheSegments = new NonSequentialList<SegmentItemCache>();

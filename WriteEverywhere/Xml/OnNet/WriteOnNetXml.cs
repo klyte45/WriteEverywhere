@@ -3,7 +3,6 @@ using Kwytto.Utils;
 using System.Xml;
 using System.Xml.Serialization;
 using UnityEngine;
-using WriteEverywhere.Rendering;
 
 namespace WriteEverywhere.Xml
 {
@@ -92,7 +91,7 @@ namespace WriteEverywhere.Xml
         public BoardTextDescriptorGeneralXml[] TextDescriptors { get => textDescriptors; set => textDescriptors = value ?? new BoardTextDescriptorGeneralXml[0]; }
         private BoardTextDescriptorGeneralXml[] textDescriptors = new BoardTextDescriptorGeneralXml[0];
         [XmlIgnore]
-        internal ref BoardTextDescriptorGeneralXml[] RefTextDescriptors => ref textDescriptors;
+        public ref BoardTextDescriptorGeneralXml[] RefTextDescriptors => ref textDescriptors;
 
         [XmlAttribute("simplePropName")]
         public string m_simplePropName;
@@ -129,7 +128,5 @@ namespace WriteEverywhere.Xml
         public override TextRenderingClass RenderingClass => TextRenderingClass.PlaceOnNet;
 
         public override string DescriptorOverrideFont => FontName;
-
-        public override TextParameterWrapper GetParameter(int idx) => null;
     }
 }

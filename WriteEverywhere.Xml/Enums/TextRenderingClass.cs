@@ -1,4 +1,4 @@
-﻿namespace WriteEverywhere.Rendering
+﻿namespace WriteEverywhere.Xml
 {
     public enum TextRenderingClass
     {

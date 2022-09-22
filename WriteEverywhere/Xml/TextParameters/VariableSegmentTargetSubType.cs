@@ -8,7 +8,7 @@ using static WriteEverywhere.Xml.TextParameterVariableWrapper;
 
 namespace WriteEverywhere.Xml
 {
-    internal enum VariableSegmentTargetSubType
+    public enum VariableSegmentTargetSubType
     {
         None,
         StreetSuffix,
@@ -39,7 +39,7 @@ namespace WriteEverywhere.Xml
         DistanceFromReferenceMiles,
     }
 
-    internal static class VariableSegmentTargetSubTypeExtensions
+    public static class VariableSegmentTargetSubTypeExtensions
     {
         public static Dictionary<Enum, CommandLevel> ReadCommandTree()
         {

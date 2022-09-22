@@ -13,8 +13,8 @@ namespace WriteEverywhere.Xml
     //    public int m_distanceRefKm;
     //    public bool m_renderPlate;
     //    public Color m_cachedColor = Color.white;
-    //    internal Color m_propColor = Color.white;
-    //    internal Color m_cachedContrastColor;
+    //    public Color m_propColor = Color.white;
+    //    public Color m_cachedContrastColor;
     //    public BoardInstanceRoadNodeXml m_currentDescriptor;
     //    public int m_segnentIndex;
     //    public int[] m_nodesOrder;

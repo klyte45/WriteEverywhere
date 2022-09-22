@@ -1,15 +1,13 @@
 ﻿using ColossalFramework;
-using ColossalFramework.UI;
 using Kwytto.Interfaces;
 using Kwytto.Utils;
 using System.Xml;
 using System.Xml.Serialization;
-using WriteEverywhere.Rendering;
 
 namespace WriteEverywhere.Xml
 {
     [XmlRoot("textDescriptor")]
-    public class BoardTextDescriptorGeneralXml : IParameterizableVariable, ILibable
+    public abstract class BaseTextToWriteOnXml : IParameterizableVariable, ILibable
     {
         #region Line dimensions
         [XmlElement("WriteLineMaxDimensions")]
@@ -26,7 +24,7 @@ namespace WriteEverywhere.Xml
         [XmlAttribute("textContentV2")]
         public TextContent textContent = TextContent.None;
         [XmlIgnore]
-        private TextParameterWrapper parameterValue;
+        private ITextParameterWrapper parameterValue;
 
         [XmlAttribute("value")]
         public string ValueAsUri
@@ -35,19 +33,12 @@ namespace WriteEverywhere.Xml
             set => SetDefaultParameterValueAsString(value);
         }
 
-        public string SetDefaultParameterValueAsString(string value, TextRenderingClass renderingClass = TextRenderingClass.Any) => (parameterValue = value.IsNullOrWhiteSpace() ? null : new TextParameterWrapper(value, renderingClass))?.ToString();
+        public abstract ITextParameterWrapper GenerateParamVal(string uri, TextRenderingClass clazz);
+        public string SetDefaultParameterValueAsString(string value, TextRenderingClass renderingClass = TextRenderingClass.Any) => (parameterValue = value.IsNullOrWhiteSpace() ? null : GenerateParamVal(value, renderingClass))?.ToString();
 
-        [XmlIgnore]
-        public TextParameterWrapper Value => parameterValue;
-        [XmlIgnore]
-        public TextParameterSequence ParameterSequence { get; set; }
 
         [XmlElement("ParameterSequenceSteps")]
-        public TextParameterSequenceXml SequenceSteps
-        {
-            get => ParameterSequence?.ToXml();
-            set => ParameterSequence = TextParameterSequence.FromXml(value);
-        }
+        public abstract TextParameterSequenceXml SequenceSteps { get; set; }
 
         [XmlAttribute("overrideFont")] public string m_overrideFont;
         [XmlAttribute("fontClass")] public FontClass m_fontClass = FontClass.Regular;
@@ -76,15 +67,13 @@ namespace WriteEverywhere.Xml
         public IlluminationSettings IlluminationConfig { get; set; } = new IlluminationSettings();
         [XmlElement("MultiItemSettings")]
         public SubItemSettings MultiItemSettings { get; set; } = new SubItemSettings();
-        [XmlElement("BackgroundMeshSettings")]
-        public BackgroundMesh BackgroundMeshSettings { get; set; } = new BackgroundMesh();
         [XmlElement("AnimationSettings")]
         public AnimationSettings AnimationSettings { get; set; } = new AnimationSettings();
         [XmlElement("ParameterDisplayName")]
         public string ParameterDisplayName { get; set; } = "";
         public string GetParameterDisplayName() => ParameterDisplayName ?? SaveName;
         public TextContent GetTextContent() => textContent;
-        public object GetValueAsUri() => Value?.ToString();
-        public int GetParamIdx() => Value?.GetParamIdx ?? -1;
+        public abstract string GetValueAsUri();
+        public abstract int GetParamIdx();
     }
 }

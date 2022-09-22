@@ -1,5 +1,6 @@
 ﻿extern alias ADR;
 extern alias TLM;
+extern alias VS;
 
 using ColossalFramework.UI;
 using Kwytto.Interfaces;
@@ -82,6 +83,7 @@ namespace WriteEverywhere
         #region Bridges
         public ADR::Bridge_WE2ADR.IBridge ConnectorADR { get; } = new BridgeADRFallback();
         public TLM::Bridge_WE2TLM.IBridge ConnectorTLM { get; } = new BridgeTLMFallback();
+        public VS::Bridge_WE2VS.IBridge ConnectorVS { get; } = new BridgeVSFallback();
         #endregion
 
         #region OnNet
@@ -89,11 +91,16 @@ namespace WriteEverywhere
         internal WTSOnNetPropsSingleton OnNetPropsSingleton { get; private set; }
         #endregion
 
+        #region Vehicles
+        public static string DefaultVehiclesConfigurationFolder { get; } = FOLDER_PATH + Path.DirectorySeparatorChar + DEFAULT_GAME_VEHICLES_CONFIG_FOLDER;
+        public const string m_defaultFileNameVehiclesXml = "WE_DefaultVehiclesConfig";
+        #endregion
+
         #region uncategorized...
         public const string DEFAULT_GAME_BUILDINGS_CONFIG_FOLDER = "BuildingsDefaultPlacing";
         public const string DEFAULT_GAME_VEHICLES_CONFIG_FOLDER = "VehiclesDefaultPlacing";
         public static string DefaultBuildingsConfigurationFolder { get; } = FOLDER_PATH + Path.DirectorySeparatorChar + DEFAULT_GAME_BUILDINGS_CONFIG_FOLDER;
-        public static string DefaultVehiclesConfigurationFolder { get; } = FOLDER_PATH + Path.DirectorySeparatorChar + DEFAULT_GAME_VEHICLES_CONFIG_FOLDER;
+
         #endregion
 
         public void Awake()

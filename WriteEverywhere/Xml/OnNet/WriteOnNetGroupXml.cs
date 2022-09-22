@@ -10,7 +10,7 @@ namespace WriteEverywhere.Xml
     public class WriteOnNetGroupXml : IWriteGroup
     {
         [XmlIgnore]
-        internal OnNetInstanceCacheContainerXml[] BoardsData { get; set; } = new OnNetInstanceCacheContainerXml[0];
+        public OnNetInstanceCacheContainerXml[] BoardsData { get; set; } = new OnNetInstanceCacheContainerXml[0];
         [XmlIgnore]
         public bool cached = false;
         [XmlElement("BoardsData")]

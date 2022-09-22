@@ -7,14 +7,14 @@ using static WriteEverywhere.Xml.TextParameterVariableWrapper;
 
 namespace WriteEverywhere.Xml
 {
-    internal enum VariableCitySubType
+    public enum VariableCitySubType
     {
         None,
         CityName,
         CityPopulation,
     }
 
-    internal static class VariableCitySubTypeExtensions
+    public static class VariableCitySubTypeExtensions
     {
         public static Dictionary<Enum, CommandLevel> ReadCommandTree()
         {

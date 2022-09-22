@@ -34,7 +34,7 @@ namespace WriteEverywhere.Rendering
         }
 
         public static Color RenderPropMesh<DESC>(PropInfo propInfo, RenderManager.CameraInfo cameraInfo, ushort refId, int boardIdx, int secIdx,
-            int layerMask, float refAngleRad, Vector3 position, Vector4 dataVector, Vector3 propAngle, Vector3 propScale, LibableWriteOnXml propLayout,
+            int layerMask, float refAngleRad, Vector3 position, Vector4 dataVector, Vector3 propAngle, Vector3 propScale, LibableWriteOnXml<BoardTextDescriptorGeneralXml> propLayout,
             DESC descriptor, out Matrix4x4 propMatrix,
             out bool rendered, InstanceID propRenderID) where DESC : BaseWriteOnXml
         {
@@ -80,7 +80,7 @@ namespace WriteEverywhere.Rendering
             return matrix;
         }
 
-        public static Color GetColorForRule<DESC>(ushort refId, int boardIdx, int secIdx, LibableWriteOnXml propLayout, DESC descriptor, out bool rendered) where DESC : BaseWriteOnXml
+        public static Color GetColorForRule<DESC>(ushort refId, int boardIdx, int secIdx, LibableWriteOnXml<BoardTextDescriptorGeneralXml> propLayout, DESC descriptor, out bool rendered) where DESC : BaseWriteOnXml
         {
             Color propColor = GetPropColor(refId, boardIdx, secIdx, descriptor, out bool colorFound);
             if (!colorFound)
