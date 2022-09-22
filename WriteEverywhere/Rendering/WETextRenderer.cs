@@ -53,6 +53,9 @@ namespace WriteEverywhere.Rendering
 
                 block.Clear();
                 CalculateIllumination(refID, boardIdx, secIdx, textDescriptor, block, ref colorToSet, instanceFlags, instanceFlags2);
+                block.SetVector(SHADER_PROP_DIMENSIONS, renderInfo.m_sizeMetersUnscaled);
+                block.SetFloat(SHADER_PROP_PIXELS_METERS, renderInfo.m_pixelDensityMeters);
+                block.SetVector(SHADER_PROP_BORDERS, renderInfo.m_borders);
 
 
                 defaultCallsCounter++;

@@ -70,7 +70,7 @@ namespace WriteEverywhere.UI
         {
             if (tab.currentFolderAtlas != null)
             {
-                GUILayout.Label(string.Join("\n", tab.currentFolderAtlas.spriteNames.OrderBy(x => x).Select(x => $"\u2022 {x}").ToArray()), new GUIStyle(GUI.skin.label)
+                GUILayout.Label(string.Join("\n", tab.currentFolderAtlas.OrderBy(x => x.Key).Select(x => $"\u2022 {x.Key}").ToArray()), new GUIStyle(GUI.skin.label)
                 {
                     wordWrap = true,
                 });
@@ -82,12 +82,12 @@ namespace WriteEverywhere.UI
             tab.SetSelectedFolder(tab.m_searchResult.Value[selectLayout] == "<ROOT>" ? "" : tab.m_searchResult.Value[selectLayout]);
             if (tab.IsLocal)
             {
-                ModInstance.Controller.AtlasesLibrary.GetAtlas(tab.SelectedFolder, out tab.currentFolderAtlas);
+                ModInstance.Controller.AtlasesLibrary.GetSpriteLib(tab.SelectedFolder, out tab.currentFolderAtlas);
             }
             else if (ulong.TryParse(tab.SearchPropName?.Split('.')[0] ?? "", out ulong wId))
             {
                 tab.SetSelectedFolder("");
-                ModInstance.Controller.AtlasesLibrary.GetAtlas(wId.ToString(), out tab.currentFolderAtlas);
+                ModInstance.Controller.AtlasesLibrary.GetSpriteLib(wId.ToString(), out tab.currentFolderAtlas);
             }
         }
 

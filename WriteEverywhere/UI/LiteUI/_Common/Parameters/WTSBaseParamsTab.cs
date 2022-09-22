@@ -6,9 +6,11 @@ using Kwytto.UI;
 using Kwytto.Utils;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using WriteEverywhere.Xml;
+using static ColossalFramework.UI.UITextureAtlas;
 
 namespace WriteEverywhere.UI
 {
@@ -277,7 +279,7 @@ namespace WriteEverywhere.UI
         #region Param editor fields
         internal readonly Wrapper<string[]> m_searchResult = new Wrapper<string[]>();
         private Coroutine m_searchCoroutine;
-        public UITextureAtlas currentFolderAtlas;
+        public Dictionary<string, SpriteInfo> currentFolderAtlas;
 
         public bool IsLocal { get; private set; } = false;
         public bool IsTextVariable { get; set; } = false;

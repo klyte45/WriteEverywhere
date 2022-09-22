@@ -56,7 +56,7 @@ namespace WriteEverywhere.UI
         }
         public static void ImageDrawRightPanel(WTSBaseParamsTab<T> tab, Vector2 areaRect)
         {
-            var texture = tab.currentFolderAtlas?.sprites.Where(x => x.name == tab.SelectedValue).FirstOrDefault()?.texture;
+            var texture = tab.currentFolderAtlas?.Where(x => x.Key == tab.SelectedValue).FirstOrDefault().Value?.texture;
             if (texture != null)
             {
                 GUI.DrawTexture(new Rect(0, 0, texture.width, texture.height), texture, ScaleMode.ScaleToFit, true);
