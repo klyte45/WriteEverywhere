@@ -190,6 +190,7 @@ namespace WriteEverywhere.UI
                     item.SegmentPositionRepeatCount = (ushort)GUIIntField.IntField(f_SegmentRepeatCount, item.SegmentPositionRepeatCount, 1, ushort.MaxValue);
                 };
                 GUIKwyttoCommons.AddIntField(areaRect.x, Str.we_roadEditor_lockCameraAtInstance, ref lockSelectionInstanceNum, true, 0, item.SegmentPositionRepeatCount - 1);
+
             }
             else
             {

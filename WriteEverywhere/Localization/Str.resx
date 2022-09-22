@@ -731,8 +731,8 @@ Note that very low values are recommended only with Real Time mod or alike!</val
   <data name="WTS_CLOCK_SHOW_LEADING_ZERO" xml:space="preserve">
     <value>Show leading zero of hours</value>
   </data>
-  <data name="we_settings_applyUiScale" xml:space="preserve">
-    <value>Apply UI Scale</value>
+  <data name="we_settings_applyUiSettings" xml:space="preserve">
+    <value>Apply UI Settings</value>
   </data>
   <data name="we_settings_goToFolderShort" xml:space="preserve">
     <value>Go To</value>
@@ -856,5 +856,8 @@ A text to succeed the variable value. Use the backslash to scape the slashes (&l
   <data name="we_roadEditor_horizontalAlignmentBoxText" xml:space="preserve">
     <value>Horizontal alignment relative to line width
 (0 = left; 1 = right)</value>
+  </data>
+  <data name="we_settings_uiOpacity" xml:space="preserve">
+    <value>UI Background Opacity</value>
   </data>
 </root>

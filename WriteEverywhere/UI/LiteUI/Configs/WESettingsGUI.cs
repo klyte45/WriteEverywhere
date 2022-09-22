@@ -1,5 +1,4 @@
 ﻿using ColossalFramework.UI;
-using Kwytto.LiteUI;
 using Kwytto.UI;
 using Kwytto.Utils;
 using UnityEngine;
@@ -7,7 +6,7 @@ using WriteEverywhere.Localization;
 
 namespace WriteEverywhere.UI
 {
-    internal class WESettingsGUI : GUIRootWindowBase
+    internal class WESettingsGUI : IOpacityChangingGUI
     {
         public static WESettingsGUI Instance
         {

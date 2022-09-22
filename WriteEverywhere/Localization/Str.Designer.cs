@@ -524,11 +524,11 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Apply UI Scale.
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Apply UI Settings.
         /// </summary>
-        internal static string we_settings_applyUiScale {
+        internal static string we_settings_applyUiSettings {
             get {
-                return ResourceManager.GetString("we_settings_applyUiScale", resourceCulture);
+                return ResourceManager.GetString("we_settings_applyUiSettings", resourceCulture);
             }
         }
         
@@ -583,6 +583,15 @@ namespace WriteEverywhere.Localization {
         internal static string we_settings_ui {
             get {
                 return ResourceManager.GetString("we_settings_ui", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a UI Background Opacity.
+        /// </summary>
+        internal static string we_settings_uiOpacity {
+            get {
+                return ResourceManager.GetString("we_settings_uiOpacity", resourceCulture);
             }
         }
         

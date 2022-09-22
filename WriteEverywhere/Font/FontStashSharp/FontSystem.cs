@@ -35,7 +35,8 @@ namespace FontStashSharp
 
             return size;
         }
-
+        private bool metricsCalculated = false;
+        private float qualityMultiplier;
         public float ReferenceHeight { get; private set; }
         public float BaselineOffset { get; private set; }
 
@@ -119,10 +120,17 @@ namespace FontStashSharp
             var font = Font.FromMemory(data);
             font.RecalculateBasedOnHeight(FontHeight);
             _fonts.Add(font);
+            this.qualityMultiplier = qualityMultiplier;
+            metricsCalculated = false;
+        }
+
+        private void CalculateMetrics()
+        {
             var bounds = new Bounds();
             TextBounds(0, 0, "A", 1, ref bounds);
             ReferenceHeight = (bounds.maxY - bounds.minY) / qualityMultiplier;
             BaselineOffset = bounds.minY / ReferenceHeight;
+            metricsCalculated = true;
         }
 
         private Dictionary<int, FontGlyph> GetGlyphsCollection(int size)
@@ -369,6 +377,10 @@ namespace FontStashSharp
                 bri.m_materialGeneratedTick = LastUpdateAtlas;
                 bri.m_fontBaseLimits = new RangeVector { min = prevGlyph.Font.Descent, max = prevGlyph.Font.Ascent };
                 bri.m_refText = str;
+                if (!metricsCalculated)
+                {
+                    CalculateMetrics();
+                }
                 bri.m_refY = ReferenceHeight;
                 bri.m_baselineOffset = BaselineOffset;
             }

@@ -12,7 +12,7 @@ using WriteEverywhere.Xml;
 
 namespace WriteEverywhere.UI
 {
-    internal class WTSOnNetLiteUI : GUIRootWindowBase
+    internal class WTSOnNetLiteUI : IOpacityChangingGUI
     {
         public static WTSOnNetLiteUI Instance { get; private set; }
         private GUIBasicListingTabsContainer<OnNetInstanceCacheContainerXml> m_tabsContainer;
@@ -44,9 +44,10 @@ namespace WriteEverywhere.UI
             }
         }
 
-        public void Awake()
+        public override void Awake()
         {
             Instance = this;
+            base.Awake();
             Init(Str.we_roadEditor_windowTitle, new Rect(128, 128, 680, 420), resizable: true, minSize: new Vector2(340, 260));
             m_colorPicker = GameObjectUtils.CreateElement<GUIColorPicker>(transform).Init();
             m_colorPicker.Visible = false;
@@ -70,7 +71,7 @@ namespace WriteEverywhere.UI
                     throw new System.Exception("Invalid call!!!");
                 })
             };
-            m_tabsContainer = new GUIBasicListingTabsContainer<OnNetInstanceCacheContainerXml>(tabs, Instance.OnAdd, Instance.GetSideList, Instance.GetSelectedItem, Instance.OnSetCurrentItem);
+            m_tabsContainer = new GUIBasicListingTabsContainer<OnNetInstanceCacheContainerXml>(tabs, Instance.OnAdd, Instance.GetSideList, Instance.GetSelectedItem, Instance.OnSetCurrentItem, Instance.AddExtraButtonsList);
             m_textEditorTabIdx = Array.IndexOf(tabs, m_textEditorTab);
         }
         public static void Destroy()
@@ -160,6 +161,26 @@ namespace WriteEverywhere.UI
             }
         }
 
+        private void AddExtraButtonsList()
+        {
+            if (GUILayout.Button(Str.we_roadEditor_importAdding))
+            {
+                xmlLibList.GoToImportAdditive();
+            }
+            if (GUILayout.Button(Str.we_roadEditor_importReplacing))
+            {
+                xmlLibList.GoToImport();
+            }
+            if (GUILayout.Button(Str.WTS_SEGMENT_EXPORTDATA))
+            {
+                xmlLibList.GoToExport();
+            }
+            if (GUILayout.Button(Str.WTS_SEGMENT_CLEARDATA))
+            {
+                xmlLibList.GoToRemove();
+            }
+        }
+
 
         private void RegularDraw()
         {
@@ -175,24 +196,6 @@ namespace WriteEverywhere.UI
                     using (new GUILayout.HorizontalScope())
                     {
                         LockSelection = GUILayout.Toggle(LockSelection, Str.WTS_SEGMENTEDITOR_BUTTONROWACTION_LOCKCAMERASELECTION);
-                        GUILayout.FlexibleSpace();
-                        if (GUILayout.Button(Str.we_roadEditor_importAdding))
-                        {
-                            xmlLibList.GoToImportAdditive();
-                        }
-                        if (GUILayout.Button(Str.we_roadEditor_importReplacing))
-                        {
-                            xmlLibList.GoToImport();
-                        }
-                        if (GUILayout.Button(Str.WTS_SEGMENT_EXPORTDATA))
-                        {
-                            xmlLibList.GoToExport();
-                        }
-                        if (GUILayout.Button(Str.WTS_SEGMENT_CLEARDATA))
-                        {
-                            xmlLibList.GoToRemove();
-                        }
-
                     }
                 }
 

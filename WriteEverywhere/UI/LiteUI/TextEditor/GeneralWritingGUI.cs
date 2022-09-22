@@ -48,7 +48,7 @@ namespace WriteEverywhere.UI
         private FooterBarStatus CurrentLibState => m_textGroupLib.Status;
         private State CurrentLocalState { get; set; } = State.Normal;
 
-        public void Reset()
+        public virtual void Reset()
         {
             m_textGroupLib.ResetStatus();
         }
@@ -148,13 +148,10 @@ namespace WriteEverywhere.UI
 
         private void RegularDraw(Vector2 size)
         {
-            m_tabsContainer.DrawListTabs(new Rect(0, 0, size.x, size.y - 25), true);
-            using (new GUILayout.AreaScope(new Rect(0, size.y - 25, size.x, 25)))
+            m_tabsContainer.DrawListTabs(new Rect(0, 20, size.x, size.y - 20), true, true);
+            using (new GUILayout.AreaScope(new Rect(0, 0, size.x, 20)))
             {
-                using (new GUILayout.HorizontalScope())
-                {
-                    m_textGroupLib.Draw(RedButton, () => GetDescriptorArray() = new BoardTextDescriptorGeneralXml[0], () => new ILibableAsContainer<BoardTextDescriptorGeneralXml> { Data = new ListWrapper<BoardTextDescriptorGeneralXml>() { listVal = GetDescriptorArray().ToList() } }, m_textGroupLib.FooterDraw);
-                }
+                m_textGroupLib.Draw(RedButton, () => GetDescriptorArray() = new BoardTextDescriptorGeneralXml[0], () => new ILibableAsContainer<BoardTextDescriptorGeneralXml> { Data = new ListWrapper<BoardTextDescriptorGeneralXml>() { listVal = GetDescriptorArray().ToList() } }, m_textGroupLib.FooterDraw);
             }
         }
 

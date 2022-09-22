@@ -11,9 +11,12 @@ namespace WriteEverywhere.UI
 
         public WESettingsUITab()
         {
+            m_TargetScale = ModInstance.UIScaleSaved.value;
+            m_TargetOpacity = ModInstance.UIOpacitySaved.value;
         }
 
         private float m_TargetScale;
+        private float m_TargetOpacity;
 
         public void DrawArea(Vector2 tabAreaSize)
         {
@@ -22,9 +25,15 @@ namespace WriteEverywhere.UI
                 using (new GUILayout.VerticalScope())
                 {
                     GUIKwyttoCommons.AddSlider(tabAreaSize.x, Str.we_settings_uiScale, ref m_TargetScale, 0.5f, 2f);
-                    if (GUILayout.Button(Str.we_settings_applyUiScale))
+                    GUIKwyttoCommons.AddSlider(tabAreaSize.x, Str.we_settings_uiOpacity, ref m_TargetOpacity, 0, 1f);
+                    if (GUILayout.Button(Str.we_settings_applyUiSettings))
                     {
                         ModInstance.UIScaleSaved.value = m_TargetScale;
+                        ModInstance.UIOpacitySaved.value = Mathf.Clamp01(m_TargetOpacity);
+                        foreach (var ui in GameObject.FindObjectsOfType<IOpacityChangingGUI>())
+                        {
+                            ui.BgOpacity = ModInstance.UIOpacitySaved.value;
+                        }
                     }
                 }
             }

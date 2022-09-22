@@ -26,8 +26,9 @@ namespace WriteEverywhere.UI
 
 
 
-        public void Reset()
+        public override void Reset()
         {
+            base.Reset();
             ReloadList();
         }
     }
