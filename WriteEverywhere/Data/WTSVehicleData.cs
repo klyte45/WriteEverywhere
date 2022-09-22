@@ -2,7 +2,7 @@
 using Kwytto.Data;
 using Kwytto.Utils;
 using System.Xml.Serialization;
-using VS::Bridge_WE2VS;
+using WriteEverywhere.Xml;
 
 namespace WriteEverywhere.Data
 {

@@ -54,7 +54,7 @@ namespace WriteEverywhere.UI
                         if (usingFrame)
                         {
                             changedFrame |= GUIKwyttoCommons.AddVector2Field(tabAreaSize.x, (Kwytto.Utils.Vector2Xml)item.BackgroundMeshSettings.FrameMeshSettings.BackSize, Str.WTS_BOXMESH_BACKSIZE, Str.WTS_BOXMESH_BACKSIZE, isEditable, .001f);
-                            changedFrame |= GUIKwyttoCommons.AddVector2Field(tabAreaSize.x, (Kwytto.Utils.Vector2Xml)item.BackgroundMeshSettings.FrameMeshSettings.BackOffset, Str.WTS_BOXMESH_BACKOFFSETFROMCENTERBOTTOM, Str.WTS_BOXMESH_BACKOFFSETFROMCENTERBOTTOM, isEditable, .001f);
+                            changedFrame |= GUIKwyttoCommons.AddVector2Field(tabAreaSize.x, (Kwytto.Utils.Vector2Xml)item.BackgroundMeshSettings.FrameMeshSettings.BackOffset, Str.WTS_BOXMESH_BACKOFFSETFROMCENTERBOTTOM, Str.WTS_BOXMESH_BACKOFFSETFROMCENTERBOTTOM, isEditable);
                             if (GUIKwyttoCommons.AddFloatField(tabAreaSize.x, Str.WTS_BOXMESH_DEPTH_BACK, item.BackgroundMeshSettings.FrameMeshSettings.BackDepth, out var newVal, isEditable, .001f))
                             {
                                 item.BackgroundMeshSettings.FrameMeshSettings.BackDepth = newVal;

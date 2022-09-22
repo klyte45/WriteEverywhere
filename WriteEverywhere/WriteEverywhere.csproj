@@ -111,7 +111,7 @@
   <!-- </ItemGroup> -->
   <ItemGroup>
     <EmbeddedResource Include="UI\**\*.png" />
-    <EmbeddedResource Include="UI\**\*.ttf" /> 
+    <EmbeddedResource Include="UI\**\*.ttf" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Bridge_WE2ADR\Bridge_WE2ADR.csproj">
@@ -125,7 +125,7 @@
       <Aliases>TLM</Aliases>
     </ProjectReference>
     <ProjectReference Include="..\Bridge_WE2VS\Bridge_WE2VS.csproj">
-      <Project>{a48b01d6-0b04-40aa-a5df-c76a73ffcbb5}</Project> 
+      <Project>{a48b01d6-0b04-40aa-a5df-c76a73ffcbb5}</Project>
       <Name>Bridge_WE2VS</Name>
       <Aliases>VS</Aliases>
     </ProjectReference>

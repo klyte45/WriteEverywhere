@@ -61,6 +61,78 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Workshop.
+        /// </summary>
+        internal static string comm_Enum__ConfigurationSource_ASSET {
+            get {
+                return ResourceManager.GetString("comm_Enum__ConfigurationSource_ASSET", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Savegame (City).
+        /// </summary>
+        internal static string comm_Enum__ConfigurationSource_CITY {
+            get {
+                return ResourceManager.GetString("comm_Enum__ConfigurationSource_CITY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Local folder (Appdata).
+        /// </summary>
+        internal static string comm_Enum__ConfigurationSource_GLOBAL {
+            get {
+                return ResourceManager.GetString("comm_Enum__ConfigurationSource_GLOBAL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a None (Disabled).
+        /// </summary>
+        internal static string comm_Enum__ConfigurationSource_NONE {
+            get {
+                return ResourceManager.GetString("comm_Enum__ConfigurationSource_NONE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Skin (From Vehicle Skins).
+        /// </summary>
+        internal static string comm_Enum__ConfigurationSource_SKIN {
+            get {
+                return ResourceManager.GetString("comm_Enum__ConfigurationSource_SKIN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a No cloning.
+        /// </summary>
+        internal static string comm_Enum__YCloneType_None {
+            get {
+                return ResourceManager.GetString("comm_Enum__YCloneType_None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Mirrored on X Axis.
+        /// </summary>
+        internal static string comm_Enum__YCloneType_OnX {
+            get {
+                return ResourceManager.GetString("comm_Enum__YCloneType_OnX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Mirrored on Z Axis.
+        /// </summary>
+        internal static string comm_Enum__YCloneType_OnZ {
+            get {
+                return ResourceManager.GetString("comm_Enum__YCloneType_OnZ", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Allow to write text in-game to simulate stuff like boards or signs..
         /// </summary>
         internal static string root_modDescription {
@@ -319,6 +391,15 @@ namespace WriteEverywhere.Localization {
         internal static string we_generalTextEditor_boxInnerColor {
             get {
                 return ResourceManager.GetString("we_generalTextEditor_boxInnerColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Clone at 180º Y type.
+        /// </summary>
+        internal static string we_generalTextEditor_cloneType180 {
+            get {
+                return ResourceManager.GetString("we_generalTextEditor_cloneType180", resourceCulture);
             }
         }
         
@@ -624,6 +705,43 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Head.
+        /// </summary>
+        internal static string we_vehicleEditor_headVehicleTitle {
+            get {
+                return ResourceManager.GetString("we_vehicleEditor_headVehicleTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Picker.
+        /// </summary>
+        internal static string we_vehicleEditor_pickerBtn {
+            get {
+                return ResourceManager.GetString("we_vehicleEditor_pickerBtn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Grab an unit of this vehicle as viewer
+        ///(Will spawn if not found).
+        /// </summary>
+        internal static string we_vehicleEditor_pickOrSpawnAVehicle {
+            get {
+                return ResourceManager.GetString("we_vehicleEditor_pickOrSpawnAVehicle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Trailer {0}.
+        /// </summary>
+        internal static string we_vehicleEditor_trailerNumTitle {
+            get {
+                return ResourceManager.GetString("we_vehicleEditor_trailerNumTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Filter assets having at least one layout active.
         /// </summary>
         internal static string WTS_ACTIVERULESONLY {
@@ -831,7 +949,7 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Delete from this savegame\n(Note: global or asset values will be used if exists).
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Delete from this savegame\n(Note: appdata or asset values will be used if exists).
         /// </summary>
         internal static string WTS_BUILDINGEDITOR_BUTTONROWACTION_DELETEFROMCITY {
             get {
@@ -840,7 +958,7 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Export this layout as global.
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Export this layout to local folder (Appdata).
         /// </summary>
         internal static string WTS_BUILDINGEDITOR_BUTTONROWACTION_EXPORTASGLOBAL {
             get {
@@ -867,7 +985,7 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Open global layouts folder.
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Open appdata layouts folder.
         /// </summary>
         internal static string WTS_BUILDINGEDITOR_BUTTONROWACTION_OPENGLOBALSFOLDER {
             get {
@@ -1193,7 +1311,7 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Image from global folder.
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Image from appdata folder.
         /// </summary>
         internal static string WTS_IMAGESRC_LOCAL {
             get {
@@ -2287,7 +2405,7 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Vehicle layout successfully exported to:\n&lt;color yellow&gt;{0}&lt;/color&gt;.
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Vehicle layout successfully exported to:.
         /// </summary>
         internal static string WTS_VEHICLE_EXPORTLAYOUT_SUCCESSSAVEDATA {
             get {

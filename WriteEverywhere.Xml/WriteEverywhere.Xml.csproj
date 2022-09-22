@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>eeb0f9cd-62f2-4e4e-9ac7-21d66e0b7696</ProjectGuid>
+    <ProjectGuid>{EEB0F9CD-62F2-4E4E-9AC7-21D66E0B7696}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>WriteEverywhere.Xml</RootNamespace>
@@ -46,7 +46,7 @@
       <HintPath>..\..\_managed\ColossalManaged.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="ICities"> 
+    <Reference Include="ICities">
       <HintPath>..\..\_managed\ICities.dll</HintPath>
       <Private>False</Private>
     </Reference>
@@ -73,7 +73,7 @@
       <Project>{27c920f8-f40f-4d56-bcb6-9c9025ed0aac}</Project>
       <Name>KwyttoUtilityWE</Name>
     </ProjectReference>
-  </ItemGroup>  
+  </ItemGroup>
   <PropertyGroup>
     <PostBuildEvent>set "ModDir=%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(SolutionName)\"
 rmdir /s /q "%25ModDir%25"
@@ -84,4 +84,4 @@ del "%25ModDir%25*.pdb"
 </PostBuildEvent>
   </PropertyGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
- </Project>
+</Project>

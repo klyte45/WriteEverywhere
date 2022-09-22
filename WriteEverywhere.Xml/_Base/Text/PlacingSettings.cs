@@ -8,8 +8,8 @@ namespace WriteEverywhere.Xml
     {
         [XmlAttribute("cloneInvertHorizontalAlign")]
         public bool m_invertYCloneHorizontalAlign;
-        [XmlAttribute("clone180DegY")]
-        public bool m_create180degYClone;
+        [XmlAttribute("yCloneType")]
+        public YCloneType m_yCloneType;
 
         [XmlElement("position")]
         public Vector3Xml Position { get; set; } = new Vector3Xml();

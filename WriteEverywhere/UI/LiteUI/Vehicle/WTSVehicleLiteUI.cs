@@ -1,5 +1,4 @@
-﻿using ColossalFramework.Globalization;
-using Kwytto.LiteUI;
+﻿using Kwytto.LiteUI;
 using Kwytto.Utils;
 using System;
 using System.Collections;
@@ -15,6 +14,10 @@ namespace WriteEverywhere.UI
     internal class WTSVehicleLiteUI : IOpacityChangingGUI
     {
         public static WTSVehicleLiteUI Instance { get; private set; }
+        public int TrailerSel { get; private set; } = 0;
+        public ushort CurrentGrabbedId => m_detailUI.CurrentGrabbedId;
+        public int CurrentTextSel => m_detailUI.CurrentSelectedText;
+        public bool IsOnTextDimensionsView => m_detailUI.IsOnTextDimensionsView;
 
         public override void Awake()
         {
@@ -42,7 +45,7 @@ namespace WriteEverywhere.UI
         {
             hasChanged = false;
             var currentTool = ToolsModifierControl.toolController.CurrentTool;
-            if (GUILayout.Button("Picker", currentTool is VehicleEditorTool currentToolVeh ? GreenButton : GUI.skin.button, GUILayout.Width(100)))
+            if (GUILayout.Button(Str.we_vehicleEditor_pickerBtn, currentTool is VehicleEditorTool currentToolVeh ? GreenButton : GUI.skin.button, GUILayout.Width(100)))
             {
                 var vehTool = ToolsModifierControl.toolController.GetComponent<VehicleEditorTool>();
                 vehTool.OnVehicleSelect += (x) =>
@@ -50,6 +53,7 @@ namespace WriteEverywhere.UI
                          var head = VehicleManager.instance.m_vehicles.m_buffer[x].GetFirstVehicle(x);
                          CurrentInfo = VehicleManager.instance.m_vehicles.m_buffer[head].Info;
                          m_currentState = State.Normal;
+                         m_detailUI.CurrentGrabbedId = x;
                      };
                 vehTool.OnParkedVehicleSelect += (x) =>
                 {
@@ -149,13 +153,12 @@ namespace WriteEverywhere.UI
         internal void Reset()
         {
             m_currentState = State.Normal;
-            CurrentTab = 0;
+            TrailerSel = 0;
         }
 
         private State m_currentState = State.Normal;
         private void GoTo(State newState) => m_currentState = newState;
 
-        public int CurrentTab { get; private set; } = 0;
         public VehicleInfo CurrentInfo
         {
             get => m_currentInfo; set
@@ -173,7 +176,7 @@ namespace WriteEverywhere.UI
                         {
                             m_currentInfoList.AddRange(m_currentInfo.m_trailers.Select(x => x.m_info).Distinct().Where(x => x != m_currentInfo));
                         }
-                        CurrentTab = 0;
+                        TrailerSel = 0;
                     }
                 }
             }
@@ -215,13 +218,13 @@ namespace WriteEverywhere.UI
                 {
                     using (var scope = new GUILayout.ScrollViewScope(m_horizontalScroll))
                     {
-                        CurrentTab = GUILayout.SelectionGrid(CurrentTab, m_currentInfoList.Select((_, i) => i == 0 ? "Head" : $"Trailer {i}").ToArray(), m_currentInfoList.Count, GUILayout.MinWidth(40));
+                        TrailerSel = GUILayout.SelectionGrid(TrailerSel, m_currentInfoList.Select((_, i) => i == 0 ? Str.we_vehicleEditor_headVehicleTitle : string.Format(Str.we_vehicleEditor_trailerNumTitle, i)).ToArray(), m_currentInfoList.Count, GUILayout.MinWidth(40));
                         m_horizontalScroll = scope.scrollPosition;
                     }
                 }
                 using (new GUILayout.AreaScope(bodyArea, BgTextureSubgroup, GUI.skin.box))
                 {
-                    m_detailUI.DoDraw(new Rect(default, bodyArea.size), m_currentInfoList[CurrentTab], m_currentInfoList[0]);
+                    m_detailUI.DoDraw(new Rect(default, bodyArea.size), m_currentInfoList[TrailerSel], m_currentInfoList[0]);
                 }
 
 
@@ -264,7 +267,10 @@ namespace WriteEverywhere.UI
             return 12;
         }
 
-        private void OnVehicleSet(int selectLayout, string _ = null) => CurrentInfo = (m_cachedResultList[selectLayout].Info as VehicleInfo);
+        private void OnVehicleSet(int selectLayout, string _ = null)
+        {
+            CurrentInfo = (m_cachedResultList[selectLayout].Info as VehicleInfo);
+        }
         #endregion
     }
 }

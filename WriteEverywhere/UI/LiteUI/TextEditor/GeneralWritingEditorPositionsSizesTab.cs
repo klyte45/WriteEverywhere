@@ -1,7 +1,8 @@
-﻿using ColossalFramework.UI;
-using Kwytto.LiteUI;
+﻿using Kwytto.LiteUI;
 using Kwytto.UI;
 using Kwytto.Utils;
+using System;
+using System.Linq;
 using UnityEngine;
 using WriteEverywhere.Localization;
 using WriteEverywhere.Xml;
@@ -10,7 +11,8 @@ namespace WriteEverywhere.UI
 {
     internal class GeneralWritingEditorPositionsSizesTab : IGUITab<BoardTextDescriptorGeneralXml>
     {
-        private readonly string[] m_alignmentOptions = EnumI18nExtensions.GetAllValuesI18n<UIHorizontalAlignment>();
+        private readonly string[] m_cloneOptionsStr = EnumI18nExtensions.GetAllValuesI18n<YCloneType>();
+        private readonly YCloneType[] m_cloneOptions = Enum.GetValues(typeof(YCloneType)).Cast<YCloneType>().ToArray();
         private readonly GUIRootWindowBase m_root;
         public GeneralWritingEditorPositionsSizesTab(GUIRootWindowBase parent)
         {
@@ -33,8 +35,8 @@ namespace WriteEverywhere.UI
             {
                 GUIKwyttoCommons.AddSlider(tabAreaSize.x, Str.we_roadEditor_verticalAlignmentLineText, ref item.m_verticalAlignment, 0, 1, isEditable);
             }
-            GUIKwyttoCommons.AddToggle(Str.WTS_CREATE_CLONE_180DEG, ref item.PlacingConfig.m_create180degYClone, isEditable);
-            GUIKwyttoCommons.AddToggle(Str.WTS_CLONE_180DEG_INVERT_TEXT_HOR_ALIGN, ref item.PlacingConfig.m_invertYCloneHorizontalAlign, isEditable, item.PlacingConfig.m_create180degYClone);
+            GUIKwyttoCommons.AddComboBox(tabAreaSize.x, Str.we_generalTextEditor_cloneType180, ref item.PlacingConfig.m_yCloneType, m_cloneOptionsStr, m_cloneOptions, m_root, isEditable);
+            GUIKwyttoCommons.AddToggle(Str.WTS_CLONE_180DEG_INVERT_TEXT_HOR_ALIGN, ref item.PlacingConfig.m_invertYCloneHorizontalAlign, isEditable, item.PlacingConfig.m_yCloneType != YCloneType.None);
             return false;
         }
         public void Reset() { }

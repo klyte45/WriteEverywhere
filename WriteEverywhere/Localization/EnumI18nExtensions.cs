@@ -1,6 +1,4 @@
 ﻿using ColossalFramework.UI;
-using FontStashSharp;
-using Kwytto.Utils;
 using System;
 using System.Linq;
 using WriteEverywhere.Xml;
@@ -133,6 +131,16 @@ namespace WriteEverywhere.Localization
                         case BlinkType.Custom: return Str.we_Enum__BlinkType_Custom;
                     }
                     break;
+                case ConfigurationSource.NONE: return Str.comm_Enum__ConfigurationSource_NONE;
+                case ConfigurationSource.ASSET: return Str.comm_Enum__ConfigurationSource_ASSET;
+                case ConfigurationSource.GLOBAL: return Str.comm_Enum__ConfigurationSource_GLOBAL;
+                case ConfigurationSource.CITY: return Str.comm_Enum__ConfigurationSource_CITY;
+                case ConfigurationSource.SKIN: return Str.comm_Enum__ConfigurationSource_SKIN;
+                case YCloneType.None: return Str.comm_Enum__YCloneType_None;
+                case YCloneType.OnX: return Str.comm_Enum__YCloneType_OnX;
+                case YCloneType.OnZ: return Str.comm_Enum__YCloneType_OnZ;
+
+
             }
             return variable.ValueToI18nKwytto();
         }

@@ -12,7 +12,7 @@ namespace WriteEverywhere.Xml
         public LayoutDescriptorVehicleXml[] Descriptors { get; set; }
         [XmlIgnore]
         internal string lastLayoutVersion = null;
-        [XmlAttribute("WTS_layoutVersion")]
+        [XmlAttribute("WE_layoutVersion")]
         public string LayoutVersion
         {
             get => ModInstance.FullVersion;

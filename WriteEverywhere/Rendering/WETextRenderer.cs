@@ -258,7 +258,7 @@ namespace WriteEverywhere.Rendering
 
             result.Add(textMatrix);
 
-            if (placingSettings.m_create180degYClone)
+            if (placingSettings.m_yCloneType != YCloneType.None)
             {
                 if (textDescriptor.PlacingConfig.m_invertYCloneHorizontalAlign)
                 {
@@ -266,7 +266,7 @@ namespace WriteEverywhere.Rendering
                 }
                 result.Add(ApplyTextAdjustments(new PlacingSettings
                 {
-                    Position = new Vector3Xml { X = placingSettings.Position.X, Y = placingSettings.Position.Y, Z = -placingSettings.Position.Z },
+                    Position = new Vector3Xml { X = (placingSettings.m_yCloneType == YCloneType.OnX ? -1 : 1) * placingSettings.Position.X, Y = placingSettings.Position.Y, Z = (placingSettings.m_yCloneType == YCloneType.OnZ ? -1 : 1) * placingSettings.Position.Z },
                     Rotation = new Vector3Xml
                     {
                         X = placingSettings.Rotation.X,

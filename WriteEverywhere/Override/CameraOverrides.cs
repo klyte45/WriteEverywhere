@@ -13,13 +13,17 @@ namespace WriteEverywhere.Override
         {
             RedirectorInstance = GameObjectUtils.CreateElement<Redirector>(transform);
             var overrideNet = typeof(WTSOnNetPropsSingleton).GetMethod("AfterUpdateTransformOverride", ReflectionUtils.allFlags);
+            var overrideVehicle = typeof(WTSVehicleTextsSingleton).GetMethod("AfterUpdateTransformOverride", ReflectionUtils.allFlags);
             var src = typeof(CameraController).GetMethod("UpdateTransform", ReflectionUtils.allFlags);
             var src2 = Type.GetType("CameraPositions.Detours.CameraControllerDetour, CameraPositions.dll")?.GetMethod("UpdateTransform", ReflectionUtils.allFlags);
-            RedirectorInstance.AddRedirect(src, null, overrideNet);
-            if (src2 != null)
+            foreach (var m in new[] { overrideNet, overrideVehicle })
             {
-                LogUtils.DoLog("CameraPositions was found!");
-                RedirectorInstance.AddRedirect(src2, null, overrideNet);
+                RedirectorInstance.AddRedirect(src, null, m);
+                if (src2 != null)
+                {
+                    LogUtils.DoLog("CameraPositions was found!");
+                    RedirectorInstance.AddRedirect(src2, null, m);
+                }
             }
 
         }

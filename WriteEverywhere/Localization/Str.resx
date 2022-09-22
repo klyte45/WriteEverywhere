@@ -142,7 +142,7 @@
     <value>Image from asset folder</value>
   </data>
   <data name="WTS_IMAGESRC_LOCAL" xml:space="preserve">
-    <value>Image from global folder</value>
+    <value>Image from appdata folder</value>
   </data>
   <data name="WTS_INVERT_SIGN_SIDE" xml:space="preserve">
     <value>Invert road side</value>
@@ -867,20 +867,74 @@ Check the data shown below to get information.</value>
   <data name="WTS_PICK_A_VEHICLE" xml:space="preserve">
     <value>Pick a vehicle</value>
   </data>
-  <data name="WTS_VEHICLEEDITOR_WINDOWTITLE" xml:space="preserve">    <value>Vehicle editor</value>  </data>
-  <data name="WTS_ACTIVERULESONLY" xml:space="preserve">    <value>Filter assets having at least one layout active</value>  </data>
-  <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_COPYTOCITY" xml:space="preserve">    <value>Clone this layout to be edited in this savegame</value>  </data>
-  <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_DELETEFROMCITY" xml:space="preserve">    <value>Delete from this savegame\n(Note: global or asset values will be used if exists)</value>  </data>
-  <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_EXPORTASGLOBAL" xml:space="preserve">    <value>Export this layout as global</value>  </data>
-  <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_EXPORTTOASSETFOLDER" xml:space="preserve">    <value>Export this layout to be packed\nto Steam Workshop</value>  </data>
-  <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_NEWINCITY" xml:space="preserve">    <value>Create new layout for this savegame</value>  </data>
-  <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_OPENGLOBALSFOLDER" xml:space="preserve">    <value>Open global layouts folder</value>  </data>
-  <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_RELOADDESCRIPTORS" xml:space="preserve">    <value>Reload descriptors</value>  </data>
-  <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_SAVESKIN" xml:space="preserve">    <value>Save skin layout to disk</value>  </data>
-  <data name="WTS_CURRENTLY_USING" xml:space="preserve">    <value>Currently using</value>  </data>
-  <data name="WTS_CURRENTSELECTION" xml:space="preserve">    <value>Current selection</value>  </data>
-  <data name="WTS_VEHICLE_EXPORTLAYOUT" xml:space="preserve">    <value>Export vehicle layout</value>  </data>
-  <data name="WTS_VEHICLE_EXPORTLAYOUT_SUCCESSSAVEDATA" xml:space="preserve">    <value>Vehicle layout successfully exported to:\n&lt;color yellow&gt;{0}&lt;/color&gt;</value>  </data>
-  <data name="WTS_VEHICLEEDITOR_SELECTMODEL" xml:space="preserve">    <value>Select vehicle model</value>  </data>
+  <data name="WTS_VEHICLEEDITOR_WINDOWTITLE" xml:space="preserve">
+    <value>Vehicle editor</value>
+  </data>
+  <data name="WTS_ACTIVERULESONLY" xml:space="preserve">
+    <value>Filter assets having at least one layout active</value>
+  </data>
+  <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_COPYTOCITY" xml:space="preserve">
+    <value>Clone this layout to be edited in this savegame</value>
+  </data>
+  <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_DELETEFROMCITY" xml:space="preserve">
+    <value>Delete from this savegame\n(Note: appdata or asset values will be used if exists)</value>
+  </data>
+  <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_EXPORTASGLOBAL" xml:space="preserve">
+    <value>Export this layout to local folder (Appdata)</value>
+  </data>
+  <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_EXPORTTOASSETFOLDER" xml:space="preserve">
+    <value>Export this layout to be packed\nto Steam Workshop</value>
+  </data>
+  <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_NEWINCITY" xml:space="preserve">
+    <value>Create new layout for this savegame</value>
+  </data>
+  <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_OPENGLOBALSFOLDER" xml:space="preserve">
+    <value>Open appdata layouts folder</value>
+  </data>
+  <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_RELOADDESCRIPTORS" xml:space="preserve">
+    <value>Reload descriptors</value>
+  </data>
+  <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_SAVESKIN" xml:space="preserve">
+    <value>Save skin layout to disk</value>
+  </data>
+  <data name="WTS_CURRENTLY_USING" xml:space="preserve">
+    <value>Currently using</value>
+  </data>
+  <data name="WTS_CURRENTSELECTION" xml:space="preserve">
+    <value>Current selection</value>
+  </data>
+  <data name="WTS_VEHICLE_EXPORTLAYOUT" xml:space="preserve">
+    <value>Export vehicle layout</value>
+  </data>
+  <data name="WTS_VEHICLE_EXPORTLAYOUT_SUCCESSSAVEDATA" xml:space="preserve">
+    <value>Vehicle layout successfully exported to:</value>
+  </data>
+  <data name="WTS_VEHICLEEDITOR_SELECTMODEL" xml:space="preserve">
+    <value>Select vehicle model</value>
+  </data>
+  <data name="we_generalTextEditor_cloneType180" xml:space="preserve">
+    <value>Clone at 180º Y type</value>
+  </data>
+  <data name="we_vehicleEditor_headVehicleTitle" xml:space="preserve">
+    <value>Head</value>
+  </data>
+  <data name="we_vehicleEditor_pickerBtn" xml:space="preserve">
+    <value>Picker</value>
+  </data>
+  <data name="we_vehicleEditor_pickOrSpawnAVehicle" xml:space="preserve">
+    <value>Grab an unit of this vehicle as viewer
+(Will spawn if not found)</value>
+  </data>
+  <data name="we_vehicleEditor_trailerNumTitle" xml:space="preserve">
+    <value>Trailer {0}</value>
+  </data>
+  <data name="comm_Enum__YCloneType_OnZ" xml:space="preserve">    <value>Mirrored on Z Axis</value>  </data>
+  <data name="comm_Enum__ConfigurationSource_ASSET" xml:space="preserve">    <value>Workshop</value>  </data>
+  <data name="comm_Enum__ConfigurationSource_CITY" xml:space="preserve">    <value>Savegame (City)</value>  </data>
+  <data name="comm_Enum__ConfigurationSource_GLOBAL" xml:space="preserve">    <value>Local folder (Appdata)</value>  </data>
+  <data name="comm_Enum__ConfigurationSource_NONE" xml:space="preserve">    <value>None (Disabled)</value>  </data>
+  <data name="comm_Enum__ConfigurationSource_SKIN" xml:space="preserve">    <value>Skin (From Vehicle Skins)</value>  </data>
+  <data name="comm_Enum__YCloneType_None" xml:space="preserve">    <value>No cloning</value>  </data>
+  <data name="comm_Enum__YCloneType_OnX" xml:space="preserve">    <value>Mirrored on X Axis</value>  </data>
 
 </root>

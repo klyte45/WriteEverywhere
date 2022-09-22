@@ -55,9 +55,7 @@ namespace WriteEverywhere.UI
         private readonly GUIColorPicker m_colorPicker;
         private readonly GUIRootWindowBase m_root;
 
-
         private readonly GUIBasicListingTabsContainer<BoardTextDescriptorGeneralXml> m_tabsContainer;
-
 
         private string m_clipboard;
         private string[] m_cachedItemList;
@@ -71,6 +69,12 @@ namespace WriteEverywhere.UI
 
         private FooterBarStatus CurrentLibState => m_vehicleLib.Status;
         private State CurrentLocalState { get; set; } = State.Normal;
+
+        public ushort CurrentGrabbedId { get; set; }
+        public int CurrentSelectedText => m_tabsContainer.ListSel;
+        public int TextDescriptorIndexSelected => m_tabsContainer.CurrentTabIdx;
+        public bool IsOnTextDimensionsView => m_tabsContainer.CurrentTabIdx == m_sizeEditorTabIdx;
+        private readonly int m_sizeEditorTabIdx;
 
         public WTSVehicleInfoDetailLiteUI(GUIColorPicker colorPicker)
         {
@@ -99,18 +103,21 @@ namespace WriteEverywhere.UI
             GameObjectUtils.CreateUIElement(out UIPanel previewContainer, WTSVehicleLiteUI.Instance.transform, "previewContainer", new UnityEngine.Vector4(uicomp.width, 0, 500, 200));
 
             var root = colorPicker.GetComponentInParent<GUIRootWindowBase>();
-            m_tabsContainer = new GUIBasicListingTabsContainer<BoardTextDescriptorGeneralXml>(
-                new IGUITab<BoardTextDescriptorGeneralXml>[]{
+            GeneralWritingEditorPositionsSizesTab positionTab;
+            var tabs = new IGUITab<BoardTextDescriptorGeneralXml>[]{
                     new GeneralWritingEditorGeneralTab(),
-                    new GeneralWritingEditorPositionsSizesTab(root),
+                    positionTab = new GeneralWritingEditorPositionsSizesTab(root),
                     new GeneralWritingEditorForegroundTab(m_colorPicker),
                     new GeneralWritingEditorBoxSettingsTab(m_colorPicker, ()=> m_currentInfo),
                     new GeneralWritingEditorIlluminationTab(m_colorPicker),
                     new GeneralWritingEditorContentTab(m_colorPicker, ()=> m_currentInfo, TextRenderingClass.Vehicle)
-                    },
+                    };
+            m_tabsContainer = new GUIBasicListingTabsContainer<BoardTextDescriptorGeneralXml>(
+                tabs,
                 OnAddItem,
                 GetList,
                 GetCurrentItem, SetCurrentItem);
+            m_sizeEditorTabIdx = Array.IndexOf(tabs, positionTab);
             m_tabsContainer.EventListItemChanged += OnTabChanged;
         }
 
@@ -161,7 +168,7 @@ namespace WriteEverywhere.UI
                             RegularDraw(area.size);
                             break;
                         case State.GeneralFontPicker:
-                            m_fontFilter.DrawSelectorView(area.height);
+                            m_fontFilter.DrawSelectorView(area.height - 20);
                             break;
                     }
                     break;
@@ -183,7 +190,7 @@ namespace WriteEverywhere.UI
                     {
                         GUILayout.FlexibleSpace();
                         GUILayout.Label($"<color=#FFFF00>{Str.WTS_CURRENTSELECTION}</color>\n{m_currentInfo.name}");
-                        GUILayout.Label($"<color=#FFFF00>{Str.WTS_CURRENTLY_USING}</color>\n{Locale.Get("K45_WTS_CONFIGURATIONSOURCE", m_currentSource.ToString())}");
+                        GUILayout.Label($"<color=#FFFF00>{Str.WTS_CURRENTLY_USING}</color>\n{m_currentSource.ValueToI18n()}");
                         GUILayout.FlexibleSpace();
                     }
                     using (new GUILayout.VerticalScope(GUILayout.MaxWidth(300)))
@@ -193,6 +200,8 @@ namespace WriteEverywhere.UI
                             if (CurrentLibState == FooterBarStatus.Normal)
                             {
                                 GUI.tooltip = "";
+                                GUILayout.FlexibleSpace();
+                                GUIKwyttoCommons.SquareTextureButton(m_goToFile, Str.we_vehicleEditor_pickOrSpawnAVehicle, GrabUnit);
                                 GUILayout.FlexibleSpace();
                                 GUIKwyttoCommons.SquareTextureButton(m_goToFile, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_OPENGLOBALSFOLDER, GoToGlobalFolder);
                                 GUIKwyttoCommons.SquareTextureButton(m_reloadFiles, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_RELOADDESCRIPTORS, ReloadFiles);
@@ -256,6 +265,12 @@ namespace WriteEverywhere.UI
                 }
             }
         }
+
+        private void GrabUnit()
+        {
+            throw new NotImplementedException();
+        }
+
         private void OnChangeInfo(VehicleInfo vehicleInfo, VehicleInfo parentVehicle, string skin = "")
         {
             m_currentInfo = vehicleInfo;
@@ -272,8 +287,9 @@ namespace WriteEverywhere.UI
 
         private void ReloadSkin()
         {
-            WTSVehicleTextsSingleton.GetTargetDescriptor(m_currentInfo, -1, out m_currentSource, out m_currentLayout, m_currentSkin);
-            m_cachedItemList = m_currentLayout?.TextDescriptors.Select(x => x.SaveName).ToArray();
+            WTSVehicleTextsSingleton.GetTargetDescriptor(m_currentInfo, -1, out m_currentSource, out var currentLayout, m_currentSkin);
+            m_currentLayout = currentLayout as LayoutDescriptorVehicleXml;
+            m_cachedItemList = currentLayout?.TextDescriptors.Select(x => x.SaveName).ToArray();
             OnTabChanged(-1);
             m_tabsContainer.Reset();
             m_vehicleLib.ResetStatus();
@@ -303,11 +319,11 @@ namespace WriteEverywhere.UI
                 .Where((x) => x.Value.PrefabName.StartsWith(assetId) || x.Value.PrefabName == m_currentInfo.name)
                 .Select(x => x.Value.Info))
                 {
-                    WTSVehicleTextsSingleton.GetTargetDescriptor(asset as VehicleInfo, -1, out _, out LayoutDescriptorVehicleXml target);
-                    if (target != null)
+                    WTSVehicleTextsSingleton.GetTargetDescriptor(asset as VehicleInfo, -1, out _, out ILayoutDescriptorVehicleXml target);
+                    if (target is LayoutDescriptorVehicleXml layout)
                     {
-                        target.VehicleAssetName = asset.name;
-                        descriptorsToExport.Add(target);
+                        layout.VehicleAssetName = asset.name;
+                        descriptorsToExport.Add(layout);
                     }
                 }
                 if (descriptorsToExport.Count > 0)
@@ -321,7 +337,8 @@ namespace WriteEverywhere.UI
                     KwyttoDialog.ShowModal(new KwyttoDialog.BindProperties
                     {
                         title = Str.WTS_VEHICLE_EXPORTLAYOUT,
-                        message = string.Format(Str.WTS_VEHICLE_EXPORTLAYOUT_SUCCESSSAVEDATA, output),
+                        message = Str.WTS_VEHICLE_EXPORTLAYOUT_SUCCESSSAVEDATA,
+                        scrollText = $"<color=FFFF00>{ output }</color>",
                         buttons = new[]
                         {
                             KwyttoDialog.SpaceBtn,
@@ -340,7 +357,7 @@ namespace WriteEverywhere.UI
                                 style= KwyttoDialog.ButtonStyle.White
                             }
                         }
-                    }); 
+                    });
 
                     ModInstance.Controller?.VehicleTextsSingleton?.LoadAllVehiclesConfigurations();
                 }

@@ -12,6 +12,7 @@ using VS::Bridge_WE2VS;
 using WriteEverywhere.Data;
 using WriteEverywhere.Localization;
 using WriteEverywhere.Rendering;
+using WriteEverywhere.UI;
 using WriteEverywhere.Xml;
 
 namespace WriteEverywhere.Singleton
@@ -44,20 +45,20 @@ namespace WriteEverywhere.Singleton
                 return;
             }
 
-            GetTargetDescriptor(thiz.m_info, vehicleID, out _, out LayoutDescriptorVehicleXml targetDescriptor);
+            GetTargetDescriptor(thiz.m_info, vehicleID, out _, out ILayoutDescriptorVehicleXml targetDescriptor);
 
-            if (targetDescriptor != null)
+            if (targetDescriptor is LayoutDescriptorVehicleXml layoutDescriptor)
             {
                 Vehicle.Flags flags = VehicleManager.instance.m_vehicles.m_buffer[vehicleID].m_flags;
                 Matrix4x4 vehicleMatrix = thiz.m_info.m_vehicleAI.CalculateBodyMatrix(flags, ref position, ref rotation, ref scale, ref swayPosition);
                 MaterialPropertyBlock materialBlock = VehicleManager.instance.m_materialBlock;
                 materialBlock.Clear();
 
-                RenderDescriptor(ref vehicleData, cameraInfo, vehicleID, position, ref vehicleMatrix, ref targetDescriptor);
+                RenderDescriptor(ref vehicleData, cameraInfo, vehicleID, position, ref vehicleMatrix, ref layoutDescriptor);
             }
         }
 
-        internal static void GetTargetDescriptor(VehicleInfo vehicle, int vehicleId, out ConfigurationSource source, out LayoutDescriptorVehicleXml target, string skin = null)
+        internal static void GetTargetDescriptor(VehicleInfo vehicle, int vehicleId, out ConfigurationSource source, out ILayoutDescriptorVehicleXml target, string skin = null)
         {
             if (vehicle == null)
             {
@@ -124,36 +125,71 @@ namespace WriteEverywhere.Singleton
             WTSVehicleData.Instance.CleanCache();
         }
 
-        private void RenderDescriptor(ref Vehicle v, RenderManager.CameraInfo cameraInfo, ushort vehicleId, Vector3 position, ref Matrix4x4 vehicleMatrix, ref LayoutDescriptorVehicleXml targetDescriptor)
+        private ref Vehicle[] buffer => ref VehicleManager.instance.m_vehicles.m_buffer;
+
+        private bool hasFixedCamera = false;
+
+
+        private void RenderDescriptor(ref Vehicle vehicle, RenderManager.CameraInfo cameraInfo, ushort vehicleId, Vector3 position, ref Matrix4x4 vehicleMatrix, ref LayoutDescriptorVehicleXml targetDescriptor)
         {
-            var instance = VehicleManager.instance;
+            ushort currentSelectedInstanceId = 0;
+            if (!hasFixedCamera || lastFrameOverriden != SimulationManager.instance.m_currentTickIndex)
+            {
+                hasFixedCamera = false;
+                currentSelectedInstanceId = WTSVehicleLiteUI.Instance.CurrentGrabbedId;
+                if (currentSelectedInstanceId != 0 && WTSVehicleLiteUI.Instance.TrailerSel > 0)
+                {
+                    var target = WTSVehicleLiteUI.Instance.TrailerSel;
+                    do
+                    {
+                        currentSelectedInstanceId = buffer[currentSelectedInstanceId].m_trailingVehicle;
+                        target--;
+                    } while (currentSelectedInstanceId != 0 && target > 0);
+                }
+            }
             for (int j = 0; j < targetDescriptor.TextDescriptors.Length; j++)
             {
                 if (targetDescriptor.TextDescriptors[j] is BoardTextDescriptorGeneralXml descriptor && cameraInfo.CheckRenderDistance(position, WETextRenderer.RENDER_DISTANCE_FACTOR * descriptor.TextLineHeight * (descriptor.IlluminationConfig?.IlluminationType == MaterialType.OPAQUE ? 1 : 2)))
                 {
-                    var flags = v.m_flags;
+                    var flags = vehicle.m_flags;
                     if ((flags & Vehicle.Flags.Inverted) != 0)
                     {
                         flags ^= Vehicle.Flags.Reversed;
                     }
-                    ref Vehicle vehicle = ref instance.m_vehicles.m_buffer[vehicleId];
                     var parentColor = vehicle.Info.m_vehicleAI.GetColor(vehicleId, ref vehicle, InfoManager.InfoMode.None);
-                    WETextRenderer.RenderTextMesh(vehicleId,
-                        0,
-                        0,
-                        ref parentColor,
-                        targetDescriptor,
-                        descriptor,
-                        ref vehicleMatrix,
-                        vehicle.Info,
-                        (int)flags,
-                        (int)v.m_flags2,
-                        false,
-                        ref VehicleManager.instance.m_drawCallData.m_batchedCalls
-                        );
+                    bool currentTextSelected = !hasFixedCamera && WTSVehicleLiteUI.Instance.Visible && currentSelectedInstanceId == vehicleId && j == WTSVehicleLiteUI.Instance.CurrentTextSel;
+                    var textPos = WETextRenderer.RenderTextMesh(vehicleId,
+                          0,
+                          0,
+                          ref parentColor,
+                          targetDescriptor,
+                          descriptor,
+                          ref vehicleMatrix,
+                          vehicle.Info,
+                          (int)flags,
+                          (int)vehicle.m_flags2,
+                          currentTextSelected && WTSVehicleLiteUI.Instance.IsOnTextDimensionsView,
+                          ref VehicleManager.instance.m_drawCallData.m_batchedCalls
+                          );
+                    if (currentTextSelected && textPos != default)
+                    {
+                        ToolsModifierControl.cameraController.m_targetPosition.x = textPos.x;
+                        ToolsModifierControl.cameraController.m_targetPosition.z = textPos.z;
+                        targetHeight = textPos.y;
+                        lastFrameOverriden = SimulationManager.instance.m_currentTickIndex;
+                        hasFixedCamera = true;
+                    }
                 }
             }
 
+            if (currentSelectedInstanceId == vehicleId && WTSVehicleLiteUI.Instance.Visible && (WTSVehicleLiteUI.Instance.CurrentTextSel < 0 || !hasFixedCamera) && WTSVehicleLiteUI.Instance.Visible)
+            {
+                ToolsModifierControl.cameraController.m_targetPosition.x = position.x;
+                ToolsModifierControl.cameraController.m_targetPosition.z = position.z;
+                targetHeight = position.y + vehicle.Info.m_mesh.bounds.center.y;
+                lastFrameOverriden = SimulationManager.instance.m_currentTickIndex;
+                hasFixedCamera = true;
+            }
         }
 
         #region IO 
@@ -238,13 +274,13 @@ namespace WriteEverywhere.Singleton
                             stream.Position = 0;
                             using (var sr = new StreamReader(stream))
                             {
-                                KwyttoDialog.ShowModal( new KwyttoDialog.BindProperties
+                                KwyttoDialog.ShowModal(new KwyttoDialog.BindProperties
                                 {
                                     title = KStr.comm_errorTitle,
-                                    message = string.Format(Str.we_errorLoadingVehicleLayout_msg, info is null ? "global" : $"asset \"{info}\"",i + 1, configs.Descriptors.Length),
+                                    message = string.Format(Str.we_errorLoadingVehicleLayout_msg, info is null ? "global" : $"asset \"{info}\"", i + 1, configs.Descriptors.Length),
                                     scrollText = sr.ReadToEnd(),
                                     buttons = KwyttoDialog.basicOkButtonBar
-                                }                                   );
+                                });
                             }
                         }
 
@@ -261,7 +297,22 @@ namespace WriteEverywhere.Singleton
             }
         }
         #endregion
+        private static float targetHeight;
+        private uint lastFrameOverriden;
 
+        public static void AfterUpdateTransformOverride(CameraController __instance)
+        {
+            if (LoadingManager.instance.m_loadingComplete && SimulationManager.instance.m_currentTickIndex - ModInstance.Controller.VehicleTextsSingleton.lastFrameOverriden > 24)
+            {
+                return;
+            }
+            __instance.m_minDistance = 1;
+            __instance.m_unlimitedCamera = true;
+
+            Vector3 vector = __instance.transform.position;
+            vector.y = targetHeight + (Mathf.Sin(__instance.m_currentAngle.y * Mathf.Deg2Rad) * __instance.m_targetSize);
+            __instance.transform.position = vector;
+        }
 
     }
 }
