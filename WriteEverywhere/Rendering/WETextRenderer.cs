@@ -126,15 +126,14 @@ namespace WriteEverywhere.Rendering
             var bgMatrix = containerMatrix * Matrix4x4.Scale(new Vector3(size.x, size.y, 1));
 
 
-            if (overrideMaterial is null && bgImage != null && bgImage.ParamType == ParameterType.IMAGE)
+            if (overrideMaterial is null && bgImage != null && bgImage.ParamType == ParameterType.IMAGE && ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(bgImage.AtlasName, bgImage.TextOrSpriteValue, true) is BasicRenderInformation image)
             {
-                var image = ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(bgImage.AtlasName, bgImage.TextOrSpriteValue, true);
                 overrideMaterial = image.m_generatedMaterial;
                 block.SetVector(SHADER_PROP_DIMENSIONS, size);
                 block.SetFloat(SHADER_PROP_PIXELS_METERS, image.m_pixelDensityMeters);
                 block.SetVector(SHADER_PROP_BORDERS, image.m_borders);
-
             }
+
             defaultCallsCounter++;
             Graphics.DrawMesh(bgBri.m_mesh, bgMatrix, overrideMaterial ?? bgBri.m_generatedMaterial, 10, null, 0, materialPropertyBlock);
             return containerMatrix;

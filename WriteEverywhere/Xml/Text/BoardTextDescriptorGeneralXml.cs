@@ -1,4 +1,5 @@
-﻿using System.Xml.Serialization;
+﻿using ColossalFramework;
+using System.Xml.Serialization;
 
 namespace WriteEverywhere.Xml
 {
@@ -14,17 +15,24 @@ namespace WriteEverywhere.Xml
             set => ParameterSequence = TextParameterSequence.FromXml(value);
         }
 
-        public override ITextParameterWrapper GenerateParamVal(string uri, TextRenderingClass clazz) => new TextParameterWrapper(uri, clazz);
 
         public override string GetValueAsUri() => Value.ToString();
 
         public override int GetParamIdx() => Value?.GetParamIdx ?? -1;
+
+        public override void SetDefaultParameterValueAsString(string value, TextRenderingClass renderingClass = TextRenderingClass.Any)
+        {
+            parameterValue = value.IsNullOrWhiteSpace() ? null : new TextParameterWrapper(value, renderingClass);
+        }
 
         [XmlElement("BackgroundMeshSettings")]
         public BackgroundMesh BackgroundMeshSettings { get; set; } = new BackgroundMesh();
 
         [XmlIgnore]
         public TextParameterWrapper Value => parameterValue;
+
+        protected override ITextParameterWrapper ParameterValue => parameterValue;
+
         [XmlIgnore]
         private TextParameterWrapper parameterValue;
     }

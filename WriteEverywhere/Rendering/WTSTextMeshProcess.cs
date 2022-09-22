@@ -1,8 +1,11 @@
 ﻿extern alias TLM;
+extern alias VS;
+
 using SpriteFontPlus;
 using SpriteFontPlus.Utility;
 using System.Collections.Generic;
 using System.Linq;
+using VS::Bridge_WE2VS;
 using WriteEverywhere.Data;
 using WriteEverywhere.Singleton;
 using WriteEverywhere.Xml;
@@ -20,11 +23,13 @@ namespace WriteEverywhere.Rendering
             //{
             //    return GetTextForPreview(textDescriptor, propLayout, ref multipleOutput, ref baseFont, preview, refPrefab);
             //}
-            //else if (instance is LayoutDescriptorVehicleXml vehicleDescriptor)
-            //{
-            //    return GetTextForVehicle(textDescriptor, refID, boardIdx, secIdx, ref baseFont, vehicleDescriptor);
-            //}
-            //else if (instance is BoardInstanceBuildingXml buildingDescritpor)
+            //else
+            if (instance is LayoutDescriptorVehicleXml vehicleDescriptor)
+            {
+                return GetTextForVehicle(textDescriptor, refID, boardIdx, secIdx, ref baseFont, vehicleDescriptor);
+            }
+            else
+            //if (instance is BoardInstanceBuildingXml buildingDescritpor)
             //{
             //    return GetTextForBuilding(textDescriptor, refID, boardIdx, secIdx, ref multipleOutput, ref baseFont, buildingDescritpor);
             //}
@@ -82,33 +87,31 @@ namespace WriteEverywhere.Rendering
         //}
 
 
-        //private static BasicRenderInformation GetTextForVehicle(BoardTextDescriptorGeneralXml textDescriptor, ushort refID, int boardIdx, int secIdx, ref DynamicSpriteFont baseFont, LayoutDescriptorVehicleXml vehicleDescriptor)
-        //{
-        //    if (baseFont is null)
-        //    {
-        //        baseFont = FontServer.instance[vehicleDescriptor.FontName] ?? FontServer.instance[GeneralWritingEditorData.Instance.DefaultFont];
-        //    }
-        //    switch (textDescriptor.textContent)
-        //    {
-        //        case TextContent.None:
-        //            return LegacyVehicle(textDescriptor, refID, baseFont, vehicleDescriptor);
-        //        case TextContent.ParameterizedText:
-        //        case TextContent.ParameterizedSpriteFolder:
-        //        case TextContent.ParameterizedSpriteSingle:
-        //            return TextParameterWrapper.GetRenderInfo(vehicleDescriptor, textDescriptor, refID, boardIdx, secIdx, out _);
-        //        case TextContent.LinesSymbols:
-        //            break;
-        //        case TextContent.LinesNameList:
-        //            break;
-        //        case TextContent.HwShield:
-        //            break;
-        //        case TextContent.TimeTemperature: return GetTimeTemperatureText(textDescriptor, ref baseFont, refID, boardIdx, secIdx);
-        //        case TextContent.TextParameterSequence:
-        //            return TextParameterWrapper.GetRenderInfo(textDescriptor.ParameterSequence?.GetAt(SimulationManager.instance.m_referenceFrameIndex, refID), vehicleDescriptor, textDescriptor, refID, boardIdx, secIdx, out _);
-        //    }
+        private static BasicRenderInformation GetTextForVehicle(BoardTextDescriptorGeneralXml textDescriptor, ushort refID, int boardIdx, int secIdx, ref DynamicSpriteFont baseFont, LayoutDescriptorVehicleXml vehicleDescriptor)
+        {
+            if (baseFont is null)
+            {
+                baseFont = FontServer.instance[vehicleDescriptor.FontName] ?? FontServer.instance[WTSVehicleData.Instance.DefaultFont];
+            }
+            switch (textDescriptor.textContent)
+            {
+                case TextContent.ParameterizedText:
+                case TextContent.ParameterizedSpriteFolder:
+                case TextContent.ParameterizedSpriteSingle:
+                    return TextParameterWrapper.GetRenderInfo(vehicleDescriptor, textDescriptor, refID, boardIdx, secIdx, out _);
+                case TextContent.LinesSymbols:
+                    break;
+                case TextContent.LinesNameList:
+                    break;
+                case TextContent.HwShield:
+                    break;
+                case TextContent.TimeTemperature: return GetTimeTemperatureText(textDescriptor, ref baseFont, refID, boardIdx, secIdx);
+                case TextContent.TextParameterSequence:
+                    return TextParameterWrapper.GetRenderInfo(textDescriptor.ParameterSequence?.GetAt(SimulationManager.instance.m_referenceFrameIndex, refID), vehicleDescriptor, textDescriptor, refID, boardIdx, secIdx, out _);
+            }
 
-        //    return null;
-        //}
+            return null;
+        }
 
 
 
@@ -129,7 +132,7 @@ namespace WriteEverywhere.Rendering
         //                break;
         //            case null:
         //            case TextRenderingClass.Vehicle:
-        //                baseFont = FontServer.instance[GeneralWritingEditorData.Instance.DefaultFont];
+        //                baseFont = FontServer.instance[WTSVehicleData.Instance.DefaultFont];
         //                break;
         //        }
         //    }

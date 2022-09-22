@@ -1,7 +1,6 @@
 ﻿using ColossalFramework;
 using Kwytto.Data;
 using System.Xml.Serialization;
-using WriteEverywhere.Rendering;
 using WriteEverywhere.Xml;
 
 namespace WriteEverywhere.Data
@@ -91,8 +90,8 @@ namespace WriteEverywhere.Data
                 //        return WTSBuildingsData.Instance.DefaultFont;
                 case TextRenderingClass.PlaceOnNet:
                     return WTSOnNetData.Instance.DefaultFont;
-                    //    case TextRenderingClass.Vehicle:
-                    //        return GeneralWritingEditorData.Instance.DefaultFont;
+                case TextRenderingClass.Vehicle:
+                    return WTSVehicleData.Instance.DefaultFont;
             }
             return null;
         }

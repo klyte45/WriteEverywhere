@@ -1,5 +1,4 @@
-﻿using ColossalFramework;
-using Kwytto.Interfaces;
+﻿using Kwytto.Interfaces;
 using Kwytto.Utils;
 using System.Xml;
 using System.Xml.Serialization;
@@ -24,17 +23,16 @@ namespace WriteEverywhere.Xml
         [XmlAttribute("textContentV2")]
         public TextContent textContent = TextContent.None;
         [XmlIgnore]
-        private ITextParameterWrapper parameterValue;
+        protected abstract ITextParameterWrapper ParameterValue { get; }
 
         [XmlAttribute("value")]
         public string ValueAsUri
         {
-            get => parameterValue?.ToString().TrimToNull();
+            get => ParameterValue?.ToString().TrimToNull();
             set => SetDefaultParameterValueAsString(value);
         }
 
-        public abstract ITextParameterWrapper GenerateParamVal(string uri, TextRenderingClass clazz);
-        public string SetDefaultParameterValueAsString(string value, TextRenderingClass renderingClass = TextRenderingClass.Any) => (parameterValue = value.IsNullOrWhiteSpace() ? null : GenerateParamVal(value, renderingClass))?.ToString();
+        public abstract void SetDefaultParameterValueAsString(string value, TextRenderingClass renderingClass = TextRenderingClass.Any);
 
 
         [XmlElement("ParameterSequenceSteps")]

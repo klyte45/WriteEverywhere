@@ -94,6 +94,7 @@ namespace WriteEverywhere
         #region Vehicles
         public static string DefaultVehiclesConfigurationFolder { get; } = FOLDER_PATH + Path.DirectorySeparatorChar + DEFAULT_GAME_VEHICLES_CONFIG_FOLDER;
         public const string m_defaultFileNameVehiclesXml = "WE_DefaultVehiclesConfig";
+        internal WTSVehicleTextsSingleton VehicleTextsSingleton { get; private set; }
         #endregion
 
         #region uncategorized...
@@ -107,10 +108,12 @@ namespace WriteEverywhere
         {
             ToolsModifierControl.toolController.AddExtraToolToController<SegmentEditorPickerTool>();
             ToolsModifierControl.toolController.AddExtraToolToController<RoadSegmentTool>();
+            ToolsModifierControl.toolController.AddExtraToolToController<VehicleEditorTool>();
             FontServer.Ensure();
             FontServer.instance.SetQualityMultiplier(WESettingsQualityTab.m_qualityArray[ModInstance.FontQuality]);
             ReloadFontsFromPath();
             OnNetPropsSingleton = gameObject.AddComponent<WTSOnNetPropsSingleton>();
+            VehicleTextsSingleton = gameObject.AddComponent<WTSVehicleTextsSingleton>();
             HighwayShieldsSingleton = gameObject.AddComponent<WTSHighwayShieldsSingleton>();
             HighwayShieldsAtlasLibrary = gameObject.AddComponent<WTSHighwayShieldsAtlasLibrary>();
         }
@@ -119,10 +122,8 @@ namespace WriteEverywhere
         {
             base.StartActions();
 
-
-            var uiGO = new GameObject("WE");
-            uiGO.transform.SetParent(UIView.GetAView().gameObject.transform);
-            uiGO.AddComponent<WTSOnNetLiteUI>();
+            GameObjectUtils.CreateElement<WTSOnNetLiteUI>(UIView.GetAView().gameObject.transform, "WTSOnNetLiteUI");
+            GameObjectUtils.CreateElement<WTSVehicleLiteUI>(UIView.GetAView().gameObject.transform, "WTSVehicleLiteUI");
             highlightMaterial = new Material(defaultHighlightShader);
             AtlasesLibrary = gameObject.AddComponent<WTSAtlasesLibrary>();
 

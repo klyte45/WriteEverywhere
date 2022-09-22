@@ -1,4 +1,6 @@
-﻿using Kwytto.Interfaces;
+﻿extern alias VS;
+
+using Kwytto.Interfaces;
 using Kwytto.Utils;
 using System.Xml;
 using System.Xml.Serialization;

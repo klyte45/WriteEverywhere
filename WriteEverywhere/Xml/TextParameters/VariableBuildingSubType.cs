@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using WriteEverywhere.Singleton;
+using WriteEverywhere.Utils;
 using static WriteEverywhere.Xml.TextParameterVariableWrapper;
 
 namespace WriteEverywhere.Xml
@@ -58,28 +60,28 @@ namespace WriteEverywhere.Xml
             subtype = var;
             return true;
         }
-        //public static string GetFormattedString(this VariableBuildingSubType var, IEnumerable<int> platforms, ushort buildingId, TextParameterVariableWrapper varWrapper)
-        //{
-        //    if (buildingId == 0)
-        //    {
-        //        return null;
-        //    }
-        //    switch (var)
-        //    {
-        //        case VariableBuildingSubType.OwnName:
-        //            return varWrapper.TryFormat(WTSCacheSingleton.instance.GetBuilding(buildingId).Name);
-        //        case VariableBuildingSubType.NextStopLine:
-        //            return varWrapper.TryFormat(WTSCacheSingleton.instance.GetBuilding(WTSStopUtils.GetTargetStopInfo(platforms, buildingId).FirstOrDefault().NextStopBuildingId).Name);
-        //        case VariableBuildingSubType.PrevStopLine:
-        //            return varWrapper.TryFormat(WTSCacheSingleton.instance.GetBuilding(WTSStopUtils.GetTargetStopInfo(platforms, buildingId).FirstOrDefault().PrevStopBuildingId).Name);
-        //        case VariableBuildingSubType.LastStopLine:
-        //            return varWrapper.TryFormat(WTSCacheSingleton.instance.GetBuilding(WTSStopUtils.GetTargetStopInfo(platforms, buildingId).FirstOrDefault().DestinationBuildingId).Name);
-        //        case VariableBuildingSubType.PlatformNumber:
-        //            return varWrapper.TryFormat(platforms.FirstOrDefault() + 1);
-        //        default:
-        //            return null;
-        //    }
-        //}
+        public static string GetFormattedString(this VariableBuildingSubType var, IEnumerable<int> platforms, ushort buildingId, TextParameterVariableWrapper varWrapper)
+        {
+            if (buildingId == 0)
+            {
+                return null;
+            }
+            switch (var)
+            {
+                case VariableBuildingSubType.OwnName:
+                    return varWrapper.TryFormat(WTSCacheSingleton.instance.GetBuilding(buildingId).Name);
+                //case VariableBuildingSubType.NextStopLine:
+                //    return varWrapper.TryFormat(WTSCacheSingleton.instance.GetBuilding(WTSStopUtils.GetTargetStopInfo(platforms, buildingId).FirstOrDefault().NextStopBuildingId).Name);
+                //case VariableBuildingSubType.PrevStopLine:
+                //    return varWrapper.TryFormat(WTSCacheSingleton.instance.GetBuilding(WTSStopUtils.GetTargetStopInfo(platforms, buildingId).FirstOrDefault().PrevStopBuildingId).Name);
+                //case VariableBuildingSubType.LastStopLine:
+                //    return varWrapper.TryFormat(WTSCacheSingleton.instance.GetBuilding(WTSStopUtils.GetTargetStopInfo(platforms, buildingId).FirstOrDefault().DestinationBuildingId).Name);
+                case VariableBuildingSubType.PlatformNumber:
+                    return varWrapper.TryFormat(platforms.FirstOrDefault() + 1);
+                default:
+                    return null;
+            }
+        }
 
     }
 }

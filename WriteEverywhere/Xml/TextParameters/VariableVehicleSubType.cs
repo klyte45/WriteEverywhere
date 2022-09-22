@@ -3,7 +3,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using TLM::Bridge_WE2TLM;
 using WriteEverywhere.Singleton;
+using WriteEverywhere.Utils;
 using static WriteEverywhere.Xml.TextParameterVariableWrapper;
 
 namespace WriteEverywhere.Xml
@@ -103,7 +105,7 @@ namespace WriteEverywhere.Xml
                 //                : ModInstance.Controller.ConnectorTLM.GetStopName(targetVehicle.m_targetBuilding, regLine4)
                 //            );
                 //        return result;
-                //}
+                //    }
                 case VariableVehicleSubType.OwnNumber:
                     return WTSCacheSingleton.instance.GetVehicle(vehicleId).Identifier;
                 case VariableVehicleSubType.LineIdentifier:

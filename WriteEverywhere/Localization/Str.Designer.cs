@@ -250,6 +250,16 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Error loading the item {1}/{2} for a vehicle in the following scope: {2}
+        ///Check the data shown below to get information..
+        /// </summary>
+        internal static string we_errorLoadingVehicleLayout_msg {
+            get {
+                return ResourceManager.GetString("we_errorLoadingVehicleLayout_msg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Export whole list to library.
         /// </summary>
         internal static string we_generalLib_exportFullList {
@@ -614,6 +624,15 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Filter assets having at least one layout active.
+        /// </summary>
+        internal static string WTS_ACTIVERULESONLY {
+            get {
+                return ResourceManager.GetString("WTS_ACTIVERULESONLY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Background &amp; box .
         /// </summary>
         internal static string WTS_BACKGROUNDANDBOX_SETTINGS {
@@ -794,6 +813,15 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Clone this layout to be edited in this savegame.
+        /// </summary>
+        internal static string WTS_BUILDINGEDITOR_BUTTONROWACTION_COPYTOCITY {
+            get {
+                return ResourceManager.GetString("WTS_BUILDINGEDITOR_BUTTONROWACTION_COPYTOCITY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Copy to clipboard.
         /// </summary>
         internal static string WTS_BUILDINGEDITOR_BUTTONROWACTION_COPYTOCLIPBOARD {
@@ -803,11 +831,74 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Delete from this savegame\n(Note: global or asset values will be used if exists).
+        /// </summary>
+        internal static string WTS_BUILDINGEDITOR_BUTTONROWACTION_DELETEFROMCITY {
+            get {
+                return ResourceManager.GetString("WTS_BUILDINGEDITOR_BUTTONROWACTION_DELETEFROMCITY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Export this layout as global.
+        /// </summary>
+        internal static string WTS_BUILDINGEDITOR_BUTTONROWACTION_EXPORTASGLOBAL {
+            get {
+                return ResourceManager.GetString("WTS_BUILDINGEDITOR_BUTTONROWACTION_EXPORTASGLOBAL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Export this layout to be packed\nto Steam Workshop.
+        /// </summary>
+        internal static string WTS_BUILDINGEDITOR_BUTTONROWACTION_EXPORTTOASSETFOLDER {
+            get {
+                return ResourceManager.GetString("WTS_BUILDINGEDITOR_BUTTONROWACTION_EXPORTTOASSETFOLDER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Create new layout for this savegame.
+        /// </summary>
+        internal static string WTS_BUILDINGEDITOR_BUTTONROWACTION_NEWINCITY {
+            get {
+                return ResourceManager.GetString("WTS_BUILDINGEDITOR_BUTTONROWACTION_NEWINCITY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Open global layouts folder.
+        /// </summary>
+        internal static string WTS_BUILDINGEDITOR_BUTTONROWACTION_OPENGLOBALSFOLDER {
+            get {
+                return ResourceManager.GetString("WTS_BUILDINGEDITOR_BUTTONROWACTION_OPENGLOBALSFOLDER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Paste from clipboard.
         /// </summary>
         internal static string WTS_BUILDINGEDITOR_BUTTONROWACTION_PASTEFROMCLIPBOARD {
             get {
                 return ResourceManager.GetString("WTS_BUILDINGEDITOR_BUTTONROWACTION_PASTEFROMCLIPBOARD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Reload descriptors.
+        /// </summary>
+        internal static string WTS_BUILDINGEDITOR_BUTTONROWACTION_RELOADDESCRIPTORS {
+            get {
+                return ResourceManager.GetString("WTS_BUILDINGEDITOR_BUTTONROWACTION_RELOADDESCRIPTORS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Save skin layout to disk.
+        /// </summary>
+        internal static string WTS_BUILDINGEDITOR_BUTTONROWACTION_SAVESKIN {
+            get {
+                return ResourceManager.GetString("WTS_BUILDINGEDITOR_BUTTONROWACTION_SAVESKIN", resourceCulture);
             }
         }
         
@@ -881,6 +972,24 @@ namespace WriteEverywhere.Localization {
         internal static string WTS_CREATE_CLONE_180DEG {
             get {
                 return ResourceManager.GetString("WTS_CREATE_CLONE_180DEG", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Currently using.
+        /// </summary>
+        internal static string WTS_CURRENTLY_USING {
+            get {
+                return ResourceManager.GetString("WTS_CURRENTLY_USING", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Current selection.
+        /// </summary>
+        internal static string WTS_CURRENTSELECTION {
+            get {
+                return ResourceManager.GetString("WTS_CURRENTSELECTION", resourceCulture);
             }
         }
         
@@ -1854,6 +1963,15 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Pick a vehicle.
+        /// </summary>
+        internal static string WTS_PICK_A_VEHICLE {
+            get {
+                return ResourceManager.GetString("WTS_PICK_A_VEHICLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Repeat multiple instances along segment.
         /// </summary>
         internal static string WTS_POSITIONINGMODE_ISMULTIPLE {
@@ -2156,6 +2274,42 @@ namespace WriteEverywhere.Localization {
         internal static string WTS_USE_GROUP_SETTING_FONT {
             get {
                 return ResourceManager.GetString("WTS_USE_GROUP_SETTING_FONT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Export vehicle layout.
+        /// </summary>
+        internal static string WTS_VEHICLE_EXPORTLAYOUT {
+            get {
+                return ResourceManager.GetString("WTS_VEHICLE_EXPORTLAYOUT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Vehicle layout successfully exported to:\n&lt;color yellow&gt;{0}&lt;/color&gt;.
+        /// </summary>
+        internal static string WTS_VEHICLE_EXPORTLAYOUT_SUCCESSSAVEDATA {
+            get {
+                return ResourceManager.GetString("WTS_VEHICLE_EXPORTLAYOUT_SUCCESSSAVEDATA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Select vehicle model.
+        /// </summary>
+        internal static string WTS_VEHICLEEDITOR_SELECTMODEL {
+            get {
+                return ResourceManager.GetString("WTS_VEHICLEEDITOR_SELECTMODEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Vehicle editor.
+        /// </summary>
+        internal static string WTS_VEHICLEEDITOR_WINDOWTITLE {
+            get {
+                return ResourceManager.GetString("WTS_VEHICLEEDITOR_WINDOWTITLE", resourceCulture);
             }
         }
     }

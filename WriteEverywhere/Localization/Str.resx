@@ -860,4 +860,27 @@ A text to succeed the variable value. Use the backslash to scape the slashes (&l
   <data name="we_settings_uiOpacity" xml:space="preserve">
     <value>UI Background Opacity</value>
   </data>
+  <data name="we_errorLoadingVehicleLayout_msg" xml:space="preserve">
+    <value>Error loading the item {1}/{2} for a vehicle in the following scope: {2}
+Check the data shown below to get information.</value>
+  </data>
+  <data name="WTS_PICK_A_VEHICLE" xml:space="preserve">
+    <value>Pick a vehicle</value>
+  </data>
+  <data name="WTS_VEHICLEEDITOR_WINDOWTITLE" xml:space="preserve">    <value>Vehicle editor</value>  </data>
+  <data name="WTS_ACTIVERULESONLY" xml:space="preserve">    <value>Filter assets having at least one layout active</value>  </data>
+  <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_COPYTOCITY" xml:space="preserve">    <value>Clone this layout to be edited in this savegame</value>  </data>
+  <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_DELETEFROMCITY" xml:space="preserve">    <value>Delete from this savegame\n(Note: global or asset values will be used if exists)</value>  </data>
+  <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_EXPORTASGLOBAL" xml:space="preserve">    <value>Export this layout as global</value>  </data>
+  <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_EXPORTTOASSETFOLDER" xml:space="preserve">    <value>Export this layout to be packed\nto Steam Workshop</value>  </data>
+  <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_NEWINCITY" xml:space="preserve">    <value>Create new layout for this savegame</value>  </data>
+  <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_OPENGLOBALSFOLDER" xml:space="preserve">    <value>Open global layouts folder</value>  </data>
+  <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_RELOADDESCRIPTORS" xml:space="preserve">    <value>Reload descriptors</value>  </data>
+  <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_SAVESKIN" xml:space="preserve">    <value>Save skin layout to disk</value>  </data>
+  <data name="WTS_CURRENTLY_USING" xml:space="preserve">    <value>Currently using</value>  </data>
+  <data name="WTS_CURRENTSELECTION" xml:space="preserve">    <value>Current selection</value>  </data>
+  <data name="WTS_VEHICLE_EXPORTLAYOUT" xml:space="preserve">    <value>Export vehicle layout</value>  </data>
+  <data name="WTS_VEHICLE_EXPORTLAYOUT_SUCCESSSAVEDATA" xml:space="preserve">    <value>Vehicle layout successfully exported to:\n&lt;color yellow&gt;{0}&lt;/color&gt;</value>  </data>
+  <data name="WTS_VEHICLEEDITOR_SELECTMODEL" xml:space="preserve">    <value>Select vehicle model</value>  </data>
+
 </root>

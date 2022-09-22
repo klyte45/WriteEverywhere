@@ -1,11 +1,13 @@
-﻿using Kwytto.Utils;
+﻿extern alias VS;
+
+using Kwytto.Utils;
 using SpriteFontPlus;
 using SpriteFontPlus.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using VS::Bridge_WE2VS;
 using WriteEverywhere.Rendering;
-using static WriteEverywhere.Xml.TextParameterWrapper;
 
 namespace WriteEverywhere.Xml
 {
@@ -152,9 +154,9 @@ namespace WriteEverywhere.Xml
                 //case BoardInstanceBuildingXml bd:
                 //    targetStr = GetTargetTextForBuilding(bd, refId, textDescriptor, out multipleOutput);
                 //    break;
-                //case LayoutDescriptorVehicleXml ve:
-                //    targetStr = GetTargetTextForVehicle(refId, textDescriptor, out multipleOutput);
-                //    break;
+                case LayoutDescriptorVehicleXml ve:
+                    targetStr = GetTargetTextForVehicle(refId, textDescriptor, out multipleOutput);
+                    break;
                 //case BoardPreviewInstanceXml bp:
                 //    switch (instance.RenderingClass)
                 //    {
@@ -203,29 +205,29 @@ namespace WriteEverywhere.Xml
         //            return m_originalCommand;
         //        }
 
-        //        public string GetTargetTextForVehicle(ushort vehicleId, BoardTextDescriptorGeneralXml textDescriptor, out IEnumerable<BasicRenderInformation> multipleOutput)
-        //        {
-        //            multipleOutput = null;
-        //            switch (type)
-        //            {
-        //                case VariableType.CurrentBuilding:
-        //                    var buildingId = VehicleManager.instance.m_vehicles.m_buffer[vehicleId].m_sourceBuilding;
-        //                    return buildingId == 0 || !(subtype is VariableBuildingSubType targetSubtype) || targetSubtype == VariableBuildingSubType.None
-        //                        ? $"{prefix}{subtype}@vehicleSrcBuilding"
-        //                        : $"{prefix}{targetSubtype.GetFormattedString(null, buildingId, this) ?? m_originalCommand}{suffix}";
-        //                case VariableType.CurrentVehicle:
-        //                    return vehicleId == 0 || !(subtype is VariableVehicleSubType targetSubtype2) || targetSubtype2 == VariableVehicleSubType.None
-        //                        ? $"{prefix}{subtype}@currVehicle"
-        //                        : $"{prefix}{targetSubtype2.GetFormattedString(vehicleId, this) ?? m_originalCommand}{suffix}";
-        //                case VariableType.CityData:
-        //                    if ((subtype is VariableCitySubType targetCitySubtype))
-        //                    {
-        //                        return $"{prefix}{targetCitySubtype.GetFormattedString(this) ?? m_originalCommand}{suffix}";
-        //                    }
-        //                    break;
-        //            }
-        //            return m_originalCommand;
-        //        }
+        public string GetTargetTextForVehicle(ushort vehicleId, BoardTextDescriptorGeneralXml textDescriptor, out IEnumerable<BasicRenderInformation> multipleOutput)
+        {
+            multipleOutput = null;
+            switch (type)
+            {
+                case VariableType.CurrentBuilding:
+                    var buildingId = VehicleManager.instance.m_vehicles.m_buffer[vehicleId].m_sourceBuilding;
+                    return buildingId == 0 || !(subtype is VariableBuildingSubType targetSubtype) || targetSubtype == VariableBuildingSubType.None
+                        ? $"{subtype}@vehicleSrcBuilding"
+                        : $"{targetSubtype.GetFormattedString(null, buildingId, this) ?? m_originalCommand}";
+                case VariableType.CurrentVehicle:
+                    return vehicleId == 0 || !(subtype is VariableVehicleSubType targetSubtype2) || targetSubtype2 == VariableVehicleSubType.None
+                        ? $"{subtype}@currVehicle"
+                        : $"{targetSubtype2.GetFormattedString(vehicleId, this) ?? m_originalCommand}";
+                case VariableType.CityData:
+                    if ((subtype is VariableCitySubType targetCitySubtype))
+                    {
+                        return $"{targetCitySubtype.GetFormattedString(this) ?? m_originalCommand}";
+                    }
+                    break;
+            }
+            return m_originalCommand;
+        }
 
         internal string GetTargetTextForNet(BaseWriteOnXml descriptor, ushort segmentId, BoardTextDescriptorGeneralXml textDescriptor, out IEnumerable<BasicRenderInformation> multipleOutput)
         {
