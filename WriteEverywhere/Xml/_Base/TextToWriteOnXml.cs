@@ -23,9 +23,6 @@ namespace WriteEverywhere.Xml
         public bool m_applyOverflowResizingOnY = false;
 
 
-        [XmlAttribute("textAlign")]
-        public UIHorizontalAlignment m_textAlign = UIHorizontalAlignment.Center;
-
         [XmlAttribute("textContentV2")]
         public TextContent textContent = TextContent.None;
         [XmlIgnore]
@@ -52,10 +49,6 @@ namespace WriteEverywhere.Xml
             set => ParameterSequence = TextParameterSequence.FromXml(value);
         }
 
-
-        [XmlIgnore]
-        public TextParameterWrapper m_spriteParam;
-
         [XmlAttribute("overrideFont")] public string m_overrideFont;
         [XmlAttribute("fontClass")] public FontClass m_fontClass = FontClass.Regular;
 
@@ -69,6 +62,8 @@ namespace WriteEverywhere.Xml
         public string m_suffix = "";
         [XmlAttribute("verticalLineAlignment")]
         public float m_verticalAlignment = .5f;
+        [XmlAttribute("horizontalLineAlignment")]
+        public float m_horizontalAlignment = .5f;
 
         [XmlAttribute("saveName")]
         public string SaveName { get; set; }

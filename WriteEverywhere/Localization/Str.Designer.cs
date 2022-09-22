@@ -295,6 +295,15 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Background Image.
+        /// </summary>
+        internal static string we_generalTextEditor_backgroundImage {
+            get {
+                return ResourceManager.GetString("we_generalTextEditor_backgroundImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Box inner color.
         /// </summary>
         internal static string we_generalTextEditor_boxInnerColor {
@@ -309,6 +318,43 @@ namespace WriteEverywhere.Localization {
         internal static string we_generalTextEditor_fontBackfaceColor {
             get {
                 return ResourceManager.GetString("we_generalTextEditor_fontBackfaceColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Image relative borders
+        ///(Left, Bottom, Right, Top - 0 to 1).
+        /// </summary>
+        internal static string we_generalTextEditor_imageBordersLBRTlabel {
+            get {
+                return ResourceManager.GetString("we_generalTextEditor_imageBordersLBRTlabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Pixel density per square meter.
+        /// </summary>
+        internal static string we_generalTextEditor_imageDensityPixelsPerMeters {
+            get {
+                return ResourceManager.GetString("we_generalTextEditor_imageDensityPixelsPerMeters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Save image info into file.
+        /// </summary>
+        internal static string we_generalTextEditor_imageSaveImageInfoBtn {
+            get {
+                return ResourceManager.GetString("we_generalTextEditor_imageSaveImageInfoBtn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Show borders.
+        /// </summary>
+        internal static string we_generalTextEditor_imageShowBorders {
+            get {
+                return ResourceManager.GetString("we_generalTextEditor_imageShowBorders", resourceCulture);
             }
         }
         
@@ -399,6 +445,16 @@ namespace WriteEverywhere.Localization {
         internal static string we_PivotPosition__RightInvert {
             get {
                 return ResourceManager.GetString("we_PivotPosition__RightInvert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Horizontal alignment relative to line width
+        ///(0 = left; 1 = right).
+        /// </summary>
+        internal static string we_roadEditor_horizontalAlignmentBoxText {
+            get {
+                return ResourceManager.GetString("we_roadEditor_horizontalAlignmentBoxText", resourceCulture);
             }
         }
         

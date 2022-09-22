@@ -837,4 +837,24 @@ A text to succeed the variable value. Use the backslash to scape the slashes (&l
   <data name="we_generalTextEditor_fontBackfaceColor" xml:space="preserve">
     <value>Text backface color</value>
   </data>
+  <data name="we_generalTextEditor_backgroundImage" xml:space="preserve">
+    <value>Background Image</value>
+  </data>
+  <data name="we_generalTextEditor_imageBordersLBRTlabel" xml:space="preserve">
+    <value>Image relative borders
+(Left, Bottom, Right, Top - 0 to 1)</value>
+  </data>
+  <data name="we_generalTextEditor_imageDensityPixelsPerMeters" xml:space="preserve">
+    <value>Pixel density per square meter</value>
+  </data>
+  <data name="we_generalTextEditor_imageSaveImageInfoBtn" xml:space="preserve">
+    <value>Save image info into file</value>
+  </data>
+  <data name="we_generalTextEditor_imageShowBorders" xml:space="preserve">
+    <value>Show borders</value>
+  </data>
+  <data name="we_roadEditor_horizontalAlignmentBoxText" xml:space="preserve">
+    <value>Horizontal alignment relative to line width
+(0 = left; 1 = right)</value>
+  </data>
 </root>

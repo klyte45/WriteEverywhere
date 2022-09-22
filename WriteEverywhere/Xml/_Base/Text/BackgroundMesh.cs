@@ -1,7 +1,9 @@
-﻿using Kwytto.Utils;
+﻿using ColossalFramework;
+using Kwytto.Utils;
 using System.Xml;
 using System.Xml.Serialization;
 using UnityEngine;
+using WriteEverywhere.Rendering;
 
 namespace WriteEverywhere.Xml
 {
@@ -33,10 +35,24 @@ namespace WriteEverywhere.Xml
         public bool m_useFrame = false;
         [XmlAttribute("textVerticalAlignment")]
         public float m_verticalAlignment = 0.5f;
+        [XmlAttribute("textHorizontalAlignment")]
+        public float m_horizontalAlignment = 0.5f;
         [XmlElement("frame")]
         public FrameMesh FrameMeshSettings { get; set; } = new FrameMesh();
 
-    }
 
+        [XmlIgnore]
+        public TextParameterWrapper BgImage => bgImage;
+        [XmlIgnore]
+        private TextParameterWrapper bgImage;
+
+        [XmlAttribute("bgImage")]
+        public string BgImageAsUri
+        {
+            get => bgImage?.ToString().TrimToNull();
+            set => SetBgImage(value);
+        }
+        public string SetBgImage(string value) => (bgImage = value.IsNullOrWhiteSpace() ? null : new TextParameterWrapper(value, TextRenderingClass.BgMesh) is TextParameterWrapper tpw && tpw.ParamType == TextParameterWrapper.ParameterType.IMAGE ? tpw : null)?.ToString();
+    }
 }
 

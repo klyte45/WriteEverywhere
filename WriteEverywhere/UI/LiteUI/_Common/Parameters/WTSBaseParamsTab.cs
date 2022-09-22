@@ -1,6 +1,7 @@
 ﻿using ColossalFramework;
 using ColossalFramework.Globalization;
 using ColossalFramework.UI;
+using HarmonyLib;
 using Kwytto.LiteUI;
 using Kwytto.UI;
 using Kwytto.Utils;
@@ -9,8 +10,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using WriteEverywhere.Utils;
 using WriteEverywhere.Xml;
-using static ColossalFramework.UI.UITextureAtlas;
 
 namespace WriteEverywhere.UI
 {
@@ -110,7 +111,7 @@ namespace WriteEverywhere.UI
                     paramEditor.DrawLeftPanel(this, areaRect);
                     m_leftPanelScroll = scroll.scrollPosition;
                 };
-                using (new GUILayout.VerticalScope(GUILayout.Width(areaRect.x / 2), GUILayout.Height(areaRect.y - topHeight - 30)))
+                using (new GUILayout.VerticalScope(GUILayout.Width(areaRect.x / 2 - 20), GUILayout.Height(areaRect.y - topHeight - 30)))
                 {
                     if (showRightPanel)
                     {
@@ -118,7 +119,7 @@ namespace WriteEverywhere.UI
                         GUILayout.Space(8);
                         using (var scroll = new GUILayout.ScrollViewScope(m_rightPanelScroll))
                         {
-                            paramEditor.DrawRightPanel(this, default);
+                            paramEditor.DrawRightPanel(this, new Vector2(areaRect.x / 2 - 20, areaRect.y - topHeight - 50));
                             m_rightPanelScroll = scroll.scrollPosition;
                         }
                     }
@@ -166,30 +167,30 @@ namespace WriteEverywhere.UI
             {
                 case TextContent.ParameterizedSpriteSingle:
                     SearchText = "";
-                    IsLocal = paramVal.IsLocal;
-                    SelectedFolder = paramVal.AtlasName.TrimToNull();
-                    SelectedValue = paramVal.TextOrSpriteValue;
+                    IsLocal = paramVal?.IsLocal ?? true;
+                    SelectedFolder = paramVal?.AtlasName.TrimToNull();
+                    SelectedValue = paramVal?.TextOrSpriteValue;
                     CurrentState = State.GettingImage;
                     paramEditor = ImageVarEditor;
                     break;
                 case TextContent.ParameterizedSpriteFolder:
                     SearchText = "";
-                    IsLocal = paramVal.IsLocal;
-                    SelectedFolder = paramVal.AtlasName.TrimToNull();
+                    IsLocal = paramVal?.IsLocal ?? true;
+                    SelectedFolder = paramVal?.AtlasName.TrimToNull();
                     CurrentState = State.GettingFolder;
                     paramEditor = FolderVarEditor;
                     break;
                 case TextContent.ParameterizedText:
-                    IsVariable = paramVal.ParamType == TextParameterWrapper.ParameterType.VARIABLE;
+                    IsVariable = paramVal?.ParamType == TextParameterWrapper.ParameterType.VARIABLE;
                     CurrentState = State.GettingText;
                     if (IsVariable)
                     {
                         SearchText = "";
-                        SelectedValue = paramVal.GetOriginalVariableParam();
+                        SelectedValue = paramVal?.GetOriginalVariableParam();
                     }
                     else
                     {
-                        SearchText = paramVal.TextOrSpriteValue ?? "";
+                        SearchText = paramVal?.TextOrSpriteValue ?? "";
                         SelectedValue = null;
                     }
                     paramEditor = TextVarEditor;
@@ -201,7 +202,7 @@ namespace WriteEverywhere.UI
                     if (IsVariable)
                     {
                         SearchText = "";
-                        SelectedValue = paramVal.GetOriginalVariableParam();
+                        SelectedValue = paramVal?.GetOriginalVariableParam();
                     }
                     else
                     {
@@ -209,13 +210,13 @@ namespace WriteEverywhere.UI
                         {
                             SearchText = "";
                             IsLocal = paramVal.IsLocal;
-                            SelectedFolder = paramVal.AtlasName.TrimToNull();
+                            SelectedFolder = paramVal?.AtlasName.TrimToNull();
                             SelectedValue = paramVal.TextOrSpriteValue;
                             CurrentState = State.GettingImage;
                         }
                         else
                         {
-                            SearchText = paramVal.TextOrSpriteValue ?? "";
+                            SearchText = paramVal?.TextOrSpriteValue ?? "";
                             SelectedValue = null;
                         }
                     }
@@ -264,7 +265,7 @@ namespace WriteEverywhere.UI
         {
             yield return 0;
             var baseArr = GetCurrentParamString().Count(x => x == '/') >= 3 ? new[] { "<color=#FFFF00><<</color>" } : new string[0];
-            yield return m_searchResult.Value = baseArr.Concat(paramEditor.OnFilterParam(this)?.Select(x => x.IsNullOrWhiteSpace() ? GUIKwyttoCommons.v_empty : x) ?? new string[0]).ToArray();
+            yield return m_searchResult.Value = baseArr.AddRangeToArray(paramEditor.OnFilterParam(this)?.Select(x => x.IsNullOrWhiteSpace() ? GUIKwyttoCommons.v_empty : x).ToArray() ?? new string[0]);
             if (autoselect != null)
             {
                 var autoSelectVal = Array.IndexOf(m_searchResult.Value, autoselect);
@@ -279,7 +280,7 @@ namespace WriteEverywhere.UI
         #region Param editor fields
         internal readonly Wrapper<string[]> m_searchResult = new Wrapper<string[]>();
         private Coroutine m_searchCoroutine;
-        public Dictionary<string, SpriteInfo> currentFolderAtlas;
+        public Dictionary<string, WEImageInfo> currentFolderAtlas;
 
         public bool IsLocal { get; private set; } = false;
         public bool IsTextVariable { get; set; } = false;

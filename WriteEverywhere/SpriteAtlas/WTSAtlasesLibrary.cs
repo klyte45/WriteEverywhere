@@ -49,15 +49,15 @@ namespace WriteEverywhere.Sprites
         public const string PROTOCOL_FOLDER_ASSET = "assetFolder://";
 
 
-        private Dictionary<string, Dictionary<string, SpriteInfo>> LocalAtlases { get; } = new Dictionary<string, Dictionary<string, SpriteInfo>>();
-        private Dictionary<ulong, Dictionary<string, SpriteInfo>> AssetAtlases { get; } = new Dictionary<ulong, Dictionary<string, SpriteInfo>>();
+        private Dictionary<string, Dictionary<string, WEImageInfo>> LocalAtlases { get; } = new Dictionary<string, Dictionary<string, WEImageInfo>>();
+        private Dictionary<ulong, Dictionary<string, WEImageInfo>> AssetAtlases { get; } = new Dictionary<ulong, Dictionary<string, WEImageInfo>>();
         private Dictionary<string, Dictionary<string, BasicRenderInformation>> LocalAtlasesCache { get; } = new Dictionary<string, Dictionary<string, BasicRenderInformation>>();
         private Dictionary<ulong, Dictionary<string, BasicRenderInformation>> AssetAtlasesCache { get; } = new Dictionary<ulong, Dictionary<string, BasicRenderInformation>>();
 
 
         #region Getters
 
-        public void GetSpriteLib(string atlasName, out Dictionary<string, SpriteInfo> result)
+        public void GetSpriteLib(string atlasName, out Dictionary<string, WEImageInfo> result)
         {
             if (!LocalAtlases.TryGetValue(atlasName ?? string.Empty, out result) && ulong.TryParse(atlasName ?? string.Empty, out ulong workshopId))
             {
@@ -65,21 +65,21 @@ namespace WriteEverywhere.Sprites
             }
         }
 
-        public string[] GetSpritesFromLocalAtlas(string atlasName) => LocalAtlases.TryGetValue(atlasName ?? string.Empty, out Dictionary<string, SpriteInfo> atlas) ? atlas.Keys.ToArray() : null;
-        public string[] GetSpritesFromAssetAtlas(ulong workshopId) => AssetAtlases.TryGetValue(workshopId, out Dictionary<string, SpriteInfo> atlas) ? atlas.Keys.ToArray() : null;
+        public string[] GetSpritesFromLocalAtlas(string atlasName) => LocalAtlases.TryGetValue(atlasName ?? string.Empty, out Dictionary<string, WEImageInfo> atlas) ? atlas.Keys.ToArray() : null;
+        public string[] GetSpritesFromAssetAtlas(ulong workshopId) => AssetAtlases.TryGetValue(workshopId, out Dictionary<string, WEImageInfo> atlas) ? atlas.Keys.ToArray() : null;
         public bool HasAtlas(ulong workshopId) => AssetAtlases.TryGetValue(workshopId, out _);
         public BasicRenderInformation GetFromLocalAtlases(string atlasName, string spriteName, bool fallbackOnInvalid = false)
         {
             if (spriteName.IsNullOrWhiteSpace())
             {
-                return GetFromLocalAtlases(null, "FrameParamsInvalidImage");
+                return fallbackOnInvalid ? GetFromLocalAtlases(null, "FrameParamsInvalidImage") : null;
             }
 
             if (LocalAtlasesCache.TryGetValue(atlasName ?? string.Empty, out Dictionary<string, BasicRenderInformation> resultDicCache) && resultDicCache.TryGetValue(spriteName ?? "", out BasicRenderInformation cachedInfo))
             {
                 return cachedInfo;
             }
-            if (!LocalAtlases.TryGetValue(atlasName ?? string.Empty, out Dictionary<string, SpriteInfo> atlas) || !atlas.ContainsKey(spriteName))
+            if (!LocalAtlases.TryGetValue(atlasName ?? string.Empty, out Dictionary<string, WEImageInfo> atlas) || !atlas.ContainsKey(spriteName))
             {
                 return fallbackOnInvalid ? GetFromLocalAtlases(null, "FrameParamsInvalidImage") : null;
             }
@@ -94,10 +94,10 @@ namespace WriteEverywhere.Sprites
             StartCoroutine(CreateItemAtlasCoroutine(LocalAtlases, LocalAtlasesCache, atlasName ?? string.Empty, spriteName));
             return null;
         }
-        public BasicRenderInformation GetSlideFromLocal(string atlasName, Func<int, int> idxFunc, bool fallbackOnInvalid = false) => !LocalAtlases.TryGetValue(atlasName ?? string.Empty, out Dictionary<string, SpriteInfo> atlas)
+        public BasicRenderInformation GetSlideFromLocal(string atlasName, Func<int, int> idxFunc, bool fallbackOnInvalid = false) => !LocalAtlases.TryGetValue(atlasName ?? string.Empty, out Dictionary<string, WEImageInfo> atlas)
                 ? fallbackOnInvalid ? GetFromLocalAtlases(null, "FrameParamsInvalidFolder") : null
                 : GetFromLocalAtlases(atlasName ?? string.Empty, atlas.Keys.ElementAt(idxFunc(atlas.Count - 1) + 1), fallbackOnInvalid);
-        public BasicRenderInformation GetSlideFromAsset(ulong assetId, Func<int, int> idxFunc, bool fallbackOnInvalid = false) => !AssetAtlases.TryGetValue(assetId, out Dictionary<string, SpriteInfo> atlas)
+        public BasicRenderInformation GetSlideFromAsset(ulong assetId, Func<int, int> idxFunc, bool fallbackOnInvalid = false) => !AssetAtlases.TryGetValue(assetId, out Dictionary<string, WEImageInfo> atlas)
                 ? fallbackOnInvalid ? GetFromLocalAtlases(null, "FrameParamsInvalidFolder") : null
                 : GetFromAssetAtlases(assetId, atlas.Keys.ElementAt(idxFunc(atlas.Count - 1) + 1), fallbackOnInvalid);
 
@@ -111,7 +111,7 @@ namespace WriteEverywhere.Sprites
             {
                 return cachedInfo;
             }
-            if (!AssetAtlases.TryGetValue(assetId, out Dictionary<string, SpriteInfo> atlas) || !atlas.ContainsKey(spriteName))
+            if (!AssetAtlases.TryGetValue(assetId, out Dictionary<string, WEImageInfo> atlas) || !atlas.ContainsKey(spriteName))
             {
                 return fallbackOnInvalid ? GetFromLocalAtlases(null, "FrameParamsInvalidImageAsset") : null;
             }
@@ -124,7 +124,7 @@ namespace WriteEverywhere.Sprites
             StartCoroutine(CreateItemAtlasCoroutine(AssetAtlases, AssetAtlasesCache, assetId, spriteName));
             return null;
         }
-        private IEnumerator CreateItemAtlasCoroutine<T>(Dictionary<T, Dictionary<string, SpriteInfo>> spriteDict, Dictionary<T, Dictionary<string, BasicRenderInformation>> spriteDictCache, T assetId, string spriteName)
+        private IEnumerator CreateItemAtlasCoroutine<T>(Dictionary<T, Dictionary<string, WEImageInfo>> spriteDict, Dictionary<T, Dictionary<string, BasicRenderInformation>> spriteDictCache, T assetId, string spriteName)
         {
             yield return 0;
             if (!spriteDict.TryGetValue(assetId, out var targetAtlas))
@@ -149,15 +149,15 @@ namespace WriteEverywhere.Sprites
         #endregion
 
         #region Filtering
-        internal string[] FindByInLocal(string targetAtlas, string searchName, out Dictionary<string, SpriteInfo> atlas) => LocalAtlases.TryGetValue(targetAtlas ?? string.Empty, out atlas)
-              ? atlas.Keys.Where((x, i) => i > 0 && x.ToLower().Contains(searchName.ToLower())).Select(x => $"{(targetAtlas.IsNullOrWhiteSpace() ? "<ROOT>" : targetAtlas)}/{x}").OrderBy(x => x).ToArray()
+        internal string[] FindByInLocal(string targetAtlas, string searchName, out Dictionary<string, WEImageInfo> atlas) => LocalAtlases.TryGetValue(targetAtlas ?? string.Empty, out atlas)
+              ? atlas.Keys.Where((x, i) => x.ToLower().Contains(searchName.ToLower())).Select(x => $"{(targetAtlas.IsNullOrWhiteSpace() ? "<ROOT>" : targetAtlas)}/{x}").OrderBy(x => x).ToArray()
               : (new string[0]);
-        internal string[] FindByInLocalSimple(string targetAtlas, string searchName, out Dictionary<string, SpriteInfo> atlas) => LocalAtlases.TryGetValue(targetAtlas ?? string.Empty, out atlas)
-              ? atlas.Keys.Where((x, i) => i > 0 && x.ToLower().Contains(searchName.ToLower())).OrderBy(x => x).ToArray()
+        internal string[] FindByInLocalSimple(string targetAtlas, string searchName, out Dictionary<string, WEImageInfo> atlas) => LocalAtlases.TryGetValue(targetAtlas ?? string.Empty, out atlas)
+              ? atlas.Keys.Where((x, i) => x.ToLower().Contains(searchName.ToLower())).OrderBy(x => x).ToArray()
               : (new string[0]);
 
-        internal string[] FindByInAssetSimple(ulong assetId, string searchName, out Dictionary<string, SpriteInfo> atlas) => AssetAtlases.TryGetValue(assetId, out atlas)
-                ? atlas.Keys.Where((x, i) => i > 0 && x.ToLower().Contains(searchName.ToLower())).OrderBy(x => x).ToArray()
+        internal string[] FindByInAssetSimple(ulong assetId, string searchName, out Dictionary<string, WEImageInfo> atlas) => AssetAtlases.TryGetValue(assetId, out atlas)
+                ? atlas.Keys.Where((x, i) => x.ToLower().Contains(searchName.ToLower())).OrderBy(x => x).ToArray()
                 : (new string[0]);
         internal string[] FindByInLocalFolders(string searchName) => LocalAtlases.Keys.Select(x => x == string.Empty ? "<ROOT>" : x).Where(x => x.ToLower().Contains(searchName.ToLower())).OrderBy(x => x).ToArray();
 
@@ -173,19 +173,19 @@ namespace WriteEverywhere.Sprites
             foreach (var dir in folders)
             {
                 bool isRoot = dir == MainController.ExtraSpritesFolder;
-                var spritesToAdd = new List<SpriteInfo>();
-                WTSAtlasLoadingUtils.LoadAllImagesFromFolderRef(dir, ref spritesToAdd, ref errors, isRoot);
+                var spritesToAdd = new List<WEImageInfo>();
+                WTSAtlasLoadingUtils.LoadAllImagesFromFolderRef(dir, ref spritesToAdd, ref errors, false);
                 if (isRoot || spritesToAdd.Count > 0)
                 {
                     var atlasName = isRoot ? string.Empty : Path.GetFileNameWithoutExtension(dir);
-                    LocalAtlases[atlasName] = new Dictionary<string, SpriteInfo>();
+                    LocalAtlases[atlasName] = new Dictionary<string, WEImageInfo>();
                     if (isRoot)
                     {
-                        spritesToAdd.AddRange(UIView.GetAView().defaultAtlas.sprites.Select(x => CloneSpriteInfo(x)).ToList());
+                        spritesToAdd.AddRange(UIView.GetAView().defaultAtlas.sprites.Select(x => CloneWEImageInfo(x)).ToList());
                     }
                     foreach (var entry in spritesToAdd)
                     {
-                        LocalAtlases[atlasName][entry.name] = entry;
+                        LocalAtlases[atlasName][entry.Name] = entry;
                     }
                 }
             }
@@ -209,12 +209,12 @@ namespace WriteEverywhere.Sprites
             }
         }
 
-        private SpriteInfo CloneSpriteInfo(SpriteInfo x) => new SpriteInfo
+        private WEImageInfo CloneWEImageInfo(SpriteInfo x) => new WEImageInfo(null)
         {
-            border = x.border,
-            name = x.name,
-            region = default,
-            texture = x.texture
+            Borders = new Vector4(x.border.left / x.width, x.border.bottom / x.height, x.border.right / x.width, x.border.top / x.height),
+            Name = x.name,
+            Texture = x.texture,
+            PixelsPerMeter = 100
         };
 
         private void LoadImagesFromPrefab(ulong workshopId, string directoryPath, PrefabInfo info)
@@ -226,16 +226,16 @@ namespace WriteEverywhere.Sprites
 
         }
 
-        private UITextureAtlas CreateAtlasEntry<T>(Dictionary<T, Dictionary<string, SpriteInfo>> atlasDic, T atlasName, string path, bool addPrefix)
+        private UITextureAtlas CreateAtlasEntry<T>(Dictionary<T, Dictionary<string, WEImageInfo>> atlasDic, T atlasName, string path, bool addPrefix)
         {
             UITextureAtlas targetAtlas = ScriptableObject.CreateInstance<UITextureAtlas>();
             targetAtlas.material = new Material(ModInstance.Controller.defaultTextShader);
-            WTSAtlasLoadingUtils.LoadAllImagesFromFolder(path, out List<SpriteInfo> spritesToAdd, out List<string> errors, addPrefix);
+            WTSAtlasLoadingUtils.LoadAllImagesFromFolder(path, out List<WEImageInfo> spritesToAdd, out List<string> errors, addPrefix);
             foreach (string error in errors)
             {
                 LogUtils.DoErrorLog($"ERROR LOADING IMAGE: {error}");
             }
-            atlasDic[atlasName] = spritesToAdd.ToDictionary(x => x.name, x => x);
+            atlasDic[atlasName] = spritesToAdd.ToDictionary(x => x.Name, x => x);
             return targetAtlas;
         }
         #endregion
@@ -243,32 +243,28 @@ namespace WriteEverywhere.Sprites
         #endregion
 
         #region Transport lines
-        private UITextureAtlas m_transportLineAtlas;
+        private Dictionary<string, WEImageInfo> m_transportLineAtlas = new Dictionary<string, WEImageInfo>();
         private Dictionary<int, BasicRenderInformation> TransportLineCache { get; } = new Dictionary<int, BasicRenderInformation>();
         private Dictionary<int, BasicRenderInformation> RegionalTransportLineCache { get; } = new Dictionary<int, BasicRenderInformation>();
 
-        private bool TransportIsDirty { get; set; }
         private void ResetTransportAtlas()
         {
-            m_transportLineAtlas = ScriptableObject.CreateInstance<UITextureAtlas>();
-            m_transportLineAtlas.material = new Material(ModInstance.Controller.defaultTextShader);
+            m_transportLineAtlas.Clear();
         }
         internal void PurgeLine(WTSLine line)
         {
             string id = $"{line.ToExternalRefId()}";
-            if (!(m_transportLineAtlas[id] is null))
+            if (m_transportLineAtlas.ContainsKey(id))
             {
                 m_transportLineAtlas.Remove(id);
             }
             (line.regional ? RegionalTransportLineCache : TransportLineCache).Remove(line.lineId);
-            TransportIsDirty = true;
         }
         public void PurgeAllLines()
         {
             TransportLineCache.Clear();
             RegionalTransportLineCache.Clear();
             ResetTransportAtlas();
-            TransportIsDirty = true;
         }
         public CommonsSpriteNames LineIconTest
         {
@@ -326,22 +322,13 @@ namespace WriteEverywhere.Sprites
                 }
                 var drawingCoroutine = CoroutineWithData.From(this, RenderSpriteLine(
                     FontServer.instance[WTSEtcData.Instance.FontSettings.PublicTransportLineSymbolFont] ??
-                    FontServer.instance[MainController.DEFAULT_FONT_KEY], UIView.GetAView().defaultAtlas, lineParams.fileName, lineParams.color, lineParams.text));
+                    FontServer.instance[MainController.DEFAULT_FONT_KEY], LocalAtlases[string.Empty], lineParams.fileName, lineParams.color, lineParams.text));
                 yield return drawingCoroutine.Coroutine;
                 while (!CheckTransportLineCoroutineCanContinue())
                 {
                     yield return null;
                 }
 
-                TextureAtlasUtils.RegenerateTextureAtlas(m_transportLineAtlas, new List<UITextureAtlas.SpriteInfo>
-                {
-                    new UITextureAtlas.SpriteInfo
-                    {
-                        name = id,
-                        texture = drawingCoroutine.result
-                    }
-                });
-                TransportIsDirty = true;
                 StopAllCoroutines();
                 TransportLineCache.Clear();
                 RegionalTransportLineCache.Clear();
@@ -357,7 +344,6 @@ namespace WriteEverywhere.Sprites
             BuildMeshFromAtlas(bri, m_transportLineAtlas[id]);
             yield return 0;
             RegisterMeshSingle(line.lineId, bri, line.regional ? RegionalTransportLineCache : TransportLineCache);
-            TransportIsDirty = false;
             yield break;
         }
         private static bool CheckTransportLineCoroutineCanContinue()
@@ -376,17 +362,17 @@ namespace WriteEverywhere.Sprites
         }
         private static uint m_lastCoroutineStepTL = 0;
         private static uint m_coroutineCounterTL = 0;
-        public static IEnumerator<Texture2D> RenderSpriteLine(DynamicSpriteFont font, UITextureAtlas atlas, string spriteName, Color bgColor, string text, float textScale = 1)
+        public static IEnumerator<Texture2D> RenderSpriteLine(DynamicSpriteFont font, Dictionary<string, WEImageInfo> atlas, string spriteName, Color bgColor, string text, float textScale = 1)
         {
             if (font is null)
             {
                 font = FontServer.instance[MainController.DEFAULT_FONT_KEY];
             }
 
-            UITextureAtlas.SpriteInfo spriteInfo = atlas[spriteName];
+            WEImageInfo spriteInfo = atlas[spriteName];
             if (spriteInfo == null)
             {
-                CODebugBase<InternalLogChannel>.Warn(InternalLogChannel.UI, "Missing sprite " + spriteName + " in " + atlas.name);
+                CODebugBase<InternalLogChannel>.Warn(InternalLogChannel.UI, "Missing sprite " + spriteName);
                 yield break;
             }
             else
@@ -396,10 +382,10 @@ namespace WriteEverywhere.Sprites
                     yield return null;
                 }
 
-                int height = spriteInfo.texture.height;
-                int width = spriteInfo.texture.width;
+                int height = spriteInfo.Texture.height;
+                int width = spriteInfo.Texture.width;
                 var formTexture = new Texture2D(width, height);
-                formTexture.SetPixels(spriteInfo.texture.GetPixels());
+                formTexture.SetPixels(spriteInfo.Texture.GetPixels());
                 TextureScaler.scale(formTexture, width * 2, height * 2);
                 Texture2D texText = font.DrawTextToTexture(text, 1);
 
@@ -415,7 +401,7 @@ namespace WriteEverywhere.Sprites
                 Color contrastColor = bgColor.ContrastColor();
                 Color[] targetColorArray = formTexture.GetPixels().Select(x => new Color(contrastColor.r, contrastColor.g, contrastColor.b, x.a)).ToArray();
                 Destroy(formTexture);
-                var targetBorder = new RectOffset(spriteInfo.border.left * 2, spriteInfo.border.right * 2, spriteInfo.border.top * 2, spriteInfo.border.bottom * 2);
+                var targetBorder = new RectOffset(spriteInfo.OffsetBorders.left * 2, spriteInfo.OffsetBorders.right * 2, spriteInfo.OffsetBorders.top * 2, spriteInfo.OffsetBorders.bottom * 2);
 
                 float textBoundHeight = Mathf.Min(height * .66f, (height * .85f) - targetBorder.vertical);
                 float textBoundWidth = ((width * .9f) - targetBorder.horizontal);
@@ -523,21 +509,22 @@ namespace WriteEverywhere.Sprites
         }
 
 
-        internal static void BuildMeshFromAtlas(BasicRenderInformation bri, SpriteInfo spriteInfo)
+        internal static void BuildMeshFromAtlas(BasicRenderInformation bri, WEImageInfo sprite)
         {
             bri.m_mesh = basicMesh;
             bri.m_fontBaseLimits = new RangeVector { min = 0, max = 1 };
             bri.m_YAxisOverflows = new RangeVector { min = -.5f, max = .5f };
-            bri.m_sizeMetersUnscaled = new Vector2(spriteInfo.width / spriteInfo.height, 1);
-            bri.m_offsetScaleX = spriteInfo.width / spriteInfo.height;
+            bri.m_sizeMetersUnscaled = new Vector2(sprite.Texture.width / sprite.Texture.height, 1);
+            bri.m_offsetScaleX = sprite.Texture.width / sprite.Texture.height;
             bri.m_generatedMaterial = new Material(FontServer.instance.DefaultShader)
             {
-                mainTexture = spriteInfo.texture
+                mainTexture = sprite.Texture
             };
-            bri.m_borders = new Vector4(spriteInfo.border.left, spriteInfo.border.top, spriteInfo.border.right, spriteInfo.border.bottom);
-            bri.m_pixelDensityMeters = 100f;
+            bri.m_borders = sprite.Borders;
+            bri.m_pixelDensityMeters = sprite.PixelsPerMeter;
             bri.m_lineOffset = .5f;
             bri.m_expandXIfAlone = true;
+
         }
 
 

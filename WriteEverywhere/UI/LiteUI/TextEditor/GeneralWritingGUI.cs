@@ -74,7 +74,7 @@ namespace WriteEverywhere.UI
                     new GeneralWritingEditorGeneralTab(),
                      positionTab = new GeneralWritingEditorPositionsSizesTab(colorPicker.GetComponentInParent<GUIRootWindowBase>()),
                     new GeneralWritingEditorForegroundTab(m_colorPicker),
-                    new GeneralWritingEditorBoxSettingsTab(m_colorPicker),
+                    new GeneralWritingEditorBoxSettingsTab(m_colorPicker,infoGetter),
                     new GeneralWritingEditorIlluminationTab(m_colorPicker),
                     new GeneralWritingEditorContentTab(m_colorPicker,infoGetter,targetRenderingClass)
                     };

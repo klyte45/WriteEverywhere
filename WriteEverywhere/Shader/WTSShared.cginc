@@ -53,9 +53,9 @@ fixed2 calculateUV(fixed2 uvInput){
 	if(length(_Border) > 0){
 		
 		fixed2 ratio = _MainTex_TexelSize.zw/_PixelsPerMeters/_Dimensions.xy;
-		fixed2 bT=_Border.xy*ratio;
-		fixed2 BT=_Border.zw*ratio;
-		fixed2 deltaLgt = (1-_Border.xy-_Border.zw)/(1-bT-BT);
+		fixed2 bT=_Border.xz*ratio;
+		fixed2 BT=_Border.yw*ratio;
+		fixed2 deltaLgt = (1-_Border.xz-_Border.yw)/(1-bT-BT);
 
 		fixed2 result = fixed2(0,0);
 		if(uvInput.x<bT.x){
@@ -70,7 +70,7 @@ fixed2 calculateUV(fixed2 uvInput){
 		}else if(uvInput.y>1-BT.y){
 			result.y= 1-((1-uvInput.y)/ratio.y);
 		}else{
-			result.y= _Border.y+(uvInput.y-bT.y)*deltaLgt.y;
+			result.y= _Border.z+(uvInput.y-bT.y)*deltaLgt.y;
 		}
 		return saturate(result);
 	}

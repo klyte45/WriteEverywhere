@@ -1,5 +1,4 @@
 ﻿using ColossalFramework;
-using ColossalFramework.UI;
 using Kwytto.Utils;
 using SpriteFontPlus;
 using SpriteFontPlus.Utility;
@@ -8,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using WriteEverywhere.Data;
+using WriteEverywhere.Utils;
 using static ColossalFramework.UI.UITextureAtlas;
 
 namespace WriteEverywhere.Xml
@@ -46,7 +46,7 @@ namespace WriteEverywhere.Xml
 
         public int GetParamIdx => VariableValue?.paramContainer.paramIdx ?? -1;
 
-        private Dictionary<string, SpriteInfo> m_cachedAtlas;
+        private Dictionary<string, WEImageInfo> m_cachedAtlas;
         private string atlasName;
         private bool isLocal;
         private bool m_isDirtyImage = true;
@@ -158,7 +158,7 @@ namespace WriteEverywhere.Xml
             ParamType = ParameterType.TEXT;
         }
 
-        public Dictionary<string, SpriteInfo> GetAtlas(PrefabInfo prefab)
+        public Dictionary<string, WEImageInfo> GetAtlas(PrefabInfo prefab)
         {
             UpdateCachedAtlas(prefab);
             return m_cachedAtlas;
@@ -181,7 +181,7 @@ namespace WriteEverywhere.Xml
             }
         }
 
-        public SpriteInfo GetCurrentSpriteInfo(PrefabInfo prefab)
+        public WEImageInfo GetCurrentWEImageInfo(PrefabInfo prefab)
         {
             UpdateCachedAtlas(prefab);
             return m_cachedAtlas?[TextOrSpriteValue];

@@ -1,25 +1,30 @@
 ﻿using Kwytto.LiteUI;
-using Kwytto.UI;
+using System;
+using System.Linq;
 using UnityEngine;
 using WriteEverywhere.Localization;
 using WriteEverywhere.Xml;
 
 namespace WriteEverywhere.UI
 {
-    internal class GeneralWritingEditorBoxSettingsTab : IGUITab<BoardTextDescriptorGeneralXml>
+    internal class GeneralWritingEditorBoxSettingsTab : WTSBaseParamsTab<BoardTextDescriptorGeneralXml>
     {
 
         private readonly GUIColorPicker m_picker;
         private Vector2 m_scrollPos;
+        private readonly Func<PrefabInfo> m_infoGetter;
 
-        public GeneralWritingEditorBoxSettingsTab(GUIColorPicker picker) => m_picker = picker;
+        public GeneralWritingEditorBoxSettingsTab(GUIColorPicker picker, Func<PrefabInfo> infoGetter)
+        {
+            m_picker = picker;
+            m_infoGetter = infoGetter;
+        }
 
-        public Texture TabIcon { get; } = GUIKwyttoCommons.GetByNameFromDefaultAtlas("ToolbarIconProps");
+        public override Texture TabIcon { get; } = GUIKwyttoCommons.GetByNameFromDefaultAtlas("ToolbarIconProps");
 
-        public bool DrawArea(Vector2 tabAreaSize, ref BoardTextDescriptorGeneralXml currentItem, int currentItemIdx)
+        protected override void DrawListing(Vector2 tabAreaSize, BoardTextDescriptorGeneralXml item)
         {
             GUILayout.Label($"<i>{Str.WTS_BACKGROUNDANDBOX_SETTINGS}</i>");
-            var item = currentItem;
             bool isEditable = true;
             using (var scroll = new GUILayout.ScrollViewScope(m_scrollPos))
             {
@@ -37,7 +42,10 @@ namespace WriteEverywhere.UI
 
                         GUIKwyttoCommons.AddColorPicker(Str.WTS_BG_COLOR, m_picker, ref item.BackgroundMeshSettings.m_bgMainColor, isEditable);
                         GUIKwyttoCommons.AddColorPicker(Str.we_generalTextEditor_backgroundBackfaceColor, m_picker, ref item.BackgroundMeshSettings.m_cachedBackColor, isEditable);
-                        changedFrame |= GUIKwyttoCommons.AddVector2Field(tabAreaSize.x, item.BackgroundMeshSettings.Size, Str.WTS_TEXTBACKGROUNDSIZEGENERATED, Str.WTS_TEXTBACKGROUNDSIZEGENERATED, isEditable, .001f);
+                        changedFrame |= GUIKwyttoCommons.AddVector2Field(tabAreaSize.x, (Kwytto.Utils.Vector2Xml)item.BackgroundMeshSettings.Size, Str.WTS_TEXTBACKGROUNDSIZEGENERATED, Str.WTS_TEXTBACKGROUNDSIZEGENERATED, isEditable, .001f);
+                        var param = item.BackgroundMeshSettings.BgImage;
+                        GUIKwyttoCommons.AddButtonSelector(tabAreaSize.x, Str.we_generalTextEditor_backgroundImage, param is null ? GUIKwyttoCommons.v_null : param.IsEmpty ? GUIKwyttoCommons.v_empty : param.ToString(), () => GoToPicker(-1, TextContent.ParameterizedSpriteSingle, param, item), isEditable);
+                        GUIKwyttoCommons.AddSlider(tabAreaSize.x, Str.we_roadEditor_horizontalAlignmentBoxText, ref item.BackgroundMeshSettings.m_horizontalAlignment, 0, 1, isEditable);
                         GUIKwyttoCommons.AddSlider(tabAreaSize.x, Str.we_roadEditor_verticalAlignmentBoxText, ref item.BackgroundMeshSettings.m_verticalAlignment, 0, 1, isEditable);
 
                         GUILayout.Space(10);
@@ -45,8 +53,8 @@ namespace WriteEverywhere.UI
                         var usingFrame = item.BackgroundMeshSettings.m_useFrame;
                         if (usingFrame)
                         {
-                            changedFrame |= GUIKwyttoCommons.AddVector2Field(tabAreaSize.x, item.BackgroundMeshSettings.FrameMeshSettings.BackSize, Str.WTS_BOXMESH_BACKSIZE, Str.WTS_BOXMESH_BACKSIZE, isEditable, .001f);
-                            changedFrame |= GUIKwyttoCommons.AddVector2Field(tabAreaSize.x, item.BackgroundMeshSettings.FrameMeshSettings.BackOffset, Str.WTS_BOXMESH_BACKOFFSETFROMCENTERBOTTOM, Str.WTS_BOXMESH_BACKOFFSETFROMCENTERBOTTOM, isEditable, .001f);
+                            changedFrame |= GUIKwyttoCommons.AddVector2Field(tabAreaSize.x, (Kwytto.Utils.Vector2Xml)item.BackgroundMeshSettings.FrameMeshSettings.BackSize, Str.WTS_BOXMESH_BACKSIZE, Str.WTS_BOXMESH_BACKSIZE, isEditable, .001f);
+                            changedFrame |= GUIKwyttoCommons.AddVector2Field(tabAreaSize.x, (Kwytto.Utils.Vector2Xml)item.BackgroundMeshSettings.FrameMeshSettings.BackOffset, Str.WTS_BOXMESH_BACKOFFSETFROMCENTERBOTTOM, Str.WTS_BOXMESH_BACKOFFSETFROMCENTERBOTTOM, isEditable, .001f);
                             if (GUIKwyttoCommons.AddFloatField(tabAreaSize.x, Str.WTS_BOXMESH_DEPTH_BACK, item.BackgroundMeshSettings.FrameMeshSettings.BackDepth, out var newVal, isEditable, .001f))
                             {
                                 item.BackgroundMeshSettings.FrameMeshSettings.BackDepth = newVal;
@@ -93,8 +101,12 @@ namespace WriteEverywhere.UI
                 }
                 m_scrollPos = scroll.scrollPosition;
             }
-            return false;
         }
-        public void Reset() { }
+
+        protected override string GetAssetName(BoardTextDescriptorGeneralXml item) => m_infoGetter()?.name;
+        protected override void SetTextParameter(BoardTextDescriptorGeneralXml item, int currentEditingParam, string paramValue)
+        {
+            item.BackgroundMeshSettings.SetBgImage(paramValue);
+        }
     }
 }

@@ -1,5 +1,4 @@
 ﻿extern alias ADR;
-using ColossalFramework.UI;
 using Kwytto.Utils;
 using SpriteFontPlus;
 using SpriteFontPlus.Utility;
@@ -21,13 +20,12 @@ namespace WriteEverywhere.Sprites
         public void Awake() => ResetHwShieldAtlas();
 
         #region Highway shields
-        private UITextureAtlas m_hwShieldsAtlas;
+        private readonly Dictionary<string, WEImageInfo> m_hwShieldsAtlas = new Dictionary<string, WEImageInfo>();
         private Dictionary<ushort, BasicRenderInformation> HighwayShieldsCache { get; } = new Dictionary<ushort, BasicRenderInformation>();
 
         private void ResetHwShieldAtlas()
         {
-            m_hwShieldsAtlas = ScriptableObject.CreateInstance<UITextureAtlas>();
-            m_hwShieldsAtlas.material = new Material(ModInstance.Controller.defaultTextShader);
+            m_hwShieldsAtlas.Clear();
         }
         public void PurgeShields()
         {
@@ -87,14 +85,6 @@ namespace WriteEverywhere.Sprites
                 {
                     yield return null;
                 }
-                TextureAtlasUtils.RegenerateTextureAtlas(m_hwShieldsAtlas, new List<UITextureAtlas.SpriteInfo>
-                {
-                    new UITextureAtlas.SpriteInfo
-                    {
-                        name = id,
-                        texture = drawingCoroutine.result
-                    }
-                });
                 HighwayShieldsCache.Clear();
                 StopAllCoroutines();
                 yield break;
@@ -132,7 +122,7 @@ namespace WriteEverywhere.Sprites
                 defaultFont = FontServer.instance[WTSEtcData.Instance.FontSettings.GetTargetFont(FontClass.HighwayShields)];
             }
 
-            UITextureAtlas.SpriteInfo spriteInfo = descriptor.BackgroundImageParameter.GetCurrentSpriteInfo(null);
+            WEImageInfo spriteInfo = descriptor.BackgroundImageParameter.GetCurrentWEImageInfo(null);
             if (spriteInfo is null)
             {
                 LogUtils.DoWarnLog("HW: Background info is invalid for hw shield descriptor " + descriptor.SaveName);
@@ -143,9 +133,9 @@ namespace WriteEverywhere.Sprites
 
                 int shieldHeight = WTSAtlasLoadingUtils.MAX_SIZE_IMAGE_IMPORT;
                 int shieldWidth = WTSAtlasLoadingUtils.MAX_SIZE_IMAGE_IMPORT;
-                var shieldTexture = new Texture2D(spriteInfo.texture.width, spriteInfo.texture.height);
+                var shieldTexture = new Texture2D(spriteInfo.Texture.width, spriteInfo.Texture.height);
                 var targetColor = descriptor.BackgroundColorIsFromHighway && parameters.hwColor != default ? parameters.hwColor : descriptor.BackgroundColor;
-                shieldTexture.SetPixels(spriteInfo.texture.GetPixels().Select(x => x.MultiplyChannelsButAlpha(targetColor)).ToArray());
+                shieldTexture.SetPixels(spriteInfo.Texture.GetPixels().Select(x => x.MultiplyChannelsButAlpha(targetColor)).ToArray());
                 TextureScaler.scale(shieldTexture, shieldWidth, shieldHeight);
                 Color[] formTexturePixels = shieldTexture.GetPixels();
 
@@ -159,7 +149,7 @@ namespace WriteEverywhere.Sprites
                     //Texture2D overlayTexture;
                     //if (text is null && textDescriptor.m_textType == TextType.GameSprite)
                     //{
-                    //    var spriteTexture = textDescriptor.m_paramValue?.GetCurrentSpriteInfo(null)?.texture;
+                    //    var spriteTexture = textDescriptor.m_paramValue?.GetCurrentWEImageInfo(null)?.texture;
                     //    if (spriteTexture is null)
                     //    {
                     //        continue;

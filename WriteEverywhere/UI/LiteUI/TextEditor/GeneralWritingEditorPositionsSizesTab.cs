@@ -27,10 +27,7 @@ namespace WriteEverywhere.UI
             GUIKwyttoCommons.AddVector3Field(tabAreaSize.x, item.PlacingConfig.Position, Str.WTS_RELATIVE_POS, Str.WTS_RELATIVE_POS, isEditable);
             GUIKwyttoCommons.AddVector3Field(tabAreaSize.x, item.PlacingConfig.Rotation, Str.WTS_RELATIVE_ROT, Str.WTS_RELATIVE_ROT, isEditable);
             GUIKwyttoCommons.AddVector2Field(tabAreaSize.x, item.LineMaxDimensions, Str.WTS_LINEDIMENSIONS, Str.WTS_LINEDIMENSIONS, isEditable, 0);
-            if (GUIKwyttoCommons.AddComboBox(tabAreaSize.x, Str.WTS_TEXT_ALIGN_HOR, (int)item.m_textAlign, m_alignmentOptions, out var newVal, m_root, isEditable))
-            {
-                item.m_textAlign = (UIHorizontalAlignment)newVal;
-            }
+            GUIKwyttoCommons.AddSlider(tabAreaSize.x, Str.WTS_TEXT_ALIGN_HOR, ref item.m_horizontalAlignment, 0, 1, isEditable);
             GUIKwyttoCommons.AddToggle(Str.WTS_RESIZE_Y_TEXT_OVERFLOW, ref item.m_applyOverflowResizingOnY, isEditable);
             if (item.m_applyOverflowResizingOnY)
             {

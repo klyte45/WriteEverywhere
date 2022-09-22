@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Kwytto.LiteUI;
+using System;
 using System.Linq;
 using UnityEngine;
 using WriteEverywhere.Localization;
@@ -56,12 +57,59 @@ namespace WriteEverywhere.UI
         }
         public static void ImageDrawRightPanel(WTSBaseParamsTab<T> tab, Vector2 areaRect)
         {
-            var texture = tab.currentFolderAtlas?.Where(x => x.Key == tab.SelectedValue).FirstOrDefault().Value?.texture;
-            if (texture != null)
+            using (new GUILayout.AreaScope(new Rect(default, areaRect)))
             {
-                GUI.DrawTexture(new Rect(0, 0, texture.width, texture.height), texture, ScaleMode.ScaleToFit, true);
+                var selectedImageInfo = tab.currentFolderAtlas?.Where(x => x.Key == tab.SelectedValue).FirstOrDefault().Value;
+                if (selectedImageInfo != null)
+                {
+                    var texture = selectedImageInfo.Texture;
+                    using (new GUILayout.VerticalScope())
+                    {
+                        if (GUIKwyttoCommons.AddVector4Field(areaRect.x, selectedImageInfo.Borders, Str.we_generalTextEditor_imageBordersLBRTlabel, "imageBordersLBRTlabel", out Vector4 result, !(selectedImageInfo.xmlPath is null), 0, 1))
+                        {
+                            selectedImageInfo.Borders = result;
+                        }
+                        if (GUIKwyttoCommons.AddFloatField(areaRect.x, Str.we_generalTextEditor_imageDensityPixelsPerMeters, selectedImageInfo.PixelsPerMeter, out var newVal, !(selectedImageInfo.xmlPath is null), 0))
+                        {
+                            selectedImageInfo.PixelsPerMeter = newVal;
+                        }
+                        if (!(selectedImageInfo.xmlPath is null))
+                        {
+                            if (GUILayout.Button(Str.we_generalTextEditor_imageSaveImageInfoBtn))
+                            {
+                                selectedImageInfo.Save();
+                            }
+                        }
+                        GUIKwyttoCommons.AddToggle(Str.we_generalTextEditor_imageShowBorders, ref showBorders);
+                    }
+                    using (var scroll = new GUILayout.ScrollViewScope(scrollImageRightPanel))
+                    {
+                        GUI.DrawTexture(new Rect(0, 0, texture.width, texture.height), texture, ScaleMode.ScaleToFit, true);
+                        if (showBorders)
+                        {
+                            var lastRect = new Rect(0, 0, texture.width, texture.height);
+                            if (borderOverlayTexture is null)
+                            {
+                                borderOverlayTexture = new Texture2D(1, 1);
+                                borderOverlayTexture.SetPixels(new[] { new Color(1, 0, 1, .5f) });
+                                borderOverlayTexture.Apply();
+                            }
+                            var offsets = selectedImageInfo.OffsetBorders;
+                            GUI.DrawTexture(new Rect(lastRect.xMin, lastRect.yMin, offsets.left, lastRect.height), borderOverlayTexture, ScaleMode.StretchToFill, true);
+                            GUI.DrawTexture(new Rect(lastRect.width - offsets.right, lastRect.yMin, offsets.right, lastRect.height), borderOverlayTexture, ScaleMode.StretchToFill, true);
+
+                            GUI.DrawTexture(new Rect(lastRect.xMin, lastRect.yMin, lastRect.width, offsets.top), borderOverlayTexture, ScaleMode.StretchToFill, true);
+                            GUI.DrawTexture(new Rect(lastRect.xMin, lastRect.height - offsets.bottom, lastRect.width, offsets.bottom), borderOverlayTexture, ScaleMode.StretchToFill, true);
+
+                        }
+                        scrollImageRightPanel = scroll.scrollPosition;
+                    }
+                }
             }
         }
+        static Vector2 scrollImageRightPanel;
+        private static bool showBorders = true;
+        private static Texture2D borderOverlayTexture;
         public bool IsText { get; } = true;
         public static void ImageOnSelectItem(WTSBaseParamsTab<T> tab, int selectLayout, IWTSParameterEditor<T> paramEditor)
         {
@@ -76,6 +124,7 @@ namespace WriteEverywhere.UI
                 if (selectLayout == 0)
                 {
                     tab.ClearSelectedValue();
+                    tab.ClearSelectedFolder();
                     tab.m_searchResult.Value = new string[0];
                     tab.RestartFilterCoroutine(paramEditor);
                 }
