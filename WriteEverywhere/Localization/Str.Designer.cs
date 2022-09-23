@@ -705,6 +705,16 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a There are no vehicles of this model running around this city.
+        ///Try force spawning anywhere, like setting the model to a transport line..
+        /// </summary>
+        internal static string we_vehicleEditor_failedPickingAVehicle {
+            get {
+                return ResourceManager.GetString("we_vehicleEditor_failedPickingAVehicle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Head.
         /// </summary>
         internal static string we_vehicleEditor_headVehicleTitle {
@@ -723,8 +733,7 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Grab an unit of this vehicle as viewer
-        ///(Will spawn if not found).
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Grab an unit of this vehicle as viewer, if exists.
         /// </summary>
         internal static string we_vehicleEditor_pickOrSpawnAVehicle {
             get {
@@ -738,6 +747,15 @@ namespace WriteEverywhere.Localization {
         internal static string we_vehicleEditor_trailerNumTitle {
             get {
                 return ResourceManager.GetString("we_vehicleEditor_trailerNumTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Waiting seach for the vehicle....
+        /// </summary>
+        internal static string we_vehicleEditor_waitingGrabVehicle {
+            get {
+                return ResourceManager.GetString("we_vehicleEditor_waitingGrabVehicle", resourceCulture);
             }
         }
         
@@ -949,7 +967,8 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Delete from this savegame\n(Note: appdata or asset values will be used if exists).
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Delete from this savegame
+        ///(Note: appdata or asset values will be used if exists).
         /// </summary>
         internal static string WTS_BUILDINGEDITOR_BUTTONROWACTION_DELETEFROMCITY {
             get {
@@ -967,7 +986,8 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Export this layout to be packed\nto Steam Workshop.
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Export this layout to be packed
+        ///to Steam Workshop.
         /// </summary>
         internal static string WTS_BUILDINGEDITOR_BUTTONROWACTION_EXPORTTOASSETFOLDER {
             get {
@@ -1344,6 +1364,15 @@ namespace WriteEverywhere.Localization {
         internal static string WTS_INVERT_SIGN_SIDE {
             get {
                 return ResourceManager.GetString("WTS_INVERT_SIGN_SIDE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Skin (From Vehicle Skins).
+        /// </summary>
+        internal static string WTS_LAYOUTSKIN {
+            get {
+                return ResourceManager.GetString("WTS_LAYOUTSKIN", resourceCulture);
             }
         }
         

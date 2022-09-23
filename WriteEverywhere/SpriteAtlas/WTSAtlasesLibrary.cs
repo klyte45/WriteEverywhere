@@ -514,8 +514,8 @@ namespace WriteEverywhere.Sprites
             bri.m_mesh = basicMesh;
             bri.m_fontBaseLimits = new RangeVector { min = 0, max = 1 };
             bri.m_YAxisOverflows = new RangeVector { min = -.5f, max = .5f };
-            bri.m_sizeMetersUnscaled = new Vector2(sprite.Texture.width / sprite.Texture.height, 1);
-            bri.m_offsetScaleX = sprite.Texture.width / sprite.Texture.height;
+            bri.m_sizeMetersUnscaled = new Vector2(sprite.Texture.width / (float)sprite.Texture.height, 1);
+            bri.m_offsetScaleX = sprite.Texture.width / (float)sprite.Texture.height;
             bri.m_generatedMaterial = new Material(FontServer.instance.DefaultShader)
             {
                 mainTexture = sprite.Texture

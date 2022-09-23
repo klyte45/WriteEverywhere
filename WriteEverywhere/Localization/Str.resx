@@ -877,13 +877,15 @@ Check the data shown below to get information.</value>
     <value>Clone this layout to be edited in this savegame</value>
   </data>
   <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_DELETEFROMCITY" xml:space="preserve">
-    <value>Delete from this savegame\n(Note: appdata or asset values will be used if exists)</value>
+    <value>Delete from this savegame
+(Note: appdata or asset values will be used if exists)</value>
   </data>
   <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_EXPORTASGLOBAL" xml:space="preserve">
     <value>Export this layout to local folder (Appdata)</value>
   </data>
   <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_EXPORTTOASSETFOLDER" xml:space="preserve">
-    <value>Export this layout to be packed\nto Steam Workshop</value>
+    <value>Export this layout to be packed
+to Steam Workshop</value>
   </data>
   <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_NEWINCITY" xml:space="preserve">
     <value>Create new layout for this savegame</value>
@@ -922,19 +924,43 @@ Check the data shown below to get information.</value>
     <value>Picker</value>
   </data>
   <data name="we_vehicleEditor_pickOrSpawnAVehicle" xml:space="preserve">
-    <value>Grab an unit of this vehicle as viewer
-(Will spawn if not found)</value>
+    <value>Grab an unit of this vehicle as viewer, if exists</value>
   </data>
   <data name="we_vehicleEditor_trailerNumTitle" xml:space="preserve">
     <value>Trailer {0}</value>
   </data>
-  <data name="comm_Enum__YCloneType_OnZ" xml:space="preserve">    <value>Mirrored on Z Axis</value>  </data>
-  <data name="comm_Enum__ConfigurationSource_ASSET" xml:space="preserve">    <value>Workshop</value>  </data>
-  <data name="comm_Enum__ConfigurationSource_CITY" xml:space="preserve">    <value>Savegame (City)</value>  </data>
-  <data name="comm_Enum__ConfigurationSource_GLOBAL" xml:space="preserve">    <value>Local folder (Appdata)</value>  </data>
-  <data name="comm_Enum__ConfigurationSource_NONE" xml:space="preserve">    <value>None (Disabled)</value>  </data>
-  <data name="comm_Enum__ConfigurationSource_SKIN" xml:space="preserve">    <value>Skin (From Vehicle Skins)</value>  </data>
-  <data name="comm_Enum__YCloneType_None" xml:space="preserve">    <value>No cloning</value>  </data>
-  <data name="comm_Enum__YCloneType_OnX" xml:space="preserve">    <value>Mirrored on X Axis</value>  </data>
-
+  <data name="comm_Enum__YCloneType_OnZ" xml:space="preserve">
+    <value>Mirrored on Z Axis</value>
+  </data>
+  <data name="comm_Enum__ConfigurationSource_ASSET" xml:space="preserve">
+    <value>Workshop</value>
+  </data>
+  <data name="comm_Enum__ConfigurationSource_CITY" xml:space="preserve">
+    <value>Savegame (City)</value>
+  </data>
+  <data name="comm_Enum__ConfigurationSource_GLOBAL" xml:space="preserve">
+    <value>Local folder (Appdata)</value>
+  </data>
+  <data name="comm_Enum__ConfigurationSource_NONE" xml:space="preserve">
+    <value>None (Disabled)</value>
+  </data>
+  <data name="comm_Enum__ConfigurationSource_SKIN" xml:space="preserve">
+    <value>Skin (From Vehicle Skins)</value>
+  </data>
+  <data name="comm_Enum__YCloneType_None" xml:space="preserve">
+    <value>No cloning</value>
+  </data>
+  <data name="comm_Enum__YCloneType_OnX" xml:space="preserve">
+    <value>Mirrored on X Axis</value>
+  </data>
+  <data name="WTS_LAYOUTSKIN" xml:space="preserve">
+    <value>Skin (From Vehicle Skins)</value>
+  </data>
+  <data name="we_vehicleEditor_failedPickingAVehicle" xml:space="preserve">
+    <value>There are no vehicles of this model running around this city.
+Try force spawning anywhere, like setting the model to a transport line.</value>
+  </data>
+  <data name="we_vehicleEditor_waitingGrabVehicle" xml:space="preserve">
+    <value>Waiting seach for the vehicle...</value>
+  </data>
 </root>

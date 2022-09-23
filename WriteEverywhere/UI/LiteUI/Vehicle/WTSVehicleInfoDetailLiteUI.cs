@@ -40,6 +40,8 @@ namespace WriteEverywhere.UI
         private ConfigurationSource m_currentSource;
         private LayoutDescriptorVehicleXml m_currentLayout;
 
+        private readonly Texture2D m_grabModel;
+        private readonly Texture2D m_grabModeWaiting;
         private readonly Texture2D m_goToFile;
         private readonly Texture2D m_reloadFiles;
         private readonly Texture2D m_createNew;
@@ -62,17 +64,17 @@ namespace WriteEverywhere.UI
         private float m_offsetYContent;
         private readonly GUIXmlLib<WTSLibVehicleLayout, LayoutDescriptorVehicleXml> m_vehicleLib = new GUIXmlLib<WTSLibVehicleLayout, LayoutDescriptorVehicleXml>()
         {
-            DeleteQuestionI18n = "K45_WTS_PROPEDIT_CONFIGDELETE_MESSAGE",
-            NameAskingI18n = "K45_WTS_EXPORTDATA_NAMEASKING",
-            NameAskingOverwriteI18n = "K45_WTS_EXPORTDATA_NAMEASKING_OVERWRITE"
+            DeleteQuestionI18n = Str.WTS_PROPEDIT_CONFIGDELETE_MESSAGE,
+            NameAskingI18n = Str.WTS_EXPORTDATA_NAMEASKING,
+            NameAskingOverwriteI18n = Str.WTS_EXPORTDATA_NAMEASKING_OVERWRITE
         };
 
         private FooterBarStatus CurrentLibState => m_vehicleLib.Status;
         private State CurrentLocalState { get; set; } = State.Normal;
 
         public ushort CurrentGrabbedId { get; set; }
-        public int CurrentSelectedText => m_tabsContainer.ListSel;
-        public int TextDescriptorIndexSelected => m_tabsContainer.CurrentTabIdx;
+        public int TextDescriptorIndexSelected => m_tabsContainer.ListSel;
+        public VehicleInfo CurrentEditingInfo => m_currentInfo;
         public bool IsOnTextDimensionsView => m_tabsContainer.CurrentTabIdx == m_sizeEditorTabIdx;
         private readonly int m_sizeEditorTabIdx;
 
@@ -80,6 +82,8 @@ namespace WriteEverywhere.UI
         {
             var viewAtlas = UIView.GetAView().defaultAtlas;
 
+            m_grabModel = KResourceLoader.LoadTextureKwytto(CommonsSpriteNames.K45_Dropper);
+            m_grabModeWaiting = KResourceLoader.LoadTextureKwytto(CommonsSpriteNames.K45_Lock);
             m_goToFile = KResourceLoader.LoadTextureKwytto(CommonsSpriteNames.K45_Load);
             m_reloadFiles = KResourceLoader.LoadTextureKwytto(CommonsSpriteNames.K45_Reload);
             m_createNew = KResourceLoader.LoadTextureKwytto(CommonsSpriteNames.K45_New);
@@ -153,7 +157,7 @@ namespace WriteEverywhere.UI
             {
                 return;
             }
-            if (GUIKwyttoCommons.AddComboBox(area.width, "K45_WTS_LAYOUTSKIN", ref m_currentSkin, m_availableSkinsOptions, m_availableSkins, m_root))
+            if (GUIKwyttoCommons.AddComboBox(area.width, Str.WTS_LAYOUTSKIN, ref m_currentSkin, m_availableSkinsOptions, m_availableSkins, m_root))
             {
                 ReloadSkin();
             }
@@ -188,9 +192,11 @@ namespace WriteEverywhere.UI
                 {
                     using (new GUILayout.VerticalScope(GUILayout.ExpandWidth(true)))
                     {
-                        GUILayout.FlexibleSpace();
-                        GUILayout.Label($"<color=#FFFF00>{Str.WTS_CURRENTSELECTION}</color>\n{m_currentInfo.name}");
-                        GUILayout.Label($"<color=#FFFF00>{Str.WTS_CURRENTLY_USING}</color>\n{m_currentSource.ValueToI18n()}");
+                        var skinNoWrap = new GUIStyle(GUI.skin.label) { wordWrap = false };
+                        GUILayout.Label($"<color=#FFFF00>{Str.WTS_CURRENTSELECTION}</color>", skinNoWrap);
+                        GUILayout.Label(m_currentInfo.GetUncheckedLocalizedTitle(), skinNoWrap);
+                        GUILayout.Label($"<color=#FFFF00>{Str.WTS_CURRENTLY_USING}</color>", skinNoWrap);
+                        GUILayout.Label(m_currentSource.ValueToI18n(), skinNoWrap);
                         GUILayout.FlexibleSpace();
                     }
                     using (new GUILayout.VerticalScope(GUILayout.MaxWidth(300)))
@@ -199,9 +205,10 @@ namespace WriteEverywhere.UI
                         {
                             if (CurrentLibState == FooterBarStatus.Normal)
                             {
+                                bool waitingGrab = ModInstance.Controller.VehicleTextsSingleton.WaitingGrab;
                                 GUI.tooltip = "";
                                 GUILayout.FlexibleSpace();
-                                GUIKwyttoCommons.SquareTextureButton(m_goToFile, Str.we_vehicleEditor_pickOrSpawnAVehicle, GrabUnit);
+                                GUIKwyttoCommons.SquareTextureButton(waitingGrab ? m_grabModeWaiting : m_grabModel, waitingGrab ? Str.we_vehicleEditor_waitingGrabVehicle : Str.we_vehicleEditor_pickOrSpawnAVehicle, GrabUnit);
                                 GUILayout.FlexibleSpace();
                                 GUIKwyttoCommons.SquareTextureButton(m_goToFile, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_OPENGLOBALSFOLDER, GoToGlobalFolder);
                                 GUIKwyttoCommons.SquareTextureButton(m_reloadFiles, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_RELOADDESCRIPTORS, ReloadFiles);
@@ -268,7 +275,25 @@ namespace WriteEverywhere.UI
 
         private void GrabUnit()
         {
-            throw new NotImplementedException();
+            ModInstance.Controller.VehicleTextsSingleton.AskForGrab(m_currentInfo, (x) =>
+            {
+                if (x == default)
+                {
+                    KwyttoDialog.ShowModal(new KwyttoDialog.BindProperties
+                    {
+                        buttons = KwyttoDialog.basicOkButtonBar,
+                        message = Str.we_vehicleEditor_failedPickingAVehicle,
+                        messageAlign = TextAnchor.MiddleCenter,
+                        messageTextSizeMultiplier = 1.4f,
+                    });
+                    CurrentGrabbedId = 0;
+                }
+                else
+                {
+                    CurrentGrabbedId = VehicleManager.instance.m_vehicles.m_buffer[x].GetFirstVehicle(x);
+                    ToolsModifierControl.cameraController.SetTarget(new InstanceID { Vehicle = x }, default, true);
+                }
+            });
         }
 
         private void OnChangeInfo(VehicleInfo vehicleInfo, VehicleInfo parentVehicle, string skin = "")
@@ -338,7 +363,7 @@ namespace WriteEverywhere.UI
                     {
                         title = Str.WTS_VEHICLE_EXPORTLAYOUT,
                         message = Str.WTS_VEHICLE_EXPORTLAYOUT_SUCCESSSAVEDATA,
-                        scrollText = $"<color=FFFF00>{ output }</color>",
+                        scrollText = $"<color=#FFFF00>{output}</color>",
                         buttons = new[]
                         {
                             KwyttoDialog.SpaceBtn,

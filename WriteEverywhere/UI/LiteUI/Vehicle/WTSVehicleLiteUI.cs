@@ -16,17 +16,27 @@ namespace WriteEverywhere.UI
         public static WTSVehicleLiteUI Instance { get; private set; }
         public int TrailerSel { get; private set; } = 0;
         public ushort CurrentGrabbedId => m_detailUI.CurrentGrabbedId;
-        public int CurrentTextSel => m_detailUI.CurrentSelectedText;
+        public int CurrentTextSel => m_detailUI.TextDescriptorIndexSelected;
         public bool IsOnTextDimensionsView => m_detailUI.IsOnTextDimensionsView;
+        public VehicleInfo CurrentEditingInfo => m_detailUI.CurrentEditingInfo;
 
         public override void Awake()
         {
+            base.Awake();
             Instance = this;
             Init($"{ModInstance.Instance.SimpleName} v{ModInstance.FullVersion} - {Str.WTS_VEHICLEEDITOR_WINDOWTITLE}", new Rect(128, 128, 500, 350), resizable: true, minSize: new Vector2(500, 350));
             m_modelFilter = new GUIFilterItemsScreen<State>(Str.WTS_VEHICLEEDITOR_SELECTMODEL, ModInstance.Controller, OnFilterParam, OnVehicleSet, GoTo, State.Normal, State.SelectVehicle, otherFilters: DrawExtraFilter, extraButtonsSearch: ExtraButtonsSearch);
             m_colorPicker = GameObjectUtils.CreateElement<GUIColorPicker>(transform).Init();
             m_colorPicker.Visible = false;
             m_detailUI = new WTSVehicleInfoDetailLiteUI(m_colorPicker);
+        }
+        protected override void OnOpacityChanged(float newVal)
+        {
+            base.OnOpacityChanged(newVal);
+            BgTextureSubgroup.SetPixel(0, 0, new Color(bgSubgroup.r, bgSubgroup.g, bgSubgroup.b, ModInstance.UIOpacitySaved));
+            BgTextureSubgroup.Apply();
+            BgTextureNote.SetPixel(0, 0, new Color(bgNote.r, bgNote.g, bgNote.b, ModInstance.UIOpacitySaved));
+            BgTextureNote.Apply();
         }
         private enum State
         {
@@ -53,7 +63,7 @@ namespace WriteEverywhere.UI
                          var head = VehicleManager.instance.m_vehicles.m_buffer[x].GetFirstVehicle(x);
                          CurrentInfo = VehicleManager.instance.m_vehicles.m_buffer[head].Info;
                          m_currentState = State.Normal;
-                         m_detailUI.CurrentGrabbedId = x;
+                         m_detailUI.CurrentGrabbedId = head;
                      };
                 vehTool.OnParkedVehicleSelect += (x) =>
                 {
@@ -79,13 +89,13 @@ namespace WriteEverywhere.UI
             bgSubgroup = ModInstance.Instance.ModColor.SetBrightness(.20f);
 
             BgTextureSubgroup = new Texture2D(1, 1);
-            BgTextureSubgroup.SetPixel(0, 0, new Color(bgSubgroup.r, bgSubgroup.g, bgSubgroup.b, 1));
+            BgTextureSubgroup.SetPixel(0, 0, new Color(bgSubgroup.r, bgSubgroup.g, bgSubgroup.b, ModInstance.UIOpacitySaved));
             BgTextureSubgroup.Apply();
 
 
             bgNote = ModInstance.Instance.ModColor.SetBrightness(.60f);
             BgTextureNote = new Texture2D(1, 1);
-            BgTextureNote.SetPixel(0, 0, new Color(bgNote.r, bgNote.g, bgNote.b, 1));
+            BgTextureNote.SetPixel(0, 0, new Color(bgNote.r, bgNote.g, bgNote.b, ModInstance.UIOpacitySaved));
             BgTextureNote.Apply();
 
         }
@@ -244,6 +254,7 @@ namespace WriteEverywhere.UI
         private bool m_searchOnlyWithActiveRules;
         private IEnumerator OnFilterParam(string searchText, Action<string[]> setResult)
         {
+            m_detailUI.CurrentGrabbedId = 0;
             yield return VehiclesIndexes.instance.BasicInputFiltering(searchText, m_searchResultWrapper);
             m_cachedResultList.Clear();
             m_cachedResultList.AddRange(m_searchResultWrapper.Value.Cast<IndexedPrefabData<VehicleInfo>>()
@@ -270,6 +281,7 @@ namespace WriteEverywhere.UI
         private void OnVehicleSet(int selectLayout, string _ = null)
         {
             CurrentInfo = (m_cachedResultList[selectLayout].Info as VehicleInfo);
+            ToolsModifierControl.SetTool<DefaultTool>();
         }
         #endregion
     }

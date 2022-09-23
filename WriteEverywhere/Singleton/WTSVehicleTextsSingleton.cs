@@ -4,6 +4,7 @@ using Kwytto.LiteUI;
 using Kwytto.Localization;
 using Kwytto.Utils;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
@@ -55,6 +56,10 @@ namespace WriteEverywhere.Singleton
                 materialBlock.Clear();
 
                 RenderDescriptor(ref vehicleData, cameraInfo, vehicleID, position, ref vehicleMatrix, ref layoutDescriptor);
+            }
+            else if (WTSVehicleLiteUI.Instance.Visible)
+            {
+                UpdateCameraFocus(ref vehicleData, vehicleID, position);
             }
         }
 
@@ -129,24 +134,42 @@ namespace WriteEverywhere.Singleton
 
         private bool hasFixedCamera = false;
 
+        private Coroutine currentGrabCoroutine;
+
+        public void AskForGrab(VehicleInfo info, Action<ushort> callback)
+        {
+            if (currentGrabCoroutine == null)
+            {
+                currentGrabCoroutine = ModInstance.Controller.StartCoroutine(TryGrabCoroutine(info, callback));
+            }
+        }
+
+        private IEnumerator TryGrabCoroutine(VehicleInfo info, Action<ushort> callback)
+        {
+            yield return null;
+            for (int i = 0; i < buffer.Length; i++)
+            {
+
+                if (info == buffer[i].Info && (buffer[i].m_flags & (Vehicle.Flags.Created | Vehicle.Flags.Spawned)) == (Vehicle.Flags.Created | Vehicle.Flags.Spawned))
+                {
+                    callback((ushort)i);
+                    currentGrabCoroutine = null;
+                    yield break;
+                }
+                if (i % 1000 == 0)
+                {
+                    yield return null;
+                }
+            }
+            callback(0);
+            currentGrabCoroutine = null;
+        }
+
+        public bool WaitingGrab => currentGrabCoroutine != null;
 
         private void RenderDescriptor(ref Vehicle vehicle, RenderManager.CameraInfo cameraInfo, ushort vehicleId, Vector3 position, ref Matrix4x4 vehicleMatrix, ref LayoutDescriptorVehicleXml targetDescriptor)
         {
-            ushort currentSelectedInstanceId = 0;
-            if (!hasFixedCamera || lastFrameOverriden != SimulationManager.instance.m_currentTickIndex)
-            {
-                hasFixedCamera = false;
-                currentSelectedInstanceId = WTSVehicleLiteUI.Instance.CurrentGrabbedId;
-                if (currentSelectedInstanceId != 0 && WTSVehicleLiteUI.Instance.TrailerSel > 0)
-                {
-                    var target = WTSVehicleLiteUI.Instance.TrailerSel;
-                    do
-                    {
-                        currentSelectedInstanceId = buffer[currentSelectedInstanceId].m_trailingVehicle;
-                        target--;
-                    } while (currentSelectedInstanceId != 0 && target > 0);
-                }
-            }
+            ushort currentSelectedInstanceId = CalculateCurrentSelection(ref vehicle, vehicleId);
             for (int j = 0; j < targetDescriptor.TextDescriptors.Length; j++)
             {
                 if (targetDescriptor.TextDescriptors[j] is BoardTextDescriptorGeneralXml descriptor && cameraInfo.CheckRenderDistance(position, WETextRenderer.RENDER_DISTANCE_FACTOR * descriptor.TextLineHeight * (descriptor.IlluminationConfig?.IlluminationType == MaterialType.OPAQUE ? 1 : 2)))
@@ -178,18 +201,47 @@ namespace WriteEverywhere.Singleton
                         targetHeight = textPos.y;
                         lastFrameOverriden = SimulationManager.instance.m_currentTickIndex;
                         hasFixedCamera = true;
+                        ToolsModifierControl.cameraController.SetTarget(default, default, false);
                     }
                 }
             }
+            CheckFocus(ref vehicle, vehicleId, position, currentSelectedInstanceId);
+        }
 
-            if (currentSelectedInstanceId == vehicleId && WTSVehicleLiteUI.Instance.Visible && (WTSVehicleLiteUI.Instance.CurrentTextSel < 0 || !hasFixedCamera) && WTSVehicleLiteUI.Instance.Visible)
+
+        private void UpdateCameraFocus(ref Vehicle vehicle, ushort vehicleId, Vector3 position)
+        {
+            ushort currentSelectedInstanceId = CalculateCurrentSelection(ref vehicle, vehicleId);
+            CheckFocus(ref vehicle, vehicleId, position, currentSelectedInstanceId);
+        }
+
+        private void CheckFocus(ref Vehicle vehicle, ushort vehicleId, Vector3 position, ushort currentSelectedInstanceId)
+        {
+            if (currentSelectedInstanceId == vehicleId && WTSVehicleLiteUI.Instance.Visible && (WTSVehicleLiteUI.Instance.CurrentTextSel < 0 || !hasFixedCamera))
             {
                 ToolsModifierControl.cameraController.m_targetPosition.x = position.x;
                 ToolsModifierControl.cameraController.m_targetPosition.z = position.z;
                 targetHeight = position.y + vehicle.Info.m_mesh.bounds.center.y;
                 lastFrameOverriden = SimulationManager.instance.m_currentTickIndex;
                 hasFixedCamera = true;
+                ToolsModifierControl.cameraController.SetTarget(default, default, false);
             }
+        }
+
+        private ushort CalculateCurrentSelection(ref Vehicle vehicle, ushort vehicleId)
+        {
+            ushort currentSelectedInstanceId = 0;
+            if (!hasFixedCamera || lastFrameOverriden != SimulationManager.instance.m_currentTickIndex)
+            {
+                hasFixedCamera = false;
+                currentSelectedInstanceId = WTSVehicleLiteUI.Instance.CurrentGrabbedId;
+                if (currentSelectedInstanceId != 0 && WTSVehicleLiteUI.Instance.TrailerSel > 0 && WTSVehicleLiteUI.Instance.CurrentEditingInfo == vehicle.Info && vehicle.GetFirstVehicle(vehicleId) == currentSelectedInstanceId)
+                {
+                    currentSelectedInstanceId = vehicleId;
+                }
+            }
+
+            return currentSelectedInstanceId;
         }
 
         #region IO 
