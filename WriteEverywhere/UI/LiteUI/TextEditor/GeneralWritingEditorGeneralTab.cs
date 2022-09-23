@@ -38,10 +38,9 @@ namespace WriteEverywhere.UI
 
         public Texture TabIcon { get; } = KResourceLoader.LoadTextureKwytto(CommonsSpriteNames.K45_Settings);
 
-        public bool DrawArea(Vector2 tabAreaRect, ref BoardTextDescriptorGeneralXml currentItem, int currentItemIdx)
+        public bool DrawArea(Vector2 tabAreaRect, ref BoardTextDescriptorGeneralXml currentItem, int currentItemIdx, bool canEdit)
         {
             GUILayout.Label($"<i>{Str.WTS_GENERAL_SETTINGS}</i>");
-            var canEdit = true;
             var item = currentItem;
             var hasChanges = false;
             var wrapper = new Wrapper<BoardTextDescriptorGeneralXml>(item);

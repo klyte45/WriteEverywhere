@@ -31,10 +31,9 @@ namespace WriteEverywhere.UI
 
         }
 
-        public bool DrawArea(Vector2 tabAreaSize, ref BoardTextDescriptorGeneralXml currentItem, int currentItemIdx)
+        public bool DrawArea(Vector2 tabAreaSize, ref BoardTextDescriptorGeneralXml currentItem, int currentItemIdx, bool isEditable)
         {
             var item = currentItem;
-            bool isEditable = true;
             switch (CurrentLocalState)
             {
                 case State.Normal:

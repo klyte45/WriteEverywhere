@@ -21,11 +21,10 @@ namespace WriteEverywhere.UI
         }
         public Texture TabIcon { get; } = KResourceLoader.LoadTextureKwytto(CommonsSpriteNames.K45_MoveCross);
 
-        public bool DrawArea(Vector2 tabAreaSize, ref BoardTextDescriptorGeneralXml currentItem, int currentItemIdx)
+        public bool DrawArea(Vector2 tabAreaSize, ref BoardTextDescriptorGeneralXml currentItem, int currentItemIdx, bool isEditable)
         {
             GUILayout.Label($"<i>{Str.WTS_TEXT_SIZE_ATTRIBUTES}</i>");
             var item = currentItem;
-            bool isEditable = true;
             GUIKwyttoCommons.AddVector3Field(tabAreaSize.x, item.PlacingConfig.Position, Str.WTS_RELATIVE_POS, Str.WTS_RELATIVE_POS, isEditable);
             GUIKwyttoCommons.AddVector3Field(tabAreaSize.x, item.PlacingConfig.Rotation, Str.WTS_RELATIVE_ROT, Str.WTS_RELATIVE_ROT, isEditable);
             GUIKwyttoCommons.AddVector2Field(tabAreaSize.x, item.LineMaxDimensions, Str.WTS_LINEDIMENSIONS, Str.WTS_LINEDIMENSIONS, isEditable, 0);

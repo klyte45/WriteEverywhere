@@ -114,15 +114,14 @@ namespace WriteEverywhere.Rendering
             materialPropertyBlock.Clear();
             materialPropertyBlock.SetColor(SHADER_PROP_COLOR, color);
             materialPropertyBlock.SetColor(SHADER_PROP_BACK_COLOR, backColor);
-            ApplyTextAdjustments(placingSettings, bgBri, ref baseScale, size.y, 0, .5f, size.x, false, false);
 
             var containerMatrix = propMatrix
                 * Matrix4x4.Translate(placingSettings.Position)
-                * Matrix4x4.Translate(new Vector3(0, (size.y * (-verticalAlignment + .5f)) + (verticalAlignment * lineHeight)))
                 * textMatrixTuple.rotationMatrix
+                * Matrix4x4.Translate(new Vector3(0, (size.y * (-verticalAlignment + .5f)) + (verticalAlignment * lineHeight)))
                 * textMatrixTuple.scaleMatrix
-                * Matrix4x4.Translate(new Vector3(0, 0, -0.001f * zDistanceMultiplier))
-                ;
+                * Matrix4x4.Translate(new Vector3(0, 0, Mathf.Sign(textMatrixTuple.rotationMatrix.determinant) * -0.001f * zDistanceMultiplier))
+            ;
             var bgMatrix = containerMatrix * Matrix4x4.Scale(new Vector3(size.x, size.y, 1));
 
 

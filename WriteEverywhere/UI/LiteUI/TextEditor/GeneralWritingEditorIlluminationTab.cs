@@ -1,6 +1,4 @@
-﻿using ColossalFramework.Globalization;
-using FontStashSharp;
-using Kwytto.LiteUI;
+﻿using Kwytto.LiteUI;
 using Kwytto.UI;
 using System;
 using System.Linq;
@@ -83,11 +81,10 @@ namespace WriteEverywhere.UI
 
         public GeneralWritingEditorIlluminationTab(GUIColorPicker colorPicker) => m_root = colorPicker.GetComponentInParent<GUIRootWindowBase>();
 
-        public bool DrawArea(Vector2 tabAreaSize, ref BoardTextDescriptorGeneralXml currentItem, int currentItemIdx)
+        public bool DrawArea(Vector2 tabAreaSize, ref BoardTextDescriptorGeneralXml currentItem, int currentItemIdx, bool isEditable)
         {
             GUILayout.Label($"<i>{Str.WTS_TEXT_ILLUMINATION_ATTRIBUTES}</i>");
             var item = currentItem;
-            bool isEditable = true;
 
             if (GUIKwyttoCommons.AddComboBox(tabAreaSize.x, Str.WTS_TEXT_MATERIALTYPE, (int)item.IlluminationConfig.IlluminationType, m_materialTypes, out var newVal, m_root, isEditable))
             {

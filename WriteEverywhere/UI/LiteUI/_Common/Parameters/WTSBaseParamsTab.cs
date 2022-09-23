@@ -49,12 +49,12 @@ namespace WriteEverywhere.UI
             CurrentState = State.List;
             m_currentEditingParam = 0;
         }
-        public bool DrawArea(Vector2 areaRect, ref T item, int _)
+        public bool DrawArea(Vector2 areaRect, ref T item, int _, bool isEditable)
         {
             switch (CurrentState)
             {
                 case State.List:
-                    DrawListing(areaRect, item);
+                    DrawListing(areaRect, item, isEditable);
                     break;
                 case State.GettingImage:
                     DrawImagePicker(item, areaRect);
@@ -304,7 +304,7 @@ namespace WriteEverywhere.UI
         #region Abstract methods
         protected abstract string GetAssetName(T item);
         protected abstract void SetTextParameter(T item, int currentEditingParam, string paramValue);
-        protected abstract void DrawListing(Vector2 areaRect, T item);
+        protected abstract void DrawListing(Vector2 areaRect, T item, bool isEditable);
         #endregion
 
     }

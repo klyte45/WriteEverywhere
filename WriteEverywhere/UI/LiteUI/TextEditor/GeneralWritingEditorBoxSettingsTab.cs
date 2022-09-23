@@ -1,6 +1,5 @@
 ﻿using Kwytto.LiteUI;
 using System;
-using System.Linq;
 using UnityEngine;
 using WriteEverywhere.Localization;
 using WriteEverywhere.Xml;
@@ -22,10 +21,9 @@ namespace WriteEverywhere.UI
 
         public override Texture TabIcon { get; } = GUIKwyttoCommons.GetByNameFromDefaultAtlas("ToolbarIconProps");
 
-        protected override void DrawListing(Vector2 tabAreaSize, BoardTextDescriptorGeneralXml item)
+        protected override void DrawListing(Vector2 tabAreaSize, BoardTextDescriptorGeneralXml item, bool isEditable)
         {
             GUILayout.Label($"<i>{Str.WTS_BACKGROUNDANDBOX_SETTINGS}</i>");
-            bool isEditable = true;
             using (var scroll = new GUILayout.ScrollViewScope(m_scrollPos))
             {
                 using (new GUILayout.VerticalScope())

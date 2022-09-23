@@ -120,7 +120,7 @@ namespace WriteEverywhere.UI
             GoTo(State.Normal);
             xmlLibItem.ResetStatus();
         }
-        public bool DrawArea(Vector2 areaRect, ref OnNetInstanceCacheContainerXml item, int _)
+        public bool DrawArea(Vector2 areaRect, ref OnNetInstanceCacheContainerXml item, int _, bool _2)
         {
             if (item != m_lastItem)
             {

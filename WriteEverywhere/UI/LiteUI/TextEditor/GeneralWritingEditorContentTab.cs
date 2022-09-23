@@ -28,11 +28,10 @@ namespace WriteEverywhere.UI
             this.m_targetRenderingClass = targetRenderingClass;
         }
         private Vector2 scrollParamsPos;
-        protected override void DrawListing(Vector2 tabAreaSize, BoardTextDescriptorGeneralXml currentItem)
+        protected override void DrawListing(Vector2 tabAreaSize, BoardTextDescriptorGeneralXml currentItem, bool isEditable)
         {
             GUILayout.Label($"<i>{Str.WTS_TEXT_CONTENTVALUE_TAB}</i>");
             var item = currentItem;
-            bool isEditable = true;
             GUIKwyttoCommons.AddComboBox(tabAreaSize.x, Str.WTS_TEXT_CONTENT, ref item.textContent, m_optionsContent, m_contents, m_root, isEditable);
             switch (item.textContent)
             {

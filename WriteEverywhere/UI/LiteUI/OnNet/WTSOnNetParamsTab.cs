@@ -18,7 +18,7 @@ namespace WriteEverywhere.UI
 
         protected override string GetAssetName(OnNetInstanceCacheContainerXml item) => item.m_simplePropName;
         protected override void SetTextParameter(OnNetInstanceCacheContainerXml item, int currentEditingParam, string paramValue) => item.SetTextParameter(currentEditingParam, paramValue);
-        protected override void DrawListing(Vector2 areaRect, OnNetInstanceCacheContainerXml item)
+        protected override void DrawListing(Vector2 areaRect, OnNetInstanceCacheContainerXml item, bool isEditable)
         {
             if (SimulationManager.instance.m_currentTickIndex - lastTickDraw > 5)
             {

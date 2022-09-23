@@ -18,7 +18,7 @@ namespace WriteEverywhere.UI
 
         public Texture TabIcon => KResourceLoader.LoadTextureKwytto(CommonsSpriteNames.K45_AutoNameIcon);
 
-        public bool DrawArea(Vector2 tabAreaSize, ref OnNetInstanceCacheContainerXml currentItem, int currentItemIdx)
+        public bool DrawArea(Vector2 tabAreaSize, ref OnNetInstanceCacheContainerXml currentItem, int currentItemIdx, bool isEditable)
         {
             DoDraw(new Rect(default, tabAreaSize));
             return true;
