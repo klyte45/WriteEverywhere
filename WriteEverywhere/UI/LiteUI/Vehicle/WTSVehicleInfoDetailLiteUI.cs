@@ -109,7 +109,7 @@ namespace WriteEverywhere.UI
             var root = colorPicker.GetComponentInParent<GUIRootWindowBase>();
             GeneralWritingEditorPositionsSizesTab positionTab;
             var tabs = new IGUITab<BoardTextDescriptorGeneralXml>[]{
-                    new GeneralWritingEditorGeneralTab(),
+                    new GeneralWritingEditorGeneralTab(()=> m_currentLayout.TextDescriptors),
                     positionTab = new GeneralWritingEditorPositionsSizesTab(root),
                     new GeneralWritingEditorForegroundTab(m_colorPicker),
                     new GeneralWritingEditorBoxSettingsTab(m_colorPicker, ()=> m_currentInfo),

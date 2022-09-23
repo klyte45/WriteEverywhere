@@ -58,7 +58,7 @@ namespace WriteEverywhere.Rendering
 
 
                 defaultCallsCounter++;
-                Graphics.DrawMesh(renderInfo.m_mesh, matrix, renderInfo.m_generatedMaterial, 10, null, 0, block);
+                Graphics.DrawMesh(renderInfo.m_mesh, matrix, renderInfo.m_generatedMaterial, 10, null, 0, block, true, true);
 
                 positionAccumulator += (Vector3)matrix.GetColumn(3) + new Vector3(0, renderInfo.m_mesh.bounds.center.y * matrix.GetColumn(1).y);
                 if (currentEditingSizeLine)
@@ -134,14 +134,14 @@ namespace WriteEverywhere.Rendering
             }
 
             defaultCallsCounter++;
-            Graphics.DrawMesh(bgBri.m_mesh, bgMatrix, overrideMaterial ?? bgBri.m_generatedMaterial, 10, null, 0, materialPropertyBlock);
+            Graphics.DrawMesh(bgBri.m_mesh, bgMatrix, overrideMaterial ?? bgBri.m_generatedMaterial, 10, null, 0, materialPropertyBlock, true, true);
             return containerMatrix;
         }
 
         private static Vector2[] cachedUvFrame;
         private static Vector2[] cachedUvGlass;
         internal static Material m_rotorMaterial;
-        private static Material m_outsideMaterial;
+        internal static Material m_outsideMaterial;
 
         private static void DrawTextFrame(BoardTextDescriptorGeneralXml textDescriptor, MaterialPropertyBlock materialPropertyBlock, PlacingSettings placingSettings, ref Vector3 baseScale, ref Color parentColor, PrefabInfo srcInfo, ref Matrix4x4 containerMatrix, ref int defaultCallsCounter)
         {
@@ -196,7 +196,7 @@ namespace WriteEverywhere.Rendering
                 };
                 foreach (var k in new Mesh[] { frameConfig.meshOuterContainer, frameConfig.meshGlass })
                 {
-                    WTSUtils.SolveTangents(k);
+                    WTSUtils.SolveTangents(k, true);
                 }
 
                 if (frameConfig.cachedGlassMain is null)
@@ -227,7 +227,7 @@ namespace WriteEverywhere.Rendering
             materialPropertyBlock.SetTexture(instance2.ID_XYSMap, frameConfig.cachedGlassXYS);
             materialPropertyBlock.SetTexture(instance2.ID_MainTex, frameConfig.cachedGlassMain);
             defaultCallsCounter++;
-            Graphics.DrawMesh(frameConfig.meshGlass, containerMatrix, m_rotorMaterial, srcInfo.m_prefabDataIndex, null, 0, materialPropertyBlock);
+            Graphics.DrawMesh(frameConfig.meshGlass, containerMatrix, m_rotorMaterial, srcInfo.m_prefabDataIndex, null, 0, materialPropertyBlock, true, true);
 
             materialPropertyBlock.Clear();
             var color = frameConfig.m_inheritColor ? parentColor : frameConfig.OutsideColor;

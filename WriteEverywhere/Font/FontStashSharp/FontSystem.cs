@@ -396,7 +396,7 @@ namespace FontStashSharp
 
 
             bri.m_mesh.RecalculateNormals();
-            WTSUtils.SolveTangents(bri.m_mesh);
+            WTSUtils.SolveTangents(bri.m_mesh, false);
             _currentAtlas.UpdateMaterial();
 
             bri.m_generatedMaterial = _currentAtlas.Material;

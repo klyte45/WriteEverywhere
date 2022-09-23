@@ -40,15 +40,33 @@ namespace WriteEverywhere.Utils
                 GameObject.DestroyImmediate(target);
             }
         }
-
-        public static void SolveTangents(Mesh mesh)
+        private readonly static Vector3 axisRotationTG = new Vector3(0, 0, -1);
+        private readonly static float degRotationTG = 90;
+        private readonly static Vector3 axisRotationN = new Vector3(1, 1, -1);
+        private readonly static float degRotationN = 120;
+        public static void SolveTangents(Mesh mesh, bool recalculateAfterGenerate)
         {
             mesh.RecalculateBounds();
             mesh.RecalculateNormals();
             mesh.RecalculateTangents();
+            if (recalculateAfterGenerate)
+            {
+                var normals = mesh.normals.ToArray();
+                for (int i = 0; i < normals.Length; i++)
+                {
+                    normals[i] = Quaternion.AngleAxis(degRotationN, axisRotationN * Mathf.Deg2Rad) * normals[i];
+                }
+                mesh.normals = normals;
+                var tangents = mesh.tangents.ToArray();
+                for (int i = 0; i < tangents.Length; i++)
+                {
+                    tangents[i] = Quaternion.AngleAxis(degRotationTG, axisRotationTG * Mathf.Deg2Rad) * tangents[i];
+                }
+                mesh.tangents = tangents;
+            }
         }
 
-    
+
     }
 }
 

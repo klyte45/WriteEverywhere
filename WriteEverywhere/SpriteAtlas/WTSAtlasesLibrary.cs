@@ -505,7 +505,7 @@ namespace WriteEverywhere.Sprites
 
         static WTSAtlasesLibrary()
         {
-            WTSUtils.SolveTangents(basicMesh);
+            WTSUtils.SolveTangents(basicMesh, false);
         }
 
 
@@ -530,13 +530,12 @@ namespace WriteEverywhere.Sprites
 
         private static void RegisterMesh(string sprite, BasicRenderInformation bri, Dictionary<string, BasicRenderInformation> cache)
         {
-            WTSUtils.SolveTangents(bri.m_mesh);
             RegisterMeshSingle(sprite, bri, cache);
         }
 
         internal static void RegisterMeshSingle<T>(T sprite, BasicRenderInformation bri, Dictionary<T, BasicRenderInformation> cache)
         {
-            WTSUtils.SolveTangents(bri.m_mesh);
+            WTSUtils.SolveTangents(bri.m_mesh, false);
             if (cache.TryGetValue(sprite, out BasicRenderInformation currentVal) && currentVal == null)
             {
                 cache[sprite] = bri;
@@ -571,6 +570,7 @@ namespace WriteEverywhere.Sprites
                 m_bgTexture.m_mesh.RecalculateBounds();
                 m_bgTexture.m_mesh.RecalculateNormals();
                 m_bgTexture.m_mesh.RecalculateTangents();
+                WTSUtils.SolveTangents(m_bgTexture.m_mesh, true);
             }
             return m_bgTexture;
         }

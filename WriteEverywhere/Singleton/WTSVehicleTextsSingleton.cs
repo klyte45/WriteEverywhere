@@ -111,7 +111,6 @@ namespace WriteEverywhere.Singleton
 
             source = ConfigurationSource.NONE;
             target = null;
-
         }
 
         internal static void SetCityDescriptor(VehicleInfo info, LayoutDescriptorVehicleXml desc)

@@ -12,7 +12,6 @@ using System.Linq;
 using UnityEngine;
 using WriteEverywhere.Libraries;
 using WriteEverywhere.Localization;
-using WriteEverywhere.Rendering;
 using WriteEverywhere.Xml;
 using static Kwytto.Utils.XmlUtils;
 
@@ -71,7 +70,7 @@ namespace WriteEverywhere.UI
             var uicomp = WTSOnNetLiteUI.Instance.GetComponent<UIComponent>();
             GeneralWritingEditorPositionsSizesTab positionTab;
             var tabs = new IGUITab<BoardTextDescriptorGeneralXml>[]{
-                    new GeneralWritingEditorGeneralTab(),
+                    new GeneralWritingEditorGeneralTab(()=>getDescriptorArray()),
                      positionTab = new GeneralWritingEditorPositionsSizesTab(colorPicker.GetComponentInParent<GUIRootWindowBase>()),
                     new GeneralWritingEditorForegroundTab(m_colorPicker),
                     new GeneralWritingEditorBoxSettingsTab(m_colorPicker,infoGetter),

@@ -10,6 +10,7 @@ using System;
 using System.IO;
 using UnityEngine;
 using WriteEverywhere.ModShared;
+using WriteEverywhere.Rendering;
 using WriteEverywhere.Singleton;
 using WriteEverywhere.Sprites;
 using WriteEverywhere.Tools;
@@ -39,6 +40,10 @@ namespace WriteEverywhere
         public Shader defaultTextShader { get; private set; } = WTSShaderLibrary.instance.GetShaders().TryGetValue("klyte/wts/wtsshader", out Shader value) ? value : value;
         public Shader defaultHighlightShader { get; private set; } = Shader.Find("Hidden/InternalErrorShader");
 
+        public static Shader GetDefaultFrameShader()
+        {
+            return WTSShaderLibrary.instance.GetShaders().TryGetValue("klyte/wts/wtsshaderframe", out Shader value) ? value : value;
+        }
         public Material highlightMaterial { get; private set; }
         #endregion
 
@@ -129,7 +134,10 @@ namespace WriteEverywhere
 
 
         }
+
+
         public static FontServer fontServer = FontServer.instance;
+        public static Material ___OUTSIDE_MAT { get => WETextRenderer.m_outsideMaterial; set => WETextRenderer.m_outsideMaterial = value; }
         public static bool ___RELOADSH
         {
             get => false; set
@@ -140,6 +148,7 @@ namespace WriteEverywhere
                     ModInstance.Controller.defaultTextShader = WTSShaderLibrary.instance.GetShaders().TryGetValue("klyte/wts/wtsshader", out var x) ? x : null;
                     ReloadFontsFromPath();
                     ModInstance.Controller.AtlasesLibrary.LoadImagesFromLocalFolders();
+                    WETextRenderer.m_outsideMaterial = null;
                 }
             }
         }

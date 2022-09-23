@@ -1,19 +1,21 @@
-﻿using ColossalFramework.UI;
-using Kwytto.LiteUI;
+﻿using Kwytto.LiteUI;
 using Kwytto.UI;
 using Kwytto.Utils;
+using System;
 using UnityEngine;
 using WriteEverywhere.Libraries;
 using WriteEverywhere.Localization;
+using WriteEverywhere.Utils;
 using WriteEverywhere.Xml;
 
 namespace WriteEverywhere.UI
 {
     internal class GeneralWritingEditorGeneralTab : IGUITab<BoardTextDescriptorGeneralXml>
     {
-        public GeneralWritingEditorGeneralTab()
+        private readonly Func<BoardTextDescriptorGeneralXml[]> listGetter;
+        public GeneralWritingEditorGeneralTab(Func<BoardTextDescriptorGeneralXml[]> listGetter)
         {
-            var viewAtlas = UIView.GetAView().defaultAtlas;
+            this.listGetter = listGetter;
             m_deleteItem = KResourceLoader.LoadTextureKwytto(CommonsSpriteNames.K45_Delete);
             m_copy = KResourceLoader.LoadTextureKwytto(CommonsSpriteNames.K45_Copy);
             m_paste = KResourceLoader.LoadTextureKwytto(CommonsSpriteNames.K45_Paste);
@@ -83,7 +85,19 @@ namespace WriteEverywhere.UI
                         }, GUILayout.Height(40));
                         GUI.tooltip = "";
                     }
-
+                    //bool changed = GUIKwyttoCommons.AddVector3Field(tabAreaRect.x, ref WTSUtils.axisRotationTG, "ROT VEC TG", "ROTATIOON", true, -1, 1);
+                    //changed |= GUIKwyttoCommons.AddFloatField(tabAreaRect.x, "ROT DEG TG", ref WTSUtils.degRotationTG, true, -180, 180);
+                    //changed |= GUIKwyttoCommons.AddFloatField(tabAreaRect.x, "ROT DEG SZ", ref WTSUtils.mulSz);
+                    //changed |= GUIKwyttoCommons.AddVector3Field(tabAreaRect.x, ref WTSUtils.axisRotationN, "ROT VEC NM", "ROTATIOON2", true, -1, 1);
+                    //changed |= GUIKwyttoCommons.AddFloatField(tabAreaRect.x, "ROT DEG NM", ref WTSUtils.degRotationN, true, -180, 180);
+                    //changed |= GUIKwyttoCommons.AddFloatField(tabAreaRect.x, "ROT DEG SZ", ref WTSUtils.mulSzN);
+                    //if (changed)
+                    //{
+                    //    foreach (var board in listGetter())
+                    //    {
+                    //        board.BackgroundMeshSettings.FrameMeshSettings.GlassSpecularLevel = board.BackgroundMeshSettings.FrameMeshSettings.GlassSpecularLevel;
+                    //    }
+                    //}
                 }
             }
             if (wrapper.Value != item)
