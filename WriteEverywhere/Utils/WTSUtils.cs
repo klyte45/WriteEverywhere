@@ -40,10 +40,10 @@ namespace WriteEverywhere.Utils
                 GameObject.DestroyImmediate(target);
             }
         }
-        private readonly static Vector3 axisRotationTG = new Vector3(0, 0, -1);
-        private readonly static float degRotationTG = 90;
-        private readonly static Vector3 axisRotationN = new Vector3(1, 1, -1);
-        private readonly static float degRotationN = 120;
+        public static Vector3 axisRotationTG = new Vector3(0, 0, -1);
+        public static float degRotationTG = 90;
+        public static Vector3 axisRotationN = new Vector3(1, 1, -1);
+        public static float degRotationN = 120;
         public static void SolveTangents(Mesh mesh, bool recalculateAfterGenerate)
         {
             mesh.RecalculateBounds();

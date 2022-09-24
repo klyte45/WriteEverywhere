@@ -9,6 +9,7 @@ using System.Linq;
 using UnityEngine;
 using WriteEverywhere.Utils;
 using WriteEverywhere.Xml;
+using static BuildingInfo;
 
 namespace WriteEverywhere.Rendering
 {
@@ -58,7 +59,7 @@ namespace WriteEverywhere.Rendering
 
 
                 defaultCallsCounter++;
-                Graphics.DrawMesh(renderInfo.m_mesh, matrix, renderInfo.m_generatedMaterial, 10, null, 0, block, true, true);
+                Graphics.DrawMesh(renderInfo.m_mesh, matrix, renderInfo.m_generatedMaterial, srcInfo.m_prefabDataIndex, null, 0, block);
 
                 positionAccumulator += (Vector3)matrix.GetColumn(3) + new Vector3(0, renderInfo.m_mesh.bounds.center.y * matrix.GetColumn(1).y);
                 if (currentEditingSizeLine)
@@ -73,7 +74,7 @@ namespace WriteEverywhere.Rendering
                         ref baseScale,
                         horizontalAlignment,
                         textItem,
-                        null,
+                        null, srcInfo,
                         ModInstance.Controller.AtlasesLibrary.GetWhiteTextureBRI(),
                         textDescriptor.TextLineHeight,
                         ref defaultCallsCounter,
@@ -92,7 +93,7 @@ namespace WriteEverywhere.Rendering
                         ref baseScale,
                         textDescriptor.BackgroundMeshSettings.m_horizontalAlignment,
                         textItem,
-                        textDescriptor.BackgroundMeshSettings.BgImage,
+                        textDescriptor.BackgroundMeshSettings.BgImage, srcInfo,
                         ModInstance.Controller.AtlasesLibrary.GetWhiteTextureBRI(),
                         textDescriptor.TextLineHeight,
                         ref defaultCallsCounter,
@@ -108,7 +109,7 @@ namespace WriteEverywhere.Rendering
         }
 
         private static Matrix4x4 DrawBgMesh(ref Matrix4x4 propMatrix, Vector2 size, Color color, Color backColor, float verticalAlignment, MaterialPropertyBlock materialPropertyBlock, PlacingSettings placingSettings,
-            ref Vector3 baseScale, float horizontalAlignment, TextRenderDescriptor textMatrixTuple, TextParameterWrapper bgImage,
+            ref Vector3 baseScale, float horizontalAlignment, TextRenderDescriptor textMatrixTuple, TextParameterWrapper bgImage, PrefabInfo srcInfo,
              BasicRenderInformation bgBri, float lineHeight, ref int defaultCallsCounter, float zDistanceMultiplier, Material overrideMaterial = null)
         {
             materialPropertyBlock.Clear();
@@ -134,7 +135,7 @@ namespace WriteEverywhere.Rendering
             }
 
             defaultCallsCounter++;
-            Graphics.DrawMesh(bgBri.m_mesh, bgMatrix, overrideMaterial ?? bgBri.m_generatedMaterial, 10, null, 0, materialPropertyBlock, true, true);
+            Graphics.DrawMesh(bgBri.m_mesh, bgMatrix, overrideMaterial ?? bgBri.m_generatedMaterial, srcInfo.m_prefabDataIndex, null, 0, materialPropertyBlock);
             return containerMatrix;
         }
 
@@ -227,14 +228,14 @@ namespace WriteEverywhere.Rendering
             materialPropertyBlock.SetTexture(instance2.ID_XYSMap, frameConfig.cachedGlassXYS);
             materialPropertyBlock.SetTexture(instance2.ID_MainTex, frameConfig.cachedGlassMain);
             defaultCallsCounter++;
-            Graphics.DrawMesh(frameConfig.meshGlass, containerMatrix, m_rotorMaterial, srcInfo.m_prefabDataIndex, null, 0, materialPropertyBlock, true, true);
+            Graphics.DrawMesh(frameConfig.meshGlass, containerMatrix, m_rotorMaterial, srcInfo.m_prefabDataIndex, null, 0, materialPropertyBlock);
 
             materialPropertyBlock.Clear();
             var color = frameConfig.m_inheritColor ? parentColor : frameConfig.OutsideColor;
             materialPropertyBlock.SetColor(SHADER_PROP_COLOR, color);
             materialPropertyBlock.SetColor(SHADER_PROP_BACK_COLOR, frameConfig.InsideColor);
             defaultCallsCounter++;
-            Graphics.DrawMesh(frameConfig.meshOuterContainer, containerMatrix, m_outsideMaterial, srcInfo.m_prefabDataIndex, null, 0, materialPropertyBlock, true, true);
+            Graphics.DrawMesh(frameConfig.meshOuterContainer, containerMatrix, m_outsideMaterial, srcInfo.m_prefabDataIndex, null, 0, materialPropertyBlock);
         }
         private class TextRenderDescriptor
         {

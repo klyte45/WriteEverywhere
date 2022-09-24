@@ -85,19 +85,17 @@ namespace WriteEverywhere.UI
                         }, GUILayout.Height(40));
                         GUI.tooltip = "";
                     }
-                    //bool changed = GUIKwyttoCommons.AddVector3Field(tabAreaRect.x, ref WTSUtils.axisRotationTG, "ROT VEC TG", "ROTATIOON", true, -1, 1);
-                    //changed |= GUIKwyttoCommons.AddFloatField(tabAreaRect.x, "ROT DEG TG", ref WTSUtils.degRotationTG, true, -180, 180);
-                    //changed |= GUIKwyttoCommons.AddFloatField(tabAreaRect.x, "ROT DEG SZ", ref WTSUtils.mulSz);
-                    //changed |= GUIKwyttoCommons.AddVector3Field(tabAreaRect.x, ref WTSUtils.axisRotationN, "ROT VEC NM", "ROTATIOON2", true, -1, 1);
-                    //changed |= GUIKwyttoCommons.AddFloatField(tabAreaRect.x, "ROT DEG NM", ref WTSUtils.degRotationN, true, -180, 180);
-                    //changed |= GUIKwyttoCommons.AddFloatField(tabAreaRect.x, "ROT DEG SZ", ref WTSUtils.mulSzN);
-                    //if (changed)
-                    //{
-                    //    foreach (var board in listGetter())
-                    //    {
-                    //        board.BackgroundMeshSettings.FrameMeshSettings.GlassSpecularLevel = board.BackgroundMeshSettings.FrameMeshSettings.GlassSpecularLevel;
-                    //    }
-                    //}
+                    bool changed = GUIKwyttoCommons.AddVector3Field(tabAreaRect.x, ref WTSUtils.axisRotationTG, "ROT VEC TG", "ROTATIOON", true, -1, 1);
+                    changed |= GUIKwyttoCommons.AddFloatField(tabAreaRect.x, "ROT DEG TG", ref WTSUtils.degRotationTG, true, -180, 180);
+                    changed |= GUIKwyttoCommons.AddVector3Field(tabAreaRect.x, ref WTSUtils.axisRotationN, "ROT VEC NM", "ROTATIOON2", true, -1, 1);
+                    changed |= GUIKwyttoCommons.AddFloatField(tabAreaRect.x, "ROT DEG NM", ref WTSUtils.degRotationN, true, -180, 180);
+                    if (changed)
+                    {
+                        foreach (var board in listGetter())
+                        {
+                            board.BackgroundMeshSettings.FrameMeshSettings.GlassSpecularLevel = board.BackgroundMeshSettings.FrameMeshSettings.GlassSpecularLevel;
+                        }
+                    }
                 }
             }
             if (wrapper.Value != item)

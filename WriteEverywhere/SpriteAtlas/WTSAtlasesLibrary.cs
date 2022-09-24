@@ -570,7 +570,7 @@ namespace WriteEverywhere.Sprites
                 m_bgTexture.m_mesh.RecalculateBounds();
                 m_bgTexture.m_mesh.RecalculateNormals();
                 m_bgTexture.m_mesh.RecalculateTangents();
-                WTSUtils.SolveTangents(m_bgTexture.m_mesh, true);
+                WTSUtils.SolveTangents(m_bgTexture.m_mesh, false);
             }
             return m_bgTexture;
         }

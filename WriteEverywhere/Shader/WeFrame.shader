@@ -22,6 +22,7 @@ Shader "Custom/WriteEverything/Frame" {
         UsePass "Custom/WriteEverything/Frame/Back/FORWARD"
         UsePass "Custom/WriteEverything/Frame/Back/PREPASS"
         UsePass "Custom/WriteEverything/Frame/Back/DEFERRED"
+        UsePass "Custom/WriteEverything/Frame/Back/SHADOWCASTER"
         UsePass "Custom/WriteEverything/Frame/Back/META"
 
         

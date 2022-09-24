@@ -20,15 +20,13 @@ Shader "Custom/WriteEverything/Default" {
         }        
        
         UsePass "Custom/WriteEverything/Default/Back/FORWARD"
-        UsePass "Custom/WriteEverything/Default/Back/PREPASS"
-        UsePass "Custom/WriteEverything/Default/Back/DEFERRED"
-        UsePass "Custom/WriteEverything/Default/Back/META"
-
-        
         UsePass "Custom/WriteEverything/Default/Front/FORWARD"
-        UsePass "Custom/WriteEverything/Default/Front/PREPASS"
+        UsePass "Custom/WriteEverything/Default/Back/PREPASS"
+        UsePass "Custom/WriteEverything/Default/Front/PREPASS" 
+        UsePass "Custom/WriteEverything/Default/Back/DEFERRED"
         UsePass "Custom/WriteEverything/Default/Front/DEFERRED"
-        UsePass "Custom/WriteEverything/Default/Front/SHADOWCASTER"
-        UsePass "Custom/WriteEverything/Default/Front/META"
+        UsePass "Custom/WriteEverything/Default/Both/SHADOWCASTER"
+        UsePass "Custom/WriteEverything/Default/Both/META"   
+
     }
 }
