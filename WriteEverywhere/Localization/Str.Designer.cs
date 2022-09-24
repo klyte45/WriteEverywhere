@@ -142,6 +142,15 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Pick a building to edit WE layout.
+        /// </summary>
+        internal static string we_buildingEditor_toolButtonText {
+            get {
+                return ResourceManager.GetString("we_buildingEditor_toolButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Blink 250ms.
         /// </summary>
         internal static string we_Enum__BlinkType_Blink_025_025 {

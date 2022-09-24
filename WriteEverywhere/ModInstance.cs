@@ -22,7 +22,7 @@ namespace WriteEverywhere
 
         public override string Acronym => "WE";
 
-        public override Color ModColor => ColorExtensions.FromRGB("44aadd");
+        public override Color ModColor => ColorExtensions.FromRGB("c69a8d");
 
         protected override void SetLocaleCulture(CultureInfo culture) => Str.Culture = culture;
 
@@ -38,14 +38,20 @@ namespace WriteEverywhere
         {
             new UUIToolButtonContainerPlaceholder(
                 buttonName :  $"{SimpleName} - {Str.WTS_PICK_A_SEGMENT}",
-                iconPath : "WTS_SegmentPickerIcon",
+                iconPath : "SegmentPickerIcon",
                 tooltip : $"WE: {Str.WTS_PICK_A_SEGMENT}",
                 toolGetter : ()=> ToolsModifierControl.toolController.GetComponent<SegmentEditorPickerTool>()
+            ),
+            new UUIToolButtonContainerPlaceholder(
+                buttonName :  $"{SimpleName} - {Str.we_buildingEditor_toolButtonText}",
+                iconPath : "BuildingEditorIcon",
+                tooltip : $"WE:  {Str.we_buildingEditor_toolButtonText}",
+                toolGetter : ()=> ToolsModifierControl.toolController.GetComponent<BuildingEditorPickerTool>()
             ),
             new UUIWindowButtonContainerPlaceholder(
              buttonName: $"{SimpleName} - {Str.WTS_VEHICLEEDITOR_WINDOWTITLE}",
              tooltip: $"{SimpleName} - {Str.WTS_VEHICLEEDITOR_WINDOWTITLE}",
-             iconPath: "WTS_VehicleEditorIcon",
+             iconPath: "VehicleEditorIcon",
              windowGetter: ()=>WTSVehicleLiteUI.Instance
              ),
         };

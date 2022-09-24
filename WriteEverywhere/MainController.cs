@@ -112,6 +112,7 @@ namespace WriteEverywhere
         public void Awake()
         {
             ToolsModifierControl.toolController.AddExtraToolToController<SegmentEditorPickerTool>();
+            ToolsModifierControl.toolController.AddExtraToolToController<BuildingEditorPickerTool>();
             ToolsModifierControl.toolController.AddExtraToolToController<RoadSegmentTool>();
             ToolsModifierControl.toolController.AddExtraToolToController<VehicleEditorTool>();
             FontServer.Ensure();
