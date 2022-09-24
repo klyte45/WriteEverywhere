@@ -57,7 +57,7 @@ namespace WriteEverywhere.UI
                             target = Any;
                             break;
                     }
-                    var usedByText = string.Join("\n", kv.Value.Select(x => $"\u2022{(x.First.GetParameterDisplayName() ?? x.Second)}").ToArray());
+                    var usedByText = string.Join("\n", kv.Value.Select(x => $"\u2022 {x.First.GetParameterDisplayName().TrimToNull() ?? x.Second}").ToArray());
                     using (new GUILayout.HorizontalScope())
                     {
                         GUILayout.Label(string.Format(Str.WTS_ONNETEDITOR_TEXTPARAM, kv.Key) + $"\n<color=#{target}>{targetContentType.ValueToI18n()}</color>\n\n{usedByText}");

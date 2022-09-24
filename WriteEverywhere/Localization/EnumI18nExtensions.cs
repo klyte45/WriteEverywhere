@@ -20,7 +20,7 @@ namespace WriteEverywhere.Localization
                         case VariableType.CurrentSegment: return Str.WTS_PARAMVARS_DESC__VariableType_CurrentSegment;
                         case VariableType.CurrentVehicle: return Str.WTS_PARAMVARS_DESC__VariableType_CurrentVehicle;
                         case VariableType.Invalid: return Str.WTS_PARAMVARS_DESC__VariableType_Invalid;
-                        case VariableType.CurrentSegmentParameter: return Str.WTS_PARAMVARS_DESC__VariableType_CurrentSegmentParameter;
+                        case VariableType.Parameter: return Str.WTS_PARAMVARS_DESC__VariableType_Parameter;
                     }
                     break;
                 case VariableCitySubType tp:
@@ -131,14 +131,14 @@ namespace WriteEverywhere.Localization
                         case BlinkType.Custom: return Str.we_Enum__BlinkType_Custom;
                     }
                     break;
-                case ConfigurationSource.NONE: return Str.comm_Enum__ConfigurationSource_NONE;
-                case ConfigurationSource.ASSET: return Str.comm_Enum__ConfigurationSource_ASSET;
-                case ConfigurationSource.GLOBAL: return Str.comm_Enum__ConfigurationSource_GLOBAL;
-                case ConfigurationSource.CITY: return Str.comm_Enum__ConfigurationSource_CITY;
-                case ConfigurationSource.SKIN: return Str.comm_Enum__ConfigurationSource_SKIN;
-                case YCloneType.None: return Str.comm_Enum__YCloneType_None;
-                case YCloneType.OnX: return Str.comm_Enum__YCloneType_OnX;
-                case YCloneType.OnZ: return Str.comm_Enum__YCloneType_OnZ;
+                case ConfigurationSource.NONE: return Str.we_Enum__ConfigurationSource_NONE;
+                case ConfigurationSource.ASSET: return Str.we_Enum__ConfigurationSource_ASSET;
+                case ConfigurationSource.GLOBAL: return Str.we_Enum__ConfigurationSource_GLOBAL;
+                case ConfigurationSource.CITY: return Str.we_Enum__ConfigurationSource_CITY;
+                case ConfigurationSource.SKIN: return Str.we_Enum__ConfigurationSource_SKIN;
+                case YCloneType.None: return Str.we_Enum__YCloneType_None;
+                case YCloneType.OnX: return Str.we_Enum__YCloneType_OnX;
+                case YCloneType.OnZ: return Str.we_Enum__YCloneType_OnZ;
 
 
             }

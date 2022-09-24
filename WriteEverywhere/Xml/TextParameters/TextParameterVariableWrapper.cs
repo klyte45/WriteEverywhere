@@ -6,7 +6,7 @@ using SpriteFontPlus.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using VS::Bridge_WE2VS;
+using WriteEverywhere.Data;
 using WriteEverywhere.Rendering;
 
 namespace WriteEverywhere.Xml
@@ -108,7 +108,7 @@ namespace WriteEverywhere.Xml
                             catch { }
                         }
                         break;
-                    case VariableType.CurrentSegmentParameter:
+                    case VariableType.Parameter:
                         if (parameterPath.Length >= 2)
                         {
                             try
@@ -116,7 +116,7 @@ namespace WriteEverywhere.Xml
                                 if (int.TryParse(parameterPath[1], out var idx))
                                 {
                                     paramContainer.paramIdx = idx;
-                                    type = VariableType.CurrentSegmentParameter;
+                                    type = VariableType.Parameter;
                                     break;
                                 }
                             }
@@ -151,31 +151,12 @@ namespace WriteEverywhere.Xml
                 case OnNetInstanceCacheContainerXml cc:
                     targetStr = GetTargetTextForNet(cc, refId, textDescriptor, out multipleOutput);
                     break;
-                //case BoardInstanceBuildingXml bd:
-                //    targetStr = GetTargetTextForBuilding(bd, refId, textDescriptor, out multipleOutput);
-                //    break;
+                case WriteOnBuildingPropXml bd:
+                    targetStr = GetTargetTextForBuilding(bd, refId, textDescriptor, out multipleOutput);
+                    break;
                 case LayoutDescriptorVehicleXml ve:
                     targetStr = GetTargetTextForVehicle(refId, textDescriptor, out multipleOutput);
                     break;
-                //case BoardPreviewInstanceXml bp:
-                //    switch (instance.RenderingClass)
-                //    {
-                //        case TextRenderingClass.None:
-                //            break;
-                //        case TextRenderingClass.RoadNodes:
-                //            break;
-                //        case TextRenderingClass.Buildings:
-                //            targetStr = GetTargetTextForBuilding(bp, refId, textDescriptor, out multipleOutput);
-                //            break;
-                //        case TextRenderingClass.PlaceOnNet:
-                //            targetStr = GetTargetTextForNet(bp, refId, textDescriptor, out multipleOutput);
-                //            break;
-                //        case TextRenderingClass.Vehicle:
-                //            targetStr = GetTargetTextForVehicle(refId, textDescriptor, out multipleOutput);
-                //            break;
-                //    }
-                //    multipleOutput = null;
-                //    break;
                 default:
                     multipleOutput = null;
                     break;
@@ -185,25 +166,93 @@ namespace WriteEverywhere.Xml
 
 
 
-        //        public string GetTargetTextForBuilding(BoardInstanceXml descriptor, ushort buildingId, BoardTextDescriptorGeneralXml textDescriptor, out IEnumerable<BasicRenderInformation> multipleOutput)
-        //        {
-        //            multipleOutput = null;
-        //            var buildingDescriptor = descriptor as BoardInstanceBuildingXml;
-        //            switch (type)
-        //            {
-        //                case VariableType.CurrentBuilding:
-        //                    return buildingId == 0 || buildingDescriptor is null || !(subtype is VariableBuildingSubType targetSubtype2) || targetSubtype2 == VariableBuildingSubType.None
-        //                        ? $"{prefix}{subtype}@currBuilding"
-        //                        : $"{prefix}{targetSubtype2.GetFormattedString(buildingDescriptor.m_platforms, buildingId, this) ?? m_originalCommand}{suffix}";
-        //                case VariableType.CityData:
-        //                    if ((subtype is VariableCitySubType targetCitySubtype))
-        //                    {
-        //                        return $"{prefix}{targetCitySubtype.GetFormattedString(this) ?? m_originalCommand}{suffix}";
-        //                    }
-        //                    break;
-        //            }
-        //            return m_originalCommand;
-        //        }
+        public string GetTargetTextForBuilding(WriteOnBuildingPropXml buildingDescriptor, ushort buildingId, BoardTextDescriptorGeneralXml textDescriptor, out IEnumerable<BasicRenderInformation> multipleOutput)
+        {
+            multipleOutput = null;
+            switch (type)
+            {
+                case VariableType.CurrentBuilding:
+                    return buildingId == 0 || buildingDescriptor is null || !(subtype is VariableBuildingSubType targetSubtype2) || targetSubtype2 == VariableBuildingSubType.None
+                        ? $"{subtype}@currBuilding"
+                        : $"{targetSubtype2.GetFormattedString(buildingDescriptor.m_platforms, buildingId, this) ?? m_originalCommand}";
+                case VariableType.CityData:
+                    if ((subtype is VariableCitySubType targetCitySubtype))
+                    {
+                        return $"{targetCitySubtype.GetFormattedString(this) ?? m_originalCommand}";
+                    }
+                    break;
+                case VariableType.Parameter:
+                    var buildingParam = WTSBuildingData.Instance.Parameters.TryGetValue(buildingId, out var parameter) ? parameter : null;
+                    if (buildingParam == null || buildingParam.TextParameters.Count == 0)
+                    {
+                        return "<NO PARAMS SET FOR BUILDING!>";
+                    }
+                    var paramIdx = paramContainer.paramIdx;
+                    switch (textDescriptor.textContent)
+                    {
+                        case TextContent.None:
+                            LogUtils.DoWarnLog("INVALID TEXT CONTENT: NONE!\n" + Environment.StackTrace);
+                            return null;
+                        case TextContent.ParameterizedText:
+                        Text:
+                            if (buildingParam.GetParameter(paramIdx) is TextParameterWrapper tpw)
+                            {
+                                var result = tpw.GetTargetText(buildingDescriptor, textDescriptor, TextParameterWrapper.GetTargetFont(buildingDescriptor, textDescriptor), buildingId, 0, 0, out multipleOutput);
+                                if (result is null && (multipleOutput is null || multipleOutput?.Count() == 0))
+                                {
+                                    return $"<EMPTY PARAM#{paramIdx} NOT SET>";
+                                }
+                                if (multipleOutput is null)
+                                {
+                                    multipleOutput = new[] { result };
+                                }
+                                return null;
+                            }
+                            return $"<PARAM#{paramIdx} NOT SET>";
+                        case TextContent.ParameterizedSpriteFolder:
+                        ImageFolder:
+                            multipleOutput = buildingParam.GetParameter(paramIdx) is TextParameterWrapper tpw2
+                                ? (new[] { tpw2.GetSpriteFromCycle(textDescriptor, buildingDescriptor.TargetAssetParameter, buildingId, 0, 0) })
+                                : (IEnumerable<BasicRenderInformation>)(new[] { ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(null, "FrameParamsNotSet") });
+                            return null;
+                        case TextContent.ParameterizedSpriteSingle:
+                        ImageSingle:
+                            multipleOutput = new[] {buildingParam.GetParameter(paramIdx)  is TextParameterWrapper tpw3
+                                ? tpw3.GetSpriteFromParameter(buildingDescriptor.TargetAssetParameter)
+                                : ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(null, "FrameParamsNotSet") };
+                            return null;
+                        case TextContent.Any:
+                        case TextContent.TextParameterSequence:
+                            if (buildingParam.GetParameter(paramIdx) is TextParameterWrapper tpw4)
+                            {
+                                switch (tpw4.ParamType)
+                                {
+                                    case ParameterType.TEXT:
+                                    case ParameterType.VARIABLE:
+                                        goto Text;
+                                    case ParameterType.IMAGE:
+                                        goto ImageSingle;
+                                    case ParameterType.FOLDER:
+                                        goto ImageFolder;
+                                    case ParameterType.EMPTY:
+                                        break;
+                                }
+                            }
+                            return $"<ANY PARAM#{paramIdx} NOT SET>";
+                        case TextContent.LinesNameList:
+                            break;
+                        case TextContent.HwShield:
+                            break;
+                        case TextContent.TimeTemperature:
+                            break;
+                        case TextContent.LinesSymbols:
+                            break;
+                    }
+                    break;
+            }
+
+            return m_originalCommand;
+        }
 
         public string GetTargetTextForVehicle(ushort vehicleId, BoardTextDescriptorGeneralXml textDescriptor, out IEnumerable<BasicRenderInformation> multipleOutput)
         {
@@ -252,7 +301,7 @@ namespace WriteEverywhere.Xml
                     break;
                 case VariableType.Invalid:
                     return $"<UNSUPPORTED PATH: {m_originalCommand}>";
-                case VariableType.CurrentSegmentParameter:
+                case VariableType.Parameter:
                     var paramIdx = paramContainer.paramIdx;
                     switch (textDescriptor.textContent)
                     {

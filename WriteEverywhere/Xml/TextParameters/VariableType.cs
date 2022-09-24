@@ -1,5 +1,4 @@
 ﻿using WriteEverywhere.Localization;
-using WriteEverywhere.Rendering;
 
 namespace WriteEverywhere.Xml
 {
@@ -11,7 +10,7 @@ namespace WriteEverywhere.Xml
         CurrentBuilding,
         CurrentVehicle,
         CurrentSegment,
-        CurrentSegmentParameter
+        Parameter
     }
 
     public static class VariableTypeExtension
@@ -27,8 +26,9 @@ namespace WriteEverywhere.Xml
                 case VariableType.CurrentBuilding:
                     return renderingClass == TextRenderingClass.Buildings || renderingClass == TextRenderingClass.Vehicle;
                 case VariableType.SegmentTarget:
-                case VariableType.CurrentSegmentParameter:
                     return renderingClass == TextRenderingClass.PlaceOnNet;
+                case VariableType.Parameter:
+                    return renderingClass == TextRenderingClass.Buildings || renderingClass == TextRenderingClass.PlaceOnNet;
                 case VariableType.CurrentVehicle:
                     return renderingClass == TextRenderingClass.Vehicle;
                 case VariableType.CurrentSegment:
@@ -47,7 +47,7 @@ namespace WriteEverywhere.Xml
                 case VariableType.CurrentSegment:
                 case VariableType.CityData:
                     return TextContent.ParameterizedText;
-                case VariableType.CurrentSegmentParameter:
+                case VariableType.Parameter:
                     return TextContent.Any;
                 case VariableType.Invalid:
                 default:
@@ -94,7 +94,7 @@ namespace WriteEverywhere.Xml
                         defaultValue = VariableVehicleSubType.None,
                         nextLevelOptions = VariableVehicleSubTypeExtensions.ReadCommandTree()
                     };
-                case VariableType.CurrentSegmentParameter:
+                case VariableType.Parameter:
                     return CommandLevel.m_numberSet;
                 default:
                     return null;

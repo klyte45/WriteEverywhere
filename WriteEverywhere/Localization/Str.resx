@@ -784,7 +784,7 @@ A text to succeed the variable value. Use the backslash to scape the slashes (&l
 
 &amp;lt;color=#FFFF00&amp;gt;0 to 4&amp;lt;/color&amp;gt; means that the segments selected at reference tab will be used</value>
   </data>
-  <data name="WTS_PARAMVARS_DESC__VariableType_CurrentSegmentParameter" xml:space="preserve">
+  <data name="WTS_PARAMVARS_DESC__VariableType_Parameter" xml:space="preserve">
     <value>Use an local variable of the instance at segment to determine its value (on segment only)</value>
   </data>
   <data name="WTS_EXPORTLAYOUT_LIB" xml:space="preserve">
@@ -929,28 +929,28 @@ to Steam Workshop</value>
   <data name="we_vehicleEditor_trailerNumTitle" xml:space="preserve">
     <value>Trailer {0}</value>
   </data>
-  <data name="comm_Enum__YCloneType_OnZ" xml:space="preserve">
+  <data name="we_Enum__YCloneType_OnZ" xml:space="preserve">
     <value>Mirrored on Z Axis</value>
   </data>
-  <data name="comm_Enum__ConfigurationSource_ASSET" xml:space="preserve">
+  <data name="we_Enum__ConfigurationSource_ASSET" xml:space="preserve">
     <value>Workshop</value>
   </data>
-  <data name="comm_Enum__ConfigurationSource_CITY" xml:space="preserve">
+  <data name="we_Enum__ConfigurationSource_CITY" xml:space="preserve">
     <value>Savegame (City)</value>
   </data>
-  <data name="comm_Enum__ConfigurationSource_GLOBAL" xml:space="preserve">
+  <data name="we_Enum__ConfigurationSource_GLOBAL" xml:space="preserve">
     <value>Local folder (Appdata)</value>
   </data>
-  <data name="comm_Enum__ConfigurationSource_NONE" xml:space="preserve">
+  <data name="we_Enum__ConfigurationSource_NONE" xml:space="preserve">
     <value>None (Disabled)</value>
   </data>
-  <data name="comm_Enum__ConfigurationSource_SKIN" xml:space="preserve">
+  <data name="we_Enum__ConfigurationSource_SKIN" xml:space="preserve">
     <value>Skin (From Vehicle Skins)</value>
   </data>
-  <data name="comm_Enum__YCloneType_None" xml:space="preserve">
+  <data name="we_Enum__YCloneType_None" xml:space="preserve">
     <value>No cloning</value>
   </data>
-  <data name="comm_Enum__YCloneType_OnX" xml:space="preserve">
+  <data name="we_Enum__YCloneType_OnX" xml:space="preserve">
     <value>Mirrored on X Axis</value>
   </data>
   <data name="WTS_LAYOUTSKIN" xml:space="preserve">
@@ -975,9 +975,28 @@ Try force spawning anywhere, like setting the model to a transport line.</value>
   <data name="we_buildingEditor_windowTitle" xml:space="preserve">
     <value>Building editor</value>
   </data>
-  <data name="we_buildingEditor_subBuildingNumTitle" xml:space="preserve">    <value>SubBuilding #{0}</value>  </data>
-  <data name="we_buildingEditor_mainBuildingTitle" xml:space="preserve">    <value>Main building</value>  </data>
-  <data name="we_buildingEditor_pickerBtn" xml:space="preserve">    <value>Pick A Building</value>  </data>
-  <data name="we_buildingEditor_selectBuilding" xml:space="preserve">    <value>Select building</value>  </data>
-
+  <data name="we_buildingEditor_subBuildingNumTitle" xml:space="preserve">
+    <value>SubBuilding #{0}</value>
+  </data>
+  <data name="we_buildingEditor_mainBuildingTitle" xml:space="preserve">
+    <value>Main building</value>
+  </data>
+  <data name="we_buildingEditor_pickerBtn" xml:space="preserve">
+    <value>Pick A Building</value>
+  </data>
+  <data name="we_buildingEditor_selectBuilding" xml:space="preserve">
+    <value>Select building</value>
+  </data>
+  <data name="we_textEditor_needPropSelectedWarning" xml:space="preserve">
+    <value>Select a prop before editing texts!</value>
+  </data>
+  <data name="we_buildingEditor_noParametersUsedThisInstance" xml:space="preserve">
+    <value>No parameters were used in this instance.</value>
+  </data>
+  <data name="we_buildingEditor_paramEditorTabText" xml:space="preserve">
+    <value>Instance parameters</value>
+  </data>
+  <data name="we_buildingEditor_layoutEditorTabText" xml:space="preserve">
+    <value>Props texts</value>
+  </data>
 </root>

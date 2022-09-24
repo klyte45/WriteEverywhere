@@ -70,12 +70,12 @@ namespace WriteEverywhere.Xml
             {
                 case VariableBuildingSubType.OwnName:
                     return varWrapper.TryFormat(WTSCacheSingleton.instance.GetBuilding(buildingId).Name);
-                //case VariableBuildingSubType.NextStopLine:
-                //    return varWrapper.TryFormat(WTSCacheSingleton.instance.GetBuilding(WTSStopUtils.GetTargetStopInfo(platforms, buildingId).FirstOrDefault().NextStopBuildingId).Name);
-                //case VariableBuildingSubType.PrevStopLine:
-                //    return varWrapper.TryFormat(WTSCacheSingleton.instance.GetBuilding(WTSStopUtils.GetTargetStopInfo(platforms, buildingId).FirstOrDefault().PrevStopBuildingId).Name);
-                //case VariableBuildingSubType.LastStopLine:
-                //    return varWrapper.TryFormat(WTSCacheSingleton.instance.GetBuilding(WTSStopUtils.GetTargetStopInfo(platforms, buildingId).FirstOrDefault().DestinationBuildingId).Name);
+                case VariableBuildingSubType.NextStopLine:
+                    return varWrapper.TryFormat(WTSCacheSingleton.instance.GetBuilding(WTSStopUtils.GetTargetStopInfo(platforms, buildingId).FirstOrDefault().m_nextStopId).Name);
+                case VariableBuildingSubType.PrevStopLine:
+                    return varWrapper.TryFormat(WTSCacheSingleton.instance.GetBuilding(WTSStopUtils.GetTargetStopInfo(platforms, buildingId).FirstOrDefault().m_previousStopId).Name);
+                case VariableBuildingSubType.LastStopLine:
+                    return varWrapper.TryFormat(WTSCacheSingleton.instance.GetBuilding(WTSStopUtils.GetTargetStopInfo(platforms, buildingId).FirstOrDefault().m_destinationId).Name);
                 case VariableBuildingSubType.PlatformNumber:
                     return varWrapper.TryFormat(platforms.FirstOrDefault() + 1);
                 default:

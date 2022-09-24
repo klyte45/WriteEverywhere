@@ -8,6 +8,7 @@ using UnityEngine;
 using WriteEverywhere.Data;
 using WriteEverywhere.Localization;
 using WriteEverywhere.Tools;
+using WriteEverywhere.Utils;
 
 namespace WriteEverywhere.UI
 {
@@ -16,9 +17,19 @@ namespace WriteEverywhere.UI
         public static BuildingLiteUI Instance { get; private set; }
         public int SubBuildingSel { get; private set; } = 0;
         public ushort CurrentGrabbedId => m_detailUI.CurrentGrabbedId;
-        public int CurrentTextSel => m_detailUI.TextDescriptorIndexSelected;
+        public int CurrentTextSel => m_detailUI.ListSel;
         public bool IsOnTextDimensionsView => m_detailUI.IsOnTextDimensionsView;
         public BuildingInfo CurrentEditingInfo => m_detailUI.CurrentEditingInfo;
+
+        private BuildingInfoDetailLiteUI m_detailUI;
+        private BuildingParamsTab m_paramsUI;
+        public GUIColorPicker m_colorPicker;
+
+        public static Texture2D BgTextureSubgroup;
+        public static Texture2D BgTextureNote;
+
+        public static Color bgSubgroup;
+        public static Color bgNote;
 
         public override void Awake()
         {
@@ -29,6 +40,7 @@ namespace WriteEverywhere.UI
             m_colorPicker = GameObjectUtils.CreateElement<GUIColorPicker>(transform).Init();
             m_colorPicker.Visible = false;
             m_detailUI = new BuildingInfoDetailLiteUI(m_colorPicker);
+            m_paramsUI = new BuildingParamsTab(() => CurrentGrabbedId, (x) => m_detailUI.CurrentGrabbedId = x, () => m_detailUI.CurrentEditingLayout, () => m_currentInfo);
         }
         protected override void OnOpacityChanged(float newVal)
         {
@@ -55,7 +67,7 @@ namespace WriteEverywhere.UI
         {
             hasChanged = false;
             var currentTool = ToolsModifierControl.toolController.CurrentTool;
-            if (GUILayout.Button(Str.we_buildingEditor_pickerBtn, currentTool is BuildingEditorTool currentToolVeh ? GreenButton : GUI.skin.button, GUILayout.Width(100)))
+            if (GUILayout.Button(Str.we_buildingEditor_pickerBtn, currentTool is BuildingEditorTool currentToolVeh ? WEUIUtils.GreenButton : GUI.skin.button, GUILayout.Width(100)))
             {
                 var vehTool = ToolsModifierControl.toolController.GetComponent<BuildingEditorTool>();
                 vehTool.OnBuildingSelect += (x) =>
@@ -68,15 +80,6 @@ namespace WriteEverywhere.UI
             }
             return 0;
         }
-
-        private BuildingInfoDetailLiteUI m_detailUI;
-        public GUIColorPicker m_colorPicker;
-
-        public static Texture2D BgTextureSubgroup;
-        public static Texture2D BgTextureNote;
-
-        public static Color bgSubgroup;
-        public static Color bgNote;
 
         static BuildingLiteUI()
         {
@@ -101,59 +104,6 @@ namespace WriteEverywhere.UI
 
             }
         }
-
-        private GUIStyle m_greenButton;
-        private GUIStyle m_redButton;
-        internal GUIStyle GreenButton
-        {
-            get
-            {
-                if (m_greenButton is null)
-                {
-                    m_greenButton = new GUIStyle(Skin.button)
-                    {
-                        normal = new GUIStyleState()
-                        {
-                            background = GUIKwyttoCommons.darkGreenTexture,
-                            textColor = Color.white
-                        },
-                        hover = new GUIStyleState()
-                        {
-                            background = GUIKwyttoCommons.greenTexture,
-                            textColor = Color.black
-                        },
-                    };
-                }
-                return m_greenButton;
-            }
-        }
-
-
-
-        internal GUIStyle RedButton
-        {
-            get
-            {
-                if (m_redButton is null)
-                {
-                    m_redButton = new GUIStyle(Skin.button)
-                    {
-                        normal = new GUIStyleState()
-                        {
-                            background = GUIKwyttoCommons.darkRedTexture,
-                            textColor = Color.white
-                        },
-                        hover = new GUIStyleState()
-                        {
-                            background = GUIKwyttoCommons.redTexture,
-                            textColor = Color.white
-                        },
-                    };
-                }
-                return m_redButton;
-            }
-        }
-
         internal void Reset()
         {
             m_currentState = State.Normal;
@@ -184,7 +134,9 @@ namespace WriteEverywhere.UI
 
         private string[] m_currentInfoList;
         private BuildingInfo m_currentInfo;
-        private Vector2 m_horizontalScroll;
+        private Vector2 m_horizontalScrollSubBuildings;
+        private Vector2 m_horizontalScrollGeneral;
+        private int m_editorTypeSel;
 
         protected override void DrawWindow()
         {
@@ -206,26 +158,57 @@ namespace WriteEverywhere.UI
         protected void DrawNormal(Vector2 size)
         {
             m_modelFilter.DrawButton(size.x, m_currentInfo?.GetUncheckedLocalizedTitle());
-
-            if (CurrentInfo)
+            var headerArea0 = new Rect(0, 25, size.x, 25);
+            var headerArea1 = new Rect(0, 50, size.x, 25);
+            var bodyArea = new Rect(0, 75, size.x, size.y - 75);
+            if (CurrentInfo && m_detailUI.CurrentSource != Xml.ConfigurationSource.NONE)
             {
-                var headerArea = new Rect(0, 25, size.x, 25); ;
-                var bodyArea = new Rect(0, 50, size.x, size.y - 50);
-                using (new GUILayout.AreaScope(headerArea))
+                using (new GUILayout.AreaScope(headerArea0))
                 {
-                    using (var scope = new GUILayout.ScrollViewScope(m_horizontalScroll))
+                    using (var scope = new GUILayout.ScrollViewScope(m_horizontalScrollGeneral))
                     {
-                        SubBuildingSel = GUILayout.SelectionGrid(SubBuildingSel, m_currentInfoList, m_currentInfoList.Length, GUILayout.MinWidth(40));
-                        m_horizontalScroll = scope.scrollPosition;
+                        m_editorTypeSel = GUILayout.SelectionGrid(m_editorTypeSel, new[] { Str.we_buildingEditor_layoutEditorTabText, Str.we_buildingEditor_paramEditorTabText }, 2, GUILayout.MinWidth(40));
+                        m_horizontalScrollGeneral = scope.scrollPosition;
                     }
                 }
-                using (new GUILayout.AreaScope(bodyArea, BgTextureSubgroup, GUI.skin.box))
+            }
+            else
+            {
+                m_editorTypeSel = 0;
+            }
+            using (new GUILayout.AreaScope(headerArea1))
+            {
+                using (var scope = new GUILayout.ScrollViewScope(m_horizontalScrollSubBuildings))
                 {
-                    m_detailUI.DoDraw(new Rect(default, bodyArea.size), SubBuildingSel, m_currentInfo);
+                    SubBuildingSel = GUILayout.SelectionGrid(SubBuildingSel, m_currentInfoList, m_currentInfoList.Length, GUILayout.MinWidth(40));
+                    m_horizontalScrollSubBuildings = scope.scrollPosition;
+                }
+            }
+            using (new GUILayout.AreaScope(bodyArea, BgTextureSubgroup, GUI.skin.box))
+            {
+                if (m_editorTypeSel == 0)
+                {
+                    DrawLayoutEditor(bodyArea.size);
+                }
+                else
+                {
+                    DrawParamEditor(bodyArea.size);
                 }
 
-
             }
+        }
+
+        private void DrawLayoutEditor(Vector2 size)
+        {
+            var bodyArea = new Rect(0, 0, size.x, size.y);
+            using (new GUILayout.AreaScope(bodyArea, BgTextureSubgroup, GUI.skin.box))
+            {
+                m_detailUI.DoDraw(new Rect(default, bodyArea.size), SubBuildingSel, m_currentInfo);
+            }
+        }
+        private void DrawParamEditor(Vector2 size)
+        {
+            m_paramsUI.DrawArea(size, WTSBuildingData.Instance.Parameters.TryGetValue(CurrentGrabbedId, out var paramData) ? paramData : new BuildingParametersData(), true);
         }
         protected override void OnWindowDestroyed() => Destroy(m_colorPicker);
 
@@ -268,6 +251,7 @@ namespace WriteEverywhere.UI
         private void OnBuildingSet(int selectLayout, string _ = null)
         {
             CurrentInfo = (m_cachedResultList[selectLayout].Info as BuildingInfo);
+            m_editorTypeSel = 0;
             ToolsModifierControl.SetTool<DefaultTool>();
         }
         #endregion

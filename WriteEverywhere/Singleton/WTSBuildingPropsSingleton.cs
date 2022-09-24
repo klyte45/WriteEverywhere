@@ -54,7 +54,7 @@ namespace WriteEverywhere.Singleton
         private void OnNodeChanged(ushort id)
         {
             ushort buildingId = NetNode.FindOwnerBuilding(id, 56f);
-            if (buildingId > 0 && Data.BoardsContainers.ContainsKey(buildingId))
+            if (buildingId > 0 && Data.BuildingCachedPositionsData.ContainsKey(buildingId))
             {
                 m_buildingLastUpdateLines[buildingId] = 0;
             }
@@ -82,20 +82,20 @@ namespace WriteEverywhere.Singleton
         public bool CalculateGroupData(ushort buildingID, int layer, ref int vertexCount, ref int triangleCount, ref int objectCount, ref RenderGroup.VertexArrays vertexArrays)
         {
             // LogUtils.DoLog("Building: CalculateGroupData {0}", buildingID);
-            if (!Data.BoardsContainers.ContainsKey(buildingID))
+            if (!Data.BuildingCachedPositionsData.ContainsKey(buildingID))
             {
                 return false;
             }
             bool result = false;
             ref Building building = ref BuildingManager.instance.m_buildings.m_buffer[buildingID];
             GetTargetDescriptor(building.Info.name, out _, out WriteOnBuildingXml targetDescriptor);
-            for (int i = 0; i < Data.BoardsContainers[buildingID].Length; i++)
+            for (int i = 0; i < Data.BuildingCachedPositionsData[buildingID].Length; i++)
             {
                 var descriptor = targetDescriptor.PropInstances[i];
                 var targetProp = descriptor.SimpleProp;
                 if (!(targetProp is null))
                 {
-                    var item = Data.BoardsContainers[buildingID][i];
+                    var item = Data.BuildingCachedPositionsData[buildingID][i];
                     for (int j = 0; j <= item.m_cachedArrayRepeatTimes; j++)
                     {
                         if (PropInstance.CalculateGroupData(targetProp, layer, ref vertexCount, ref triangleCount, ref objectCount, ref vertexArrays))
@@ -110,7 +110,7 @@ namespace WriteEverywhere.Singleton
         public bool PopulateGroupData(ushort buildingID, int layer, ref int vertexIndex, ref int triangleIndex, Vector3 groupPosition, RenderGroup.MeshData data, ref Vector3 min, ref Vector3 max, ref float maxRenderDistance, ref float maxInstanceDistance)
         {
             //  LogUtils.DoLog("Building: PopulateGroupData {0}", buildingID);
-            if (!Data.BoardsContainers.ContainsKey(buildingID))
+            if (!Data.BuildingCachedPositionsData.ContainsKey(buildingID))
             {
                 return false;
             }
@@ -124,7 +124,7 @@ namespace WriteEverywhere.Singleton
                 var targetProp = descriptor.SimpleProp;
                 if (targetProp != null)
                 {
-                    var item = Data.BoardsContainers[buildingID][i];
+                    var item = Data.BuildingCachedPositionsData[buildingID][i];
                     var targetPosition = item.m_cachedPosition;
                     for (int j = 0; j <= item.m_cachedArrayRepeatTimes; j++)
                     {
@@ -274,11 +274,11 @@ namespace WriteEverywhere.Singleton
             var targetProp = targetDescriptor.SimpleProp;
 
 
-            if (!Data.BoardsContainers.ContainsKey(buildingID) || Data.BoardsContainers[buildingID].Length != parentDescriptor.PropInstances.Length)
+            if (!Data.BuildingCachedPositionsData.ContainsKey(buildingID) || Data.BuildingCachedPositionsData[buildingID].Length != parentDescriptor.PropInstances.Length)
             {
-                Data.BoardsContainers[buildingID] = new PropLayoutCachedBuildingData[parentDescriptor.PropInstances.Length];
+                Data.BuildingCachedPositionsData[buildingID] = new PropLayoutCachedBuildingData[parentDescriptor.PropInstances.Length];
             }
-            ref PropLayoutCachedBuildingData item = ref Data.BoardsContainers[buildingID][idx];
+            ref PropLayoutCachedBuildingData item = ref Data.BuildingCachedPositionsData[buildingID][idx];
             if (item.m_buildingPositionWhenGenerated != data.m_position)
             {
                 item.m_buildingPositionWhenGenerated = data.m_position;
@@ -743,5 +743,9 @@ namespace WriteEverywhere.Singleton
             }
             WTSBuildingData.Instance.CleanCache();
         }
+
+
     }
+
+
 }

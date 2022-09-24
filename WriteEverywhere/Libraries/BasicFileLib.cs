@@ -1,12 +1,8 @@
 ﻿extern alias VS;
-
 using Kwytto.Interfaces;
 using Kwytto.Libraries;
-using Kwytto.Utils;
-using WriteEverywhere.Xml;
 using System.Xml.Serialization;
-using System.Collections.Generic;
-using VS::Bridge_WE2VS;
+using WriteEverywhere.Xml;
 
 namespace WriteEverywhere.Libraries
 {
@@ -24,6 +20,7 @@ namespace WriteEverywhere.Libraries
     [XmlRoot("LibOnNetPropLayout")] public class WTSLibOnNetPropLayout : LibBaseFile<WTSLibOnNetPropLayout, WriteOnNetXml> { protected override string XmlName => "LibOnNetPropLayout"; }
     [XmlRoot("LibOnNetPropLayoutList")] public class WTSLibOnNetPropLayoutList : LibBaseFile<WTSLibOnNetPropLayoutList, ExportableBoardInstanceOnNetListXml> { protected override string XmlName => "LibOnNetPropLayoutList"; }
     [XmlRoot("LibOnBuildingPropLayoutList")] public class WTSLibOnBuildingPropLayoutList : LibBaseFile<WTSLibOnBuildingPropLayoutList, ExportableBoardInstanceOnBuildingListXml> { protected override string XmlName => "LibOnBuildingPropLayoutList"; }
+    [XmlRoot("LibOnBuildingPropLayout")] public class WTSLibOnBuildingPropLayout : LibBaseFile<WTSLibOnBuildingPropLayout, WriteOnBuildingPropXml> { protected override string XmlName => "LibOnBuildingPropLayout"; }
     //[XmlRoot("LibHighwayShieldLayout")] public class WTSLibHighwayShieldLayout : LibBaseFile<WTSLibHighwayShieldLayout, HighwayShieldDescriptor> { protected override string XmlName => "LibHighwayShieldLayout"; }
     //[XmlRoot("LibHighwayShieldTextLayer")] public class WTSLibHighwayShieldTextLayer : LibBaseFile<WTSLibHighwayShieldTextLayer, ImageLayerTextDescriptorXml> { protected override string XmlName => "LibHighwayShieldTextLayer"; }
 

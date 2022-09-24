@@ -41,7 +41,7 @@ namespace WriteEverywhere.Xml
         public ParameterType ParamType { get; private set; }
         public TextContent VariableValueTextContent => ParamType == ParameterType.VARIABLE ? VariableValue.m_varType.ToContent() : TextContent.None;
         public bool IsEmpty { get; private set; }
-        public bool IsParameter => VariableValue?.m_varType == VariableType.CurrentSegmentParameter;
+        public bool IsParameter => VariableValue?.m_varType == VariableType.Parameter;
 
         public int GetParamIdx => VariableValue?.paramContainer.paramIdx ?? -1;
 

@@ -51,6 +51,10 @@ namespace WriteEverywhere.UI
         }
         public bool DrawArea(Vector2 areaRect, ref T item, int _, bool isEditable)
         {
+            return DrawArea(areaRect, item, isEditable);
+        }
+        public bool DrawArea(Vector2 areaRect, T item, bool isEditable)
+        {
             switch (CurrentState)
             {
                 case State.List:

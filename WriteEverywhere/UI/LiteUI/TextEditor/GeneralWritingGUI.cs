@@ -116,6 +116,7 @@ namespace WriteEverywhere.UI
         {
             if (getInfo() is null)
             {
+                GUILayout.Label(Str.we_textEditor_needPropSelectedWarning);
                 return;
             }
             switch (CurrentLibState)

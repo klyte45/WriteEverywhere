@@ -32,10 +32,8 @@ namespace WriteEverywhere.UI
             Normal,
             GeneralFontPicker
         }
-
-        private BuildingInfo m_currentInfo;
-        private BuildingInfo m_currentParentInfo;
-        private WriteOnBuildingXml CurrentEditingLayout { get; set; }
+        public ConfigurationSource CurrentSource => m_currentSource;
+        internal WriteOnBuildingXml CurrentEditingLayout { get; set; }
         private int m_currentSubBuilding;
         private ConfigurationSource m_currentSource;
 
@@ -57,7 +55,7 @@ namespace WriteEverywhere.UI
         private readonly GUIRootWindowBase m_root;
 
         private readonly GUIBasicListingTabsContainer<WriteOnBuildingPropXml> m_tabsContainer;
-        //private ??? m_textEditorTab;
+        private BuildingUITextTab m_textEditorTab;
         private int m_textEditorTabIdx;
 
         private string m_clipboard;
@@ -79,10 +77,10 @@ namespace WriteEverywhere.UI
         private FooterBarStatus CurrentLibState => xmlLibList.Status;
         private State CurrentLocalState { get; set; } = State.Normal;
 
+        public int ListSel => m_cachedItemListIdx[m_tabsContainer.ListSel];
         public ushort CurrentGrabbedId { get; set; }
-        public int TextDescriptorIndexSelected => m_tabsContainer.ListSel;
-        public BuildingInfo CurrentEditingInfo => m_currentInfo;
-        public bool IsOnTextDimensionsView => false;//m_tabsContainer.CurrentTabIdx == m_sizeEditorTabIdx;
+        public BuildingInfo CurrentEditingInfo { get; private set; }
+        public bool IsOnTextDimensionsView => m_textEditorTab.IsOnTextDimensionsView;
 
         public BuildingInfoDetailLiteUI(GUIColorPicker colorPicker)
         {
@@ -111,19 +109,34 @@ namespace WriteEverywhere.UI
 
             var root = colorPicker.GetComponentInParent<GUIRootWindowBase>();
             var tabs = new IGUITab<WriteOnBuildingPropXml>[] {
-
+                new BuildingUIBasicTab(OnImportSingle, OnDelete, root),
+                m_textEditorTab =  new BuildingUITextTab(m_colorPicker, () => CurrentEditingLayout.PropInstances[ListSel].SimpleProp, () =>
+                {
+                    if(ListSel>=0 && CurrentEditingLayout.PropInstances[ListSel] != null)
+                    {
+                        return ref CurrentEditingLayout.PropInstances[ListSel].RefTextDescriptors;
+                    }
+                    throw new System.Exception("Invalid call!!!");
+                }, () =>
+                {
+                    if(ListSel>=0 && CurrentEditingLayout?.PropInstances[ListSel] != null)
+                    {
+                        return ref CurrentEditingLayout.PropInstances[ListSel].RefFontName;
+                    }
+                    throw new System.Exception("Invalid call!!!");
+                })
             };
             m_tabsContainer = new GUIBasicListingTabsContainer<WriteOnBuildingPropXml>(tabs, OnAdd, GetSideList, GetSelectedItem, OnSetCurrentItem, AddExtraButtonsList);
-            //m_textEditorTabIdx = Array.IndexOf(tabs, m_textEditorTab);
+            m_textEditorTabIdx = Array.IndexOf(tabs, m_textEditorTab);
         }
 
         public void DoDraw(Rect area, int subbuildingIdx, BuildingInfo parentBuilding)
         {
-            if (m_currentInfo != parentBuilding || subbuildingIdx != m_currentSubBuilding)
+            if (CurrentEditingInfo != parentBuilding || subbuildingIdx != m_currentSubBuilding)
             {
                 OnChangeInfo(parentBuilding, subbuildingIdx);
             }
-            if (m_currentInfo is null)
+            if (CurrentEditingInfo is null)
             {
                 return;
             }
@@ -178,7 +191,7 @@ namespace WriteEverywhere.UI
                     {
                         var skinNoWrap = new GUIStyle(GUI.skin.label) { wordWrap = false };
                         GUILayout.Label($"<color=#FFFF00>{Str.WTS_CURRENTSELECTION}</color>", skinNoWrap, GUILayout.MaxWidth(140));
-                        GUILayout.Label(m_currentInfo.GetUncheckedLocalizedTitle(), skinNoWrap);
+                        GUILayout.Label(CurrentEditingInfo.GetUncheckedLocalizedTitle(), skinNoWrap);
                         GUILayout.Label($"<color=#FFFF00>{Str.WTS_CURRENTLY_USING}</color>", skinNoWrap);
                         GUILayout.Label(m_currentSource.ValueToI18n(), skinNoWrap, GUILayout.MaxWidth(140));
                         GUILayout.FlexibleSpace();
@@ -202,7 +215,7 @@ namespace WriteEverywhere.UI
                                 GUIKwyttoCommons.SquareTextureButton(m_cloneToCity, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_COPYTOCITY, CloneToCity, m_currentSource == ConfigurationSource.ASSET || m_currentSource == ConfigurationSource.GLOBAL);
                                 GUILayout.FlexibleSpace();
                                 GUIKwyttoCommons.SquareTextureButton(m_exportGlobal, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_EXPORTASGLOBAL, ExportGlobal, m_currentSource == ConfigurationSource.CITY);
-                                GUIKwyttoCommons.SquareTextureButton(m_exportAsset, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_EXPORTTOASSETFOLDER, ExportAsset, m_currentSource == ConfigurationSource.CITY && m_currentInfo.name.EndsWith("_Data"));
+                                GUIKwyttoCommons.SquareTextureButton(m_exportAsset, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_EXPORTTOASSETFOLDER, ExportAsset, m_currentSource == ConfigurationSource.CITY && CurrentEditingInfo.name.EndsWith("_Data"));
                                 GUILayout.FlexibleSpace();
                                 GUIKwyttoCommons.SquareTextureButton(m_copy, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_COPYTOCLIPBOARD, CopyToClipboard, m_currentSource != ConfigurationSource.NONE);
                                 GUIKwyttoCommons.SquareTextureButton(m_paste, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_PASTEFROMCLIPBOARD, PasteFromClipboard, isEditable && !(m_clipboard is null));
@@ -258,14 +271,14 @@ namespace WriteEverywhere.UI
 
         private void OnChangeInfo(BuildingInfo parentBuilding, int subBuilding)
         {
-            m_currentInfo = parentBuilding;
+            CurrentEditingInfo = parentBuilding;
             m_currentSubBuilding = subBuilding;
             ReloadDescriptor();
         }
 
         private void ReloadDescriptor()
         {
-            WTSBuildingPropsSingleton.GetTargetDescriptor(m_currentInfo.name, out m_currentSource, out var currentLayout);
+            WTSBuildingPropsSingleton.GetTargetDescriptor(CurrentEditingInfo.name, out m_currentSource, out var currentLayout);
             CurrentEditingLayout = currentLayout;
             var cachedItemList = currentLayout?.PropInstances.Select((x, i) => Tuple.New(i, x)).Where(x => x.Second.SubBuildingPivotReference == m_currentSubBuilding).Select((x) => new KeyValuePair<int, string>(x.First, x.Second.SaveName)).ToList();
             m_cachedItemListIdx = cachedItemList.Select(x => x.Key).ToArray();
@@ -303,19 +316,19 @@ namespace WriteEverywhere.UI
         }
         private void ExportLayout() => xmlLibList.GoToExport();
         private void ImportLayout() => xmlLibList.GoToImport();
-        private void ExportAsset() => ExportTo(Path.Combine(Path.GetDirectoryName(PackageManager.FindAssetByName(m_currentInfo.name)?.package?.packagePath), $"{MainController.m_defaultFileNameBuildingsXml}.xml"));
+        private void ExportAsset() => ExportTo(Path.Combine(Path.GetDirectoryName(PackageManager.FindAssetByName(CurrentEditingInfo.name)?.package?.packagePath), $"{MainController.m_defaultFileNameBuildingsXml}.xml"));
 
-        private void ExportGlobal() => ExportTo(Path.Combine(MainController.DefaultBuildingsConfigurationFolder, $"{MainController.m_defaultFileNameBuildingsXml}_{PackageManager.FindAssetByName(m_currentParentInfo.name)?.package.packageMainAsset ?? m_currentParentInfo.name}.xml"));
+        private void ExportGlobal() => ExportTo(Path.Combine(MainController.DefaultBuildingsConfigurationFolder, $"{MainController.m_defaultFileNameBuildingsXml}_{CurrentEditingInfo.name}.xml"));
 
         private void ExportTo(string output)
         {
-            if (!(m_currentInfo is null))
+            if (!(CurrentEditingInfo is null))
             {
-                var assetId = m_currentInfo.name.Split('.')[0] + ".";
-                WTSBuildingPropsSingleton.GetTargetDescriptor(m_currentInfo.name, out _, out var target);
+                var assetId = CurrentEditingInfo.name.Split('.')[0] + ".";
+                WTSBuildingPropsSingleton.GetTargetDescriptor(CurrentEditingInfo.name, out _, out var target);
                 if (target is WriteOnBuildingXml layout)
                 {
-                    layout.BuildingInfoName = m_currentInfo.name;
+                    layout.BuildingInfoName = CurrentEditingInfo.name;
                     File.WriteAllText(output, XmlUtils.DefaultXmlSerialize(layout));
 
                     KwyttoDialog.ShowModal(new KwyttoDialog.BindProperties
@@ -349,32 +362,32 @@ namespace WriteEverywhere.UI
         }
         private void PasteFromClipboard()
         {
-            WTSBuildingPropsSingleton.SetCityDescriptor(m_currentInfo, XmlUtils.DefaultXmlDeserialize<WriteOnBuildingXml>(m_clipboard));
+            WTSBuildingPropsSingleton.SetCityDescriptor(CurrentEditingInfo, XmlUtils.DefaultXmlDeserialize<WriteOnBuildingXml>(m_clipboard));
 
-            OnChangeInfo(m_currentInfo, m_currentSubBuilding);
+            OnChangeInfo(CurrentEditingInfo, m_currentSubBuilding);
         }
 
         private void CopyToClipboard() => m_clipboard = XmlUtils.DefaultXmlSerialize(CurrentEditingLayout);
         private void CloneToCity()
         {
-            WTSBuildingPropsSingleton.SetCityDescriptor(m_currentInfo, XmlUtils.CloneViaXml(CurrentEditingLayout));
-            OnChangeInfo(m_currentInfo, m_currentSubBuilding);
+            WTSBuildingPropsSingleton.SetCityDescriptor(CurrentEditingInfo, XmlUtils.CloneViaXml(CurrentEditingLayout));
+            OnChangeInfo(CurrentEditingInfo, m_currentSubBuilding);
         }
         private void CreateNew()
         {
-            WTSBuildingPropsSingleton.SetCityDescriptor(m_currentInfo, new WriteOnBuildingXml());
-            OnChangeInfo(m_currentInfo, m_currentSubBuilding);
+            WTSBuildingPropsSingleton.SetCityDescriptor(CurrentEditingInfo, new WriteOnBuildingXml());
+            OnChangeInfo(CurrentEditingInfo, m_currentSubBuilding);
         }
         private void DeleteFromCity()
         {
-            WTSBuildingPropsSingleton.SetCityDescriptor(m_currentInfo, null);
-            OnChangeInfo(m_currentInfo, m_currentSubBuilding);
+            WTSBuildingPropsSingleton.SetCityDescriptor(CurrentEditingInfo, null);
+            OnChangeInfo(CurrentEditingInfo, m_currentSubBuilding);
         }
 
         private void ReloadFiles()
         {
             ModInstance.Controller?.BuildingPropsSingleton?.LoadAllBuildingConfigurations();
-            OnChangeInfo(m_currentInfo, m_currentSubBuilding);
+            OnChangeInfo(CurrentEditingInfo, m_currentSubBuilding);
         }
         private void GoToGlobalFolder() => ColossalFramework.Utils.OpenInFileBrowser(MainController.DefaultBuildingsConfigurationFolder);
         #endregion
@@ -397,12 +410,12 @@ namespace WriteEverywhere.UI
         private void OnAdd()
         {
             CurrentEditingLayout.PropInstances = CurrentEditingLayout.PropInstances.Concat(new[] { new WriteOnBuildingPropXml() { SaveName = "NEW", SubBuildingPivotReference = m_currentSubBuilding } }).ToArray();
-            OnChangeInfo(m_currentInfo, m_currentSubBuilding);
+            OnChangeInfo(CurrentEditingInfo, m_currentSubBuilding);
         }
         private void OnClearList()
         {
             CurrentEditingLayout.PropInstances = CurrentEditingLayout.PropInstances.Where(x => x.SubBuildingPivotReference != m_currentSubBuilding).ToArray();
-            OnChangeInfo(m_currentInfo, m_currentSubBuilding);
+            OnChangeInfo(CurrentEditingInfo, m_currentSubBuilding);
         }
 
         private void OnSetCurrentItem(int listSel, WriteOnBuildingPropXml newVal)
@@ -423,6 +436,22 @@ namespace WriteEverywhere.UI
             Instances = CurrentEditingLayout.PropInstances.Where(x => x.SubBuildingPivotReference == m_currentSubBuilding).Select((x) => XmlUtils.CloneViaXml(x)).ToArray(),
         };
 
+        private void OnDelete()
+        {
+            CurrentEditingLayout.PropInstances = CurrentEditingLayout.PropInstances.Where((k, i) => i != ListSel).ToArray();
+            m_tabsContainer.Reset();
+            OnChangeInfo(CurrentEditingInfo, m_currentSubBuilding);
+        }
+
+        private void OnImportSingle(WriteOnBuildingPropXml data, bool _)
+        {
+            data.SaveName = CurrentEditingLayout.PropInstances[ListSel].SaveName;
+            data.SubBuildingPivotReference = m_currentSubBuilding;
+            CurrentEditingLayout.PropInstances[ListSel] = data;
+            var oldListSel = m_tabsContainer.ListSel;
+            OnChangeInfo(CurrentEditingInfo, m_currentSubBuilding);
+            m_tabsContainer.ListSel = oldListSel;
+        }
 
         #endregion
     }

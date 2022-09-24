@@ -61,78 +61,6 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Workshop.
-        /// </summary>
-        internal static string comm_Enum__ConfigurationSource_ASSET {
-            get {
-                return ResourceManager.GetString("comm_Enum__ConfigurationSource_ASSET", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Savegame (City).
-        /// </summary>
-        internal static string comm_Enum__ConfigurationSource_CITY {
-            get {
-                return ResourceManager.GetString("comm_Enum__ConfigurationSource_CITY", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Local folder (Appdata).
-        /// </summary>
-        internal static string comm_Enum__ConfigurationSource_GLOBAL {
-            get {
-                return ResourceManager.GetString("comm_Enum__ConfigurationSource_GLOBAL", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a None (Disabled).
-        /// </summary>
-        internal static string comm_Enum__ConfigurationSource_NONE {
-            get {
-                return ResourceManager.GetString("comm_Enum__ConfigurationSource_NONE", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Skin (From Vehicle Skins).
-        /// </summary>
-        internal static string comm_Enum__ConfigurationSource_SKIN {
-            get {
-                return ResourceManager.GetString("comm_Enum__ConfigurationSource_SKIN", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a No cloning.
-        /// </summary>
-        internal static string comm_Enum__YCloneType_None {
-            get {
-                return ResourceManager.GetString("comm_Enum__YCloneType_None", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Mirrored on X Axis.
-        /// </summary>
-        internal static string comm_Enum__YCloneType_OnX {
-            get {
-                return ResourceManager.GetString("comm_Enum__YCloneType_OnX", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Mirrored on Z Axis.
-        /// </summary>
-        internal static string comm_Enum__YCloneType_OnZ {
-            get {
-                return ResourceManager.GetString("comm_Enum__YCloneType_OnZ", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Allow to write text in-game to simulate stuff like boards or signs..
         /// </summary>
         internal static string root_modDescription {
@@ -142,11 +70,38 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Props texts.
+        /// </summary>
+        internal static string we_buildingEditor_layoutEditorTabText {
+            get {
+                return ResourceManager.GetString("we_buildingEditor_layoutEditorTabText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Main building.
         /// </summary>
         internal static string we_buildingEditor_mainBuildingTitle {
             get {
                 return ResourceManager.GetString("we_buildingEditor_mainBuildingTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a No parameters were used in this instance..
+        /// </summary>
+        internal static string we_buildingEditor_noParametersUsedThisInstance {
+            get {
+                return ResourceManager.GetString("we_buildingEditor_noParametersUsedThisInstance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Instance parameters.
+        /// </summary>
+        internal static string we_buildingEditor_paramEditorTabText {
+            get {
+                return ResourceManager.GetString("we_buildingEditor_paramEditorTabText", resourceCulture);
             }
         }
         
@@ -259,6 +214,51 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Workshop.
+        /// </summary>
+        internal static string we_Enum__ConfigurationSource_ASSET {
+            get {
+                return ResourceManager.GetString("we_Enum__ConfigurationSource_ASSET", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Savegame (City).
+        /// </summary>
+        internal static string we_Enum__ConfigurationSource_CITY {
+            get {
+                return ResourceManager.GetString("we_Enum__ConfigurationSource_CITY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Local folder (Appdata).
+        /// </summary>
+        internal static string we_Enum__ConfigurationSource_GLOBAL {
+            get {
+                return ResourceManager.GetString("we_Enum__ConfigurationSource_GLOBAL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a None (Disabled).
+        /// </summary>
+        internal static string we_Enum__ConfigurationSource_NONE {
+            get {
+                return ResourceManager.GetString("we_Enum__ConfigurationSource_NONE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Skin (From Vehicle Skins).
+        /// </summary>
+        internal static string we_Enum__ConfigurationSource_SKIN {
+            get {
+                return ResourceManager.GetString("we_Enum__ConfigurationSource_SKIN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Electronic Boards.
         /// </summary>
         internal static string we_Enum__FontClass_ElectronicBoards {
@@ -363,6 +363,33 @@ namespace WriteEverywhere.Localization {
         internal static string we_Enum__UIHorizontalAlignment_Right {
             get {
                 return ResourceManager.GetString("we_Enum__UIHorizontalAlignment_Right", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a No cloning.
+        /// </summary>
+        internal static string we_Enum__YCloneType_None {
+            get {
+                return ResourceManager.GetString("we_Enum__YCloneType_None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Mirrored on X Axis.
+        /// </summary>
+        internal static string we_Enum__YCloneType_OnX {
+            get {
+                return ResourceManager.GetString("we_Enum__YCloneType_OnX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Mirrored on Z Axis.
+        /// </summary>
+        internal static string we_Enum__YCloneType_OnZ {
+            get {
+                return ResourceManager.GetString("we_Enum__YCloneType_OnZ", resourceCulture);
             }
         }
         
@@ -773,6 +800,15 @@ namespace WriteEverywhere.Localization {
         internal static string we_settings_windowTitle {
             get {
                 return ResourceManager.GetString("we_settings_windowTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Select a prop before editing texts!.
+        /// </summary>
+        internal static string we_textEditor_needPropSelectedWarning {
+            get {
+                return ResourceManager.GetString("we_textEditor_needPropSelectedWarning", resourceCulture);
             }
         }
         
@@ -2065,15 +2101,6 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Use an local variable of the instance at segment to determine its value (on segment only).
-        /// </summary>
-        internal static string WTS_PARAMVARS_DESC__VariableType_CurrentSegmentParameter {
-            get {
-                return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableType_CurrentSegmentParameter", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Variables about current vehicle (vehicle layouts only).
         /// </summary>
         internal static string WTS_PARAMVARS_DESC__VariableType_CurrentVehicle {
@@ -2088,6 +2115,15 @@ namespace WriteEverywhere.Localization {
         internal static string WTS_PARAMVARS_DESC__VariableType_Invalid {
             get {
                 return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableType_Invalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Use an local variable of the instance at segment to determine its value (on segment only).
+        /// </summary>
+        internal static string WTS_PARAMVARS_DESC__VariableType_Parameter {
+            get {
+                return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableType_Parameter", resourceCulture);
             }
         }
         

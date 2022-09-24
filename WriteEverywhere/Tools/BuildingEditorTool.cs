@@ -7,12 +7,13 @@ namespace WriteEverywhere.Tools
     public class BuildingEditorTool : KwyttoBuildingToolBase
     {
         public Action<ushort> OnBuildingSelect;
+        public Func<ushort, Color> GetHoverColor;
         public override void RenderOverlay(RenderManager.CameraInfo cameraInfo)
         {
 
             if (m_hoverBuilding != 0)
             {
-                Color toolColor = m_hoverColor;
+                Color toolColor = GetHoverColor?.Invoke(m_hoverBuilding) ?? m_hoverColor;
                 RenderOverlay(cameraInfo, toolColor, m_hoverBuilding);
                 return;
             }
@@ -31,6 +32,7 @@ namespace WriteEverywhere.Tools
         protected override void OnDisable()
         {
             OnBuildingSelect = null;
+            GetHoverColor = null;
             base.OnDisable();
         }
     }
