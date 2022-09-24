@@ -4,6 +4,7 @@ using System;
 using System.Linq;
 using UnityEngine;
 using WriteEverywhere.Localization;
+using WriteEverywhere.Utils;
 using WriteEverywhere.Xml;
 
 namespace WriteEverywhere.UI
@@ -28,56 +29,6 @@ namespace WriteEverywhere.UI
             .ToArray();
         private readonly GUIRootWindowBase m_root;
 
-
-        private GUIStyle m_redButton;
-        private GUIStyle RedButton
-        {
-            get
-            {
-                if (m_redButton is null)
-                {
-                    m_redButton = new GUIStyle(GUI.skin.button)
-                    {
-                        normal = new GUIStyleState()
-                        {
-                            background = GUIKwyttoCommons.darkRedTexture,
-                            textColor = Color.white
-                        },
-                        hover = new GUIStyleState()
-                        {
-                            background = GUIKwyttoCommons.redTexture,
-                            textColor = Color.white
-                        },
-                    };
-                }
-                return m_redButton;
-            }
-        }
-
-        private GUIStyle m_greenButton;
-        private GUIStyle GreenButton
-        {
-            get
-            {
-                if (m_greenButton is null)
-                {
-                    m_greenButton = new GUIStyle(GUI.skin.button)
-                    {
-                        normal = new GUIStyleState()
-                        {
-                            background = GUIKwyttoCommons.greenTexture,
-                            textColor = Color.black
-                        },
-                        hover = new GUIStyleState()
-                        {
-                            background = GUIKwyttoCommons.darkGreenTexture,
-                            textColor = Color.black
-                        },
-                    };
-                }
-                return m_greenButton;
-            }
-        }
 
         public GeneralWritingEditorIlluminationTab(GUIColorPicker colorPicker) => m_root = colorPicker.GetComponentInParent<GUIRootWindowBase>();
 
@@ -119,7 +70,7 @@ namespace WriteEverywhere.UI
                             if (counter < m_flagsToSelect1.Length)
                             {
                                 var flag = m_flagsToSelect1[counter];
-                                if (GUILayout.Button(flag.ToString(), IsRequired(item, flag) ? GreenButton : IsForbid(item, flag) ? RedButton : GUI.skin.button, GUILayout.Width(width)) && isEditable)
+                                if (GUILayout.Button(flag.ToString(), IsRequired(item, flag) ? WEUIUtils.GreenButton : IsForbid(item, flag) ? WEUIUtils.RedButton : GUI.skin.button, GUILayout.Width(width)) && isEditable)
                                 {
                                     ToggleFlag(item, flag);
                                 }
@@ -127,7 +78,7 @@ namespace WriteEverywhere.UI
                             else
                             {
                                 var flag = m_flagsToSelect2[counter - m_flagsToSelect1.Length];
-                                if (GUILayout.Button(flag.ToString(), IsRequired(item, flag) ? GreenButton : IsForbid(item, flag) ? RedButton : GUI.skin.button, GUILayout.Width(width)) && isEditable)
+                                if (GUILayout.Button(flag.ToString(), IsRequired(item, flag) ? WEUIUtils.GreenButton : IsForbid(item, flag) ? WEUIUtils.RedButton : GUI.skin.button, GUILayout.Width(width)) && isEditable)
                                 {
                                     ToggleFlag(item, flag);
                                 }

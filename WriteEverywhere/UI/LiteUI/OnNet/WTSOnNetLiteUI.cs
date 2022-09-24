@@ -48,11 +48,11 @@ namespace WriteEverywhere.UI
         {
             Instance = this;
             base.Awake();
-            Init(Str.we_roadEditor_windowTitle, new Rect(128, 128, 680, 420), resizable: true, minSize: new Vector2(340, 260));
+            Init($"{ModInstance.Instance.GeneralName} - {Str.we_roadEditor_windowTitle}", new Rect(128, 128, 680, 420), resizable: true, minSize: new Vector2(340, 260));
             m_colorPicker = GameObjectUtils.CreateElement<GUIColorPicker>(transform).Init();
             m_colorPicker.Visible = false;
             var tabs = new IGUITab<OnNetInstanceCacheContainerXml>[] {
-                new WTSOnNetBasicTab(Instance.OnImportSingle, Instance.OnDelete, this),
+                new WTSOnNetBasicTab(OnImportSingle, OnDelete, this),
                 new WTSOnNetTargetsTab(),
                 new WTSOnNetParamsTab(),
                 m_textEditorTab =  new WTSOnNetTextTab(m_colorPicker, () => CurrentEditingInstance?.BoardsData[ListSel]?.SimpleCachedProp, () =>
@@ -71,7 +71,7 @@ namespace WriteEverywhere.UI
                     throw new System.Exception("Invalid call!!!");
                 })
             };
-            m_tabsContainer = new GUIBasicListingTabsContainer<OnNetInstanceCacheContainerXml>(tabs, Instance.OnAdd, Instance.GetSideList, Instance.GetSelectedItem, Instance.OnSetCurrentItem, Instance.AddExtraButtonsList);
+            m_tabsContainer = new GUIBasicListingTabsContainer<OnNetInstanceCacheContainerXml>(tabs, OnAdd, GetSideList, GetSelectedItem, OnSetCurrentItem, AddExtraButtonsList);
             m_textEditorTabIdx = Array.IndexOf(tabs, m_textEditorTab);
         }
         public static void Destroy()
@@ -207,6 +207,7 @@ namespace WriteEverywhere.UI
             m_tabsContainer.DrawListTabs(new Rect(0, 44, WindowRect.width, WindowRect.height - 50));
         }
 
+        #region Tab Actions
         private OnNetInstanceCacheContainerXml GetSelectedItem(int listSel) => CurrentEditingInstance.BoardsData[listSel];
         private string[] GetSideList() => CurrentEditingInstance.BoardsData.Select((y, i) => y.SaveName).ToArray();
         private void OnAdd() => CurrentEditingInstance.BoardsData = CurrentEditingInstance.BoardsData.Concat(new[] { new OnNetInstanceCacheContainerXml() { SaveName = "NEW" } }).ToArray();
@@ -250,5 +251,6 @@ namespace WriteEverywhere.UI
             data.SaveName = CurrentEditingInstance.BoardsData[m_tabsContainer.ListSel].SaveName;
             CurrentEditingInstance.BoardsData[m_tabsContainer.ListSel] = data;
         }
+        #endregion
     }
 }

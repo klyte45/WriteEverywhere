@@ -142,11 +142,47 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Pick a building to edit WE layout.
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Main building.
         /// </summary>
-        internal static string we_buildingEditor_toolButtonText {
+        internal static string we_buildingEditor_mainBuildingTitle {
             get {
-                return ResourceManager.GetString("we_buildingEditor_toolButtonText", resourceCulture);
+                return ResourceManager.GetString("we_buildingEditor_mainBuildingTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Pick A Building.
+        /// </summary>
+        internal static string we_buildingEditor_pickerBtn {
+            get {
+                return ResourceManager.GetString("we_buildingEditor_pickerBtn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Select building.
+        /// </summary>
+        internal static string we_buildingEditor_selectBuilding {
+            get {
+                return ResourceManager.GetString("we_buildingEditor_selectBuilding", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a SubBuilding #{0}.
+        /// </summary>
+        internal static string we_buildingEditor_subBuildingNumTitle {
+            get {
+                return ResourceManager.GetString("we_buildingEditor_subBuildingNumTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Building editor.
+        /// </summary>
+        internal static string we_buildingEditor_windowTitle {
+            get {
+                return ResourceManager.GetString("we_buildingEditor_windowTitle", resourceCulture);
             }
         }
         

@@ -1,11 +1,12 @@
-﻿using Kwytto.LiteUI;
-using Kwytto.Tools;
+﻿using Kwytto.Tools;
+using System;
 using UnityEngine;
 
 namespace WriteEverywhere.Tools
 {
-    public class BuildingEditorPickerTool : KwyttoBuildingToolBase
+    public class BuildingEditorTool : KwyttoBuildingToolBase
     {
+        public Action<ushort> OnBuildingSelect;
         public override void RenderOverlay(RenderManager.CameraInfo cameraInfo)
         {
 
@@ -22,16 +23,16 @@ namespace WriteEverywhere.Tools
         {
             if (m_hoverBuilding != 0)
             {
-                KwyttoDialog.ShowModal(new KwyttoDialog.BindProperties
-                {
-                    buttons = KwyttoDialog.basicOkButtonBar,
-                    message = $"PICKED! {m_hoverBuilding} => {BuildingBuffer[m_hoverBuilding].Info.GetUncheckedLocalizedTitle()}"
-                });
+                OnBuildingSelect?.Invoke(m_hoverBuilding);
                 ToolsModifierControl.SetTool<DefaultTool>();
             }
         }
 
-
+        protected override void OnDisable()
+        {
+            OnBuildingSelect = null;
+            base.OnDisable();
+        }
     }
 
 }

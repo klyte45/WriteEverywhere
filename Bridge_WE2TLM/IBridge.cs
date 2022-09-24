@@ -13,7 +13,7 @@ namespace Bridge_WE2TLM
         public abstract string GetLineSortString(WTSLine lineObj);
         public abstract string GetVehicleIdentifier(ushort vehicleId);
         public abstract string GetLineIdString(WTSLine lineObj);
-        public abstract void MapLineDestinations(WTSLine lineObj, StopInformation[] cacheToUpdate);
+        public abstract void MapLineDestinations(WTSLine lineObj, ref StopInformation[] cacheToUpdate);
         public abstract WTSLine GetVehicleLine(ushort vehicleId);
         public abstract WTSLine GetStopLine(ushort stopId);
 

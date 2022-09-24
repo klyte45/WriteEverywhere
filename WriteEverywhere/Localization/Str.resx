@@ -972,7 +972,12 @@ Try force spawning anywhere, like setting the model to a transport line.</value>
   <data name="we_settings_defaultFontsAvailableOnlyWhenCityLoaded" xml:space="preserve">
     <value>Default fonts settings are available only when a city is loaded</value>
   </data>
-  <data name="we_buildingEditor_toolButtonText" xml:space="preserve">
-    <value>Pick a building to edit WE layout</value>
+  <data name="we_buildingEditor_windowTitle" xml:space="preserve">
+    <value>Building editor</value>
   </data>
+  <data name="we_buildingEditor_subBuildingNumTitle" xml:space="preserve">    <value>SubBuilding #{0}</value>  </data>
+  <data name="we_buildingEditor_mainBuildingTitle" xml:space="preserve">    <value>Main building</value>  </data>
+  <data name="we_buildingEditor_pickerBtn" xml:space="preserve">    <value>Pick A Building</value>  </data>
+  <data name="we_buildingEditor_selectBuilding" xml:space="preserve">    <value>Select building</value>  </data>
+
 </root>

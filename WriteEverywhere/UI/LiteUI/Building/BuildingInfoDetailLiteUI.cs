@@ -4,6 +4,7 @@ using ColossalFramework;
 using ColossalFramework.Globalization;
 using ColossalFramework.Packaging;
 using ColossalFramework.UI;
+using HarmonyLib;
 using Kwytto.LiteUI;
 using Kwytto.Localization;
 using Kwytto.UI;
@@ -16,15 +17,15 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using UnityEngine;
-using VS::Bridge_WE2VS;
 using WriteEverywhere.Libraries;
 using WriteEverywhere.Localization;
 using WriteEverywhere.Singleton;
+using WriteEverywhere.Utils;
 using WriteEverywhere.Xml;
 
 namespace WriteEverywhere.UI
 {
-    internal class WTSVehicleInfoDetailLiteUI
+    internal class BuildingInfoDetailLiteUI
     {
         private enum State
         {
@@ -32,13 +33,11 @@ namespace WriteEverywhere.UI
             GeneralFontPicker
         }
 
-        private VehicleInfo m_currentInfo;
-        private VehicleInfo m_currentParentInfo;
-        private string m_currentSkin;
-        private string[] m_availableSkins;
-        private string[] m_availableSkinsOptions;
+        private BuildingInfo m_currentInfo;
+        private BuildingInfo m_currentParentInfo;
+        private WriteOnBuildingXml CurrentEditingLayout { get; set; }
+        private int m_currentSubBuilding;
         private ConfigurationSource m_currentSource;
-        private LayoutDescriptorVehicleXml m_currentLayout;
 
         private readonly Texture2D m_grabModel;
         private readonly Texture2D m_grabModeWaiting;
@@ -57,28 +56,35 @@ namespace WriteEverywhere.UI
         private readonly GUIColorPicker m_colorPicker;
         private readonly GUIRootWindowBase m_root;
 
-        private readonly GUIBasicListingTabsContainer<BoardTextDescriptorGeneralXml> m_tabsContainer;
+        private readonly GUIBasicListingTabsContainer<WriteOnBuildingPropXml> m_tabsContainer;
+        //private ??? m_textEditorTab;
+        private int m_textEditorTabIdx;
 
         private string m_clipboard;
-        private string[] m_cachedItemList;
+        private int[] m_cachedItemListIdx;
+        private string[] m_cachedItemListLabels;
         private float m_offsetYContent;
-        private readonly GUIXmlLib<WTSLibVehicleLayout, LayoutDescriptorVehicleXml> m_vehicleLib = new GUIXmlLib<WTSLibVehicleLayout, LayoutDescriptorVehicleXml>()
+
+        private readonly GUIXmlLib<WTSLibOnBuildingPropLayoutList, ExportableBoardInstanceOnBuildingListXml> xmlLibList = new GUIXmlLib<WTSLibOnBuildingPropLayoutList, ExportableBoardInstanceOnBuildingListXml>()
         {
-            DeleteQuestionI18n = Str.WTS_PROPEDIT_CONFIGDELETE_MESSAGE,
+            DeleteQuestionI18n = Str.WTS_SEGMENT_CLEARDATA_AYS,
+            ImportI18n = Str.WTS_SEGMENT_IMPORTDATA,
+            ExportI18n = Str.WTS_SEGMENT_EXPORTDATA,
+            DeleteButtonI18n = Str.WTS_SEGMENT_REMOVEITEM,
             NameAskingI18n = Str.WTS_EXPORTDATA_NAMEASKING,
-            NameAskingOverwriteI18n = Str.WTS_EXPORTDATA_NAMEASKING_OVERWRITE
+            NameAskingOverwriteI18n = Str.WTS_EXPORTDATA_NAMEASKING_OVERWRITE,
+
         };
 
-        private FooterBarStatus CurrentLibState => m_vehicleLib.Status;
+        private FooterBarStatus CurrentLibState => xmlLibList.Status;
         private State CurrentLocalState { get; set; } = State.Normal;
 
         public ushort CurrentGrabbedId { get; set; }
         public int TextDescriptorIndexSelected => m_tabsContainer.ListSel;
-        public VehicleInfo CurrentEditingInfo => m_currentInfo;
-        public bool IsOnTextDimensionsView => m_tabsContainer.CurrentTabIdx == m_sizeEditorTabIdx;
-        private readonly int m_sizeEditorTabIdx;
+        public BuildingInfo CurrentEditingInfo => m_currentInfo;
+        public bool IsOnTextDimensionsView => false;//m_tabsContainer.CurrentTabIdx == m_sizeEditorTabIdx;
 
-        public WTSVehicleInfoDetailLiteUI(GUIColorPicker colorPicker)
+        public BuildingInfoDetailLiteUI(GUIColorPicker colorPicker)
         {
             var viewAtlas = UIView.GetAView().defaultAtlas;
 
@@ -104,65 +110,29 @@ namespace WriteEverywhere.UI
 
 
             var root = colorPicker.GetComponentInParent<GUIRootWindowBase>();
-            GeneralWritingEditorPositionsSizesTab positionTab;
-            var tabs = new IGUITab<BoardTextDescriptorGeneralXml>[]{
-                    new GeneralWritingEditorGeneralTab(()=> m_currentLayout.TextDescriptors),
-                    positionTab = new GeneralWritingEditorPositionsSizesTab(root),
-                    new GeneralWritingEditorForegroundTab(m_colorPicker),
-                    new GeneralWritingEditorBoxSettingsTab(m_colorPicker, ()=> m_currentInfo),
-                    new GeneralWritingEditorIlluminationTab(m_colorPicker),
-                    new GeneralWritingEditorContentTab(m_colorPicker, ()=> m_currentInfo, TextRenderingClass.Vehicle)
-                    };
-            m_tabsContainer = new GUIBasicListingTabsContainer<BoardTextDescriptorGeneralXml>(
-                tabs,
-                OnAddItem,
-                GetList,
-                GetCurrentItem, SetCurrentItem);
-            m_sizeEditorTabIdx = Array.IndexOf(tabs, positionTab);
-            m_tabsContainer.EventListItemChanged += OnTabChanged;
+            var tabs = new IGUITab<WriteOnBuildingPropXml>[] {
+
+            };
+            m_tabsContainer = new GUIBasicListingTabsContainer<WriteOnBuildingPropXml>(tabs, OnAdd, GetSideList, GetSelectedItem, OnSetCurrentItem, AddExtraButtonsList);
+            //m_textEditorTabIdx = Array.IndexOf(tabs, m_textEditorTab);
         }
 
-        private BoardTextDescriptorGeneralXml GetCurrentItem(int arg) => m_currentLayout.TextDescriptors[arg] as BoardTextDescriptorGeneralXml;
-        private string[] GetList() => m_cachedItemList;
-        private void OnAddItem()
+        public void DoDraw(Rect area, int subbuildingIdx, BuildingInfo parentBuilding)
         {
-            m_currentLayout.TextDescriptors = m_currentLayout.TextDescriptors.Concat(new[] { new BoardTextDescriptorGeneralXml() { SaveName = "NEW" } }).ToArray();
-            m_cachedItemList = m_currentLayout?.TextDescriptors.Select(x => x.SaveName).ToArray();
-        }
-
-        private void SetCurrentItem(int arg, BoardTextDescriptorGeneralXml val)
-        {
-            if (val is null)
+            if (m_currentInfo != parentBuilding || subbuildingIdx != m_currentSubBuilding)
             {
-                m_currentLayout.TextDescriptors = m_currentLayout.TextDescriptors.Where((x, i) => i != arg).ToArray();
-                m_tabsContainer.Reset();
-            }
-            else
-            {
-                m_currentLayout.TextDescriptors[arg] = val;
-            }
-            m_cachedItemList = m_currentLayout?.TextDescriptors.Select(x => x.SaveName).ToArray();
-        }
-
-        public void DoDraw(Rect area, VehicleInfo vehicleInfo, VehicleInfo parentVehicle)
-        {
-            if (m_currentInfo != vehicleInfo)
-            {
-                OnChangeInfo(vehicleInfo, parentVehicle);
+                OnChangeInfo(parentBuilding, subbuildingIdx);
             }
             if (m_currentInfo is null)
             {
                 return;
-            }
-            if (GUIKwyttoCommons.AddComboBox(area.width, Str.WTS_LAYOUTSKIN, ref m_currentSkin, m_availableSkinsOptions, m_availableSkins, m_root))
-            {
-                ReloadSkin();
             }
             switch (CurrentLibState)
             {
                 case FooterBarStatus.Normal:
                 case FooterBarStatus.AskingToExport:
                 case FooterBarStatus.AskingToExportOverwrite:
+                case FooterBarStatus.AskingToRemove:
                     switch (CurrentLocalState)
                     {
                         case State.Normal:
@@ -174,7 +144,24 @@ namespace WriteEverywhere.UI
                     }
                     break;
                 case FooterBarStatus.AskingToImport:
-                    m_vehicleLib.DrawImportView((x, _) => WTSVehicleTextsSingleton.SetCityDescriptor(m_currentInfo, x));
+                    xmlLibList.DrawImportView(
+                        (x, isAdd) =>
+                    {
+                        var newItems = x.Instances.Select(y =>
+                        {
+                            y.SubBuildingPivotReference = subbuildingIdx;
+                            return y;
+                        }).ToArray();
+                        if (isAdd)
+                        {
+                            CurrentEditingLayout.PropInstances.AddRangeToArray(newItems);
+                        }
+                        else
+                        {
+                            CurrentEditingLayout.PropInstances = CurrentEditingLayout.PropInstances.Where(y => y.SubBuildingPivotReference != subbuildingIdx).Concat(newItems).ToArray();
+                        }
+                    }
+                    );
                     break;
             }
 
@@ -190,10 +177,10 @@ namespace WriteEverywhere.UI
                     using (new GUILayout.VerticalScope(GUILayout.ExpandWidth(true)))
                     {
                         var skinNoWrap = new GUIStyle(GUI.skin.label) { wordWrap = false };
-                        GUILayout.Label($"<color=#FFFF00>{Str.WTS_CURRENTSELECTION}</color>", skinNoWrap);
+                        GUILayout.Label($"<color=#FFFF00>{Str.WTS_CURRENTSELECTION}</color>", skinNoWrap, GUILayout.MaxWidth(140));
                         GUILayout.Label(m_currentInfo.GetUncheckedLocalizedTitle(), skinNoWrap);
                         GUILayout.Label($"<color=#FFFF00>{Str.WTS_CURRENTLY_USING}</color>", skinNoWrap);
-                        GUILayout.Label(m_currentSource.ValueToI18n(), skinNoWrap);
+                        GUILayout.Label(m_currentSource.ValueToI18n(), skinNoWrap, GUILayout.MaxWidth(140));
                         GUILayout.FlexibleSpace();
                     }
                     using (new GUILayout.VerticalScope(GUILayout.MaxWidth(300)))
@@ -202,10 +189,10 @@ namespace WriteEverywhere.UI
                         {
                             if (CurrentLibState == FooterBarStatus.Normal)
                             {
-                                bool waitingGrab = ModInstance.Controller.VehicleTextsSingleton.WaitingGrab;
+                                //bool waitingGrab = ModInstance.Controller.BuildingTextsSingleton.WaitingGrab;
                                 GUI.tooltip = "";
                                 GUILayout.FlexibleSpace();
-                                GUIKwyttoCommons.SquareTextureButton(waitingGrab ? m_grabModeWaiting : m_grabModel, waitingGrab ? Str.we_vehicleEditor_waitingGrabVehicle : Str.we_vehicleEditor_pickOrSpawnAVehicle, GrabUnit);
+                                //   GUIKwyttoCommons.SquareTextureButton(waitingGrab ? m_grabModeWaiting : m_grabModel, waitingGrab ? Str.we_buildingEditor_waitingGrabBuilding : Str.we_buildingEditor_pickOrSpawnABuilding, GrabUnit);
                                 GUILayout.FlexibleSpace();
                                 GUIKwyttoCommons.SquareTextureButton(m_goToFile, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_OPENGLOBALSFOLDER, GoToGlobalFolder);
                                 GUIKwyttoCommons.SquareTextureButton(m_reloadFiles, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_RELOADDESCRIPTORS, ReloadFiles);
@@ -216,7 +203,6 @@ namespace WriteEverywhere.UI
                                 GUILayout.FlexibleSpace();
                                 GUIKwyttoCommons.SquareTextureButton(m_exportGlobal, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_EXPORTASGLOBAL, ExportGlobal, m_currentSource == ConfigurationSource.CITY);
                                 GUIKwyttoCommons.SquareTextureButton(m_exportAsset, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_EXPORTTOASSETFOLDER, ExportAsset, m_currentSource == ConfigurationSource.CITY && m_currentInfo.name.EndsWith("_Data"));
-                                GUIKwyttoCommons.SquareTextureButton(m_save, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_SAVESKIN, ExportSkin, m_currentSource == ConfigurationSource.SKIN);
                                 GUILayout.FlexibleSpace();
                                 GUIKwyttoCommons.SquareTextureButton(m_copy, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_COPYTOCLIPBOARD, CopyToClipboard, m_currentSource != ConfigurationSource.NONE);
                                 GUIKwyttoCommons.SquareTextureButton(m_paste, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_PASTEFROMCLIPBOARD, PasteFromClipboard, isEditable && !(m_clipboard is null));
@@ -234,7 +220,7 @@ namespace WriteEverywhere.UI
                             }
                             else
                             {
-                                m_vehicleLib.Draw(null, null, () => m_currentLayout);
+                                xmlLibList.Draw(WEUIUtils.RedButton, OnClearList, OnGetExportableList);
                             }
                         }
                         GUILayout.FlexibleSpace();
@@ -252,11 +238,11 @@ namespace WriteEverywhere.UI
                 }
                 if (isEditable)
                 {
-                    m_fontFilter.DrawButton(size.x, m_currentLayout?.FontName);
+                    m_fontFilter.DrawButton(size.x, CurrentEditingLayout?.FontName);
                 }
                 else if (m_currentSource != ConfigurationSource.NONE)
                 {
-                    m_fontFilter.DrawButtonDisabled(size.x, m_currentLayout?.FontName);
+                    m_fontFilter.DrawButtonDisabled(size.x, CurrentEditingLayout?.FontName);
                 }
                 if (m_currentSource != ConfigurationSource.NONE)
                 {
@@ -270,51 +256,23 @@ namespace WriteEverywhere.UI
             }
         }
 
-        private void GrabUnit()
+        private void OnChangeInfo(BuildingInfo parentBuilding, int subBuilding)
         {
-            ModInstance.Controller.VehicleTextsSingleton.AskForGrab(m_currentInfo, (x) =>
-            {
-                if (x == default)
-                {
-                    KwyttoDialog.ShowModal(new KwyttoDialog.BindProperties
-                    {
-                        buttons = KwyttoDialog.basicOkButtonBar,
-                        message = Str.we_vehicleEditor_failedPickingAVehicle,
-                        messageAlign = TextAnchor.MiddleCenter,
-                        messageTextSizeMultiplier = 1.4f,
-                    });
-                    CurrentGrabbedId = 0;
-                }
-                else
-                {
-                    CurrentGrabbedId = VehicleManager.instance.m_vehicles.m_buffer[x].GetFirstVehicle(x);
-                    ToolsModifierControl.cameraController.SetTarget(new InstanceID { Vehicle = x }, default, true);
-                }
-            });
+            m_currentInfo = parentBuilding;
+            m_currentSubBuilding = subBuilding;
+            ReloadDescriptor();
         }
 
-        private void OnChangeInfo(VehicleInfo vehicleInfo, VehicleInfo parentVehicle, string skin = "")
+        private void ReloadDescriptor()
         {
-            m_currentInfo = vehicleInfo;
-            m_currentParentInfo = parentVehicle;
-            if (m_currentInfo is null)
-            {
-                return;
-            }
-            m_currentSkin = skin;
-            m_availableSkins = ModInstance.Controller.ConnectorVS.ListAllSkins(vehicleInfo);
-            m_availableSkinsOptions = m_availableSkins.Select(x => x.IsNullOrWhiteSpace() ? "<DEFAULT>" : x).ToArray();
-            ReloadSkin();
-        }
-
-        private void ReloadSkin()
-        {
-            WTSVehicleTextsSingleton.GetTargetDescriptor(m_currentInfo, -1, out m_currentSource, out var currentLayout, m_currentSkin);
-            m_currentLayout = currentLayout as LayoutDescriptorVehicleXml;
-            m_cachedItemList = currentLayout?.TextDescriptors.Select(x => x.SaveName).ToArray();
+            WTSBuildingPropsSingleton.GetTargetDescriptor(m_currentInfo.name, out m_currentSource, out var currentLayout);
+            CurrentEditingLayout = currentLayout;
+            var cachedItemList = currentLayout?.PropInstances.Select((x, i) => Tuple.New(i, x)).Where(x => x.Second.SubBuildingPivotReference == m_currentSubBuilding).Select((x) => new KeyValuePair<int, string>(x.First, x.Second.SaveName)).ToList();
+            m_cachedItemListIdx = cachedItemList.Select(x => x.Key).ToArray();
+            m_cachedItemListLabels = cachedItemList.Select(x => x.Value).ToArray();
             OnTabChanged(-1);
             m_tabsContainer.Reset();
-            m_vehicleLib.ResetStatus();
+            xmlLibList.ResetStatus();
         }
 
         private void OnTabChanged(int tabIdx)
@@ -323,38 +281,42 @@ namespace WriteEverywhere.UI
         }
         private void GoTo(State newState) => CurrentLocalState = newState;
 
-        #region Top buttons
-        private void ExportLayout() => m_vehicleLib.GoToExport();
-        private void ImportLayout() => m_vehicleLib.GoToImport();
-        private void ExportAsset() => ExportTo(Path.Combine(Path.GetDirectoryName(PackageManager.FindAssetByName(m_currentInfo.name)?.package?.packagePath), $"{MainController.m_defaultFileNameVehiclesXml}.xml"));
+        #region Extra buttons
+        private void AddExtraButtonsList()
+        {
+            if (GUILayout.Button(Str.we_roadEditor_importAdding))
+            {
+                xmlLibList.GoToImportAdditive();
+            }
+            if (GUILayout.Button(Str.we_roadEditor_importReplacing))
+            {
+                xmlLibList.GoToImport();
+            }
+            if (GUILayout.Button(Str.WTS_SEGMENT_EXPORTDATA))
+            {
+                xmlLibList.GoToExport();
+            }
+            if (GUILayout.Button(Str.WTS_SEGMENT_CLEARDATA))
+            {
+                xmlLibList.GoToRemove();
+            }
+        }
+        private void ExportLayout() => xmlLibList.GoToExport();
+        private void ImportLayout() => xmlLibList.GoToImport();
+        private void ExportAsset() => ExportTo(Path.Combine(Path.GetDirectoryName(PackageManager.FindAssetByName(m_currentInfo.name)?.package?.packagePath), $"{MainController.m_defaultFileNameBuildingsXml}.xml"));
 
-        private void ExportGlobal() => ExportTo(Path.Combine(MainController.DefaultVehiclesConfigurationFolder, $"{MainController.m_defaultFileNameVehiclesXml}_{PackageManager.FindAssetByName(m_currentParentInfo.name)?.package.packageMainAsset ?? m_currentParentInfo.name}.xml"));
-        private void ExportSkin() => ModInstance.Controller.ConnectorVS.ApplySkin(m_currentInfo, m_currentSkin, XmlUtils.DefaultXmlSerialize(m_currentLayout));
+        private void ExportGlobal() => ExportTo(Path.Combine(MainController.DefaultBuildingsConfigurationFolder, $"{MainController.m_defaultFileNameBuildingsXml}_{PackageManager.FindAssetByName(m_currentParentInfo.name)?.package.packageMainAsset ?? m_currentParentInfo.name}.xml"));
 
         private void ExportTo(string output)
         {
             if (!(m_currentInfo is null))
             {
                 var assetId = m_currentInfo.name.Split('.')[0] + ".";
-                var descriptorsToExport = new List<LayoutDescriptorVehicleXml>();
-                foreach (var asset in VehiclesIndexes.instance.PrefabsData
-                .Where((x) => x.Value.PrefabName.StartsWith(assetId) || x.Value.PrefabName == m_currentInfo.name)
-                .Select(x => x.Value.Info))
+                WTSBuildingPropsSingleton.GetTargetDescriptor(m_currentInfo.name, out _, out var target);
+                if (target is WriteOnBuildingXml layout)
                 {
-                    WTSVehicleTextsSingleton.GetTargetDescriptor(asset as VehicleInfo, -1, out _, out ILayoutDescriptorVehicleXml target);
-                    if (target is LayoutDescriptorVehicleXml layout)
-                    {
-                        layout.VehicleAssetName = asset.name;
-                        descriptorsToExport.Add(layout);
-                    }
-                }
-                if (descriptorsToExport.Count > 0)
-                {
-                    var exportableLayouts = new ExportableLayoutDescriptorVehicleXml
-                    {
-                        Descriptors = descriptorsToExport.ToArray()
-                    };
-                    File.WriteAllText(output, XmlUtils.DefaultXmlSerialize(exportableLayouts));
+                    layout.BuildingInfoName = m_currentInfo.name;
+                    File.WriteAllText(output, XmlUtils.DefaultXmlSerialize(layout));
 
                     KwyttoDialog.ShowModal(new KwyttoDialog.BindProperties
                     {
@@ -381,47 +343,40 @@ namespace WriteEverywhere.UI
                         }
                     });
 
-                    ModInstance.Controller?.VehicleTextsSingleton?.LoadAllVehiclesConfigurations();
+                    ModInstance.Controller?.BuildingPropsSingleton?.LoadAllBuildingConfigurations();
                 }
             }
         }
         private void PasteFromClipboard()
         {
-            if (m_currentSkin.IsNullOrWhiteSpace())
-            {
-                WTSVehicleTextsSingleton.SetCityDescriptor(m_currentInfo, XmlUtils.DefaultXmlDeserialize<LayoutDescriptorVehicleXml>(m_clipboard));
-            }
-            else
-            {
-                ModInstance.Controller.ConnectorVS.ApplySkin(m_currentInfo, m_currentSkin, m_clipboard);
-            }
+            WTSBuildingPropsSingleton.SetCityDescriptor(m_currentInfo, XmlUtils.DefaultXmlDeserialize<WriteOnBuildingXml>(m_clipboard));
 
-            OnChangeInfo(m_currentInfo, m_currentParentInfo, m_currentSkin);
+            OnChangeInfo(m_currentInfo, m_currentSubBuilding);
         }
 
-        private void CopyToClipboard() => m_clipboard = XmlUtils.DefaultXmlSerialize(m_currentLayout);
+        private void CopyToClipboard() => m_clipboard = XmlUtils.DefaultXmlSerialize(CurrentEditingLayout);
         private void CloneToCity()
         {
-            WTSVehicleTextsSingleton.SetCityDescriptor(m_currentInfo, XmlUtils.CloneViaXml(m_currentLayout));
-            OnChangeInfo(m_currentInfo, m_currentParentInfo);
+            WTSBuildingPropsSingleton.SetCityDescriptor(m_currentInfo, XmlUtils.CloneViaXml(CurrentEditingLayout));
+            OnChangeInfo(m_currentInfo, m_currentSubBuilding);
         }
         private void CreateNew()
         {
-            WTSVehicleTextsSingleton.SetCityDescriptor(m_currentInfo, new LayoutDescriptorVehicleXml());
-            OnChangeInfo(m_currentInfo, m_currentParentInfo);
+            WTSBuildingPropsSingleton.SetCityDescriptor(m_currentInfo, new WriteOnBuildingXml());
+            OnChangeInfo(m_currentInfo, m_currentSubBuilding);
         }
         private void DeleteFromCity()
         {
-            WTSVehicleTextsSingleton.SetCityDescriptor(m_currentInfo, null);
-            OnChangeInfo(m_currentInfo, m_currentParentInfo);
+            WTSBuildingPropsSingleton.SetCityDescriptor(m_currentInfo, null);
+            OnChangeInfo(m_currentInfo, m_currentSubBuilding);
         }
 
         private void ReloadFiles()
         {
-            ModInstance.Controller?.VehicleTextsSingleton?.LoadAllVehiclesConfigurations();
-            OnChangeInfo(m_currentInfo, m_currentParentInfo);
+            ModInstance.Controller?.BuildingPropsSingleton?.LoadAllBuildingConfigurations();
+            OnChangeInfo(m_currentInfo, m_currentSubBuilding);
         }
-        private void GoToGlobalFolder() => ColossalFramework.Utils.OpenInFileBrowser(MainController.DefaultVehiclesConfigurationFolder);
+        private void GoToGlobalFolder() => ColossalFramework.Utils.OpenInFileBrowser(MainController.DefaultBuildingsConfigurationFolder);
         #endregion
 
         #region Search font
@@ -429,10 +384,46 @@ namespace WriteEverywhere.UI
         private readonly GUIFilterItemsScreen<State> m_fontFilter;
         private IEnumerator OnFilterParam(string searchText, Action<string[]> setResult)
         {
-            setResult(FontServer.instance.GetAllFonts().Where(x => searchText.IsNullOrWhiteSpace() ? true : LocaleManager.cultureInfo.CompareInfo.IndexOf(x, searchText, CompareOptions.IgnoreCase) >= 0).OrderBy(x => x).ToArray());
+            setResult(FontServer.instance.GetAllFonts().Where(x => searchText.IsNullOrWhiteSpace() || LocaleManager.cultureInfo.CompareInfo.IndexOf(x, searchText, CompareOptions.IgnoreCase) >= 0).OrderBy(x => x).ToArray());
             yield return 0;
         }
-        private void OnSelectFont(int _, string fontName) => m_currentLayout.FontName = fontName;
+        private void OnSelectFont(int _, string fontName) => CurrentEditingLayout.FontName = fontName;
+        #endregion
+
+
+        #region Tab Actions
+        private WriteOnBuildingPropXml GetSelectedItem(int listSel) => CurrentEditingLayout.PropInstances[m_cachedItemListIdx[listSel]];
+        private string[] GetSideList() => m_cachedItemListLabels;
+        private void OnAdd()
+        {
+            CurrentEditingLayout.PropInstances = CurrentEditingLayout.PropInstances.Concat(new[] { new WriteOnBuildingPropXml() { SaveName = "NEW", SubBuildingPivotReference = m_currentSubBuilding } }).ToArray();
+            OnChangeInfo(m_currentInfo, m_currentSubBuilding);
+        }
+        private void OnClearList()
+        {
+            CurrentEditingLayout.PropInstances = CurrentEditingLayout.PropInstances.Where(x => x.SubBuildingPivotReference != m_currentSubBuilding).ToArray();
+            OnChangeInfo(m_currentInfo, m_currentSubBuilding);
+        }
+
+        private void OnSetCurrentItem(int listSel, WriteOnBuildingPropXml newVal)
+        {
+            var effectiveIdx = m_cachedItemListIdx[listSel];
+            if (newVal is null)
+            {
+                CurrentEditingLayout.PropInstances = CurrentEditingLayout.PropInstances.Where((k, i) => i != effectiveIdx).ToArray();
+                m_tabsContainer.Reset();
+            }
+            else
+            {
+                CurrentEditingLayout.PropInstances[effectiveIdx] = newVal;
+            }
+        }
+        private ExportableBoardInstanceOnBuildingListXml OnGetExportableList() => new ExportableBoardInstanceOnBuildingListXml
+        {
+            Instances = CurrentEditingLayout.PropInstances.Where(x => x.SubBuildingPivotReference == m_currentSubBuilding).Select((x) => XmlUtils.CloneViaXml(x)).ToArray(),
+        };
+
+
         #endregion
     }
 

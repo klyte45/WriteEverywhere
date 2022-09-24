@@ -16,13 +16,14 @@ namespace WriteEverywhere.Libraries
     //[XmlRoot("LibPropTextItem")] public class WTSLibPropTextItem : LibBaseFile<WTSLibPropTextItem, BoardTextDescriptorGeneralXml> { protected override string XmlName => "LibPropTextItem"; }
     //[XmlRoot("LibRoadCornerRule")] public class WTSLibRoadCornerRule : LibBaseFile<WTSLibRoadCornerRule, BoardInstanceRoadNodeXml> { protected override string XmlName => "LibRoadCornerRule"; }
     //[XmlRoot("LibRoadCornerRuleList")] public class WTSLibRoadCornerRuleList : LibBaseFile<WTSLibRoadCornerRuleList, ILibableAsContainer<BoardInstanceRoadNodeXml>> { protected override string XmlName => "LibRoadCornerRuleList"; }
-    //[XmlRoot("LibBuildingPropLayoutList")] public class WTSLibBuildingPropLayoutList : LibBaseFile<WTSLibBuildingPropLayoutList, ExportableBoardInstanceBuildingListXml> { protected override string XmlName => "LibBuildingPropLayoutList"; }
+    [XmlRoot("LibBuildingPropLayoutList")] public class WTSLibBuildingLayout : LibBaseFile<WTSLibBuildingLayout, WriteOnBuildingXml> { protected override string XmlName => "LibBuildingLayout"; }
     //[XmlRoot("LibBuildingPropLayout")] public class WTSLibBuildingPropLayout : LibBaseFile<WTSLibBuildingPropLayout, BoardInstanceBuildingXml> { protected override string XmlName => "LibBuildingPropLayout"; }
     [XmlRoot("LibVehicleLayout")] public class WTSLibVehicleLayout : LibBaseFile<WTSLibVehicleLayout, LayoutDescriptorVehicleXml> { protected override string XmlName => "LibVehicleLayout"; }
     [XmlRoot("LibTextList")] internal class WTSLibTextList : LibBaseFile<WTSLibTextList, ILibableAsContainer<BoardTextDescriptorGeneralXml>> { protected override string XmlName => "WTSLibTextList"; }
     [XmlRoot("LibTextItem")] internal class WTSLibTextItem : LibBaseFile<WTSLibTextItem, BoardTextDescriptorGeneralXml> { protected override string XmlName => "WTSLibTextItem"; }
     [XmlRoot("LibOnNetPropLayout")] public class WTSLibOnNetPropLayout : LibBaseFile<WTSLibOnNetPropLayout, WriteOnNetXml> { protected override string XmlName => "LibOnNetPropLayout"; }
     [XmlRoot("LibOnNetPropLayoutList")] public class WTSLibOnNetPropLayoutList : LibBaseFile<WTSLibOnNetPropLayoutList, ExportableBoardInstanceOnNetListXml> { protected override string XmlName => "LibOnNetPropLayoutList"; }
+    [XmlRoot("LibOnBuildingPropLayoutList")] public class WTSLibOnBuildingPropLayoutList : LibBaseFile<WTSLibOnBuildingPropLayoutList, ExportableBoardInstanceOnBuildingListXml> { protected override string XmlName => "LibOnBuildingPropLayoutList"; }
     //[XmlRoot("LibHighwayShieldLayout")] public class WTSLibHighwayShieldLayout : LibBaseFile<WTSLibHighwayShieldLayout, HighwayShieldDescriptor> { protected override string XmlName => "LibHighwayShieldLayout"; }
     //[XmlRoot("LibHighwayShieldTextLayer")] public class WTSLibHighwayShieldTextLayer : LibBaseFile<WTSLibHighwayShieldTextLayer, ImageLayerTextDescriptorXml> { protected override string XmlName => "LibHighwayShieldTextLayer"; }
 

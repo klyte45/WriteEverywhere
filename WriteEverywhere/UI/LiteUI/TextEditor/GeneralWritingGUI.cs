@@ -12,6 +12,7 @@ using System.Linq;
 using UnityEngine;
 using WriteEverywhere.Libraries;
 using WriteEverywhere.Localization;
+using WriteEverywhere.Utils;
 using WriteEverywhere.Xml;
 using static Kwytto.Utils.XmlUtils;
 
@@ -150,7 +151,7 @@ namespace WriteEverywhere.UI
             m_tabsContainer.DrawListTabs(new Rect(0, 20, size.x, size.y - 20), true, true);
             using (new GUILayout.AreaScope(new Rect(0, 0, size.x, 20)))
             {
-                m_textGroupLib.Draw(RedButton, () => GetDescriptorArray() = new BoardTextDescriptorGeneralXml[0], () => new ILibableAsContainer<BoardTextDescriptorGeneralXml> { Data = new ListWrapper<BoardTextDescriptorGeneralXml>() { listVal = GetDescriptorArray().ToList() } }, m_textGroupLib.FooterDraw);
+                m_textGroupLib.Draw(WEUIUtils.RedButton, () => GetDescriptorArray() = new BoardTextDescriptorGeneralXml[0], () => new ILibableAsContainer<BoardTextDescriptorGeneralXml> { Data = new ListWrapper<BoardTextDescriptorGeneralXml>() { listVal = GetDescriptorArray().ToList() } }, m_textGroupLib.FooterDraw);
             }
         }
 
@@ -170,30 +171,6 @@ namespace WriteEverywhere.UI
         #endregion
 
 
-        private GUIStyle m_redButton;
-        private GUIStyle RedButton
-        {
-            get
-            {
-                if (m_redButton is null)
-                {
-                    m_redButton = new GUIStyle(GUI.skin.button)
-                    {
-                        normal = new GUIStyleState()
-                        {
-                            background = GUIKwyttoCommons.darkRedTexture,
-                            textColor = Color.white
-                        },
-                        hover = new GUIStyleState()
-                        {
-                            background = GUIKwyttoCommons.redTexture,
-                            textColor = Color.white
-                        },
-                    };
-                }
-                return m_redButton;
-            }
-        }
 
     }
 }

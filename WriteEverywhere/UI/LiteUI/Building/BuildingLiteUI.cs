@@ -11,24 +11,24 @@ using WriteEverywhere.Tools;
 
 namespace WriteEverywhere.UI
 {
-    internal class WTSVehicleLiteUI : IOpacityChangingGUI
+    internal class BuildingLiteUI : IOpacityChangingGUI
     {
-        public static WTSVehicleLiteUI Instance { get; private set; }
-        public int TrailerSel { get; private set; } = 0;
+        public static BuildingLiteUI Instance { get; private set; }
+        public int SubBuildingSel { get; private set; } = 0;
         public ushort CurrentGrabbedId => m_detailUI.CurrentGrabbedId;
         public int CurrentTextSel => m_detailUI.TextDescriptorIndexSelected;
         public bool IsOnTextDimensionsView => m_detailUI.IsOnTextDimensionsView;
-        public VehicleInfo CurrentEditingInfo => m_detailUI.CurrentEditingInfo;
+        public BuildingInfo CurrentEditingInfo => m_detailUI.CurrentEditingInfo;
 
         public override void Awake()
         {
             base.Awake();
             Instance = this;
-            Init($"{ModInstance.Instance.GeneralName} - {Str.WTS_VEHICLEEDITOR_WINDOWTITLE}", new Rect(128, 128, 500, 350), resizable: true, minSize: new Vector2(500, 500));
-            m_modelFilter = new GUIFilterItemsScreen<State>(Str.WTS_VEHICLEEDITOR_SELECTMODEL, ModInstance.Controller, OnFilterParam, OnVehicleSet, GoTo, State.Normal, State.SelectVehicle, otherFilters: DrawExtraFilter, extraButtonsSearch: ExtraButtonsSearch);
+            Init($"{ModInstance.Instance.GeneralName} - {Str.we_buildingEditor_windowTitle}", new Rect(128, 128, 500, 500), resizable: true, minSize: new Vector2(500, 500));
+            m_modelFilter = new GUIFilterItemsScreen<State>(Str.we_buildingEditor_selectBuilding, ModInstance.Controller, OnFilterParam, OnBuildingSet, GoTo, State.Normal, State.SelectBuilding, otherFilters: DrawExtraFilter, extraButtonsSearch: ExtraButtonsSearch);
             m_colorPicker = GameObjectUtils.CreateElement<GUIColorPicker>(transform).Init();
             m_colorPicker.Visible = false;
-            m_detailUI = new WTSVehicleInfoDetailLiteUI(m_colorPicker);
+            m_detailUI = new BuildingInfoDetailLiteUI(m_colorPicker);
         }
         protected override void OnOpacityChanged(float newVal)
         {
@@ -41,7 +41,7 @@ namespace WriteEverywhere.UI
         private enum State
         {
             Normal,
-            SelectVehicle
+            SelectBuilding
         }
         public static void Destroy()
         {
@@ -55,27 +55,21 @@ namespace WriteEverywhere.UI
         {
             hasChanged = false;
             var currentTool = ToolsModifierControl.toolController.CurrentTool;
-            if (GUILayout.Button(Str.we_vehicleEditor_pickerBtn, currentTool is VehicleEditorTool currentToolVeh ? GreenButton : GUI.skin.button, GUILayout.Width(100)))
+            if (GUILayout.Button(Str.we_buildingEditor_pickerBtn, currentTool is BuildingEditorTool currentToolVeh ? GreenButton : GUI.skin.button, GUILayout.Width(100)))
             {
-                var vehTool = ToolsModifierControl.toolController.GetComponent<VehicleEditorTool>();
-                vehTool.OnVehicleSelect += (x) =>
+                var vehTool = ToolsModifierControl.toolController.GetComponent<BuildingEditorTool>();
+                vehTool.OnBuildingSelect += (x) =>
                      {
-                         var head = VehicleManager.instance.m_vehicles.m_buffer[x].GetFirstVehicle(x);
-                         CurrentInfo = VehicleManager.instance.m_vehicles.m_buffer[head].Info;
+                         CurrentInfo = BuildingManager.instance.m_buildings.m_buffer[x].Info;
                          m_currentState = State.Normal;
-                         m_detailUI.CurrentGrabbedId = head;
+                         m_detailUI.CurrentGrabbedId = x;
                      };
-                vehTool.OnParkedVehicleSelect += (x) =>
-                {
-                    CurrentInfo = VehicleManager.instance.m_parkedVehicles.m_buffer[x].Info;
-                    m_currentState = State.Normal;
-                };
-                ToolsModifierControl.SetTool<VehicleEditorTool>();
+                ToolsModifierControl.SetTool<BuildingEditorTool>();
             }
             return 0;
         }
 
-        private WTSVehicleInfoDetailLiteUI m_detailUI;
+        private BuildingInfoDetailLiteUI m_detailUI;
         public GUIColorPicker m_colorPicker;
 
         public static Texture2D BgTextureSubgroup;
@@ -84,7 +78,7 @@ namespace WriteEverywhere.UI
         public static Color bgSubgroup;
         public static Color bgNote;
 
-        static WTSVehicleLiteUI()
+        static BuildingLiteUI()
         {
             bgSubgroup = ModInstance.Instance.ModColor.SetBrightness(.20f);
 
@@ -134,16 +128,42 @@ namespace WriteEverywhere.UI
             }
         }
 
+
+
+        internal GUIStyle RedButton
+        {
+            get
+            {
+                if (m_redButton is null)
+                {
+                    m_redButton = new GUIStyle(Skin.button)
+                    {
+                        normal = new GUIStyleState()
+                        {
+                            background = GUIKwyttoCommons.darkRedTexture,
+                            textColor = Color.white
+                        },
+                        hover = new GUIStyleState()
+                        {
+                            background = GUIKwyttoCommons.redTexture,
+                            textColor = Color.white
+                        },
+                    };
+                }
+                return m_redButton;
+            }
+        }
+
         internal void Reset()
         {
             m_currentState = State.Normal;
-            TrailerSel = 0;
+            SubBuildingSel = 0;
         }
 
         private State m_currentState = State.Normal;
         private void GoTo(State newState) => m_currentState = newState;
 
-        public VehicleInfo CurrentInfo
+        public BuildingInfo CurrentInfo
         {
             get => m_currentInfo; set
             {
@@ -152,15 +172,8 @@ namespace WriteEverywhere.UI
                     m_currentInfo = value;
                     if (!(value is null))
                     {
-                        m_currentInfoList = new List<VehicleInfo>()
-                        {
-                            m_currentInfo
-                        };
-                        if (!(m_currentInfo.m_trailers is null))
-                        {
-                            m_currentInfoList.AddRange(m_currentInfo.m_trailers.Select(x => x.m_info).Distinct().Where(x => x != m_currentInfo));
-                        }
-                        TrailerSel = 0;
+                        m_currentInfoList = new[] { Str.we_buildingEditor_mainBuildingTitle }.Concat(m_currentInfo.m_subBuildings.Select((_, i) => string.Format(Str.we_buildingEditor_subBuildingNumTitle, i + 1))).ToArray();
+                        SubBuildingSel = 0;
                     }
                 }
             }
@@ -169,8 +182,8 @@ namespace WriteEverywhere.UI
         protected override bool showOverModals { get; } = false;
         protected override bool requireModal { get; } = false;
 
-        private List<VehicleInfo> m_currentInfoList;
-        private VehicleInfo m_currentInfo;
+        private string[] m_currentInfoList;
+        private BuildingInfo m_currentInfo;
         private Vector2 m_horizontalScroll;
 
         protected override void DrawWindow()
@@ -183,7 +196,7 @@ namespace WriteEverywhere.UI
                     case State.Normal:
                         DrawNormal(area.size);
                         break;
-                    case State.SelectVehicle:
+                    case State.SelectBuilding:
                         m_modelFilter.DrawSelectorView(area.height);
                         break;
                 }
@@ -202,13 +215,13 @@ namespace WriteEverywhere.UI
                 {
                     using (var scope = new GUILayout.ScrollViewScope(m_horizontalScroll))
                     {
-                        TrailerSel = GUILayout.SelectionGrid(TrailerSel, m_currentInfoList.Select((_, i) => i == 0 ? Str.we_vehicleEditor_headVehicleTitle : string.Format(Str.we_vehicleEditor_trailerNumTitle, i)).ToArray(), m_currentInfoList.Count, GUILayout.MinWidth(40));
+                        SubBuildingSel = GUILayout.SelectionGrid(SubBuildingSel, m_currentInfoList, m_currentInfoList.Length, GUILayout.MinWidth(40));
                         m_horizontalScroll = scope.scrollPosition;
                     }
                 }
                 using (new GUILayout.AreaScope(bodyArea, BgTextureSubgroup, GUI.skin.box))
                 {
-                    m_detailUI.DoDraw(new Rect(default, bodyArea.size), m_currentInfoList[TrailerSel], m_currentInfoList[0]);
+                    m_detailUI.DoDraw(new Rect(default, bodyArea.size), SubBuildingSel, m_currentInfo);
                 }
 
 
@@ -229,14 +242,14 @@ namespace WriteEverywhere.UI
         private IEnumerator OnFilterParam(string searchText, Action<string[]> setResult)
         {
             m_detailUI.CurrentGrabbedId = 0;
-            yield return VehiclesIndexes.instance.BasicInputFiltering(searchText, m_searchResultWrapper);
+            yield return BuildingIndexes.instance.BasicInputFiltering(searchText, m_searchResultWrapper);
             m_cachedResultList.Clear();
-            m_cachedResultList.AddRange(m_searchResultWrapper.Value.Cast<IndexedPrefabData<VehicleInfo>>()
+            m_cachedResultList.AddRange(m_searchResultWrapper.Value.Cast<IndexedPrefabData<BuildingInfo>>()
                 .Where(x => x.Prefab.m_placementStyle == ItemClass.Placement.Automatic &&
                 (!m_searchOnlyWithActiveRules
-                || WTSVehicleData.Instance.CityDescriptors.Any(y => (y.Key == x.PrefabName || (x.Prefab.m_trailers?.Any(z => z.m_info.name == y.Key) ?? false)) && y.Value != null)
-                || WTSVehicleData.Instance.GlobalDescriptors.Any(y => (y.Key == x.PrefabName || (x.Prefab.m_trailers?.Any(z => z.m_info.name == y.Key) ?? false)) && y.Value != null)
-                || WTSVehicleData.Instance.AssetsDescriptors.Any(y => (y.Key == x.PrefabName || (x.Prefab.m_trailers?.Any(z => z.m_info.name == y.Key) ?? false)) && y.Value != null))
+                || WTSBuildingData.Instance.CityDescriptors.Any(y => (y.Key == x.PrefabName || (x.Prefab.m_subBuildings?.Any(z => z.m_buildingInfo.name == y.Key) ?? false)) && y.Value != null)
+                || WTSBuildingData.Instance.GlobalDescriptors.Any(y => (y.Key == x.PrefabName || (x.Prefab.m_subBuildings?.Any(z => z.m_buildingInfo.name == y.Key) ?? false)) && y.Value != null)
+                || WTSBuildingData.Instance.AssetsDescriptors.Any(y => (y.Key == x.PrefabName || (x.Prefab.m_subBuildings?.Any(z => z.m_buildingInfo.name == y.Key) ?? false)) && y.Value != null))
                 )
                 .OrderBy(x => x.Info.GetUncheckedLocalizedTitle()).Take(500).Cast<IIndexedPrefabData>()); ;
             setResult(m_cachedResultList.Select(x => x.Info.GetUncheckedLocalizedTitle()).ToArray());
@@ -252,9 +265,9 @@ namespace WriteEverywhere.UI
             return 12;
         }
 
-        private void OnVehicleSet(int selectLayout, string _ = null)
+        private void OnBuildingSet(int selectLayout, string _ = null)
         {
-            CurrentInfo = (m_cachedResultList[selectLayout].Info as VehicleInfo);
+            CurrentInfo = (m_cachedResultList[selectLayout].Info as BuildingInfo);
             ToolsModifierControl.SetTool<DefaultTool>();
         }
         #endregion

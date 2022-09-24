@@ -1,4 +1,5 @@
 using ColossalFramework.UI;
+using Kwytto.LiteUI;
 using SpriteFontPlus;
 using System.Linq;
 using UnityEngine;
@@ -6,6 +7,60 @@ using WriteEverywhere.Localization;
 
 namespace WriteEverywhere.Utils
 {
+    internal static class WEUIUtils
+    {
+
+
+        private static GUIStyle m_redButton;
+        public static GUIStyle RedButton
+        {
+            get
+            {
+                if (m_redButton is null)
+                {
+                    m_redButton = new GUIStyle(GUI.skin.button)
+                    {
+                        normal = new GUIStyleState()
+                        {
+                            background = GUIKwyttoCommons.darkRedTexture,
+                            textColor = Color.white
+                        },
+                        hover = new GUIStyleState()
+                        {
+                            background = GUIKwyttoCommons.redTexture,
+                            textColor = Color.white
+                        },
+                    };
+                }
+                return m_redButton;
+            }
+        }
+
+        private static GUIStyle m_greenButton;
+        public static GUIStyle GreenButton
+        {
+            get
+            {
+                if (m_greenButton is null)
+                {
+                    m_greenButton = new GUIStyle(GUI.skin.button)
+                    {
+                        normal = new GUIStyleState()
+                        {
+                            background = GUIKwyttoCommons.greenTexture,
+                            textColor = Color.black
+                        },
+                        hover = new GUIStyleState()
+                        {
+                            background = GUIKwyttoCommons.darkGreenTexture,
+                            textColor = Color.black
+                        },
+                    };
+                }
+                return m_greenButton;
+            }
+        }
+    }
     internal class WTSUtils
     {
 

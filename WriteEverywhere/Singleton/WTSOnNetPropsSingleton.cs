@@ -108,7 +108,7 @@ namespace WriteEverywhere.Singleton
                 {
                     continue;
                 }
-                WEDynamicTextRenderingRules.GetColorForRule(segmentID, i, 0, null, targetDescriptor, out bool rendered);
+                WEDynamicTextRenderingRules.GetColorForRule(segmentID, i, 0, targetDescriptor, out bool rendered);
                 if (rendered)
                 {
                     int deltaVertexCount = 0;
@@ -181,7 +181,7 @@ namespace WriteEverywhere.Singleton
                     return;
                 }
 
-                Color parentColor = WEDynamicTextRenderingRules.RenderPropMesh(cachedProp, cameraInfo, segmentId, boardIdx, 0, 0xFFFFFFF, 0, position, Vector4.zero, rotation, targetDescriptor.PropScale, null, targetDescriptor, out Matrix4x4 propMatrix, out bool rendered, new InstanceID { NetNode = segmentId });
+                Color parentColor = WEDynamicTextRenderingRules.RenderPropMesh(cachedProp, cameraInfo, segmentId, boardIdx, 0, 0xFFFFFFF, 0, position, Vector4.zero, rotation, targetDescriptor.PropScale, targetDescriptor, out Matrix4x4 propMatrix, out bool rendered, new InstanceID { NetNode = segmentId });
 
                 if (rendered)
                 {
