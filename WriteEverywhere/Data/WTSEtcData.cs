@@ -63,22 +63,41 @@ namespace WriteEverywhere.Data
             }
         }
 
-        internal string GetTargetFont(FontClass fontClass)
+        internal string GetTargetFont(FontClass fontClass, bool allowNull = false)
         {
             switch (fontClass)
             {
                 case FontClass.Regular:
                     return null;
                 case FontClass.PublicTransport:
-                    return m_publicTransportLineSymbolFont ?? MainController.DEFAULT_FONT_KEY;
+                    return m_publicTransportLineSymbolFont ?? (allowNull ? null : MainController.DEFAULT_FONT_KEY);
                 case FontClass.ElectronicBoards:
-                    return ElectronicFont ?? MainController.DEFAULT_FONT_KEY;
+                    return ElectronicFont ?? (allowNull ? null : MainController.DEFAULT_FONT_KEY);
                 case FontClass.Stencil:
-                    return StencilFont ?? MainController.DEFAULT_FONT_KEY;
+                    return StencilFont ?? (allowNull ? null : MainController.DEFAULT_FONT_KEY);
                 case FontClass.HighwayShields:
-                    return HighwayShieldsFont ?? MainController.DEFAULT_FONT_KEY;
+                    return HighwayShieldsFont ?? (allowNull ? null : MainController.DEFAULT_FONT_KEY);
             }
             return null;
+        }
+
+        internal void SetTargetFont(FontClass fontClass, string newVal)
+        {
+            switch (fontClass)
+            {
+                case FontClass.PublicTransport:
+                    m_publicTransportLineSymbolFont = newVal;
+                    break;
+                case FontClass.ElectronicBoards:
+                    ElectronicFont = newVal;
+                    break;
+                case FontClass.Stencil:
+                    StencilFont = newVal;
+                    break;
+                case FontClass.HighwayShields:
+                    HighwayShieldsFont = newVal;
+                    break;
+            }
         }
         internal string GetTargetFont(TextRenderingClass renderingClass)
         {
@@ -94,6 +113,22 @@ namespace WriteEverywhere.Data
                     return WTSVehicleData.Instance.DefaultFont;
             }
             return null;
+        }
+        internal void SetTargetFont(TextRenderingClass renderingClass, string newVal)
+        {
+            switch (renderingClass)
+            {
+                //    case TextRenderingClass.RoadNodes:
+                //        return WTSRoadNodesData.Instance.DefaultFont;
+                //    case TextRenderingClass.Buildings:
+                //        return WTSBuildingsData.Instance.DefaultFont;
+                case TextRenderingClass.PlaceOnNet:
+                    WTSOnNetData.Instance.DefaultFont = newVal;
+                    return;
+                case TextRenderingClass.Vehicle:
+                    WTSVehicleData.Instance.DefaultFont = newVal;
+                    return;
+            }
         }
     }
 }

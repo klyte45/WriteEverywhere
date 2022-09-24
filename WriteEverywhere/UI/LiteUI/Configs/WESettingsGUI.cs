@@ -20,7 +20,8 @@ namespace WriteEverywhere.UI
                         new WESettingsUITab(),
                         new WESettingsFoldersGeneralTab(),
                         new WESettingsQualityTab(instance),
-                        new WESettingsClockTab(instance)
+                        new WESettingsClockTab(instance),
+                        new WESettingsDefaultFontsTab()
                     };
                     instance.m_tabsContainer = new GUIVerticalTabsContainer(tabs);
                 }

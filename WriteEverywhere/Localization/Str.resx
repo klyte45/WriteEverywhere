@@ -963,4 +963,13 @@ Try force spawning anywhere, like setting the model to a transport line.</value>
   <data name="we_vehicleEditor_waitingGrabVehicle" xml:space="preserve">
     <value>Waiting seach for the vehicle...</value>
   </data>
+  <data name="we_settings_defaultFontDescription" xml:space="preserve">
+    <value>The default fonts will be used when none is selected in a layout, when relative to Building, Vehicle or Placing on network modes; or can be selected as font class for the other fields below.</value>
+  </data>
+  <data name="we_settings_defaultFonts" xml:space="preserve">
+    <value>Default fonts</value>
+  </data>
+  <data name="we_settings_defaultFontsAvailableOnlyWhenCityLoaded" xml:space="preserve">
+    <value>Default fonts settings are available only when a city is loaded</value>
+  </data>
 </root>

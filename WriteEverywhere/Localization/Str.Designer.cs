@@ -633,6 +633,33 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a The default fonts will be used when none is selected in a layout, when relative to Building, Vehicle or Placing on network modes; or can be selected as font class for the other fields below..
+        /// </summary>
+        internal static string we_settings_defaultFontDescription {
+            get {
+                return ResourceManager.GetString("we_settings_defaultFontDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Default fonts.
+        /// </summary>
+        internal static string we_settings_defaultFonts {
+            get {
+                return ResourceManager.GetString("we_settings_defaultFonts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Default fonts settings are available only when a city is loaded.
+        /// </summary>
+        internal static string we_settings_defaultFontsAvailableOnlyWhenCityLoaded {
+            get {
+                return ResourceManager.GetString("we_settings_defaultFontsAvailableOnlyWhenCityLoaded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Custom file folders.
         /// </summary>
         internal static string we_settings_folders {
