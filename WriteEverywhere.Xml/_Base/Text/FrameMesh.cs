@@ -15,12 +15,6 @@ namespace WriteEverywhere.Xml
         [XmlAttribute("outsideColor")]
         public string OutsideColorStr { get => m_cachedOutsideColor == null ? null : ColorExtensions.ToRGB(OutsideColor); set => OutsideColor = ColorExtensions.FromRGBSafe(value) ?? Color.gray; }
 
-        [XmlIgnore]
-        public Color InsideColor { get => m_cachedInsideColor; set => m_cachedInsideColor = value; }
-        [XmlIgnore]
-        public Color m_cachedInsideColor = Color.black;
-        [XmlAttribute("insideColor")]
-        public string InsideColorStr { get => m_cachedInsideColor == null ? null : ColorExtensions.ToRGB(InsideColor); set => InsideColor = ColorExtensions.FromRGBSafe(value) ?? Color.black; }
 
         [XmlIgnore]
         public Color GlassColor
@@ -93,9 +87,7 @@ namespace WriteEverywhere.Xml
             }
         }
 
-        public void ClearCacheArray() => cachedFrameArray = null;
-        [XmlIgnore]
-        public Vector3[] cachedFrameArray;
+        public void ClearCacheArray() => meshOuterContainer = null;
         [XmlIgnore]
         public Mesh meshOuterContainer;
         [XmlIgnore]

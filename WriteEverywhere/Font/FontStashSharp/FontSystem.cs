@@ -124,10 +124,12 @@ namespace FontStashSharp
             metricsCalculated = false;
         }
 
-        private void CalculateMetrics()
+        private IEnumerator CalculateMetrics()
         {
+            yield return 0;
             var bounds = new Bounds();
             TextBounds(0, 0, "A", 1, ref bounds);
+            yield return 0;
             ReferenceHeight = (bounds.maxY - bounds.minY) / qualityMultiplier;
             BaselineOffset = bounds.minY / ReferenceHeight;
             metricsCalculated = true;
@@ -377,9 +379,21 @@ namespace FontStashSharp
                 bri.m_materialGeneratedTick = LastUpdateAtlas;
                 bri.m_fontBaseLimits = new RangeVector { min = prevGlyph.Font.Descent, max = prevGlyph.Font.Ascent };
                 bri.m_refText = str;
-                if (!metricsCalculated)
+                while (lockCalculations)
                 {
-                    CalculateMetrics();
+                    yield return null;
+                }
+                try
+                {
+                    lockCalculations = true;
+                    if (!metricsCalculated)
+                    {
+                        yield return CalculateMetrics();
+                    }
+                }
+                finally
+                {
+                    lockCalculations = false;
                 }
                 bri.m_refY = ReferenceHeight;
                 bri.m_baselineOffset = BaselineOffset;
@@ -396,7 +410,7 @@ namespace FontStashSharp
 
 
             bri.m_mesh.RecalculateNormals();
-            WTSUtils.SolveTangents(bri.m_mesh, false);
+            WTSUtils.SolveTangents(bri.m_mesh);
             _currentAtlas.UpdateMaterial();
 
             bri.m_generatedMaterial = _currentAtlas.Material;
@@ -412,6 +426,8 @@ namespace FontStashSharp
             }
             yield break;
         }
+
+        private bool lockCalculations;
 
         private Vector3[] AlignVertices(PoolList<Vector3> points, UIHorizontalAlignment alignment)
         {

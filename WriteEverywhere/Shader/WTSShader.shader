@@ -5,7 +5,7 @@ Shader "Custom/WriteEverything/Default" {
         _Color("Main Color", Color) = (1,1,1,1)
         _BackfaceColor("Backface Color", Color) = (0.01,0.01,0.01,1)
         _MainTex("Diffuse (RGBA)", 2D) = "transparent" {}
-        _SurfProperties("Spec, Gloss, Illum, Em.Str", Vector) = (0,0,0,0)
+        _SurfProperties("Norm, Gloss, Illum, Em.Str", Vector) = (0,0,0,0)
         _Cutout("Alpha cutoff", Range(0,1)) = 0.5
         _Border("Border Offsets LRTB", Vector) = (0,0,0,0)
         _PixelsPerMeters("Pixels per meters", float) = 100

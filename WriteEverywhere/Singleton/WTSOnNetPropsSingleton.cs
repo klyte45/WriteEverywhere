@@ -190,10 +190,8 @@ namespace WriteEverywhere.Singleton
                     {
                         if (cameraInfo.CheckRenderDistance(position, WETextRenderer.RENDER_DISTANCE_FACTOR * targetDescriptor.TextDescriptors[j].TextLineHeight * (targetDescriptor.TextDescriptors[j].IlluminationConfig.IlluminationType == MaterialType.OPAQUE ? 1 : 3)))
                         {
-                            MaterialPropertyBlock properties = PropManager.instance.m_materialBlock;
-                            properties.Clear();
                             bool currentTextSelected = !hasFixedCamera && WTSOnNetLiteUI.LockSelection && WTSOnNetLiteUI.Instance.IsOnTextEditor && i == WTSOnNetLiteUI.LockSelectionInstanceNum && j == WTSOnNetLiteUI.LockSelectionTextIdx && WTSOnNetLiteUI.Instance.Visible && (WTSOnNetLiteUI.Instance.CurrentSegmentId == segmentId) && WTSOnNetLiteUI.Instance.ListSel == boardIdx && !ModInstance.Controller.RoadSegmentToolInstance.enabled;
-                            var textPos = WETextRenderer.RenderTextMesh(segmentId, boardIdx, i, ref parentColor, targetDescriptor, targetDescriptor.TextDescriptors[j], ref propMatrix, cachedProp, 0, 0, currentTextSelected && WTSOnNetLiteUI.Instance.IsOnTextEditorSizeView, ref NetManager.instance.m_drawCallData.m_batchedCalls);
+                            var textPos = WETextRenderer.RenderTextMesh(null, segmentId, boardIdx, i, ref parentColor, targetDescriptor, targetDescriptor.TextDescriptors[j], ref propMatrix, cachedProp, 0, 0, currentTextSelected && WTSOnNetLiteUI.Instance.IsOnTextEditorSizeView, ref NetManager.instance.m_drawCallData.m_batchedCalls);
                             if (currentTextSelected && textPos != default)
                             {
                                 ToolsModifierControl.cameraController.m_targetPosition.x = textPos.x;

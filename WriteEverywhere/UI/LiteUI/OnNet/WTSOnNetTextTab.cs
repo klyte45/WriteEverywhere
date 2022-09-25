@@ -3,14 +3,13 @@ using Kwytto.UI;
 using Kwytto.Utils;
 using System;
 using UnityEngine;
-using WriteEverywhere.Rendering;
 using WriteEverywhere.Xml;
 
 namespace WriteEverywhere.UI
 {
     internal class WTSOnNetTextTab : GeneralWritingGUI, IGUITab<OnNetInstanceCacheContainerXml>
     {
-        public WTSOnNetTextTab(GUIColorPicker colorPicker, Func<PrefabInfo> infoGetter, RefGetter<BoardTextDescriptorGeneralXml[]> getDescriptorArray, RefGetter<string> getFont) : base(colorPicker, TextRenderingClass.PlaceOnNet, infoGetter, getDescriptorArray, getFont)
+        public WTSOnNetTextTab(GUIColorPicker colorPicker, Func<PrefabInfo> infoGetter, RefGetter<TextToWriteOnXml[]> getDescriptorArray, RefGetter<string> getFont) : base(colorPicker, TextRenderingClass.PlaceOnNet, infoGetter, getDescriptorArray, getFont)
         {
         }
 
@@ -20,7 +19,7 @@ namespace WriteEverywhere.UI
 
         public bool DrawArea(Vector2 tabAreaSize, ref OnNetInstanceCacheContainerXml currentItem, int currentItemIdx, bool isEditable)
         {
-            DoDraw(new Rect(default, tabAreaSize));
+            DoDraw(new Rect(default, tabAreaSize), true);
             return true;
         }
 

@@ -70,6 +70,15 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Current Building: {0} (ID: {1}).
+        /// </summary>
+        internal static string we_buildingEditor_currentBuildingBeingEdited {
+            get {
+                return ResourceManager.GetString("we_buildingEditor_currentBuildingBeingEdited", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Props texts.
         /// </summary>
         internal static string we_buildingEditor_layoutEditorTabText {
@@ -102,6 +111,15 @@ namespace WriteEverywhere.Localization {
         internal static string we_buildingEditor_paramEditorTabText {
             get {
                 return ResourceManager.GetString("we_buildingEditor_paramEditorTabText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Pick a building to edit its parameters..
+        /// </summary>
+        internal static string we_buildingEditor_pickABuildingToEditParameters {
+            get {
+                return ResourceManager.GetString("we_buildingEditor_pickABuildingToEditParameters", resourceCulture);
             }
         }
         

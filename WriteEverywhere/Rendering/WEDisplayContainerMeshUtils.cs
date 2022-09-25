@@ -1,8 +1,10 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
+using WriteEverywhere.Utils;
 
 namespace WriteEverywhere.Rendering
 {
-    internal static class WTSDisplayContainerMeshUtils
+    internal static class WEDisplayContainerMeshUtils
     {
         public const float FRONT_HEIGHT_BASE = 1f;
         public const float BACK_HEIGHT_BASE = 1f;
@@ -12,7 +14,9 @@ namespace WriteEverywhere.Rendering
         public const float FRONT_BORDER_BASE = 0.05f;
 
         private const float offsetX = 0f;
-        public static void GenerateDisplayContainer(Vector2 frontWH, Vector2 backWH, Vector2 backCenterOffset, float frontDepth, float backDepth, float frontBorderThickness, out Vector3[] points)
+        private static float constMultiplierVertex => MainController.__constMultiplierVertex;
+
+        public static void GenerateDisplayContainer(Vector2 frontWH, Vector2 backWH, Vector2 backCenterOffset, float frontDepth, float backDepth, float frontBorderThickness, out Mesh mesh, out Vector3[] glassVerts)
         {
             /**
              * 
@@ -20,7 +24,7 @@ namespace WriteEverywhere.Rendering
              *    |  I0________________________________________I1  |
              *    |    |                                      |    |
              *    |    |                                      |    |
-             *    |    |                                      |    |
+             *    |    |  -x                             +x   |    |
              *    |    |                                      |    |
              *    |    |                                      |    |
              *    |  I2|______________________________________|I3  |
@@ -118,59 +122,34 @@ namespace WriteEverywhere.Rendering
             var A2 = new Vector3(-frontWH.x * .5f - offsetX, frontWH.y * -.5f, 0);//A2
             var A3 = new Vector3(frontWH.x * .5f + offsetX, frontWH.y * -.5f, 0); //A3
 
-            points = new Vector3[]
-            {
+
+            mesh = WEAssetLibrary.instance.frameMesh.Copy();
+            mesh.vertices = mesh.vertices.Select(
+                v => v.y > 0.9f
+                        ? v.z > 0.9f
+                            ? v.x < 0 ? P0 : P1
+                        : v.z < -.9f
+                            ? v.x < 0 ? Q0 : Q1
+                            : v.x < 0 ? A0 : A1
+                    : v.y < -.9f
+                        ? v.z > 0.9f
+                            ? v.x < 0 ? P2 : P3
+                        : v.z < -.9f
+                            ? v.x < 0 ? Q2 : Q3
+                        : v.x < 0 ? A2 : A3
+                    : v.y > 0
+                        ? v.x < 0 ? I0 : I1
+                    : v.y < 0
+                        ? v.x < 0 ? I2 : I3
+                    : Vector3.zero).ToArray();
+            mesh.triangles = mesh.triangles.Concat(mesh.triangles.Reverse()).ToArray();
+            glassVerts = new Vector3[]
+             {
                I0 ,
                I1 ,
                I2 ,
                I3 ,
-               P0 ,
-               P1 ,
-               P2 ,
-               P3 ,
-
-               Q0 ,
-               Q1 ,
-               Q2 ,
-               Q3 ,
-
-               A0 ,
-               A1 ,
-               A2 ,
-               A3 ,
-               P0 ,
-               P1 ,
-               P2 ,
-               P3 ,
-               Q0 ,
-               Q1 ,
-               Q2 ,
-               Q3 ,
-
-               A0 ,
-               A1 ,
-               A2 ,
-               A3 ,
-               P0 ,
-               P1 ,
-               P2 ,
-               P3 ,
-               Q0 ,
-               Q1 ,
-               Q2 ,
-               Q3,
-
-
-               A0 ,
-               A1 ,
-               A2 ,
-               A3 ,
-               A0 ,
-               A1 ,
-               A2 ,
-               A3 ,
-            };
-
+             };
         }
 
         public static int[] m_triangles = new int[]

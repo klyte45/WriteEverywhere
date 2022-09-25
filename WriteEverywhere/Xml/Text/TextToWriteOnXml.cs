@@ -3,7 +3,7 @@ using System.Xml.Serialization;
 
 namespace WriteEverywhere.Xml
 {
-    public class BoardTextDescriptorGeneralXml : BaseTextToWriteOnXml
+    public class TextToWriteOnXml : BaseTextToWriteOnXml
     {
         [XmlIgnore]
         public TextParameterSequence ParameterSequence { get; set; }

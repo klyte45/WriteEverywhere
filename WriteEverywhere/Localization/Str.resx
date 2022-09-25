@@ -999,4 +999,10 @@ Try force spawning anywhere, like setting the model to a transport line.</value>
   <data name="we_buildingEditor_layoutEditorTabText" xml:space="preserve">
     <value>Props texts</value>
   </data>
+  <data name="we_buildingEditor_currentBuildingBeingEdited" xml:space="preserve">
+    <value>Current Building: {0} (ID: {1})</value>
+  </data>
+  <data name="we_buildingEditor_pickABuildingToEditParameters" xml:space="preserve">
+    <value>Pick a building to edit its parameters.</value>
+  </data>
 </root>

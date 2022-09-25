@@ -1,10 +1,13 @@
 ﻿extern alias TLM;
+
+using ColossalFramework;
 using ColossalFramework.Math;
 using ColossalFramework.UI;
 using Kwytto.LiteUI;
 using Kwytto.Utils;
 using SpriteFontPlus;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,10 +15,13 @@ using System.Xml.Serialization;
 using TLM::Bridge_WE2TLM;
 using UnityEngine;
 using WriteEverywhere.Data;
+using WriteEverywhere.Overrides;
 using WriteEverywhere.Rendering;
+using WriteEverywhere.UI;
 using WriteEverywhere.Utils;
 using WriteEverywhere.Xml;
 using static Kwytto.Utils.StopSearchUtils;
+
 namespace WriteEverywhere.Singleton
 {
     public class WTSBuildingPropsSingleton : MonoBehaviour
@@ -43,16 +49,17 @@ namespace WriteEverywhere.Singleton
 
         public void Start()
         {
-            //TransportManagerOverrides.EventOnLineUpdated += OnLineUpdated;
-            //NetManagerOverrides.EventNodeChanged += OnNodeChanged;
-            //TransportManager.instance.eventLineColorChanged += OnLineUpdated;
-            //TransportManagerOverrides.EventOnLineBuildingUpdated += OnBuildingLineChanged;
+            TransportManagerOverrides.EventOnLineUpdated += OnLineUpdated;
+            NetManagerOverrides.EventNodeChanged += OnNodeChanged;
+            TransportManager.instance.eventLineColorChanged += OnLineUpdated;
+            TransportManagerOverrides.EventOnLineBuildingUpdated += OnBuildingLineChanged;
         }
 
         private void OnLineUpdated(ushort obj) => m_lastUpdateLines = SimulationManager.instance.m_currentTickIndex;
 
-        private void OnNodeChanged(ushort id)
+        private IEnumerator OnNodeChanged(ushort id)
         {
+            yield return null;
             ushort buildingId = NetNode.FindOwnerBuilding(id, 56f);
             if (buildingId > 0 && Data.BuildingCachedPositionsData.ContainsKey(buildingId))
             {
@@ -109,7 +116,6 @@ namespace WriteEverywhere.Singleton
         }
         public bool PopulateGroupData(ushort buildingID, int layer, ref int vertexIndex, ref int triangleIndex, Vector3 groupPosition, RenderGroup.MeshData data, ref Vector3 min, ref Vector3 max, ref float maxRenderDistance, ref float maxInstanceDistance)
         {
-            //  LogUtils.DoLog("Building: PopulateGroupData {0}", buildingID);
             if (!Data.BuildingCachedPositionsData.ContainsKey(buildingID))
             {
                 return false;
@@ -154,18 +160,18 @@ namespace WriteEverywhere.Singleton
 
 
             string refName = GetReferenceModelName(ref data);
-            //if ((WTSBuildingLayoutEditor.Instance?.MainContainer?.isVisible ?? false) && (WTSBuildingLayoutEditor.Instance?.IsEditing(refName) ?? false))
-            //{
-            //    if (!m_buildingStopsDescriptor.ContainsKey(refName))
-            //    {
-            //        m_buildingStopsDescriptor[refName] = MapStopPoints(data.Info, WTSBuildingLayoutEditor.Instance.GetCurrentMappingThresold());
-            //    }
-            //    for (int i = 0; i < m_buildingStopsDescriptor[refName].Length; i++)
-            //    {
-            //        m_onOverlayRenderQueue.Add(Tuple.New(renderInstance.m_dataMatrix1.MultiplyPoint(m_buildingStopsDescriptor[refName][i].platformLine.Position(0.5f)),
-            //               m_buildingStopsDescriptor[refName][i].width / 2, m_colorOrder[i % m_colorOrder.Length]));
-            //    }
-            //}
+            if (BuildingLiteUI.Instance.Visible && BuildingLiteUI.Instance.CurrentEditingInfo?.name == refName)
+            {
+                if (!m_buildingStopsDescriptor.ContainsKey(refName))
+                {
+                    m_buildingStopsDescriptor[refName] = MapStopPoints(data.Info, 1f); //TODO: Thresold salvo em algum lugar
+                }
+                for (int i = 0; i < m_buildingStopsDescriptor[refName].Length; i++)
+                {
+                    m_onOverlayRenderQueue.Add(Tuple.New(renderInstance.m_dataMatrix1.MultiplyPoint(m_buildingStopsDescriptor[refName][i].platformLine.Position(0.5f)),
+                           m_buildingStopsDescriptor[refName][i].width / 2, m_colorOrder[i % m_colorOrder.Length]));
+                }
+            }
             GetTargetDescriptor(refName, out _, out WriteOnBuildingXml targetDescriptor);
             if (subBuildingIdx == 0)
             {
@@ -179,13 +185,28 @@ namespace WriteEverywhere.Singleton
 
             for (int i = 0; i < targetDescriptor.PropInstances.Length; i++)
             {
-                if (targetDescriptor.PropInstances[i].SubBuildingPivotReference == subBuildingIdx - 1)
+                if (targetDescriptor.PropInstances[i].SubBuildingPivotReference == subBuildingIdx)
                 {
                     RenderDescriptor(cameraInfo, parentBuildingId, ref data, layerMask, ref renderInstance, ref targetDescriptor, i);
                 }
             }
         }
+        public static void AfterEndOverlayImpl(RenderManager.CameraInfo cameraInfo)
+        {
 
+            if (BuildingLiteUI.Instance.Visible)
+            {
+                foreach (Tuple<Vector3, float, Color> tuple in ModInstance.Controller.BuildingPropsSingleton.m_onOverlayRenderQueue)
+                {
+                    Singleton<RenderManager>.instance.OverlayEffect.DrawCircle(cameraInfo,
+                       tuple.Third,
+                       tuple.First,
+                       tuple.Second * 2,
+                       -1, 1280f, false, true);
+                }
+                ModInstance.Controller.BuildingPropsSingleton.m_onOverlayRenderQueue.Clear();
+            }
+        }
         internal static void GetTargetDescriptor(string building, out ConfigurationSource source, out WriteOnBuildingXml target)
         {
             if (building == null)
@@ -219,23 +240,6 @@ namespace WriteEverywhere.Singleton
             source = ConfigurationSource.NONE;
             target = null;
 
-        }
-
-        public static void AfterEndOverlayImpl(RenderManager.CameraInfo cameraInfo)
-        {
-
-            //if (WTSBuildingLayoutEditor.Instance?.MainContainer?.isVisible ?? false)
-            //{
-            //    foreach (Tuple<Vector3, float, Color> tuple in ModInstance.Controller.BuildingPropsSingleton.m_onOverlayRenderQueue)
-            //    {
-            //        Singleton<RenderManager>.instance.OverlayEffect.DrawCircle(cameraInfo,
-            //           tuple.Third,
-            //           tuple.First,
-            //           tuple.Second * 2,
-            //           -1, 1280f, false, true);
-            //    }
-            //    ModInstance.Controller.BuildingPropsSingleton.m_onOverlayRenderQueue.Clear();
-            //}
         }
 
         private readonly List<Tuple<Vector3, float, Color>> m_onOverlayRenderQueue = new List<Tuple<Vector3, float, Color>>();
@@ -279,7 +283,7 @@ namespace WriteEverywhere.Singleton
                 Data.BuildingCachedPositionsData[buildingID] = new PropLayoutCachedBuildingData[parentDescriptor.PropInstances.Length];
             }
             ref PropLayoutCachedBuildingData item = ref Data.BuildingCachedPositionsData[buildingID][idx];
-            if (item.m_buildingPositionWhenGenerated != data.m_position)
+            if (item.m_buildingPositionWhenGenerated != data.m_position || (BuildingLiteUI.Instance.Visible == BuildingLiteUI.Instance.CurrentInfo == data.Info))
             {
                 item.m_buildingPositionWhenGenerated = data.m_position;
                 if (targetDescriptor.SubBuildingPivotReference >= 0 && targetDescriptor.SubBuildingPivotReference < data.Info.m_subBuildings.Length)
@@ -318,15 +322,13 @@ namespace WriteEverywhere.Singleton
                 {
                     targetPostion = item.m_cachedMatrix.MultiplyPoint(targetDescriptor.PropPosition + (i * (Vector3)targetDescriptor.ArrayRepeat));
                 }
-                RenderSign(ref data, cameraInfo, buildingID, idx, targetPostion, item.m_cachedRotation, layerMask, ref targetDescriptor, targetProp);
-                //if (i == 0 && (WTSBuildingLayoutEditor.Instance?.MainContainer?.isVisible ?? false) && WTSBuildingLayoutEditor.Instance.LockSelection && (WTSBuildingLayoutEditor.Instance?.CurrentBuildingId == buildingID) && WTSBuildingLayoutEditor.Instance.LayoutList.SelectedIndex == idx)
-                //{
-                //    ToolsModifierControl.cameraController.m_targetPosition = targetPostion;
-                //}
+                RenderSign(parentDescriptor, ref data, cameraInfo, buildingID, idx, targetPostion, item.m_cachedRotation, layerMask, targetDescriptor, targetProp);
+
             }
         }
-
-        private void RenderSign(ref Building data, RenderManager.CameraInfo cameraInfo, ushort buildingId, int boardIdx, Vector3 position, Vector3 rotation, int layerMask, ref WriteOnBuildingPropXml targetDescriptor, PropInfo cachedProp)
+        private static float targetHeight;
+        private uint lastFrameOverriden;
+        private void RenderSign(WriteOnBuildingXml parentDescriptor, ref Building data, RenderManager.CameraInfo cameraInfo, ushort buildingId, int boardIdx, Vector3 position, Vector3 rotation, int layerMask, WriteOnBuildingPropXml targetDescriptor, PropInfo cachedProp)
         {
             var propname = targetDescriptor.m_simplePropName;
             if (propname is null)
@@ -335,14 +337,47 @@ namespace WriteEverywhere.Singleton
             }
             Color parentColor = WEDynamicTextRenderingRules.RenderPropMesh(cachedProp, cameraInfo, buildingId, boardIdx, 0, layerMask, data.m_angle, position, Vector4.zero, rotation, targetDescriptor.PropScale, targetDescriptor, out Matrix4x4 propMatrix, out bool rendered, new InstanceID { Building = buildingId });
 
+            var hasFixedCamera = false;
             if (rendered)
             {
                 for (int j = 0; j < targetDescriptor.TextDescriptors.Length; j++)
                 {
                     if (cameraInfo.CheckRenderDistance(position, WETextRenderer.RENDER_DISTANCE_FACTOR * targetDescriptor.TextDescriptors[j].TextLineHeight * targetDescriptor.PropScale.magnitude * (targetDescriptor.TextDescriptors[j].IlluminationConfig.IlluminationType == MaterialType.OPAQUE ? 1 : 2)))
                     {
-                        WETextRenderer.RenderTextMesh(buildingId, boardIdx, 0, ref parentColor, targetDescriptor, targetDescriptor.TextDescriptors[j], ref propMatrix, data.Info, (int)data.m_flags, (int)data.m_flags2, data.Info, ref BuildingManager.instance.m_drawCallData.m_batchedCalls);
+                        bool currentTextSelected = !hasFixedCamera
+                            && BuildingLiteUI.Instance.Visible
+                            && BuildingLiteUI.LockSelection
+                            && BuildingLiteUI.Instance.IsOnTextEditor
+                            && BuildingLiteUI.Instance.CurrentGrabbedId == buildingId
+                            /* && i == WTSOnNetLiteUI.LockSelectionInstanceNum*/
+                            && BuildingLiteUI.Instance.CurrentTextSel == j
+                            && BuildingLiteUI.Instance.CurrentPropSel == boardIdx
+                            && !ModInstance.Controller.BuildingToolInstance.enabled;
+                        var textPos = WETextRenderer.RenderTextMesh(parentDescriptor, buildingId, boardIdx, 0, ref parentColor, targetDescriptor, targetDescriptor.TextDescriptors[j], ref propMatrix, data.Info, (int)data.m_flags, (int)data.m_flags2, currentTextSelected && BuildingLiteUI.Instance.IsOnTextDimensionsView, ref BuildingManager.instance.m_drawCallData.m_batchedCalls);
+
+                        if (currentTextSelected && textPos != default)
+                        {
+                            ToolsModifierControl.cameraController.m_targetPosition.x = textPos.x;
+                            ToolsModifierControl.cameraController.m_targetPosition.z = textPos.z;
+                            targetHeight = textPos.y;
+                            lastFrameOverriden = SimulationManager.instance.m_currentTickIndex;
+                            hasFixedCamera = true;
+                        }
                     }
+                }
+
+                if (BuildingLiteUI.LockSelection &&
+                    (!BuildingLiteUI.Instance.IsOnTextEditor || !hasFixedCamera)
+                     /*&&( i == BuildingLiteUI.LockSelectionInstanceNum || BuildingLiteUI.LockSelectionTextIdx < 0)*/
+                     && BuildingLiteUI.Instance.Visible
+                    && (BuildingLiteUI.Instance.CurrentGrabbedId == buildingId)
+                    && BuildingLiteUI.Instance.CurrentPropSel == boardIdx
+                    && !ModInstance.Controller.BuildingToolInstance.enabled)
+                {
+                    ToolsModifierControl.cameraController.m_targetPosition.x = position.x;
+                    ToolsModifierControl.cameraController.m_targetPosition.z = position.z;
+                    targetHeight = position.y + (cachedProp.m_mesh.bounds.center.y * targetDescriptor.PropScale.y);
+                    lastFrameOverriden = SimulationManager.instance.m_currentTickIndex;
                 }
             }
         }
@@ -744,7 +779,18 @@ namespace WriteEverywhere.Singleton
             WTSBuildingData.Instance.CleanCache();
         }
 
+        public static void AfterUpdateTransformOverride(CameraController __instance)
+        {
+            if (LoadingManager.instance.m_loadingComplete && SimulationManager.instance.m_currentTickIndex - ModInstance.Controller.BuildingPropsSingleton.lastFrameOverriden > 24)
+            {
+                return;
+            }
+            __instance.m_minDistance = 1;
 
+            Vector3 vector = __instance.transform.position;
+            vector.y = targetHeight + (Mathf.Sin(__instance.m_currentAngle.y * Mathf.Deg2Rad) * __instance.m_targetSize);
+            __instance.transform.position = vector;
+        }
     }
 
 

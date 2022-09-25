@@ -10,7 +10,7 @@ using WriteEverywhere.Xml;
 
 namespace WriteEverywhere.UI
 {
-    internal class GeneralWritingEditorContentTab : WTSBaseParamsTab<BoardTextDescriptorGeneralXml>
+    internal class GeneralWritingEditorContentTab : WTSBaseParamsTab<TextToWriteOnXml>
     {
         public override Texture TabIcon { get; } = KResourceLoader.LoadTextureKwytto(CommonsSpriteNames.K45_DiskDrive);
 
@@ -28,7 +28,7 @@ namespace WriteEverywhere.UI
             this.m_targetRenderingClass = targetRenderingClass;
         }
         private Vector2 scrollParamsPos;
-        protected override void DrawListing(Vector2 tabAreaSize, BoardTextDescriptorGeneralXml currentItem, bool isEditable)
+        protected override void DrawListing(Vector2 tabAreaSize, TextToWriteOnXml currentItem, bool isEditable)
         {
             GUILayout.Label($"<i>{Str.WTS_TEXT_CONTENTVALUE_TAB}</i>");
             var item = currentItem;
@@ -126,7 +126,7 @@ namespace WriteEverywhere.UI
         private void MoveDown(TextParameterSequence paramSeq, int line) => paramSeq.MoveDown(line);
         private void RemoveAt(TextParameterSequence paramSeq, int line) => paramSeq.RemoveAt(line);
         private void AddItem(TextParameterSequence paramSeq) => paramSeq.Add(new TextParameterWrapper(), 250);
-        private void OnGoToPicker(BoardTextDescriptorGeneralXml currentItem, int key)
+        private void OnGoToPicker(TextToWriteOnXml currentItem, int key)
         {
             TextParameterWrapper value;
             if (key == -1)
@@ -144,8 +144,8 @@ namespace WriteEverywhere.UI
             GoToPicker(key, currentItem.textContent, value, currentItem);
         }
 
-        protected override string GetAssetName(BoardTextDescriptorGeneralXml item) => infoGetter()?.name;
-        protected override void SetTextParameter(BoardTextDescriptorGeneralXml item, int currentEditingParam, string paramValue)
+        protected override string GetAssetName(TextToWriteOnXml item) => infoGetter()?.name;
+        protected override void SetTextParameter(TextToWriteOnXml item, int currentEditingParam, string paramValue)
         {
             if (currentEditingParam == -1)
             {

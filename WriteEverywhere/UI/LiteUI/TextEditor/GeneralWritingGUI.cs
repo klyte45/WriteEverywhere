@@ -30,11 +30,11 @@ namespace WriteEverywhere.UI
 
         private readonly GUIColorPicker m_colorPicker;
         private readonly Func<PrefabInfo> getInfo;
-        private readonly GUIBasicListingTabsContainer<BoardTextDescriptorGeneralXml> m_tabsContainer;
+        private readonly GUIBasicListingTabsContainer<TextToWriteOnXml> m_tabsContainer;
 
 
         private string[] m_cachedItemList;
-        private readonly GUIXmlLib<WTSLibTextList, ILibableAsContainer<BoardTextDescriptorGeneralXml>> m_textGroupLib = new GUIXmlLib<WTSLibTextList, ILibableAsContainer<BoardTextDescriptorGeneralXml>>()
+        private readonly GUIXmlLib<WTSLibTextList, ILibableAsContainer<TextToWriteOnXml>> m_textGroupLib = new GUIXmlLib<WTSLibTextList, ILibableAsContainer<TextToWriteOnXml>>()
         {
             NameAskingI18n = Str.WTS_EXPORTDATA_NAMEASKING,
             NameAskingOverwriteI18n = Str.WTS_EXPORTDATA_NAMEASKING_OVERWRITE,
@@ -53,14 +53,14 @@ namespace WriteEverywhere.UI
             m_textGroupLib.ResetStatus();
         }
 
-        private readonly RefGetter<BoardTextDescriptorGeneralXml[]> GetDescriptorArray;
+        private readonly RefGetter<TextToWriteOnXml[]> GetDescriptorArray;
         private readonly RefGetter<string> GetFont;
         public int SelectedTextItem => m_tabsContainer.ListSel;
         public bool IsOnTextDimensionsView => m_tabsContainer.CurrentTabIdx == m_sizeEditorTabIdx;
         private readonly int m_sizeEditorTabIdx;
         public readonly TextRenderingClass m_targetRenderingClass;
 
-        public GeneralWritingGUI(GUIColorPicker colorPicker, TextRenderingClass targetRenderingClass, Func<PrefabInfo> infoGetter, RefGetter<BoardTextDescriptorGeneralXml[]> getDescriptorArray, RefGetter<string> getFont)
+        public GeneralWritingGUI(GUIColorPicker colorPicker, TextRenderingClass targetRenderingClass, Func<PrefabInfo> infoGetter, RefGetter<TextToWriteOnXml[]> getDescriptorArray, RefGetter<string> getFont)
         {
             var viewAtlas = UIView.GetAView().defaultAtlas;
 
@@ -70,7 +70,7 @@ namespace WriteEverywhere.UI
             m_fontFilter = new GUIFilterItemsScreen<State>(Str.WTS_OVERRIDE_FONT, ModInstance.Controller, OnFilterParam, OnSelectFont, GoTo, State.Normal, State.GeneralFontPicker, acceptsNull: true);
             var uicomp = WTSOnNetLiteUI.Instance.GetComponent<UIComponent>();
             GeneralWritingEditorPositionsSizesTab positionTab;
-            var tabs = new IGUITab<BoardTextDescriptorGeneralXml>[]{
+            var tabs = new IGUITab<TextToWriteOnXml>[]{
                     new GeneralWritingEditorGeneralTab(()=>getDescriptorArray()),
                      positionTab = new GeneralWritingEditorPositionsSizesTab(colorPicker.GetComponentInParent<GUIRootWindowBase>()),
                     new GeneralWritingEditorForegroundTab(m_colorPicker),
@@ -78,7 +78,7 @@ namespace WriteEverywhere.UI
                     new GeneralWritingEditorIlluminationTab(m_colorPicker),
                     new GeneralWritingEditorContentTab(m_colorPicker,infoGetter,targetRenderingClass)
                     };
-            m_tabsContainer = new GUIBasicListingTabsContainer<BoardTextDescriptorGeneralXml>(
+            m_tabsContainer = new GUIBasicListingTabsContainer<TextToWriteOnXml>(
                tabs,
                 OnAddItem,
                 GetList,
@@ -89,16 +89,16 @@ namespace WriteEverywhere.UI
             GetFont = getFont;
         }
 
-        private BoardTextDescriptorGeneralXml GetCurrentItem(int arg) => GetDescriptorArray()[arg];
+        private TextToWriteOnXml GetCurrentItem(int arg) => GetDescriptorArray()[arg];
         private string[] GetList() => m_cachedItemList;
         public void ReloadList() => m_cachedItemList = GetDescriptorArray().Select(x => x.SaveName).ToArray();
         private void OnAddItem()
         {
-            GetDescriptorArray() = GetDescriptorArray().Concat(new[] { new BoardTextDescriptorGeneralXml() { SaveName = "NEW", } }).ToArray();
+            GetDescriptorArray() = GetDescriptorArray().Concat(new[] { new TextToWriteOnXml() { SaveName = "NEW", } }).ToArray();
             ReloadList();
         }
 
-        private void SetCurrentItem(int arg, BoardTextDescriptorGeneralXml val)
+        private void SetCurrentItem(int arg, TextToWriteOnXml val)
         {
             if (val is null)
             {
@@ -112,7 +112,7 @@ namespace WriteEverywhere.UI
             ReloadList();
         }
 
-        public void DoDraw(Rect area)
+        public void DoDraw(Rect area, bool allowEdit)
         {
             if (getInfo() is null)
             {
@@ -127,7 +127,7 @@ namespace WriteEverywhere.UI
                     {
                         m_textGroupLib.DrawImportView((x, y) =>
                         {
-                            GetDescriptorArray() = x.m_dataArray.Concat(y ? GetDescriptorArray() : new BoardTextDescriptorGeneralXml[0]).ToArray();
+                            GetDescriptorArray() = x.m_dataArray.Concat(y ? GetDescriptorArray() : new TextToWriteOnXml[0]).ToArray();
                             ReloadList();
                         });
                     }
@@ -136,7 +136,7 @@ namespace WriteEverywhere.UI
                     switch (CurrentLocalState)
                     {
                         case State.Normal:
-                            RegularDraw(area.size);
+                            RegularDraw(area.size, allowEdit);
                             break;
                         case State.GeneralFontPicker:
                             m_fontFilter.DrawSelectorView(area.height);
@@ -147,12 +147,12 @@ namespace WriteEverywhere.UI
 
         }
 
-        private void RegularDraw(Vector2 size)
+        private void RegularDraw(Vector2 size, bool allowEdit)
         {
-            m_tabsContainer.DrawListTabs(new Rect(0, 20, size.x, size.y - 20), true, true);
+            m_tabsContainer.DrawListTabs(new Rect(0, 20, size.x, size.y - 20), allowEdit, true);
             using (new GUILayout.AreaScope(new Rect(0, 0, size.x, 20)))
             {
-                m_textGroupLib.Draw(WEUIUtils.RedButton, () => GetDescriptorArray() = new BoardTextDescriptorGeneralXml[0], () => new ILibableAsContainer<BoardTextDescriptorGeneralXml> { Data = new ListWrapper<BoardTextDescriptorGeneralXml>() { listVal = GetDescriptorArray().ToList() } }, m_textGroupLib.FooterDraw);
+                m_textGroupLib.Draw(WEUIUtils.RedButton, () => GetDescriptorArray() = new TextToWriteOnXml[0], () => new ILibableAsContainer<TextToWriteOnXml> { Data = new ListWrapper<TextToWriteOnXml>() { listVal = GetDescriptorArray().ToList() } }, m_textGroupLib.FooterDraw);
             }
         }
 

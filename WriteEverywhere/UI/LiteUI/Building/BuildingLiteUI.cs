@@ -7,6 +7,7 @@ using System.Linq;
 using UnityEngine;
 using WriteEverywhere.Data;
 using WriteEverywhere.Localization;
+using WriteEverywhere.Singleton;
 using WriteEverywhere.Tools;
 using WriteEverywhere.Utils;
 
@@ -17,7 +18,8 @@ namespace WriteEverywhere.UI
         public static BuildingLiteUI Instance { get; private set; }
         public int SubBuildingSel { get; private set; } = 0;
         public ushort CurrentGrabbedId => m_detailUI.CurrentGrabbedId;
-        public int CurrentTextSel => m_detailUI.ListSel;
+        public int CurrentPropSel => m_detailUI.PropSel;
+        public int CurrentTextSel => m_detailUI.TextSel;
         public bool IsOnTextDimensionsView => m_detailUI.IsOnTextDimensionsView;
         public BuildingInfo CurrentEditingInfo => m_detailUI.CurrentEditingInfo;
 
@@ -40,7 +42,11 @@ namespace WriteEverywhere.UI
             m_colorPicker = GameObjectUtils.CreateElement<GUIColorPicker>(transform).Init();
             m_colorPicker.Visible = false;
             m_detailUI = new BuildingInfoDetailLiteUI(m_colorPicker);
-            m_paramsUI = new BuildingParamsTab(() => CurrentGrabbedId, (x) => m_detailUI.CurrentGrabbedId = x, () => m_detailUI.CurrentEditingLayout, () => m_currentInfo);
+            m_paramsUI = new BuildingParamsTab(() => CurrentGrabbedId, (x) => m_detailUI.CurrentGrabbedId = x, () => m_currentInfoList.Select(x =>
+            {
+                WTSBuildingPropsSingleton.GetTargetDescriptor(x.name, out _, out var desc);
+                return desc;
+            }), () => m_currentInfo);
         }
         protected override void OnOpacityChanged(float newVal)
         {
@@ -122,7 +128,8 @@ namespace WriteEverywhere.UI
                     m_currentInfo = value;
                     if (!(value is null))
                     {
-                        m_currentInfoList = new[] { Str.we_buildingEditor_mainBuildingTitle }.Concat(m_currentInfo.m_subBuildings.Select((_, i) => string.Format(Str.we_buildingEditor_subBuildingNumTitle, i + 1))).ToArray();
+                        m_currentInfoListTitles = new[] { Str.we_buildingEditor_mainBuildingTitle }.Concat(m_currentInfo.m_subBuildings.Select((_, i) => string.Format(Str.we_buildingEditor_subBuildingNumTitle, i + 1))).ToArray();
+                        m_currentInfoList = new[] { m_currentInfo }.Concat(m_currentInfo.m_subBuildings.Select((x, i) => x.m_buildingInfo)).GroupBy(x => x).Select(x => x.Key).ToArray();
                         SubBuildingSel = 0;
                     }
                 }
@@ -131,8 +138,11 @@ namespace WriteEverywhere.UI
 
         protected override bool showOverModals { get; } = false;
         protected override bool requireModal { get; } = false;
+        public static bool LockSelection { get; internal set; } = true;
+        public bool IsOnTextEditor => m_detailUI.IsOnTextEditor;
 
-        private string[] m_currentInfoList;
+        private string[] m_currentInfoListTitles;
+        private BuildingInfo[] m_currentInfoList;
         private BuildingInfo m_currentInfo;
         private Vector2 m_horizontalScrollSubBuildings;
         private Vector2 m_horizontalScrollGeneral;
@@ -176,12 +186,15 @@ namespace WriteEverywhere.UI
             {
                 m_editorTypeSel = 0;
             }
-            using (new GUILayout.AreaScope(headerArea1))
+            if (CurrentInfo)
             {
-                using (var scope = new GUILayout.ScrollViewScope(m_horizontalScrollSubBuildings))
+                using (new GUILayout.AreaScope(headerArea1))
                 {
-                    SubBuildingSel = GUILayout.SelectionGrid(SubBuildingSel, m_currentInfoList, m_currentInfoList.Length, GUILayout.MinWidth(40));
-                    m_horizontalScrollSubBuildings = scope.scrollPosition;
+                    using (var scope = new GUILayout.ScrollViewScope(m_horizontalScrollSubBuildings))
+                    {
+                        SubBuildingSel = GUILayout.SelectionGrid(SubBuildingSel, m_currentInfoListTitles, m_currentInfoListTitles.Length, GUILayout.MinWidth(40));
+                        m_horizontalScrollSubBuildings = scope.scrollPosition;
+                    }
                 }
             }
             using (new GUILayout.AreaScope(bodyArea, BgTextureSubgroup, GUI.skin.box))
@@ -208,7 +221,7 @@ namespace WriteEverywhere.UI
         }
         private void DrawParamEditor(Vector2 size)
         {
-            m_paramsUI.DrawArea(size, WTSBuildingData.Instance.Parameters.TryGetValue(CurrentGrabbedId, out var paramData) ? paramData : new BuildingParametersData(), true);
+            m_paramsUI.DrawArea(size, WTSBuildingData.Instance.Parameters.TryGetValue(Building.FindParentBuilding(CurrentGrabbedId), out var paramData) ? paramData : new BuildingParametersData(), true);
         }
         protected override void OnWindowDestroyed() => Destroy(m_colorPicker);
 

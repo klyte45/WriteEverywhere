@@ -10,7 +10,7 @@ using System.Reflection.Emit;
 using UnityEngine;
 using WriteEverywhere.Data;
 
-namespace WriteEverywhere.Override
+namespace WriteEverywhere.Overrides
 {
 
     public class NetManagerOverrides : MonoBehaviour, IRedirectable
@@ -24,7 +24,6 @@ namespace WriteEverywhere.Override
         public static event Func<ushort, IEnumerator> EventSegmentReleased;
         public static event Func<ushort, IEnumerator> EventSegmentNameChanged;
 
-#pragma warning disable IDE0051 // Remover membros privados não utilizados
         private static void OnNodeChanged(ref ushort node)
         {
             nodeChangeBuffer.Add(node);
@@ -127,9 +126,8 @@ namespace WriteEverywhere.Override
                 cooldown--;
                 foreach (var node in nodeChangeBuffer)
                 {
-                    // ModInstance.Controller?.RoadPropsSingleton?.OnNodeChanged(node);
                     StartCoroutine(EventNodeChanged?.Invoke(node));
-                    // WTSBuildingDataCaches.PurgeStopCache(node);
+                    WTSBuildingData.Instance.CacheData.PurgeStopCache(node);
                 }
                 foreach (var segment in segmentChangeBuffer)
                 {

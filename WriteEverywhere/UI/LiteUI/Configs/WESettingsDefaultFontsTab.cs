@@ -22,7 +22,7 @@ namespace WriteEverywhere.UI
 
         private Enum[] getterTypes = new Enum[]
         {
-            //TextRenderingClass.Buildings,
+            TextRenderingClass.Buildings,
             TextRenderingClass.PlaceOnNet,
             TextRenderingClass.Vehicle,
             FontClass.PublicTransport          ,

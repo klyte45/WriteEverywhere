@@ -38,7 +38,7 @@ namespace WriteEverywhere.UI
                         FontServer.instance.SetQualityMultiplier(m_qualityArray[newValue]);
                         MainController.ReloadFontsFromPath();
                     };
-                    if (GUIKwyttoCommons.AddComboBox(tabAreaSize.x, Str.WTS_MAX_PARALLEL_WORD_PROCESSES, Convert.ToString(FontSystem.MaxCoroutines, 2).Length - 1, m_textureQualityOptions, out newValue, root))
+                    if (GUIKwyttoCommons.AddComboBox(tabAreaSize.x, Str.WTS_MAX_PARALLEL_WORD_PROCESSES, Convert.ToString(FontSystem.MaxCoroutines, 2).Length - 1, m_maxParallelWordsOptions, out newValue, root))
                     {
                         FontSystem.MaxCoroutines.value = 1 << newValue;
                     }

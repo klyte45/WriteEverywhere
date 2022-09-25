@@ -13,7 +13,7 @@ namespace Bridge_WE2TLM
             this.regional = regional;
             this.test = test;
         }
-
+        public WTSLine(StopInformation stop) : this(stop.m_lineId, stop.m_regionalLine) { }
         public bool ZeroLine => lineId == 0 && !regional;
 
         private int ToRefId() => regional ? 256 + lineId : lineId;

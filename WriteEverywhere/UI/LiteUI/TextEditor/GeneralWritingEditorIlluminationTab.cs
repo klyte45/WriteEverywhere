@@ -9,7 +9,7 @@ using WriteEverywhere.Xml;
 
 namespace WriteEverywhere.UI
 {
-    internal class GeneralWritingEditorIlluminationTab : IGUITab<BoardTextDescriptorGeneralXml>
+    internal class GeneralWritingEditorIlluminationTab : IGUITab<TextToWriteOnXml>
     {
         public Texture TabIcon { get; } = GUIKwyttoCommons.GetByNameFromDefaultAtlas("SubBarPropsCommonLights");
 
@@ -32,7 +32,7 @@ namespace WriteEverywhere.UI
 
         public GeneralWritingEditorIlluminationTab(GUIColorPicker colorPicker) => m_root = colorPicker.GetComponentInParent<GUIRootWindowBase>();
 
-        public bool DrawArea(Vector2 tabAreaSize, ref BoardTextDescriptorGeneralXml currentItem, int currentItemIdx, bool isEditable)
+        public bool DrawArea(Vector2 tabAreaSize, ref TextToWriteOnXml currentItem, int currentItemIdx, bool isEditable)
         {
             GUILayout.Label($"<i>{Str.WTS_TEXT_ILLUMINATION_ATTRIBUTES}</i>");
             var item = currentItem;
@@ -95,7 +95,7 @@ namespace WriteEverywhere.UI
 
             return false;
         }
-        private void ToggleFlag(BoardTextDescriptorGeneralXml item, Vehicle.Flags flag)
+        private void ToggleFlag(TextToWriteOnXml item, Vehicle.Flags flag)
         {
             if (IsRequired(item, flag))
             {
@@ -112,10 +112,10 @@ namespace WriteEverywhere.UI
             }
         }
 
-        private static bool IsForbid(BoardTextDescriptorGeneralXml item, Vehicle.Flags flag) => (item.IlluminationConfig.m_forbiddenFlags & (int)flag) > 0;
-        private static bool IsRequired(BoardTextDescriptorGeneralXml item, Vehicle.Flags flag) => (item.IlluminationConfig.m_requiredFlags & (int)flag) > 0;
+        private static bool IsForbid(TextToWriteOnXml item, Vehicle.Flags flag) => (item.IlluminationConfig.m_forbiddenFlags & (int)flag) > 0;
+        private static bool IsRequired(TextToWriteOnXml item, Vehicle.Flags flag) => (item.IlluminationConfig.m_requiredFlags & (int)flag) > 0;
 
-        private void ToggleFlag(BoardTextDescriptorGeneralXml item, Vehicle.Flags2 flag)
+        private void ToggleFlag(TextToWriteOnXml item, Vehicle.Flags2 flag)
         {
             if (IsRequired(item, flag))
             {
@@ -132,8 +132,8 @@ namespace WriteEverywhere.UI
             }
         }
 
-        private static bool IsForbid(BoardTextDescriptorGeneralXml item, Vehicle.Flags2 flag) => (item.IlluminationConfig.m_forbiddenFlags2 & (int)flag) > 0;
-        private static bool IsRequired(BoardTextDescriptorGeneralXml item, Vehicle.Flags2 flag) => (item.IlluminationConfig.m_requiredFlags2 & (int)flag) > 0;
+        private static bool IsForbid(TextToWriteOnXml item, Vehicle.Flags2 flag) => (item.IlluminationConfig.m_forbiddenFlags2 & (int)flag) > 0;
+        private static bool IsRequired(TextToWriteOnXml item, Vehicle.Flags2 flag) => (item.IlluminationConfig.m_requiredFlags2 & (int)flag) > 0;
 
         public void Reset() { }
     }

@@ -1,7 +1,6 @@
 ﻿using ColossalFramework;
 using ColossalFramework.Math;
 using Kwytto.Utils;
-using SpriteFontPlus;
 using SpriteFontPlus.Utility;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,6 @@ using System.Linq;
 using UnityEngine;
 using WriteEverywhere.Utils;
 using WriteEverywhere.Xml;
-using static BuildingInfo;
 
 namespace WriteEverywhere.Rendering
 {
@@ -26,9 +24,9 @@ namespace WriteEverywhere.Rendering
         private static readonly float m_daynightOffTime = 6 * Convert.ToSingle(Math.Pow(Convert.ToDouble((6 - (15 / 2.5)) / 6), Convert.ToDouble(1 / 1.09)));
 
 
-        internal static Vector3 RenderTextMesh(ushort refID, int boardIdx, int secIdx, ref Color parentColor, BaseWriteOnXml baseWrite, BoardTextDescriptorGeneralXml textDescriptor, ref Matrix4x4 propMatrix, PrefabInfo srcInfo, int instanceFlags, int instanceFlags2, bool currentEditingSizeLine, ref int defaultCallsCounter)
+        internal static Vector3 RenderTextMesh(WriteOnBuildingXml propGroup, ushort refID, int boardIdx, int secIdx, ref Color parentColor, BaseWriteOnXml baseWrite, TextToWriteOnXml textDescriptor, ref Matrix4x4 propMatrix, PrefabInfo srcInfo, int instanceFlags, int instanceFlags2, bool currentEditingSizeLine, ref int defaultCallsCounter)
         {
-            BasicRenderInformation bri = WTSTextMeshProcess.GetTextMesh(textDescriptor, refID, boardIdx, secIdx, baseWrite);
+            BasicRenderInformation bri = WETextMeshProcess.GetTextMesh(propGroup, textDescriptor, refID, boardIdx, secIdx, baseWrite);
             if (bri?.m_mesh is null || bri?.m_generatedMaterial is null)
             {
                 return default;
@@ -40,7 +38,7 @@ namespace WriteEverywhere.Rendering
         }
 
         private static readonly MaterialPropertyBlock block = new MaterialPropertyBlock();
-        private static Vector3 DrawTextBri(ushort refID, int boardIdx, int secIdx, ref Matrix4x4 propMatrix, BoardTextDescriptorGeneralXml textDescriptor,
+        private static Vector3 DrawTextBri(ushort refID, int boardIdx, int secIdx, ref Matrix4x4 propMatrix, TextToWriteOnXml textDescriptor,
         BasicRenderInformation renderInfo, ref Color colorToSet, PlacingSettings placingSettings, ref Color parentColor, PrefabInfo srcInfo,
         ref Vector3 baseScale, float horizontalAlignment, float maxWidth, int instanceFlags, int instanceFlags2, bool currentEditingSizeLine, ref int defaultCallsCounter)
         {
@@ -139,21 +137,18 @@ namespace WriteEverywhere.Rendering
             return containerMatrix;
         }
 
-        private static Vector2[] cachedUvFrame;
-        private static Vector2[] cachedUvGlass;
-        internal static Material m_rotorMaterial;
-        internal static Material m_outsideMaterial;
+        internal static ref Vector2[] cachedUvGlass => ref MainController.__cachedUvGlass;
+        internal static ref Vector2[] cachedUvFrame => ref MainController.__cachedUvFrame;
+        internal static ref Material m_rotorMaterial => ref MainController.m_rotorMaterial;
+        internal static ref Material m_outsideMaterial => ref MainController.m_outsideMaterial;
 
-        private static void DrawTextFrame(BoardTextDescriptorGeneralXml textDescriptor, MaterialPropertyBlock materialPropertyBlock, PlacingSettings placingSettings, ref Vector3 baseScale, ref Color parentColor, PrefabInfo srcInfo, ref Matrix4x4 containerMatrix, ref int defaultCallsCounter)
+        private static Vector2[] baseUv = new Vector2[] { Vector2.zero, Vector2.right, Vector2.right + Vector2.up, Vector2.up };
+
+        private static void DrawTextFrame(TextToWriteOnXml textDescriptor, MaterialPropertyBlock materialPropertyBlock, PlacingSettings placingSettings, ref Vector3 baseScale, ref Color parentColor, PrefabInfo srcInfo, ref Matrix4x4 containerMatrix, ref int defaultCallsCounter)
         {
             var frameConfig = textDescriptor.BackgroundMeshSettings.FrameMeshSettings;
 
-            if (cachedUvFrame is null)
-            {
-                WTSDisplayContainerMeshUtils.GenerateDisplayContainer(new Vector2(1, 1), new Vector2(1, 1), new Vector2(), 0.05f, 0.3f, 0.1f, out Vector3[] points);
-                cachedUvFrame = points.Select((x, i) => new Vector2(i * .25f % 1, i * .5f % 1)).ToArray();
-                cachedUvGlass = points.Take(4).Select(x => new Vector2(0.5f, .5f)).ToArray();
-            }
+
             var instance2 = Singleton<VehicleManager>.instance;
             if (m_rotorMaterial == null)
             {
@@ -169,36 +164,30 @@ namespace WriteEverywhere.Rendering
             }
             if (m_outsideMaterial == null)
             {
-                m_outsideMaterial = new Material(FontServer.instance.DefaultShader);
+                m_outsideMaterial = new Material(ModInstance.Controller.defaultFrameShader);
             }
 
-            if (frameConfig.cachedFrameArray == null)
+            if (frameConfig.meshOuterContainer is null)
             {
-                WTSDisplayContainerMeshUtils.GenerateDisplayContainer(textDescriptor.BackgroundMeshSettings.Size,
+                WEDisplayContainerMeshUtils.GenerateDisplayContainer(textDescriptor.BackgroundMeshSettings.Size,
                     frameConfig.BackSize,
                     frameConfig.BackOffset,
                     frameConfig.FrontDepth,
                     frameConfig.BackDepth,
                     frameConfig.FrontBorderThickness,
-                    out frameConfig.cachedFrameArray);
+                    out frameConfig.meshOuterContainer,
+                    out var glassVerts);
 
-                frameConfig.meshOuterContainer = new Mesh()
-                {
-                    vertices = frameConfig.cachedFrameArray,
-                    triangles = WTSDisplayContainerMeshUtils.m_triangles,
-                    uv = cachedUvFrame,
-                };
                 frameConfig.meshGlass = new Mesh()
                 {
-                    vertices = frameConfig.cachedFrameArray.Take(4).ToArray(),
-                    triangles = WTSDisplayContainerMeshUtils.m_trianglesGlass,
+                    vertices = glassVerts,
+                    triangles = WEDisplayContainerMeshUtils.m_trianglesGlass,
                     uv = cachedUvGlass,
-                    colors = frameConfig.cachedFrameArray.Take(4).Select(x => new Color(1 - frameConfig.GlassTransparency, 0, 0, 0)).ToArray(),
+                    colors = glassVerts.Select(x => new Color(1 - frameConfig.GlassTransparency, 0, 0, 0)).ToArray(),
                 };
-                foreach (var k in new Mesh[] { frameConfig.meshOuterContainer, frameConfig.meshGlass })
-                {
-                    WTSUtils.SolveTangents(k, true);
-                }
+                WTSUtils.SolveTangents(frameConfig.meshGlass);
+                frameConfig.meshOuterContainer.RecalculateTangents();
+                frameConfig.meshOuterContainer.RecalculateBounds();
 
                 if (frameConfig.cachedGlassMain is null)
                 {
@@ -233,7 +222,6 @@ namespace WriteEverywhere.Rendering
             materialPropertyBlock.Clear();
             var color = frameConfig.m_inheritColor ? parentColor : frameConfig.OutsideColor;
             materialPropertyBlock.SetColor(SHADER_PROP_COLOR, color);
-            materialPropertyBlock.SetColor(SHADER_PROP_BACK_COLOR, frameConfig.InsideColor);
             defaultCallsCounter++;
             Graphics.DrawMesh(frameConfig.meshOuterContainer, containerMatrix, m_outsideMaterial, srcInfo.m_prefabDataIndex, null, 0, materialPropertyBlock);
         }
@@ -246,7 +234,7 @@ namespace WriteEverywhere.Rendering
             public Vector2 finalSize;
         }
 
-        private static List<TextRenderDescriptor> CalculateTextMatrix(PlacingSettings placingSettings, ref Vector3 baseScale, float horizontalAlignment, float maxWidth, BoardTextDescriptorGeneralXml textDescriptor, BasicRenderInformation renderInfo, bool centerReference = false)
+        private static List<TextRenderDescriptor> CalculateTextMatrix(PlacingSettings placingSettings, ref Vector3 baseScale, float horizontalAlignment, float maxWidth, TextToWriteOnXml textDescriptor, BasicRenderInformation renderInfo, bool centerReference = false)
         {
             var result = new List<TextRenderDescriptor>();
             if (renderInfo == null)
@@ -287,7 +275,7 @@ namespace WriteEverywhere.Rendering
             float defaultMultiplierY = lineHeight / renderInfo.m_refY;
             float realWidth = defaultMultiplierX * renderInfo.m_sizeMetersUnscaled.x;
             Vector3 targetRelativePosition = Vector3.zero;
-            //LogUtils.DoWarnLog($"[{renderInfo},{refID},{boardIdx},{secIdx}] realWidth = {realWidth}; realHeight = {realHeight};");
+
             var rotationMatrix = Matrix4x4.TRS(Vector3.zero, Quaternion.Euler(placingSettings.Rotation), Vector3.one);
             var lineRelativePosition = 0f;
             if (maxWidth > 0)
@@ -335,7 +323,7 @@ namespace WriteEverywhere.Rendering
         }
 
         #region Illumination handling
-        private static void CalculateIllumination(ushort refID, int boardIdx, int secIdx, BoardTextDescriptorGeneralXml textDescriptor, MaterialPropertyBlock materialPropertyBlock, ref Color colorToSet, int instanceFlags, int instanceFlags2)
+        private static void CalculateIllumination(ushort refID, int boardIdx, int secIdx, TextToWriteOnXml textDescriptor, MaterialPropertyBlock materialPropertyBlock, ref Color colorToSet, int instanceFlags, int instanceFlags2)
         {
             Vector4 surfProperties = default;
             var randomizer = new Randomizer((refID << 8) + (boardIdx << 2) + secIdx);
@@ -370,11 +358,11 @@ namespace WriteEverywhere.Rendering
                 CalculateBlinkEffect(textDescriptor, ref surfProperties, ref randomizer);
             }
 
-            surfProperties.x = -textDescriptor.IlluminationConfig.m_illuminationDepth;
+            surfProperties.x = textDescriptor.IlluminationConfig.m_illuminationDepth;
             materialPropertyBlock.SetVector(SHADER_PROP_SURF_PROPERTIES, surfProperties);
             materialPropertyBlock.SetColor(SHADER_PROP_BACK_COLOR, textDescriptor.ColoringConfig.UseFrontColorAsBackColor ? colorToSet : textDescriptor.ColoringConfig.m_cachedBackColor);
         }
-        private static void CalculateBlinkEffect(BoardTextDescriptorGeneralXml textDescriptor, ref Vector4 objectIndex, ref Randomizer randomizer)
+        private static void CalculateBlinkEffect(TextToWriteOnXml textDescriptor, ref Vector4 objectIndex, ref Randomizer randomizer)
         {
             float num = m_daynightOffTime + (randomizer.Int32(100000u) * 1E-05f);
             Vector4 blinkVector;
@@ -394,7 +382,7 @@ namespace WriteEverywhere.Rendering
         }
         #endregion
 
-        private static Color GetTextColor(ushort refID, int boardIdx, int secIdx, BaseWriteOnXml descriptor, BoardTextDescriptorGeneralXml textDescriptor)
+        private static Color GetTextColor(ushort refID, int boardIdx, int secIdx, BaseWriteOnXml descriptor, TextToWriteOnXml textDescriptor)
         {
             if (textDescriptor.ColoringConfig.UseContrastColor)
             {
@@ -408,14 +396,6 @@ namespace WriteEverywhere.Rendering
         }
         public static Color GetContrastColor(ushort refID, int boardIdx, int secIdx, BaseWriteOnXml instance)
         {
-            //if (instance is BoardInstanceRoadNodeXml)
-            //{
-            //    return WTSRoadNodesData.Instance.BoardsContainers[refID, boardIdx, secIdx]?.m_cachedContrastColor ?? Color.black;
-            //}
-            //else if (instance is BoardPreviewInstanceXml preview)
-            //{
-            //    return (preview?.Descriptor?.FixedColor ?? GetCurrentSimulationColor()).ContrastColor();
-            //}
             var targetColor = WEDynamicTextRenderingRules.GetPropColor(refID, boardIdx, secIdx, instance, out bool colorFound);
             return (colorFound ? targetColor : Color.black).ContrastColor();
         }

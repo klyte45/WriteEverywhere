@@ -4,7 +4,6 @@ using SpriteFontPlus;
 using SpriteFontPlus.Utility;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
 using WriteEverywhere.Data;
 using WriteEverywhere.Utils;
@@ -210,17 +209,18 @@ namespace WriteEverywhere.Xml
 
         #region renderingInfo
 
-        internal static DynamicSpriteFont GetTargetFont(BaseWriteOnXml instance, BoardTextDescriptorGeneralXml textDescriptor)
-            => FontServer.instance.FirstOf(new[]
+        internal static DynamicSpriteFont GetTargetFont(WriteOnBuildingXml propGroup, BaseWriteOnXml propDesc, TextToWriteOnXml textDesc)
+            => FontServer.instance.FirstOf(new Func<string>[]
             {
-                        textDescriptor.m_overrideFont,
-                        WTSEtcData.Instance.FontSettings.GetTargetFont(textDescriptor.m_fontClass),
-                        instance.DescriptorOverrideFont,
-                        WTSEtcData.Instance.FontSettings.GetTargetFont(instance.RenderingClass),
-                        MainController.DEFAULT_FONT_KEY,
-            }.Where(x => !x.IsNullOrWhiteSpace()));
+                    ()=>   textDesc.m_overrideFont,
+                    ()=>   WTSEtcData.Instance.FontSettings.GetTargetFont(textDesc.m_fontClass),
+                    ()=>   propDesc.DescriptorOverrideFont,
+                    ()=>   propGroup.FontName,
+                    ()=>   WTSEtcData.Instance.FontSettings.GetTargetFont(propDesc.RenderingClass),
+                    ()=>   MainController.DEFAULT_FONT_KEY,
+            });
 
-        internal static BasicRenderInformation GetRenderInfo(BaseWriteOnXml instance, BoardTextDescriptorGeneralXml textDescriptor, ushort refId, int secIdx, int tercIdx, out IEnumerable<BasicRenderInformation> multipleOutput)
+        internal static BasicRenderInformation GetRenderInfo(WriteOnBuildingXml propGroup, BaseWriteOnXml propDesc, TextToWriteOnXml textDescriptor, ushort refId, int secIdx, int tercIdx, out IEnumerable<BasicRenderInformation> multipleOutput)
         {
             multipleOutput = null;
             switch (textDescriptor.textContent)
@@ -229,11 +229,11 @@ namespace WriteEverywhere.Xml
                     LogUtils.DoWarnLog("INVALID TEXT CONTENT: NONE!\n" + Environment.StackTrace);
                     return null;
                 case TextContent.ParameterizedText:
-                    return textDescriptor.Value?.GetTargetText(instance, textDescriptor, GetTargetFont(instance, textDescriptor), refId, secIdx, tercIdx, out multipleOutput);
+                    return textDescriptor.Value?.GetTargetText(propGroup, propDesc, textDescriptor, GetTargetFont(propGroup, propDesc, textDescriptor), refId, secIdx, tercIdx, out multipleOutput);
                 case TextContent.ParameterizedSpriteFolder:
-                    return textDescriptor.Value?.GetSpriteFromCycle(textDescriptor, instance.TargetAssetParameter, refId, secIdx, tercIdx);
+                    return textDescriptor.Value?.GetSpriteFromCycle(textDescriptor, propDesc.TargetAssetParameter, refId, secIdx, tercIdx);
                 case TextContent.ParameterizedSpriteSingle:
-                    return textDescriptor.Value?.GetSpriteFromParameter(instance.TargetAssetParameter);
+                    return textDescriptor.Value?.GetSpriteFromParameter(propDesc.TargetAssetParameter);
                 case TextContent.LinesNameList:
                     break;
                 case TextContent.HwShield:
@@ -247,7 +247,7 @@ namespace WriteEverywhere.Xml
         }
 
 
-        internal static BasicRenderInformation GetRenderInfo(TextParameterWrapper tpw, BaseWriteOnXml instance, BoardTextDescriptorGeneralXml textDescriptor, ushort refId, int secIdx, int tercIdx, out IEnumerable<BasicRenderInformation> multipleOutput)
+        internal static BasicRenderInformation GetRenderInfo(WriteOnBuildingXml propGroupDescriptor, TextParameterWrapper tpw, BaseWriteOnXml instance, TextToWriteOnXml textDescriptor, ushort refId, int secIdx, int tercIdx, out IEnumerable<BasicRenderInformation> multipleOutput)
         {
             multipleOutput = null;
             switch (textDescriptor.textContent)
@@ -258,8 +258,8 @@ namespace WriteEverywhere.Xml
                 case TextContent.ParameterizedText:
                 Text:
                     return !(tpw is null)
-                        ? tpw.GetTargetText(instance, textDescriptor, GetTargetFont(instance, textDescriptor), refId, secIdx, tercIdx, out multipleOutput)
-                        : GetTargetFont(instance, textDescriptor).DrawString(ModInstance.Controller, $"<PARAM IS NOT SET>", default, FontServer.instance.ScaleEffective);
+                        ? tpw.GetTargetText(propGroupDescriptor, instance, textDescriptor, GetTargetFont(propGroupDescriptor, instance, textDescriptor), refId, secIdx, tercIdx, out multipleOutput)
+                        : GetTargetFont(propGroupDescriptor, instance, textDescriptor).DrawString(ModInstance.Controller, $"<PARAM IS NOT SET>", default, FontServer.instance.ScaleEffective);
                 case TextContent.ParameterizedSpriteFolder:
                 ImageFolder:
                     return !(tpw is null)
@@ -287,7 +287,7 @@ namespace WriteEverywhere.Xml
                                 break;
                         }
                     }
-                    return GetTargetFont(instance, textDescriptor).DrawString(ModInstance.Controller, $"<SEQ PARAM IS NOT SET>", default, FontServer.instance.ScaleEffective); ;
+                    return GetTargetFont(propGroupDescriptor, instance, textDescriptor).DrawString(ModInstance.Controller, $"<SEQ PARAM IS NOT SET>", default, FontServer.instance.ScaleEffective); ;
                 case TextContent.LinesNameList:
                     break;
                 case TextContent.HwShield:
@@ -325,7 +325,7 @@ namespace WriteEverywhere.Xml
 
         }
 
-        internal BasicRenderInformation GetTargetText(BaseWriteOnXml descriptorBuilding, BoardTextDescriptorGeneralXml textDescriptor, DynamicSpriteFont targetFont, ushort refId, int secId, int tercId, out IEnumerable<BasicRenderInformation> multipleOutput)
+        internal BasicRenderInformation GetTargetText(WriteOnBuildingXml propGroupDescriptor, BaseWriteOnXml descriptorBuilding, TextToWriteOnXml textDescriptor, DynamicSpriteFont targetFont, ushort refId, int secId, int tercId, out IEnumerable<BasicRenderInformation> multipleOutput)
         {
             if (ParamType != ParameterType.VARIABLE)
             {
@@ -334,14 +334,14 @@ namespace WriteEverywhere.Xml
             }
             else
             {
-                return VariableValue.GetTargetText(descriptorBuilding, textDescriptor, targetFont, refId, secId, tercId, out multipleOutput);
+                return VariableValue.GetTargetText(propGroupDescriptor, descriptorBuilding, textDescriptor, targetFont, refId, secId, tercId, out multipleOutput);
             }
         }
 
         public string GetOriginalVariableParam() => ParamType != ParameterType.VARIABLE ? null : VariableValue.m_originalCommand;
 
 
-        internal BasicRenderInformation GetSpriteFromCycle(BoardTextDescriptorGeneralXml textDescriptor, PrefabInfo cachedPrefab, ushort refId, int boardIdx, int secIdx)
+        internal BasicRenderInformation GetSpriteFromCycle(TextToWriteOnXml textDescriptor, PrefabInfo cachedPrefab, ushort refId, int boardIdx, int secIdx)
         {
             if (IsEmpty)
             {

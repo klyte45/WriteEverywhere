@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TLM::Bridge_WE2TLM;
 using UnityEngine;
+using WriteEverywhere.Data;
 using WriteEverywhere.Singleton;
 using static ItemClass;
 
@@ -99,7 +100,7 @@ namespace WriteEverywhere.ModShared
                 return "";
             }
 
-            buildingID = 0;// WTSBuildingDataCaches.GetStopBuilding(stopId, lineObj);
+            buildingID = WTSBuildingData.Instance.CacheData.GetStopBuilding(stopId, lineObj);
 
             if (buildingID > 0)
             {
@@ -283,7 +284,7 @@ namespace WriteEverywhere.ModShared
 
         public override void OnAutoNameParameterChanged()
         {
-            //  ModInstance.Controller.BuildingPropsSingleton.ResetLines();
+            ModInstance.Controller.BuildingPropsSingleton.ResetLines();
             WTSCacheSingleton.ClearCacheLineName();
         }
 

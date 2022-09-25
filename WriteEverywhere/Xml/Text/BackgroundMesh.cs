@@ -13,7 +13,7 @@ namespace WriteEverywhere.Xml
         {
             get => m_size; set
             {
-                FrameMeshSettings.cachedFrameArray = null;
+                FrameMeshSettings.meshOuterContainer = null;
                 m_size = value;
             }
         }

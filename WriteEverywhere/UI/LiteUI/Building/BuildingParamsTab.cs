@@ -21,7 +21,7 @@ namespace WriteEverywhere.UI
 
         private Func<ushort> m_buildingIdxGetter;
         private Action<ushort> m_buildingIdxSetter;
-        private Func<WriteOnBuildingXml> m_buildingLayoutGetter;
+        private Func<IEnumerable<WriteOnBuildingXml>> m_buildingLayoutGetter;
         private Func<BuildingInfo> m_buildingInfoGetter;
         private GUIFilterItemsScreen<StateInstance> m_instanceFilter;
 
@@ -31,7 +31,7 @@ namespace WriteEverywhere.UI
             GettingInstance
         }
 
-        public BuildingParamsTab(Func<ushort> buildingIdxGetter, Action<ushort> buildingIdxSetter, Func<WriteOnBuildingXml> buildingLayoutGetter, Func<BuildingInfo> buildingInfoGetter)
+        public BuildingParamsTab(Func<ushort> buildingIdxGetter, Action<ushort> buildingIdxSetter, Func<IEnumerable<WriteOnBuildingXml>> buildingLayoutGetter, Func<BuildingInfo> buildingInfoGetter)
         {
             m_buildingIdxGetter = buildingIdxGetter;
             m_buildingLayoutGetter = buildingLayoutGetter;
@@ -124,56 +124,66 @@ namespace WriteEverywhere.UI
                     {
                         return;
                     }
-                    m_cachedParamsUsed = target.GetAllParametersUsedWithData();
+                    m_cachedParamsUsed = target.SelectMany(x => x.GetAllParametersUsedWithData().ToArray()).GroupBy(x => x.Key).ToDictionary(x => x.Key, x => x.SelectMany(y => y.Value).ToList());
                 }
                 lastTickDraw = SimulationManager.instance.m_currentTickIndex;
                 if ((m_cachedParamsUsed?.Count ?? 0) > 0)
                 {
-                    foreach (var kv in m_cachedParamsUsed.OrderBy(x => x.Key))
+                    var currIdx = m_buildingIdxGetter();
+                    m_instanceFilter.DrawButton(size.x, string.Format(Str.we_buildingEditor_currentBuildingBeingEdited, BuildingManager.instance.GetBuildingName(currIdx, default), currIdx));
+                    if (currIdx > 0)
                     {
-                        var contentTypes = kv.Value.GroupBy(x => x.First.GetTextContent()).Select(x => x.Key);
-                        if (contentTypes.Count() > 1)
+
+                        foreach (var kv in m_cachedParamsUsed.OrderBy(x => x.Key))
                         {
-                            GUILayout.Label(string.Format(Str.WTS_ONNETEDITOR_TEXTPARAM, kv.Key));
-                            GUILayout.Label(Str.WTS_ONNETEDITOR_INVALIDPARAMSETTINGS_DIFFERENTKINDSAMEPARAM, new GUIStyle(GUI.skin.label)
+                            var contentTypes = kv.Value.GroupBy(x => x.First.GetTextContent()).Select(x => x.Key);
+                            if (contentTypes.Count() > 1)
                             {
-                                alignment = TextAnchor.MiddleCenter
-                            });
-                            GUILayout.Space(4);
-                            continue;
-                        }
-                        var targetContentType = contentTypes.First();
-                        string target = "FFFFFF";
-                        switch (targetContentType)
-                        {
-                            case TextContent.ParameterizedSpriteSingle:
-                                target = Image;
-                                break;
-                            case TextContent.ParameterizedSpriteFolder:
-                                target = Folder;
-                                break;
-                            case TextContent.ParameterizedText:
-                                target = Text;
-                                break;
-                            case TextContent.Any:
-                                target = Any;
-                                break;
-                        }
-                        var usedByText = string.Join("\n", kv.Value.Select(x => $"\u2022 {(x.First.GetParameterDisplayName().TrimToNull() ?? x.Second)}").ToArray());
-                        using (new GUILayout.HorizontalScope())
-                        {
-                            GUILayout.Label(string.Format(Str.WTS_ONNETEDITOR_TEXTPARAM, kv.Key) + $"\n<color=#{target}>{targetContentType.ValueToI18n()}</color>\n\n{usedByText}");
-                            var param = item.GetParameter(kv.Key);
-                            if (GUILayout.Button(param is null ? GUIKwyttoCommons.v_null : param.IsEmpty ? GUIKwyttoCommons.v_empty : param.ToString(), GUILayout.ExpandHeight(true)))
-                            {
-                                if (param is null)
+                                GUILayout.Label(string.Format(Str.WTS_ONNETEDITOR_TEXTPARAM, kv.Key));
+                                GUILayout.Label(Str.WTS_ONNETEDITOR_INVALIDPARAMSETTINGS_DIFFERENTKINDSAMEPARAM, new GUIStyle(GUI.skin.label)
                                 {
-                                    item.SetTextParameter(kv.Key, null);
-                                    param = item.GetParameter(kv.Key);
-                                }
-                                GoToPicker(kv.Key, targetContentType, param, item);
+                                    alignment = TextAnchor.MiddleCenter
+                                });
+                                GUILayout.Space(4);
+                                continue;
                             }
-                        };
+                            var targetContentType = contentTypes.First();
+                            string target = "FFFFFF";
+                            switch (targetContentType)
+                            {
+                                case TextContent.ParameterizedSpriteSingle:
+                                    target = Image;
+                                    break;
+                                case TextContent.ParameterizedSpriteFolder:
+                                    target = Folder;
+                                    break;
+                                case TextContent.ParameterizedText:
+                                    target = Text;
+                                    break;
+                                case TextContent.Any:
+                                    target = Any;
+                                    break;
+                            }
+                            var usedByText = string.Join("\n", kv.Value.Select(x => $"\u2022 {(x.First.GetParameterDisplayName().TrimToNull() ?? x.Second)}").ToArray());
+                            using (new GUILayout.HorizontalScope())
+                            {
+                                GUILayout.Label(string.Format(Str.WTS_ONNETEDITOR_TEXTPARAM, kv.Key) + $"\n<color=#{target}>{targetContentType.ValueToI18n()}</color>\n\n{usedByText}");
+                                var param = item.GetParameter(kv.Key);
+                                if (GUILayout.Button(param is null ? GUIKwyttoCommons.v_null : param.IsEmpty ? GUIKwyttoCommons.v_empty : param.ToString(), GUILayout.ExpandHeight(true)))
+                                {
+                                    if (param is null)
+                                    {
+                                        item.SetTextParameter(kv.Key, null);
+                                        param = item.GetParameter(kv.Key);
+                                    }
+                                    GoToPicker(kv.Key, targetContentType, param, item);
+                                }
+                            };
+                        }
+                    }
+                    else
+                    {
+                        GUILayout.Label(Str.we_buildingEditor_pickABuildingToEditParameters);
                     }
                 }
                 else

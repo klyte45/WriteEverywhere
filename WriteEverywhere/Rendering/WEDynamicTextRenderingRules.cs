@@ -1,5 +1,10 @@
-﻿using ColossalFramework.Math;
+﻿extern alias TLM;
+
+using ColossalFramework.Math;
+using System.Linq;
+using TLM::Bridge_WE2TLM;
 using UnityEngine;
+using WriteEverywhere.Utils;
 using WriteEverywhere.Xml;
 
 namespace WriteEverywhere.Rendering
@@ -104,61 +109,49 @@ namespace WriteEverywhere.Rendering
         private static Randomizer rand = new Randomizer(0);
         public static Color GetPropColor(ushort refId, int boardIdx, int secIdx, BaseWriteOnXml instance, out bool found)
         {
-
-            //if (instance is BoardInstanceRoadNodeXml)
-            //{
-            //    found = WTSRoadNodesData.Instance.BoardsContainers[refId, boardIdx, secIdx] != null;
-            //    return WTSRoadNodesData.Instance.BoardsContainers[refId, boardIdx, secIdx]?.m_cachedColor ?? default;
-            //}
-            //else if (instance is LayoutDescriptorVehicleXml vehicleDescriptor)
-            //{
-            //    found = true;
-            //    ref Vehicle targetVehicle = ref VehicleManager.instance.m_vehicles.m_buffer[refId];
-            //    return targetVehicle.Info.m_vehicleAI.GetColor(refId, ref targetVehicle, InfoManager.InfoMode.None);
-            //}
-            //else if (instance is BoardInstanceBuildingXml buildingDescriptor)
-            //{
-            //    found = true;
-            //    switch (buildingDescriptor.ColorModeProp)
-            //    {
-            //        case ColoringMode.Fixed:
-            //            rand.seed = refId * (1u + (uint)boardIdx);
-            //            return propLayout?.FixedColor ?? buildingDescriptor.CachedSimpleProp?.GetColor(ref rand) ?? Color.white;
-            //        case ColoringMode.ByPlatform:
-            //            var stops = WTSStopUtils.GetAllTargetStopInfo(buildingDescriptor, refId).Where(x => x.m_lineId != 0);
-            //            if (buildingDescriptor.UseFixedIfMultiline && stops.GroupBy(x => x.m_lineId).Count() > 1)
-            //            {
-            //                rand.seed = refId * (1u + (uint)boardIdx);
-            //                return propLayout?.FixedColor ?? buildingDescriptor.CachedSimpleProp?.GetColor(ref rand) ?? Color.white;
-            //            }
-            //            if (stops.Count() != 0)
-            //            {
-            //                var line = new WTSLine(stops.FirstOrDefault());
-            //                if (!line.ZeroLine)
-            //                {
-            //                    return ModInstance.Controller.ConnectorTLM.GetLineColor(line);
-            //                }
-            //            }
-            //            if (!buildingDescriptor.m_showIfNoLine)
-            //            {
-            //                found = false;
-            //                return default;
-            //            }
-            //            return Color.white;
-            //        case ColoringMode.ByDistrict:
-            //            byte districtId = DistrictManager.instance.GetDistrict(BuildingManager.instance.m_buildings.m_buffer[refId].m_position);
-            //            return ModInstance.Controller.ConnectorADR.GetDistrictColor(districtId);
-            //        case ColoringMode.FromBuilding:
-            //            return BuildingManager.instance.m_buildings.m_buffer[refId].Info.m_buildingAI.GetColor(refId, ref BuildingManager.instance.m_buildings.m_buffer[refId], InfoManager.InfoMode.None);
-            //    }
-            //}
-            //else if (instance is BoardPreviewInstanceXml preview)
-            //{
-            //    found = true;
-            //    return preview?.Descriptor?.FixedColor ?? GetCurrentSimulationColor();
-            //}
-            //else 
-            if (instance is WriteOnNetXml n)
+            if (instance is LayoutDescriptorVehicleXml vehicleDescriptor)
+            {
+                found = true;
+                ref Vehicle targetVehicle = ref VehicleManager.instance.m_vehicles.m_buffer[refId];
+                return targetVehicle.Info.m_vehicleAI.GetColor(refId, ref targetVehicle, InfoManager.InfoMode.None);
+            }
+            else if (instance is WriteOnBuildingPropXml buildingDescriptor)
+            {
+                found = true;
+                switch (buildingDescriptor.ColorModeProp)
+                {
+                    case ColoringMode.Fixed:
+                        rand.seed = refId * (1u + (uint)boardIdx);
+                        return buildingDescriptor?.FixedColor ?? buildingDescriptor.SimpleProp?.GetColor(ref rand) ?? Color.white;
+                    case ColoringMode.ByPlatform:
+                        var stops = WTSStopUtils.GetAllTargetStopInfo(buildingDescriptor, refId).Where(x => x.m_lineId != 0);
+                        if (buildingDescriptor.UseFixedIfMultiline && stops.GroupBy(x => x.m_lineId).Count() > 1)
+                        {
+                            rand.seed = refId * (1u + (uint)boardIdx);
+                            return buildingDescriptor?.FixedColor ?? buildingDescriptor.SimpleProp?.GetColor(ref rand) ?? Color.white;
+                        }
+                        if (stops.Count() != 0)
+                        {
+                            var line = new WTSLine(stops.FirstOrDefault());
+                            if (!line.ZeroLine)
+                            {
+                                return ModInstance.Controller.ConnectorTLM.GetLineColor(line);
+                            }
+                        }
+                        if (!buildingDescriptor.m_showIfNoLine)
+                        {
+                            found = false;
+                            return default;
+                        }
+                        return Color.white;
+                    case ColoringMode.ByDistrict:
+                        byte districtId = DistrictManager.instance.GetDistrict(BuildingManager.instance.m_buildings.m_buffer[refId].m_position);
+                        return ModInstance.Controller.ConnectorADR.GetDistrictColor(districtId);
+                    case ColoringMode.FromBuilding:
+                        return BuildingManager.instance.m_buildings.m_buffer[refId].Info.m_buildingAI.GetColor(refId, ref BuildingManager.instance.m_buildings.m_buffer[refId], InfoManager.InfoMode.None);
+                }
+            }
+            else if (instance is WriteOnNetXml n)
             {
                 found = n.SimpleProp != null;
                 return n.FixedColor ?? n.SimpleProp?.m_color0 ?? Color.white;

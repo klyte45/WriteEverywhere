@@ -37,8 +37,6 @@ namespace WriteEverywhere.UI
         private int m_currentSubBuilding;
         private ConfigurationSource m_currentSource;
 
-        private readonly Texture2D m_grabModel;
-        private readonly Texture2D m_grabModeWaiting;
         private readonly Texture2D m_goToFile;
         private readonly Texture2D m_reloadFiles;
         private readonly Texture2D m_createNew;
@@ -77,17 +75,17 @@ namespace WriteEverywhere.UI
         private FooterBarStatus CurrentLibState => xmlLibList.Status;
         private State CurrentLocalState { get; set; } = State.Normal;
 
-        public int ListSel => m_cachedItemListIdx[m_tabsContainer.ListSel];
+        public int PropSel => m_tabsContainer.ListSel >= 0 ? m_cachedItemListIdx[m_tabsContainer.ListSel] : -1;
+        public int TextSel => m_textEditorTab.SelectedTextItem;
         public ushort CurrentGrabbedId { get; set; }
         public BuildingInfo CurrentEditingInfo { get; private set; }
         public bool IsOnTextDimensionsView => m_textEditorTab.IsOnTextDimensionsView;
+        public bool IsOnTextEditor => m_textEditorTabIdx == m_tabsContainer.CurrentTabIdx;
 
         public BuildingInfoDetailLiteUI(GUIColorPicker colorPicker)
         {
             var viewAtlas = UIView.GetAView().defaultAtlas;
 
-            m_grabModel = KResourceLoader.LoadTextureKwytto(CommonsSpriteNames.K45_Dropper);
-            m_grabModeWaiting = KResourceLoader.LoadTextureKwytto(CommonsSpriteNames.K45_Lock);
             m_goToFile = KResourceLoader.LoadTextureKwytto(CommonsSpriteNames.K45_Load);
             m_reloadFiles = KResourceLoader.LoadTextureKwytto(CommonsSpriteNames.K45_Reload);
             m_createNew = KResourceLoader.LoadTextureKwytto(CommonsSpriteNames.K45_New);
@@ -110,18 +108,18 @@ namespace WriteEverywhere.UI
             var root = colorPicker.GetComponentInParent<GUIRootWindowBase>();
             var tabs = new IGUITab<WriteOnBuildingPropXml>[] {
                 new BuildingUIBasicTab(OnImportSingle, OnDelete, root),
-                m_textEditorTab =  new BuildingUITextTab(m_colorPicker, () => CurrentEditingLayout.PropInstances[ListSel].SimpleProp, () =>
+                m_textEditorTab =  new BuildingUITextTab(m_colorPicker, () => CurrentEditingLayout.PropInstances[PropSel].SimpleProp, () =>
                 {
-                    if(ListSel>=0 && CurrentEditingLayout.PropInstances[ListSel] != null)
+                    if(PropSel>=0 && CurrentEditingLayout.PropInstances[PropSel] != null)
                     {
-                        return ref CurrentEditingLayout.PropInstances[ListSel].RefTextDescriptors;
+                        return ref CurrentEditingLayout.PropInstances[PropSel].RefTextDescriptors;
                     }
                     throw new System.Exception("Invalid call!!!");
                 }, () =>
                 {
-                    if(ListSel>=0 && CurrentEditingLayout?.PropInstances[ListSel] != null)
+                    if(PropSel>=0 && CurrentEditingLayout?.PropInstances[PropSel] != null)
                     {
-                        return ref CurrentEditingLayout.PropInstances[ListSel].RefFontName;
+                        return ref CurrentEditingLayout.PropInstances[PropSel].RefFontName;
                     }
                     throw new System.Exception("Invalid call!!!");
                 })
@@ -202,10 +200,7 @@ namespace WriteEverywhere.UI
                         {
                             if (CurrentLibState == FooterBarStatus.Normal)
                             {
-                                //bool waitingGrab = ModInstance.Controller.BuildingTextsSingleton.WaitingGrab;
                                 GUI.tooltip = "";
-                                GUILayout.FlexibleSpace();
-                                //   GUIKwyttoCommons.SquareTextureButton(waitingGrab ? m_grabModeWaiting : m_grabModel, waitingGrab ? Str.we_buildingEditor_waitingGrabBuilding : Str.we_buildingEditor_pickOrSpawnABuilding, GrabUnit);
                                 GUILayout.FlexibleSpace();
                                 GUIKwyttoCommons.SquareTextureButton(m_goToFile, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_OPENGLOBALSFOLDER, GoToGlobalFolder);
                                 GUIKwyttoCommons.SquareTextureButton(m_reloadFiles, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_RELOADDESCRIPTORS, ReloadFiles);
@@ -438,16 +433,16 @@ namespace WriteEverywhere.UI
 
         private void OnDelete()
         {
-            CurrentEditingLayout.PropInstances = CurrentEditingLayout.PropInstances.Where((k, i) => i != ListSel).ToArray();
+            CurrentEditingLayout.PropInstances = CurrentEditingLayout.PropInstances.Where((k, i) => i != PropSel).ToArray();
             m_tabsContainer.Reset();
             OnChangeInfo(CurrentEditingInfo, m_currentSubBuilding);
         }
 
         private void OnImportSingle(WriteOnBuildingPropXml data, bool _)
         {
-            data.SaveName = CurrentEditingLayout.PropInstances[ListSel].SaveName;
+            data.SaveName = CurrentEditingLayout.PropInstances[PropSel].SaveName;
             data.SubBuildingPivotReference = m_currentSubBuilding;
-            CurrentEditingLayout.PropInstances[ListSel] = data;
+            CurrentEditingLayout.PropInstances[PropSel] = data;
             var oldListSel = m_tabsContainer.ListSel;
             OnChangeInfo(CurrentEditingInfo, m_currentSubBuilding);
             m_tabsContainer.ListSel = oldListSel;

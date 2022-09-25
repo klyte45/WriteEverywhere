@@ -15,7 +15,7 @@ using WriteEverywhere.Xml;
 
 namespace WriteEverywhere.UI
 {
-    internal class GeneralWritingEditorForegroundTab : IGUITab<BoardTextDescriptorGeneralXml>
+    internal class GeneralWritingEditorForegroundTab : IGUITab<TextToWriteOnXml>
     {
         public Texture TabIcon { get; } = KResourceLoader.LoadTextureKwytto(CommonsSpriteNames.K45_FontIcon);
 
@@ -31,7 +31,7 @@ namespace WriteEverywhere.UI
 
         }
 
-        public bool DrawArea(Vector2 tabAreaSize, ref BoardTextDescriptorGeneralXml currentItem, int currentItemIdx, bool isEditable)
+        public bool DrawArea(Vector2 tabAreaSize, ref TextToWriteOnXml currentItem, int currentItemIdx, bool isEditable)
         {
             var item = currentItem;
             switch (CurrentLocalState)
@@ -48,7 +48,7 @@ namespace WriteEverywhere.UI
             return false;
         }
 
-        private void NormalDraw(Vector2 tabAreaSize, BoardTextDescriptorGeneralXml item, bool isEditable)
+        private void NormalDraw(Vector2 tabAreaSize, TextToWriteOnXml item, bool isEditable)
         {
             GUILayout.Label($"<i>{Str.WTS_FONTFACE_SETTINGS}</i>");
             bool useContrast = item.ColoringConfig.UseContrastColor;
@@ -115,7 +115,7 @@ namespace WriteEverywhere.UI
             setResult(FontServer.instance.GetAllFonts().Where(x => searchText.IsNullOrWhiteSpace() ? true : LocaleManager.cultureInfo.CompareInfo.IndexOf(x, searchText, CompareOptions.IgnoreCase) >= 0).OrderBy(x => x).ToArray());
             yield return 0;
         }
-        private void OnSelectFont(BoardTextDescriptorGeneralXml item, string fontName) => item.m_overrideFont = fontName;
+        private void OnSelectFont(TextToWriteOnXml item, string fontName) => item.m_overrideFont = fontName;
         #endregion
     }
 }

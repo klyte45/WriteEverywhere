@@ -10,10 +10,10 @@ using WriteEverywhere.Xml;
 
 namespace WriteEverywhere.UI
 {
-    internal class GeneralWritingEditorGeneralTab : IGUITab<BoardTextDescriptorGeneralXml>
+    internal class GeneralWritingEditorGeneralTab : IGUITab<TextToWriteOnXml>
     {
-        private readonly Func<BoardTextDescriptorGeneralXml[]> listGetter;
-        public GeneralWritingEditorGeneralTab(Func<BoardTextDescriptorGeneralXml[]> listGetter)
+        private readonly Func<TextToWriteOnXml[]> listGetter;
+        public GeneralWritingEditorGeneralTab(Func<TextToWriteOnXml[]> listGetter)
         {
             this.listGetter = listGetter;
             m_deleteItem = KResourceLoader.LoadTextureKwytto(CommonsSpriteNames.K45_Delete);
@@ -31,7 +31,7 @@ namespace WriteEverywhere.UI
         private string m_clipboard;
         private FooterBarStatus CurrentLibState => m_textItemLib.Status;
 
-        private readonly GUIXmlLib<WTSLibTextItem, BoardTextDescriptorGeneralXml> m_textItemLib = new GUIXmlLib<WTSLibTextItem, BoardTextDescriptorGeneralXml>()
+        private readonly GUIXmlLib<WTSLibTextItem, TextToWriteOnXml> m_textItemLib = new GUIXmlLib<WTSLibTextItem, TextToWriteOnXml>()
         {
             NameAskingI18n = Str.WTS_EXPORTDATA_NAMEASKING,
             NameAskingOverwriteI18n = Str.WTS_EXPORTDATA_NAMEASKING_OVERWRITE,
@@ -40,12 +40,12 @@ namespace WriteEverywhere.UI
 
         public Texture TabIcon { get; } = KResourceLoader.LoadTextureKwytto(CommonsSpriteNames.K45_Settings);
 
-        public bool DrawArea(Vector2 tabAreaRect, ref BoardTextDescriptorGeneralXml currentItem, int currentItemIdx, bool canEdit)
+        public bool DrawArea(Vector2 tabAreaRect, ref TextToWriteOnXml currentItem, int currentItemIdx, bool canEdit)
         {
             GUILayout.Label($"<i>{Str.WTS_GENERAL_SETTINGS}</i>");
             var item = currentItem;
             var hasChanges = false;
-            var wrapper = new Wrapper<BoardTextDescriptorGeneralXml>(item);
+            var wrapper = new Wrapper<TextToWriteOnXml>(item);
 
             if (CurrentLibState == FooterBarStatus.AskingToImport)
             {
@@ -85,17 +85,18 @@ namespace WriteEverywhere.UI
                         }, GUILayout.Height(40));
                         GUI.tooltip = "";
                     }
-                    //bool changed = GUIKwyttoCommons.AddVector3Field(tabAreaRect.x, ref WTSUtils.axisRotationTG, "ROT VEC TG", "ROTATIOON", true, -1, 1);
-                    //changed |= GUIKwyttoCommons.AddFloatField(tabAreaRect.x, "ROT DEG TG", ref WTSUtils.degRotationTG, true, -180, 180);
-                    //changed |= GUIKwyttoCommons.AddVector3Field(tabAreaRect.x, ref WTSUtils.axisRotationN, "ROT VEC NM", "ROTATIOON2", true, -1, 1);
-                    //changed |= GUIKwyttoCommons.AddFloatField(tabAreaRect.x, "ROT DEG NM", ref WTSUtils.degRotationN, true, -180, 180);
-                    //if (changed)
-                    //{
-                    //    foreach (var board in listGetter())
-                    //    {
-                    //        board.BackgroundMeshSettings.FrameMeshSettings.GlassSpecularLevel = board.BackgroundMeshSettings.FrameMeshSettings.GlassSpecularLevel;
-                    //    }
-                    //}
+                    bool changed = GUIKwyttoCommons.AddVector3Field(tabAreaRect.x, ref WTSUtils.axisRotationTG, "ROT VEC TG", "ROTATIOON", true, -1, 1);
+                    changed |= GUIKwyttoCommons.AddFloatField(tabAreaRect.x, "ROT DEG TG", ref WTSUtils.degRotationTG, true, -180, 180);
+                    changed |= GUIKwyttoCommons.AddVector3Field(tabAreaRect.x, ref WTSUtils.axisRotationN, "ROT VEC NM", "ROTATIOON2", true, -1, 1);
+                    changed |= GUIKwyttoCommons.AddFloatField(tabAreaRect.x, "ROT DEG NM", ref WTSUtils.degRotationN, true, -180, 180);
+                    changed |= GUIKwyttoCommons.AddVector4Field(tabAreaRect.x, WTSUtils.tangent, "ROT VEC NM", "ROTATIOON2", out WTSUtils.tangent, true, -1, 1);
+                    if (changed)
+                    {
+                        foreach (var board in listGetter())
+                        {
+                            board.BackgroundMeshSettings.FrameMeshSettings.GlassSpecularLevel = board.BackgroundMeshSettings.FrameMeshSettings.GlassSpecularLevel;
+                        }
+                    }
                 }
             }
             if (wrapper.Value != item)
@@ -109,21 +110,21 @@ namespace WriteEverywhere.UI
             }
         }
 
-        private void ChangeName(string x, BoardTextDescriptorGeneralXml item) => item.SaveName = x;
+        private void ChangeName(string x, TextToWriteOnXml item) => item.SaveName = x;
 
         public void Reset() => m_textItemLib.ResetStatus();
 
         #region Action buttons
         private void ExportLayout() => m_textItemLib.GoToExport();
         private void ImportLayout() => m_textItemLib.GoToImport();
-        private void PasteFromClipboard(Wrapper<BoardTextDescriptorGeneralXml> wrapper)
+        private void PasteFromClipboard(Wrapper<TextToWriteOnXml> wrapper)
         {
-            var item = XmlUtils.DefaultXmlDeserialize<BoardTextDescriptorGeneralXml>(m_clipboard);
+            var item = XmlUtils.DefaultXmlDeserialize<TextToWriteOnXml>(m_clipboard);
             item.SaveName = wrapper.Value.SaveName;
             wrapper.Value = item;
         }
 
-        private void CopyToClipboard(BoardTextDescriptorGeneralXml item) => m_clipboard = XmlUtils.DefaultXmlSerialize(item);
+        private void CopyToClipboard(TextToWriteOnXml item) => m_clipboard = XmlUtils.DefaultXmlSerialize(item);
 
         #endregion
     }

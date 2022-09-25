@@ -143,7 +143,7 @@ namespace WriteEverywhere.Xml
         }
 
 
-        internal BasicRenderInformation GetTargetText(BaseWriteOnXml instance, BoardTextDescriptorGeneralXml textDescriptor, DynamicSpriteFont targetFont, ushort refId, int secRefId, int tercRefId, out IEnumerable<BasicRenderInformation> multipleOutput)
+        internal BasicRenderInformation GetTargetText(WriteOnBuildingXml propGroupDescriptor, BaseWriteOnXml instance, TextToWriteOnXml textDescriptor, DynamicSpriteFont targetFont, ushort refId, int secRefId, int tercRefId, out IEnumerable<BasicRenderInformation> multipleOutput)
         {
             string targetStr = m_originalCommand;
             switch (instance)
@@ -152,7 +152,7 @@ namespace WriteEverywhere.Xml
                     targetStr = GetTargetTextForNet(cc, refId, textDescriptor, out multipleOutput);
                     break;
                 case WriteOnBuildingPropXml bd:
-                    targetStr = GetTargetTextForBuilding(bd, refId, textDescriptor, out multipleOutput);
+                    targetStr = GetTargetTextForBuilding(propGroupDescriptor, bd, refId, textDescriptor, out multipleOutput);
                     break;
                 case LayoutDescriptorVehicleXml ve:
                     targetStr = GetTargetTextForVehicle(refId, textDescriptor, out multipleOutput);
@@ -166,7 +166,7 @@ namespace WriteEverywhere.Xml
 
 
 
-        public string GetTargetTextForBuilding(WriteOnBuildingPropXml buildingDescriptor, ushort buildingId, BoardTextDescriptorGeneralXml textDescriptor, out IEnumerable<BasicRenderInformation> multipleOutput)
+        public string GetTargetTextForBuilding(WriteOnBuildingXml propGroupDescriptor, WriteOnBuildingPropXml buildingDescriptor, ushort buildingId, TextToWriteOnXml textDescriptor, out IEnumerable<BasicRenderInformation> multipleOutput)
         {
             multipleOutput = null;
             switch (type)
@@ -182,7 +182,7 @@ namespace WriteEverywhere.Xml
                     }
                     break;
                 case VariableType.Parameter:
-                    var buildingParam = WTSBuildingData.Instance.Parameters.TryGetValue(buildingId, out var parameter) ? parameter : null;
+                    var buildingParam = WTSBuildingData.Instance.Parameters.TryGetValue(Building.FindParentBuilding(buildingId), out var parameter) ? parameter : null;
                     if (buildingParam == null || buildingParam.TextParameters.Count == 0)
                     {
                         return "<NO PARAMS SET FOR BUILDING!>";
@@ -197,7 +197,7 @@ namespace WriteEverywhere.Xml
                         Text:
                             if (buildingParam.GetParameter(paramIdx) is TextParameterWrapper tpw)
                             {
-                                var result = tpw.GetTargetText(buildingDescriptor, textDescriptor, TextParameterWrapper.GetTargetFont(buildingDescriptor, textDescriptor), buildingId, 0, 0, out multipleOutput);
+                                var result = tpw.GetTargetText(propGroupDescriptor, buildingDescriptor, textDescriptor, TextParameterWrapper.GetTargetFont(propGroupDescriptor, buildingDescriptor, textDescriptor), buildingId, 0, 0, out multipleOutput);
                                 if (result is null && (multipleOutput is null || multipleOutput?.Count() == 0))
                                 {
                                     return $"<EMPTY PARAM#{paramIdx} NOT SET>";
@@ -254,7 +254,7 @@ namespace WriteEverywhere.Xml
             return m_originalCommand;
         }
 
-        public string GetTargetTextForVehicle(ushort vehicleId, BoardTextDescriptorGeneralXml textDescriptor, out IEnumerable<BasicRenderInformation> multipleOutput)
+        public string GetTargetTextForVehicle(ushort vehicleId, TextToWriteOnXml textDescriptor, out IEnumerable<BasicRenderInformation> multipleOutput)
         {
             multipleOutput = null;
             switch (type)
@@ -278,7 +278,7 @@ namespace WriteEverywhere.Xml
             return m_originalCommand;
         }
 
-        internal string GetTargetTextForNet(BaseWriteOnXml descriptor, ushort segmentId, BoardTextDescriptorGeneralXml textDescriptor, out IEnumerable<BasicRenderInformation> multipleOutput)
+        internal string GetTargetTextForNet(BaseWriteOnXml descriptor, ushort segmentId, TextToWriteOnXml textDescriptor, out IEnumerable<BasicRenderInformation> multipleOutput)
         {
             multipleOutput = null;
             var propDescriptor = descriptor as OnNetInstanceCacheContainerXml;
@@ -312,7 +312,7 @@ namespace WriteEverywhere.Xml
                         Text:
                             if (propDescriptor.GetParameter(paramIdx) is TextParameterWrapper tpw)
                             {
-                                var result = tpw.GetTargetText(descriptor, textDescriptor, TextParameterWrapper.GetTargetFont(descriptor, textDescriptor), segmentId, 0, 0, out multipleOutput);
+                                var result = tpw.GetTargetText(null, descriptor, textDescriptor, TextParameterWrapper.GetTargetFont(null, propDesc: descriptor, textDesc: textDescriptor), segmentId, 0, 0, out multipleOutput);
                                 if (result is null && (multipleOutput is null || multipleOutput?.Count() == 0))
                                 {
                                     return $"<EMPTY PARAM#{paramIdx} NOT SET>";

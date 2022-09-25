@@ -1,6 +1,7 @@
 using ColossalFramework;
 using FontStashSharp;
 using Kwytto.Utils;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using WriteEverywhere;
@@ -98,10 +99,11 @@ namespace SpriteFontPlus
             }
         }
 
-        public DynamicSpriteFont FirstOf(IEnumerable<string> names)
+        public DynamicSpriteFont FirstOf(IEnumerable<Func<string>> names)
         {
-            foreach (var idx in names)
+            foreach (var run in names)
             {
+                var idx = run();
                 if (idx != null)
                 {
                     if (m_fontRegistered.TryGetValue(Aliases.TryGetValue(idx, out string alias) ? alias : idx, out DynamicSpriteFont value))

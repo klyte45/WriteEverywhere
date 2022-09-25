@@ -103,8 +103,6 @@ namespace WriteEverywhere.Data
         {
             switch (renderingClass)
             {
-                //    case TextRenderingClass.RoadNodes:
-                //        return WTSRoadNodesData.Instance.DefaultFont;
                 case TextRenderingClass.Buildings:
                     return WTSBuildingData.Instance.DefaultFont;
                 case TextRenderingClass.PlaceOnNet:
@@ -118,10 +116,9 @@ namespace WriteEverywhere.Data
         {
             switch (renderingClass)
             {
-                //    case TextRenderingClass.RoadNodes:
-                //        return WTSRoadNodesData.Instance.DefaultFont;
-                //    case TextRenderingClass.Buildings:
-                //        return WTSBuildingsData.Instance.DefaultFont;
+                case TextRenderingClass.Buildings:
+                    WTSBuildingData.Instance.DefaultFont = newVal;
+                    return;
                 case TextRenderingClass.PlaceOnNet:
                     WTSOnNetData.Instance.DefaultFont = newVal;
                     return;

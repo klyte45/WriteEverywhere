@@ -9,7 +9,7 @@ using WriteEverywhere.Xml;
 
 namespace WriteEverywhere.UI
 {
-    internal class GeneralWritingEditorPositionsSizesTab : IGUITab<BoardTextDescriptorGeneralXml>
+    internal class GeneralWritingEditorPositionsSizesTab : IGUITab<TextToWriteOnXml>
     {
         private readonly string[] m_cloneOptionsStr = EnumI18nExtensions.GetAllValuesI18n<YCloneType>();
         private readonly YCloneType[] m_cloneOptions = Enum.GetValues(typeof(YCloneType)).Cast<YCloneType>().ToArray();
@@ -21,7 +21,7 @@ namespace WriteEverywhere.UI
         }
         public Texture TabIcon { get; } = KResourceLoader.LoadTextureKwytto(CommonsSpriteNames.K45_MoveCross);
 
-        public bool DrawArea(Vector2 tabAreaSize, ref BoardTextDescriptorGeneralXml currentItem, int currentItemIdx, bool isEditable)
+        public bool DrawArea(Vector2 tabAreaSize, ref TextToWriteOnXml currentItem, int currentItemIdx, bool isEditable)
         {
             GUILayout.Label($"<i>{Str.WTS_TEXT_SIZE_ATTRIBUTES}</i>");
             var item = currentItem;

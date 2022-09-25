@@ -6,7 +6,7 @@ using WriteEverywhere.Xml;
 
 namespace WriteEverywhere.UI
 {
-    internal class GeneralWritingEditorBoxSettingsTab : WTSBaseParamsTab<BoardTextDescriptorGeneralXml>
+    internal class GeneralWritingEditorBoxSettingsTab : WTSBaseParamsTab<TextToWriteOnXml>
     {
 
         private readonly GUIColorPicker m_picker;
@@ -21,7 +21,7 @@ namespace WriteEverywhere.UI
 
         public override Texture TabIcon { get; } = GUIKwyttoCommons.GetByNameFromDefaultAtlas("ToolbarIconProps");
 
-        protected override void DrawListing(Vector2 tabAreaSize, BoardTextDescriptorGeneralXml item, bool isEditable)
+        protected override void DrawListing(Vector2 tabAreaSize, TextToWriteOnXml item, bool isEditable)
         {
             GUILayout.Label($"<i>{Str.WTS_BACKGROUNDANDBOX_SETTINGS}</i>");
             using (var scroll = new GUILayout.ScrollViewScope(m_scrollPos))
@@ -76,7 +76,6 @@ namespace WriteEverywhere.UI
                             {
                                 GUIKwyttoCommons.AddColorPicker(Str.WTS_BOXMESH_OUTERCOLOR, m_picker, ref item.BackgroundMeshSettings.FrameMeshSettings.m_cachedOutsideColor, isEditable);
                             }
-                            GUIKwyttoCommons.AddColorPicker(Str.we_generalTextEditor_boxInnerColor, m_picker, ref item.BackgroundMeshSettings.FrameMeshSettings.m_cachedInsideColor, isEditable);
                             changedFrame |= GUIKwyttoCommons.AddColorPicker(Str.WTS_TEXT_CONTAINERGLASSCOLOR, m_picker, ref item.BackgroundMeshSettings.FrameMeshSettings.m_cachedGlassColor, isEditable);
 
                             GUILayout.Space(10);
@@ -101,8 +100,8 @@ namespace WriteEverywhere.UI
             }
         }
 
-        protected override string GetAssetName(BoardTextDescriptorGeneralXml item) => m_infoGetter()?.name;
-        protected override void SetTextParameter(BoardTextDescriptorGeneralXml item, int currentEditingParam, string paramValue)
+        protected override string GetAssetName(TextToWriteOnXml item) => m_infoGetter()?.name;
+        protected override void SetTextParameter(TextToWriteOnXml item, int currentEditingParam, string paramValue)
         {
             item.BackgroundMeshSettings.SetBgImage(paramValue);
         }

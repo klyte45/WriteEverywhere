@@ -33,16 +33,18 @@ namespace WriteEverywhere
 
         #region Tool Access
         public RoadSegmentTool RoadSegmentToolInstance => ToolsModifierControl.toolController.GetComponent<RoadSegmentTool>();
+        public BuildingEditorTool BuildingToolInstance => ToolsModifierControl.toolController.GetComponent<BuildingEditorTool>();
         #endregion
 
         #region Shader
-        public WTSShaderLibrary ShaderLib => WTSShaderLibrary.instance;
-        public Shader defaultTextShader { get; private set; } = WTSShaderLibrary.instance.GetShaders().TryGetValue("klyte/wts/wtsshader", out Shader value) ? value : value;
+        public WEAssetLibrary ShaderLib => WEAssetLibrary.instance;
+        public Shader defaultTextShader { get; private set; } = WEAssetLibrary.instance.GetShaders().TryGetValue("klyte/wts/wtsshader", out Shader value) ? value : value;
+        public Shader defaultFrameShader { get; private set; } = Shader.Find("Custom/Buildings/Building/NoBase");
         public Shader defaultHighlightShader { get; private set; } = Shader.Find("Hidden/InternalErrorShader");
 
         public static Shader GetDefaultFrameShader()
         {
-            return WTSShaderLibrary.instance.GetShaders().TryGetValue("klyte/wts/wtsshaderframe", out Shader value) ? value : value;
+            return WEAssetLibrary.instance.GetShaders().TryGetValue("klyte/wts/wtsshaderframe", out Shader value) ? value : value;
         }
         public Material highlightMaterial { get; private set; }
         #endregion
@@ -143,14 +145,20 @@ namespace WriteEverywhere
 
         public static FontServer fontServer = FontServer.instance;
         public static Material ___OUTSIDE_MAT { get => WETextRenderer.m_outsideMaterial; set => WETextRenderer.m_outsideMaterial = value; }
+        public static Vector2[] __cachedUvFrame;
+        public static Vector2[] __cachedUvGlass;
+        public static Material m_rotorMaterial;
+        public static Material m_outsideMaterial;
+        public static float __constMultiplierVertex = 100;
+
         public static bool ___RELOADSH
         {
             get => false; set
             {
                 if (value)
                 {
-                    WTSShaderLibrary.instance.ReloadFromDisk();
-                    ModInstance.Controller.defaultTextShader = WTSShaderLibrary.instance.GetShaders().TryGetValue("klyte/wts/wtsshader", out var x) ? x : null;
+                    WEAssetLibrary.instance.ReloadFromDisk();
+                    ModInstance.Controller.defaultTextShader = WEAssetLibrary.instance.GetShaders().TryGetValue("klyte/wts/wtsshader", out var x) ? x : null;
                     ReloadFontsFromPath();
                     ModInstance.Controller.AtlasesLibrary.LoadImagesFromLocalFolders();
                     WETextRenderer.m_outsideMaterial = null;

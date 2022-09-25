@@ -90,10 +90,10 @@ namespace WriteEverywhere.Xml
         public ref string RefFontName => ref fontName;
 
         [XmlElement("textDescriptor")]
-        public BoardTextDescriptorGeneralXml[] TextDescriptors { get => textDescriptors; set => textDescriptors = value ?? new BoardTextDescriptorGeneralXml[0]; }
-        private BoardTextDescriptorGeneralXml[] textDescriptors = new BoardTextDescriptorGeneralXml[0];
+        public TextToWriteOnXml[] TextDescriptors { get => textDescriptors; set => textDescriptors = value ?? new TextToWriteOnXml[0]; }
+        private TextToWriteOnXml[] textDescriptors = new TextToWriteOnXml[0];
         [XmlIgnore]
-        public ref BoardTextDescriptorGeneralXml[] RefTextDescriptors => ref textDescriptors;
+        public ref TextToWriteOnXml[] RefTextDescriptors => ref textDescriptors;
 
         [XmlAttribute("simplePropName")]
         public string m_simplePropName;

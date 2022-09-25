@@ -1,14 +1,9 @@
 ﻿extern alias VS;
-
-using ColossalFramework;
 using Kwytto.Interfaces;
 using Kwytto.Utils;
-using System.Collections.Generic;
-using System;
 using System.Xml;
 using System.Xml.Serialization;
 using UnityEngine;
-using System.Linq;
 
 namespace WriteEverywhere.Xml
 {
@@ -32,10 +27,10 @@ namespace WriteEverywhere.Xml
         public ref string RefFontName => ref fontName;
 
         [XmlElement("textDescriptor")]
-        public BoardTextDescriptorGeneralXml[] TextDescriptors { get => textDescriptors; set => textDescriptors = value ?? new BoardTextDescriptorGeneralXml[0]; }
-        private BoardTextDescriptorGeneralXml[] textDescriptors = new BoardTextDescriptorGeneralXml[0];
+        public TextToWriteOnXml[] TextDescriptors { get => textDescriptors; set => textDescriptors = value ?? new TextToWriteOnXml[0]; }
+        private TextToWriteOnXml[] textDescriptors = new TextToWriteOnXml[0];
         [XmlIgnore]
-        public ref BoardTextDescriptorGeneralXml[] RefTextDescriptors => ref textDescriptors;
+        public ref TextToWriteOnXml[] RefTextDescriptors => ref textDescriptors;
 
         [XmlAttribute("simplePropName")]
         public string m_simplePropName;
@@ -115,9 +110,9 @@ namespace WriteEverywhere.Xml
         public bool UseFixedIfMultiline { get; set; } = true;
 
         [XmlAttribute("subBuildingIdxPivotReference")]
-        public int SubBuildingPivotReference { get; set; } = -1;
-       
-        private Vector3Xml m_arrayRepeat = new Vector3Xml();     
+        public int SubBuildingPivotReference { get; set; } = 0;
+
+        private Vector3Xml m_arrayRepeat = new Vector3Xml();
 
     }
 }

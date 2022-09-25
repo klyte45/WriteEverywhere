@@ -171,7 +171,7 @@ namespace WriteEverywhere.Singleton
             ushort currentSelectedInstanceId = CalculateCurrentSelection(ref vehicle, vehicleId);
             for (int j = 0; j < targetDescriptor.TextDescriptors.Length; j++)
             {
-                if (targetDescriptor.TextDescriptors[j] is BoardTextDescriptorGeneralXml descriptor && cameraInfo.CheckRenderDistance(position, WETextRenderer.RENDER_DISTANCE_FACTOR * descriptor.TextLineHeight * (descriptor.IlluminationConfig?.IlluminationType == MaterialType.OPAQUE ? 1 : 2)))
+                if (targetDescriptor.TextDescriptors[j] is TextToWriteOnXml descriptor && cameraInfo.CheckRenderDistance(position, WETextRenderer.RENDER_DISTANCE_FACTOR * descriptor.TextLineHeight * (descriptor.IlluminationConfig?.IlluminationType == MaterialType.OPAQUE ? 1 : 2)))
                 {
                     var flags = vehicle.m_flags;
                     if ((flags & Vehicle.Flags.Inverted) != 0)
@@ -180,7 +180,8 @@ namespace WriteEverywhere.Singleton
                     }
                     var parentColor = vehicle.Info.m_vehicleAI.GetColor(vehicleId, ref vehicle, InfoManager.InfoMode.None);
                     bool currentTextSelected = !hasFixedCamera && WTSVehicleLiteUI.Instance.Visible && currentSelectedInstanceId == vehicleId && j == WTSVehicleLiteUI.Instance.CurrentTextSel;
-                    var textPos = WETextRenderer.RenderTextMesh(vehicleId,
+                    var textPos = WETextRenderer.RenderTextMesh(null,
+                          vehicleId,
                           0,
                           0,
                           ref parentColor,

@@ -54,7 +54,7 @@
             {
                 if (abbreviated is null)
                 {
-                    abbreviated = value;// Use ADR bridge!!!
+                    abbreviated = value;//TODO: Use ADR bridge!!!
                 }
                 return abbreviated;
             }

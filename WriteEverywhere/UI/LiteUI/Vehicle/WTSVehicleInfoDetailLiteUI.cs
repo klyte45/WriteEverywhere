@@ -57,7 +57,7 @@ namespace WriteEverywhere.UI
         private readonly GUIColorPicker m_colorPicker;
         private readonly GUIRootWindowBase m_root;
 
-        private readonly GUIBasicListingTabsContainer<BoardTextDescriptorGeneralXml> m_tabsContainer;
+        private readonly GUIBasicListingTabsContainer<TextToWriteOnXml> m_tabsContainer;
 
         private string m_clipboard;
         private string[] m_cachedItemList;
@@ -105,7 +105,7 @@ namespace WriteEverywhere.UI
 
             var root = colorPicker.GetComponentInParent<GUIRootWindowBase>();
             GeneralWritingEditorPositionsSizesTab positionTab;
-            var tabs = new IGUITab<BoardTextDescriptorGeneralXml>[]{
+            var tabs = new IGUITab<TextToWriteOnXml>[]{
                     new GeneralWritingEditorGeneralTab(()=> m_currentLayout.TextDescriptors),
                     positionTab = new GeneralWritingEditorPositionsSizesTab(root),
                     new GeneralWritingEditorForegroundTab(m_colorPicker),
@@ -113,7 +113,7 @@ namespace WriteEverywhere.UI
                     new GeneralWritingEditorIlluminationTab(m_colorPicker),
                     new GeneralWritingEditorContentTab(m_colorPicker, ()=> m_currentInfo, TextRenderingClass.Vehicle)
                     };
-            m_tabsContainer = new GUIBasicListingTabsContainer<BoardTextDescriptorGeneralXml>(
+            m_tabsContainer = new GUIBasicListingTabsContainer<TextToWriteOnXml>(
                 tabs,
                 OnAddItem,
                 GetList,
@@ -122,15 +122,15 @@ namespace WriteEverywhere.UI
             m_tabsContainer.EventListItemChanged += OnTabChanged;
         }
 
-        private BoardTextDescriptorGeneralXml GetCurrentItem(int arg) => m_currentLayout.TextDescriptors[arg] as BoardTextDescriptorGeneralXml;
+        private TextToWriteOnXml GetCurrentItem(int arg) => m_currentLayout.TextDescriptors[arg] as TextToWriteOnXml;
         private string[] GetList() => m_cachedItemList;
         private void OnAddItem()
         {
-            m_currentLayout.TextDescriptors = m_currentLayout.TextDescriptors.Concat(new[] { new BoardTextDescriptorGeneralXml() { SaveName = "NEW" } }).ToArray();
+            m_currentLayout.TextDescriptors = m_currentLayout.TextDescriptors.Concat(new[] { new TextToWriteOnXml() { SaveName = "NEW" } }).ToArray();
             m_cachedItemList = m_currentLayout?.TextDescriptors.Select(x => x.SaveName).ToArray();
         }
 
-        private void SetCurrentItem(int arg, BoardTextDescriptorGeneralXml val)
+        private void SetCurrentItem(int arg, TextToWriteOnXml val)
         {
             if (val is null)
             {
