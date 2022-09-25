@@ -13,7 +13,7 @@ using WriteEverywhere.Localization;
 namespace WriteEverywhere.Data
 {
 
-    [XmlRoot("WTSOnNetData")]
+    [XmlRoot("OnNetData")]
     public class WTSOnNetData : DataExtensionBase<WTSOnNetData>
     {
         [XmlIgnore]
@@ -44,7 +44,7 @@ namespace WriteEverywhere.Data
             }
         }
 
-        public override string SaveId => "K45_WE_WTSOnNetData";
+        public override string SaveId => "K45_WE_OnNetData";
 
 
 

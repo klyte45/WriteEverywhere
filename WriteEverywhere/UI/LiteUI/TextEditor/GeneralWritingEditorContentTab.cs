@@ -5,7 +5,6 @@ using System;
 using System.Linq;
 using UnityEngine;
 using WriteEverywhere.Localization;
-using WriteEverywhere.Rendering;
 using WriteEverywhere.Xml;
 
 namespace WriteEverywhere.UI
@@ -41,13 +40,21 @@ namespace WriteEverywhere.UI
                 case TextContent.ParameterizedSpriteSingle:
                     var param = item.Value;
                     GUIKwyttoCommons.AddButtonSelector(tabAreaSize.x, Str.WTS_CONTENT_TEXTVALUE, param is null ? GUIKwyttoCommons.v_null : param.IsEmpty ? GUIKwyttoCommons.v_empty : param.ToString(), () => OnGoToPicker(currentItem, -1), isEditable);
+                    if (param?.IsParameter ?? false)
+                    {
+                        GUIKwyttoCommons.TextWithLabel(tabAreaSize.x, Str.we_generalTextEditor_labelForParamListing, item.ParameterDisplayName, (x) => item.ParameterDisplayName = x, isEditable);
+                    }
                     break;
                 case TextContent.TextParameterSequence:
                     if (item.ParameterSequence is null)
                     {
                         item.ParameterSequence = new TextParameterSequence(new[] { new TextParameterSequenceItem("", m_targetRenderingClass) }, m_targetRenderingClass);
                     }
-                    var paramSeq = item.ParameterSequence;
+                    var paramSeq = item.ParameterSequence; 
+                    if (paramSeq.Any(x=>x.IsParameter))
+                    {
+                        GUIKwyttoCommons.TextWithLabel(tabAreaSize.x, Str.we_generalTextEditor_labelForParamListing, item.ParameterDisplayName, (x) => item.ParameterDisplayName = x, isEditable);
+                    }
                     using (new GUILayout.HorizontalScope())
                     {
                         GUILayout.Label("#", GUILayout.Width(25));

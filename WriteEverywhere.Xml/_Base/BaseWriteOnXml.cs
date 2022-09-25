@@ -1,5 +1,6 @@
 ﻿using Kwytto.Interfaces;
 using Kwytto.Utils;
+using System.Collections;
 using System.Xml;
 using System.Xml.Serialization;
 using UnityEngine;
@@ -23,26 +24,28 @@ namespace WriteEverywhere.Xml
         public Vector3Xml PropPosition
         {
             get => m_propPosition;
-            set { m_propPosition = value; OnChangeMatrixData(); }
+            set { m_propPosition = value; BasicIUserMod.Instance.RequireRunCoroutine("OnChangeMatrixData", OnChangeMatrixData()); }
         }
         [XmlElement("rotation")]
         public Vector3Xml PropRotation
         {
             get => m_propRotation;
-            set { m_propRotation = value; OnChangeMatrixData(); }
+            set { m_propRotation = value; BasicIUserMod.Instance.RequireRunCoroutine("OnChangeMatrixData", OnChangeMatrixData()); }
         }
         [XmlElement("scale")]
         public Vector3Xml Scale
         {
             get => m_scale;
-            set { m_scale = value; OnChangeMatrixData(); }
+            set { m_scale = value; BasicIUserMod.Instance.RequireRunCoroutine("OnChangeMatrixData", OnChangeMatrixData()); }
         }
 
-        public virtual void OnChangeMatrixData()
+        public virtual IEnumerator OnChangeMatrixData()
         {
+            yield return null;
             for (int i = 0; i < 32; i++)
             {
                 RenderManager.instance.UpdateGroups(i);
+                yield return null;
             }
         }
 

@@ -5,7 +5,7 @@ using WriteEverywhere.Xml;
 
 namespace WriteEverywhere.Data
 {
-    [XmlRoot("WTSEtcData")]
+    [XmlRoot("EtcData")]
     public class WTSEtcData : DataExtensionBase<WTSEtcData>
     {
         public override string SaveId => "K45_WE_EtcData";

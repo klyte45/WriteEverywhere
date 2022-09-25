@@ -221,7 +221,12 @@ namespace WriteEverywhere.UI
         }
         private void DrawParamEditor(Vector2 size)
         {
-            m_paramsUI.DrawArea(size, WTSBuildingData.Instance.Parameters.TryGetValue(Building.FindParentBuilding(CurrentGrabbedId), out var paramData) ? paramData : new BuildingParametersData(), true);
+            ushort parent = WTSBuildingPropsSingleton.FindParentBuilding(CurrentGrabbedId);
+            if (!WTSBuildingData.Instance.Parameters.TryGetValue(parent, out var paramData))
+            {
+                WTSBuildingData.Instance.Parameters[parent] = paramData = new BuildingParametersData();
+            }
+            m_paramsUI.DrawArea(size, paramData, true);
         }
         protected override void OnWindowDestroyed() => Destroy(m_colorPicker);
 

@@ -5,10 +5,10 @@ using WriteEverywhere.Xml;
 
 namespace WriteEverywhere.Data
 {
-    [XmlRoot("WTSHighwayShieldsData")]
+    [XmlRoot("HighwayShieldsData")]
     public class WTSHighwayShieldsData : DataExtensionBase<WTSHighwayShieldsData>
     {
-        public override string SaveId => "K45_WTS_WTSHighwayShieldsData";
+        public override string SaveId => "K45_WTS_HighwayShieldsData";
         [XmlElement]
         public SimpleXmlDictionary<string, HighwayShieldDescriptor> CityDescriptors = new SimpleXmlDictionary<string, HighwayShieldDescriptor>();
         [XmlIgnore]

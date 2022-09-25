@@ -215,7 +215,7 @@ namespace WriteEverywhere.Xml
                     ()=>   textDesc.m_overrideFont,
                     ()=>   WTSEtcData.Instance.FontSettings.GetTargetFont(textDesc.m_fontClass),
                     ()=>   propDesc.DescriptorOverrideFont,
-                    ()=>   propGroup.FontName,
+                    ()=>   propGroup?.FontName,
                     ()=>   WTSEtcData.Instance.FontSettings.GetTargetFont(propDesc.RenderingClass),
                     ()=>   MainController.DEFAULT_FONT_KEY,
             });

@@ -21,7 +21,7 @@ namespace WriteEverywhere.Xml
             get => m_pivotPosition; set
             {
                 m_pivotPosition = value;
-                OnChangeMatrixData();
+                BasicIUserMod.Instance.RequireRunCoroutine("OnChangeMatrixData", OnChangeMatrixData());
             }
         }
         [XmlAttribute("segmentPosition")]
@@ -30,7 +30,7 @@ namespace WriteEverywhere.Xml
             get => m_segmentPosition; set
             {
                 m_segmentPosition = value;
-                OnChangeMatrixData();
+                BasicIUserMod.Instance.RequireRunCoroutine("OnChangeMatrixData", OnChangeMatrixData());
             }
         }
         [XmlAttribute("segmentPositionStart")]
@@ -39,7 +39,7 @@ namespace WriteEverywhere.Xml
             get => m_segmentPositionStart; set
             {
                 m_segmentPositionStart = value;
-                OnChangeMatrixData();
+                BasicIUserMod.Instance.RequireRunCoroutine("OnChangeMatrixData", OnChangeMatrixData());
             }
         }
         [XmlAttribute("segmentPositionEnd")]
@@ -48,7 +48,7 @@ namespace WriteEverywhere.Xml
             get => m_segmentPositionEnd; set
             {
                 m_segmentPositionEnd = value;
-                OnChangeMatrixData();
+                BasicIUserMod.Instance.RequireRunCoroutine("OnChangeMatrixData", OnChangeMatrixData());
             }
         }
         [XmlAttribute("segmentPositionsRepeatCount")]
@@ -57,7 +57,7 @@ namespace WriteEverywhere.Xml
             get => m_segmentPositionRepeat; set
             {
                 m_segmentPositionRepeat = value;
-                OnChangeMatrixData();
+                BasicIUserMod.Instance.RequireRunCoroutine("OnChangeMatrixData", OnChangeMatrixData());
             }
         }
         [XmlAttribute("segmentPositionsRepeating")]
@@ -66,7 +66,7 @@ namespace WriteEverywhere.Xml
             get => m_segmentRepeatItem; set
             {
                 m_segmentRepeatItem = value;
-                OnChangeMatrixData();
+                BasicIUserMod.Instance.RequireRunCoroutine("OnChangeMatrixData", OnChangeMatrixData());
             }
         }
 

@@ -82,7 +82,7 @@ namespace WriteEverywhere.Xml
             {
                 if (value != m_arrayRepeat)
                 {
-                    OnChangeMatrixData();
+                    BasicIUserMod.Instance.RequireRunCoroutine("OnChangeMatrixData", OnChangeMatrixData());
                 }
                 m_arrayRepeat = value;
             }
@@ -97,7 +97,7 @@ namespace WriteEverywhere.Xml
             {
                 if (value != m_arrayRepeatTimes)
                 {
-                    OnChangeMatrixData();
+                    BasicIUserMod.Instance.RequireRunCoroutine("OnChangeMatrixData", OnChangeMatrixData());
                 }
                 m_arrayRepeatTimes = value;
             }

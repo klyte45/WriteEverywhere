@@ -1,6 +1,4 @@
-﻿using WriteEverywhere.Rendering;
-
-namespace WriteEverywhere.Xml
+﻿namespace WriteEverywhere.Xml
 {
     public class TextParameterSequenceItem : IParameterizableVariable
     {
@@ -14,6 +12,7 @@ namespace WriteEverywhere.Xml
         public string GetValueAsUri() => Value.ToString();
 
         public int GetParamIdx() => Value.GetParamIdx;
+        public bool IsParameter => Value?.IsParameter ?? false;
         public TextParameterSequenceItem(string value, TextRenderingClass clazz, long length = 500)
         {
             m_length = length;

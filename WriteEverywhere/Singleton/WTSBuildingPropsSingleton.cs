@@ -164,12 +164,15 @@ namespace WriteEverywhere.Singleton
             {
                 if (!m_buildingStopsDescriptor.ContainsKey(refName))
                 {
-                    m_buildingStopsDescriptor[refName] = MapStopPoints(data.Info, 1f); //TODO: Thresold salvo em algum lugar
+                    StartCoroutine(DoMapStopPoints(refName, data.Info, 1f));//TODO: Thresold salvo em algum lugar
                 }
-                for (int i = 0; i < m_buildingStopsDescriptor[refName].Length; i++)
+                if (!(m_buildingStopsDescriptor[refName] is null))
                 {
-                    m_onOverlayRenderQueue.Add(Tuple.New(renderInstance.m_dataMatrix1.MultiplyPoint(m_buildingStopsDescriptor[refName][i].platformLine.Position(0.5f)),
-                           m_buildingStopsDescriptor[refName][i].width / 2, m_colorOrder[i % m_colorOrder.Length]));
+                    for (int i = 0; i < m_buildingStopsDescriptor[refName].Length; i++)
+                    {
+                        m_onOverlayRenderQueue.Add(Tuple.New(renderInstance.m_dataMatrix1.MultiplyPoint(m_buildingStopsDescriptor[refName][i].platformLine.Position(0.5f)),
+                               m_buildingStopsDescriptor[refName][i].width / 2, m_colorOrder[i % m_colorOrder.Length]));
+                    }
                 }
             }
             GetTargetDescriptor(refName, out _, out WriteOnBuildingXml targetDescriptor);
@@ -191,6 +194,19 @@ namespace WriteEverywhere.Singleton
                 }
             }
         }
+
+        private IEnumerator DoMapStopPoints(string refName, BuildingInfo info, float thresold)
+        {
+            m_buildingStopsDescriptor[refName] = null;
+            var result = new Wrapper<StopPointDescriptorLanes[]>();
+            yield return null;
+            yield return MapStopPoints(info, thresold, result);
+            m_buildingStopsDescriptor[refName] = result.Value;
+        }
+
+
+
+
         public static void AfterEndOverlayImpl(RenderManager.CameraInfo cameraInfo)
         {
 
@@ -283,8 +299,9 @@ namespace WriteEverywhere.Singleton
                 Data.BuildingCachedPositionsData[buildingID] = new PropLayoutCachedBuildingData[parentDescriptor.PropInstances.Length];
             }
             ref PropLayoutCachedBuildingData item = ref Data.BuildingCachedPositionsData[buildingID][idx];
-            if (item.m_buildingPositionWhenGenerated != data.m_position || (BuildingLiteUI.Instance.Visible == BuildingLiteUI.Instance.CurrentInfo == data.Info))
+            if (SimulationManager.instance.m_currentTickIndex % 10 == 0 && (item.m_buildingPositionWhenGenerated != data.m_position || (BuildingLiteUI.Instance.Visible && BuildingLiteUI.Instance.CurrentInfo == data.Info)))
             {
+                var isFromPositionChanged = item.m_buildingPositionWhenGenerated != data.m_position;
                 item.m_buildingPositionWhenGenerated = data.m_position;
                 if (targetDescriptor.SubBuildingPivotReference >= 0 && targetDescriptor.SubBuildingPivotReference < data.Info.m_subBuildings.Length)
                 {
@@ -294,14 +311,9 @@ namespace WriteEverywhere.Singleton
                     {
                         targetBuildingId = inst.m_buildings.m_buffer[targetBuildingId].m_subBuilding;
                     }
-                    if (RenderManager.instance.RequireInstance(targetBuildingId, 1u, out uint num))
-                    {
-                        item.m_cachedMatrix = RenderManager.instance.m_instances[num].m_dataMatrix1;
-                    }
-                    else
-                    {
-                        item.m_cachedMatrix = renderInstance.m_dataMatrix1;
-                    }
+                    item.m_cachedMatrix = RenderManager.instance.RequireInstance(targetBuildingId, 1u, out uint num)
+                        ? RenderManager.instance.m_instances[num].m_dataMatrix1
+                        : renderInstance.m_dataMatrix1;
                 }
                 else
                 {
@@ -313,7 +325,10 @@ namespace WriteEverywhere.Singleton
                 item.m_cachedScale = targetDescriptor.PropScale;
                 item.m_cachedArrayRepeatTimes = targetDescriptor.ArrayRepeatTimes;
                 item.m_cachedArrayItemPace = targetDescriptor.ArrayRepeat;
-                targetDescriptor.OnChangeMatrixData();
+                if (isFromPositionChanged)
+                {
+                    ModInstance.Instance.RequireRunCoroutine("targetDescriptor.OnChangeMatrixData()", targetDescriptor.OnChangeMatrixData());
+                }
             }
             Vector3 targetPostion = item.m_cachedPosition;
             for (int i = 0; i <= targetDescriptor.ArrayRepeatTimes; i++)
@@ -394,18 +409,20 @@ namespace WriteEverywhere.Singleton
         {
             if ((data.Info.m_buildingAI is TransportStationAI || data.Info.m_buildingAI is OutsideConnectionAI) && (m_platformToLine[buildingID] == null || (m_buildingLastUpdateLines[buildingID] != m_lastUpdateLines && m_platformToLine[buildingID].Length > 0)))
             {
-
+                if (!m_buildingStopsDescriptor.ContainsKey(refName))
+                {
+                    m_buildingStopsDescriptor[refName] = null;
+                    StartCoroutine(DoMapStopPoints(refName, data.Info, propDescriptor?.StopMappingThresold ?? 1f));
+                }
+                if (m_buildingStopsDescriptor[refName] == null)
+                {
+                    return;
+                }
                 NetManager nmInstance = NetManager.instance;
                 LogUtils.DoLog($"--------------- UpdateLinesBuilding {buildingID}");
 
                 m_platformToLine[buildingID]?.ForEach(x => x?.ForEach(y => m_stopInformation[y.m_stopId] = default));
                 m_platformToLine[buildingID] = null;
-                if (!m_buildingStopsDescriptor.ContainsKey(refName))
-                {
-                    m_buildingStopsDescriptor[refName] = MapStopPoints(data.Info, propDescriptor?.StopMappingThresold ?? 1f);
-
-                }
-
                 var platforms = m_buildingStopsDescriptor[refName].Select((v, i) => new { Key = i, Value = v }).ToDictionary(o => o.Key, o => o.Value);
 
                 if (platforms.Count == 0)
@@ -759,7 +776,8 @@ namespace WriteEverywhere.Singleton
             if (!(building is null) && !instance.m_buildingStopsDescriptor.ContainsKey(building))
             {
                 GetTargetDescriptor(building, out _, out WriteOnBuildingXml target);
-                instance.m_buildingStopsDescriptor[building] = MapStopPoints(PrefabCollection<BuildingInfo>.FindLoaded(building), target?.StopMappingThresold ?? 1f);
+                instance.m_buildingStopsDescriptor[building] = null;
+                ModInstance.Controller.BuildingPropsSingleton.StartCoroutine(ModInstance.Controller.BuildingPropsSingleton.DoMapStopPoints(building, PrefabCollection<BuildingInfo>.FindLoaded(building), target?.StopMappingThresold ?? 1f));
             }
             return instance.m_buildingStopsDescriptor[building];
         }
@@ -790,6 +808,25 @@ namespace WriteEverywhere.Singleton
             Vector3 vector = __instance.transform.position;
             vector.y = targetHeight + (Mathf.Sin(__instance.m_currentAngle.y * Mathf.Deg2Rad) * __instance.m_targetSize);
             __instance.transform.position = vector;
+        }
+        public static ushort FindParentBuilding(ushort buildingID)
+        {
+            BuildingManager instance = Singleton<BuildingManager>.instance;
+            ushort result = buildingID;
+            ushort parentBuilding = instance.m_buildings.m_buffer[buildingID].m_parentBuilding;
+            int num = 0;
+            while (parentBuilding != 0)
+            {
+                result = parentBuilding;
+                parentBuilding = instance.m_buildings.m_buffer[parentBuilding].m_parentBuilding;
+                if (++num >= 49152)
+                {
+                    CODebugBase<LogChannel>.Error(LogChannel.Core, "Invalid list detected!\n" + Environment.StackTrace);
+                    break;
+                }
+            }
+
+            return result;
         }
     }
 

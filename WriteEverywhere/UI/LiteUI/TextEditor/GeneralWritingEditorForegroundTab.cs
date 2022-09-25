@@ -78,7 +78,7 @@ namespace WriteEverywhere.UI
                 GUILayout.Space(12);
             }
 
-            GUIKwyttoCommons.AddSlider(tabAreaSize.x, Str.WTS_TEXT_DEPTH, ref item.IlluminationConfig.m_illuminationDepth, -1, 1, isEditable);
+            GUIKwyttoCommons.AddSlider(tabAreaSize.x, Str.WTS_TEXT_DEPTH, ref item.IlluminationConfig.m_illuminationDepth, -1000, 1000, isEditable);
 
             if (isEditable)
             {

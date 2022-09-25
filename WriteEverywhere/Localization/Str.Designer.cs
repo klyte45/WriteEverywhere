@@ -540,6 +540,15 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Label for parameter list.
+        /// </summary>
+        internal static string we_generalTextEditor_labelForParamListing {
+            get {
+                return ResourceManager.GetString("we_generalTextEditor_labelForParamListing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Create background.
         /// </summary>
         internal static string we_generalTextEditor_useBackground {

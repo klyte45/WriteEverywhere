@@ -12,11 +12,11 @@ using WriteEverywhere.Xml;
 namespace WriteEverywhere.Data
 {
 
-    [XmlRoot("WTSBuildingData")]
+    [XmlRoot("BuildingData")]
     public class WTSBuildingData : DataExtensionBase<WTSBuildingData>
     {
 
-        public override string SaveId => "K45_WE_WTSBuildingsData";
+        public override string SaveId => "K45_WE_BuildingData";
 
         [XmlElement]
         public SimpleXmlDictionary<string, WriteOnBuildingXml> CityDescriptors = new SimpleXmlDictionary<string, WriteOnBuildingXml>();

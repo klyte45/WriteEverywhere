@@ -1005,4 +1005,7 @@ Try force spawning anywhere, like setting the model to a transport line.</value>
   <data name="we_buildingEditor_pickABuildingToEditParameters" xml:space="preserve">
     <value>Pick a building to edit its parameters.</value>
   </data>
+  <data name="we_generalTextEditor_labelForParamListing" xml:space="preserve">
+    <value>Label for parameter list</value>
+  </data>
 </root>

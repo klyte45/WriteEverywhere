@@ -42,7 +42,7 @@ namespace WriteEverywhere.Xml
         public Dictionary<int, List<Tuple<IParameterizableVariable, string>>> GetAllParametersUsedWithData() =>
            PropInstances.SelectMany(p => p.TextDescriptors
             .Where(x =>
-                x.Value.IsParameter
+                (x.Value?.IsParameter ?? false)
                 || (x.ParameterSequence?.Any(y => y.Value?.IsParameter ?? false) ?? false)
             )
             .SelectMany(x =>

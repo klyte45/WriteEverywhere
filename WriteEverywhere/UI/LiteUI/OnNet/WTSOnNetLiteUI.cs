@@ -129,6 +129,7 @@ namespace WriteEverywhere.UI
             CurrentEditingInstance = WTSOnNetData.Instance.m_boardsContainers[CurrentSegmentId];
             m_tabsContainer.Reset();
             xmlLibList.ResetStatus();
+            m_textEditorTab.Reset();
         }
 
         public int ListSel => m_tabsContainer.ListSel;
@@ -227,7 +228,7 @@ namespace WriteEverywhere.UI
         {
             var arrImport = obj.Instances.Select(x => XmlUtils.TransformViaXml<WriteOnNetXml, OnNetInstanceCacheContainerXml>(x)).Where(x => !(x?.SaveName is null));
             CurrentEditingInstance.BoardsData = additive ? CurrentEditingInstance.BoardsData.Concat(arrImport).ToArray() : arrImport.ToArray();
-            m_tabsContainer.Reset();
+            ReloadSegment();
         }
         private ExportableBoardInstanceOnNetListXml OnGetCurrentList() => new ExportableBoardInstanceOnNetListXml
         {
@@ -237,19 +238,20 @@ namespace WriteEverywhere.UI
         private void OnDeleteList()
         {
             CurrentEditingInstance.BoardsData = new OnNetInstanceCacheContainerXml[0];
-            m_tabsContainer.Reset();
+            ReloadSegment();
         }
 
         private void OnDelete()
         {
             CurrentEditingInstance.BoardsData = CurrentEditingInstance.BoardsData.Where((k, i) => i != m_tabsContainer.ListSel).ToArray();
-            m_tabsContainer.Reset();
+            ReloadSegment();
         }
 
         private void OnImportSingle(OnNetInstanceCacheContainerXml data, bool _)
         {
             data.SaveName = CurrentEditingInstance.BoardsData[m_tabsContainer.ListSel].SaveName;
             CurrentEditingInstance.BoardsData[m_tabsContainer.ListSel] = data;
+            ReloadSegment();
         }
         #endregion
     }

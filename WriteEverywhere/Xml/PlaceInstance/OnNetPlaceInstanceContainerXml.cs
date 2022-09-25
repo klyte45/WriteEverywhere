@@ -1,4 +1,5 @@
 ﻿using Kwytto.Utils;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
@@ -18,11 +19,11 @@ namespace WriteEverywhere.Xml
         [XmlIgnore]
         public PropInfo SimpleCachedProp => m_simpleProp;
 
-        public override void OnChangeMatrixData()
+        public override IEnumerator OnChangeMatrixData()
         {
-            base.OnChangeMatrixData();
             m_cachedPositions = null;
             m_cachedRotations = null;
+            yield return base.OnChangeMatrixData();
         }
 
         public ushort GetTargetSegment(int id) => m_targets.TryGetValue(id, out ushort value) ? value : (ushort)0;

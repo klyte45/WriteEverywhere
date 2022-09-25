@@ -93,19 +93,12 @@ namespace WriteEverywhere.Utils
                 GameObject.DestroyImmediate(target);
             }
         }
-        internal static Vector3 axisRotationTG = new Vector3(0, 0, -1);
-        internal static float degRotationTG = 90;
-        internal static Vector3 axisRotationN = new Vector3(1, 1, -1);
-        internal static float degRotationN = 120;
-        internal static Vector4 tangent = new Vector4(1, 0, 0, 1);
         public static void SolveTangents(Mesh mesh)
         {
             mesh.RecalculateNormals();
             mesh.RecalculateTangents();
             mesh.RecalculateBounds();
         }
-
-
     }
 }
 

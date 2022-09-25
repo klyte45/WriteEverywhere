@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using WriteEverywhere.Data;
 using WriteEverywhere.Rendering;
+using WriteEverywhere.Singleton;
 
 namespace WriteEverywhere.Xml
 {
@@ -182,7 +183,7 @@ namespace WriteEverywhere.Xml
                     }
                     break;
                 case VariableType.Parameter:
-                    var buildingParam = WTSBuildingData.Instance.Parameters.TryGetValue(Building.FindParentBuilding(buildingId), out var parameter) ? parameter : null;
+                    var buildingParam = WTSBuildingData.Instance.Parameters.TryGetValue(WTSBuildingPropsSingleton.FindParentBuilding(buildingId), out var parameter) ? parameter : null;
                     if (buildingParam == null || buildingParam.TextParameters.Count == 0)
                     {
                         return "<NO PARAMS SET FOR BUILDING!>";

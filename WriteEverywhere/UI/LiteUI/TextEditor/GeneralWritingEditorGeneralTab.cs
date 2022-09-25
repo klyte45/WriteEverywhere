@@ -5,7 +5,6 @@ using System;
 using UnityEngine;
 using WriteEverywhere.Libraries;
 using WriteEverywhere.Localization;
-using WriteEverywhere.Utils;
 using WriteEverywhere.Xml;
 
 namespace WriteEverywhere.UI
@@ -84,18 +83,6 @@ namespace WriteEverywhere.UI
                             alignment = TextAnchor.MiddleRight
                         }, GUILayout.Height(40));
                         GUI.tooltip = "";
-                    }
-                    bool changed = GUIKwyttoCommons.AddVector3Field(tabAreaRect.x, ref WTSUtils.axisRotationTG, "ROT VEC TG", "ROTATIOON", true, -1, 1);
-                    changed |= GUIKwyttoCommons.AddFloatField(tabAreaRect.x, "ROT DEG TG", ref WTSUtils.degRotationTG, true, -180, 180);
-                    changed |= GUIKwyttoCommons.AddVector3Field(tabAreaRect.x, ref WTSUtils.axisRotationN, "ROT VEC NM", "ROTATIOON2", true, -1, 1);
-                    changed |= GUIKwyttoCommons.AddFloatField(tabAreaRect.x, "ROT DEG NM", ref WTSUtils.degRotationN, true, -180, 180);
-                    changed |= GUIKwyttoCommons.AddVector4Field(tabAreaRect.x, WTSUtils.tangent, "ROT VEC NM", "ROTATIOON2", out WTSUtils.tangent, true, -1, 1);
-                    if (changed)
-                    {
-                        foreach (var board in listGetter())
-                        {
-                            board.BackgroundMeshSettings.FrameMeshSettings.GlassSpecularLevel = board.BackgroundMeshSettings.FrameMeshSettings.GlassSpecularLevel;
-                        }
                     }
                 }
             }
