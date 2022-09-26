@@ -233,7 +233,7 @@ namespace WriteEverywhere.Localization {
         
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a The platform order will define which information show in texts of this prop. The priority order will be used to determine from where to get the lines passing thru this building, following the order below. The platforms in the top will have priority over others to get information like color, as example.
-        ///The platforms are highlighted and numbered in the game..
+        ///The platforms are highlighted and numbered in the game. The underground platforms are shown above the main building also showing how deep they are being the lowest platform of them showed below all others. T [o restante da cadeia de caracteres foi truncado]&quot;;.
         /// </summary>
         internal static string we_buildingEditor_transportStation_platformSelectionInfo {
             get {

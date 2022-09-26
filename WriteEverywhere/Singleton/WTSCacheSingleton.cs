@@ -75,8 +75,7 @@ namespace WriteEverywhere.Singleton
         }
 
         public static void ClearCacheParkName() => DoClearCacheCoroutineStart(CacheErasingFlags.ParkName | CacheErasingFlags.LineName);
-        public static void ClearCacheParkArea() => DoClearCacheCoroutineStart(CacheErasingFlags.ParkArea);
-        public static void ClearCacheDistrictArea() => DoClearCacheCoroutineStart(CacheErasingFlags.DistrictArea);
+        public static void ClearCacheDistrictArea() => DoClearCacheCoroutineStart(CacheErasingFlags.DistrictArea | CacheErasingFlags.ParkArea);
         public static void ClearCacheBuildingName(ushort? buildingId)
         {
             if (buildingId is ushort buildingIdSh)

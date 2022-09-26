@@ -15,7 +15,6 @@ using System.Xml.Serialization;
 using TLM::Bridge_WE2TLM;
 using UnityEngine;
 using WriteEverywhere.Data;
-using WriteEverywhere.Overrides;
 using WriteEverywhere.Rendering;
 using WriteEverywhere.UI;
 using WriteEverywhere.Utils;
@@ -49,10 +48,10 @@ namespace WriteEverywhere.Singleton
 
         public void Start()
         {
-            TransportManagerOverrides.EventOnLineUpdated += OnLineUpdated;
-            NetManagerOverrides.EventNodeChanged += OnNodeChanged;
+            ModInstance.Controller.EventOnLineUpdated += OnLineUpdated;
+            ModInstance.Controller.EventNodeChanged += OnNodeChanged;
             TransportManager.instance.eventLineColorChanged += OnLineUpdated;
-            TransportManagerOverrides.EventOnLineBuildingUpdated += OnBuildingLineChanged;
+            ModInstance.Controller.EventOnLineBuildingUpdated += OnBuildingLineChanged;
         }
 
         private void OnLineUpdated(ushort obj) => m_lastUpdateLines = SimulationManager.instance.m_currentTickIndex;
@@ -169,6 +168,7 @@ namespace WriteEverywhere.Singleton
                 if (!(m_buildingStopsDescriptor[refName] is null) && subBuildingIdx == 0)
                 {
                     float angle = SimulationManager.instance.m_currentTickIndex;
+                    var lowestPoint = Mathf.Min(m_buildingStopsDescriptor[refName].Select(x => x.platformLine.Position(0.5f).y).ToArray());
                     for (int i = 0; i < m_buildingStopsDescriptor[refName].Length; i++)
                     {
                         var color = m_colorOrder[i % m_colorOrder.Length];
@@ -184,14 +184,14 @@ namespace WriteEverywhere.Singleton
                         });
 
 
-                        var bri = FontServer.instance[MainController.DEFAULT_FONT_KEY].DrawString(ModInstance.Controller, $"{i + 1}", default, FontServer.instance.ScaleEffective);
+                        var bri = FontServer.instance[MainController.DEFAULT_FONT_KEY].DrawString(ModInstance.Controller, string.Format(position.y < 0 ? "[{0}]" : "{0}", i + 1), default, FontServer.instance.ScaleEffective);
                         if (bri != null)
                         {
                             overlayBlock.Clear();
                             overlayBlock.SetColor(WETextRenderer.SHADER_PROP_BACK_COLOR, color);
                             overlayBlock.SetColor(WETextRenderer.SHADER_PROP_COLOR, color);
-                            overlayBlock.SetVector(WETextRenderer.SHADER_PROP_SURF_PROPERTIES, new Vector4(1, 0, 1));
-                            WETextRenderer.RenderBri(bri, ref BuildingManager.instance.m_drawCallData.m_batchedCalls, renderInstance.m_dataMatrix1 * Matrix4x4.TRS(position + new Vector3(0, 3, 0), Quaternion.Euler(new Vector3(0, angle, 0)), new Vector3(.05f * circleSize, .05f * circleSize, .05f * circleSize))
+                            overlayBlock.SetVector(WETextRenderer.SHADER_PROP_SURF_PROPERTIES, new Vector4(1, 0, .3F));
+                            WETextRenderer.RenderBri(bri, ref BuildingManager.instance.m_drawCallData.m_batchedCalls, renderInstance.m_dataMatrix1 * Matrix4x4.TRS(position + new Vector3(0, position.y < 0 ? data.Info.m_mesh.bounds.max.y + 5 - lowestPoint : 3, 0), Quaternion.Euler(new Vector3(0, angle, 0)), new Vector3(.05f * circleSize, .05f * circleSize, .05f * circleSize))
                                 , data.Info.m_prefabDataLayer, overlayBlock);
                         }
                     }

@@ -7,8 +7,12 @@ using Kwytto.Interfaces;
 using Kwytto.Utils;
 using SpriteFontPlus;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
+using WriteEverywhere.Data;
 using WriteEverywhere.ModShared;
 using WriteEverywhere.Rendering;
 using WriteEverywhere.Singleton;
@@ -140,10 +144,133 @@ namespace WriteEverywhere
             AtlasesLibrary = gameObject.AddComponent<WTSAtlasesLibrary>();
 
 
+            BuildingManager.instance.EventBuildingReleased += WTSBuildingData.Instance.CacheData.PurgeBuildingCache;
+            BuildingManager.instance.EventBuildingRelocated += WTSBuildingData.Instance.CacheData.PurgeBuildingCache;
+
+            EventSegmentNameChanged += OnNameSeedChanged;
+            BuildingManager.instance.EventBuildingRelocated += WTSCacheSingleton.ClearCacheBuildingName;
+            BuildingManager.instance.EventBuildingReleased += WTSCacheSingleton.ClearCacheBuildingName;
+            BuildingManager.instance.EventBuildingCreated += WTSCacheSingleton.ClearCacheBuildingName;
+            EventOnDistrictChanged += WTSCacheSingleton.ClearCacheDistrictName;
+            EventOnParkChanged += WTSCacheSingleton.ClearCacheParkName;
+            EventOnBuildingNameChanged += WTSCacheSingleton.ClearCacheBuildingName;
+            EventOnPostalCodeChanged += WTSCacheSingleton.ClearCachePostalCode;
+            EventOnZeroMarkerChanged += OnNameSeedChanged;
+
+
         }
 
+        private IEnumerator OnNameSeedChanged(ushort segmentId)
+        {
+            yield return 0;
+            OnNameSeedChanged();
+        }
+        private void OnNameSeedChanged()
+        {
+            WTSCacheSingleton.ClearCacheSegmentNameParam();
+            WTSCacheSingleton.ClearCachePostalCode();
+            WTSCacheSingleton.ClearCacheBuildingName(null);
+        }
 
         public static FontServer fontServer = FontServer.instance;
+
+        #region Changes handler
+
+        public void OnBuildingNameChanged(ushort buildingId) => EventOnBuildingNameChanged?.Invoke(buildingId);
+        public void OnSegmentNameChanged(ushort segmentId) => EventSegmentNameChanged?.Invoke(segmentId);
+
+        public event Func<ushort, IEnumerator> EventNodeChanged;
+        public event Func<ushort, IEnumerator> EventSegmentChanged;
+        public event Func<ushort, IEnumerator> EventSegmentReleased;
+        public event Func<ushort, IEnumerator> EventSegmentNameChanged;
+
+        public event Action<ushort> EventOnLineUpdated;
+        public event Action<ushort> EventOnLineBuildingUpdated;
+
+
+        private int segmentsCooldown = 0;
+        internal readonly HashSet<ushort> nodeChangeBuffer = new HashSet<ushort>();
+        internal readonly HashSet<ushort> segmentChangeBuffer = new HashSet<ushort>();
+        internal readonly HashSet<ushort> segmentReleaseBuffer = new HashSet<ushort>();
+        internal readonly HashSet<ushort> segmentNameChangeBuffer = new HashSet<ushort>();
+
+        internal readonly HashSet<ushort> m_lineStack = new HashSet<ushort>();
+        internal readonly HashSet<ushort> m_buildingStack = new HashSet<ushort>();
+        private uint linesCooldown = 0;
+        public void Update()
+        {
+            if (segmentsCooldown > 0)
+            {
+                segmentsCooldown--;
+            }
+            else if (segmentsCooldown == 0)
+            {
+                segmentsCooldown--;
+                foreach (var node in nodeChangeBuffer)
+                {
+                    StartCoroutine(EventNodeChanged?.Invoke(node));
+                    WTSBuildingData.Instance.CacheData.PurgeStopCache(node);
+                }
+                foreach (var segment in segmentChangeBuffer)
+                {
+                    WTSOnNetData.Instance.OnSegmentChanged(segment);
+                    StartCoroutine(EventSegmentChanged?.Invoke(segment));
+                }
+                foreach (var segment in segmentReleaseBuffer)
+                {
+                    StartCoroutine(EventSegmentReleased?.Invoke(segment));
+                }
+                foreach (var segment in segmentNameChangeBuffer)
+                {
+                    StartCoroutine(EventSegmentNameChanged?.Invoke(segment));
+                }
+                nodeChangeBuffer.Clear();
+                segmentChangeBuffer.Clear();
+            }
+
+
+            if (linesCooldown == 1)
+            {
+                bool shouldDecrement = true;
+                if (m_lineStack.Count > 0)
+                {
+                    var next = m_lineStack.First();
+                    EventOnLineUpdated?.Invoke(next);
+                    m_lineStack.Remove(next);
+                    shouldDecrement = false;
+                }
+                if (m_buildingStack.Count > 0)
+                {
+                    var next = m_buildingStack.First();
+                    EventOnLineBuildingUpdated?.Invoke(next);
+                    m_buildingStack.Remove(next);
+                    shouldDecrement = false;
+                }
+                if (shouldDecrement)
+                {
+                    linesCooldown = 0;
+                }
+            }
+            else if (linesCooldown > 0)
+            {
+                linesCooldown--;
+            }
+        }
+
+        internal void ResetSegmentCooldown()
+        {
+            segmentsCooldown = 15;
+        }
+
+        internal void ResetLinesCooldown()
+        {
+            linesCooldown = 15;
+        }
+
+        #endregion
+
+
+
         public static Material ___OUTSIDE_MAT { get => WETextRenderer.m_outsideMaterial; set => WETextRenderer.m_outsideMaterial = value; }
         public static Vector2[] __cachedUvFrame;
         public static Vector2[] __cachedUvGlass;

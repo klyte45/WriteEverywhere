@@ -1,7 +1,6 @@
 ﻿
 using Kwytto.Utils;
 using System;
-using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 using WriteEverywhere.Data;
@@ -14,22 +13,14 @@ namespace WriteEverywhere.Overrides
 
 
         #region Events
-        public static event Action<ushort> EventOnLineUpdated;
-        public static event Action<ushort> EventOnLineBuildingUpdated;
-        private static readonly Stack<ushort> m_lineStack = new Stack<ushort>();
-        private static readonly Stack<ushort> m_buildingStack = new Stack<ushort>();
-
 
         public static void PushIntoStackBuilding(bool __result, Vector3 position)
         {
             if (__result)
             {
                 ushort buildingId = BuildingManager.instance.FindBuilding(position, 100f, ItemClass.Service.None, ItemClass.SubService.None, Building.Flags.None, Building.Flags.None);
-                if (!m_buildingStack.Contains(buildingId))
-                {
-                    m_buildingStack.Push(buildingId);
-                }
-                m_cooldown = 2;
+                ModInstance.Controller?.m_buildingStack.Add(buildingId);
+                ModInstance.Controller?.ResetLinesCooldown();
             }
         }
         public static void BeforeRemoveStop(ref TransportLine __instance, int index, ushort lineID)
@@ -58,40 +49,10 @@ namespace WriteEverywhere.Overrides
 
         public static void PushIntoStackLine(ushort lineID)
         {
-            if (!m_lineStack.Contains(lineID))
-            {
-                m_lineStack.Push(lineID);
-            }
-
-            m_cooldown = 2;
+            ModInstance.Controller?.m_lineStack.Add(lineID);
+            ModInstance.Controller?.ResetLinesCooldown();
         }
 
-        private static uint m_cooldown = 0;
-        public void Update()
-        {
-            if (m_cooldown == 1)
-            {
-                bool shouldDecrement = true;
-                if (m_lineStack.Count > 0)
-                {
-                    EventOnLineUpdated?.Invoke(m_lineStack.Pop());
-                    shouldDecrement = false;
-                }
-                if (m_buildingStack.Count > 0)
-                {
-                    EventOnLineBuildingUpdated?.Invoke(m_buildingStack.Pop());
-                    shouldDecrement = false;
-                }
-                if (shouldDecrement)
-                {
-                    m_cooldown = 0;
-                }
-            }
-            else if (m_cooldown > 0)
-            {
-                m_cooldown--;
-            }
-        }
 
         #endregion
 

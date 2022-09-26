@@ -23,7 +23,7 @@ namespace WriteEverywhere.Xml
         [XmlAttribute("fixedIfMultiline")]
         public bool m_useFixedIfMultiline;
 
-        [XmlAttribute("colorSource")]
+        [XmlAttribute("source")]
         public ColoringSource m_colorSource = ColoringSource.Fixed;
     }
 
