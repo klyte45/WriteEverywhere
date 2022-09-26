@@ -6,8 +6,8 @@ using WriteEverywhere.Xml;
 
 namespace WriteEverywhere.Libraries
 {
-    [XmlRoot("LibTextList")] internal class WTSLibTextList : LibBaseFile<WTSLibTextList, ILibableAsContainer<TextToWriteOnXml>> { protected override string XmlName => "WTSLibTextList"; }
-    [XmlRoot("LibTextItem")] internal class WTSLibTextItem : LibBaseFile<WTSLibTextItem, TextToWriteOnXml> { protected override string XmlName => "WTSLibTextItem"; }
+    [XmlRoot("LibTextList")] public class WTSLibTextList : LibBaseFile<WTSLibTextList, ILibableAsContainer<TextToWriteOnXml>> { protected override string XmlName => "WTSLibTextList"; }
+    [XmlRoot("LibTextItem")] public class WTSLibTextItem : LibBaseFile<WTSLibTextItem, TextToWriteOnXml> { protected override string XmlName => "WTSLibTextItem"; }
 
     [XmlRoot("LibOnBuildingPropLayoutList")] public class WTSLibOnBuildingPropLayoutList : LibBaseFile<WTSLibOnBuildingPropLayoutList, ExportableBoardInstanceOnBuildingListXml> { protected override string XmlName => "LibOnBuildingPropLayoutList"; }
     [XmlRoot("LibOnBuildingPropLayout")] public class WTSLibOnBuildingPropLayout : LibBaseFile<WTSLibOnBuildingPropLayout, WriteOnBuildingPropXml> { protected override string XmlName => "LibOnBuildingPropLayout"; }

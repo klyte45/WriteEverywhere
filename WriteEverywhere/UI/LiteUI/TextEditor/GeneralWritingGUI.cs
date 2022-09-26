@@ -1,6 +1,7 @@
 ﻿using ColossalFramework;
 using ColossalFramework.Globalization;
 using ColossalFramework.UI;
+using HarmonyLib;
 using Kwytto.Interfaces;
 using Kwytto.LiteUI;
 using Kwytto.UI;
@@ -127,7 +128,7 @@ namespace WriteEverywhere.UI
                     {
                         m_textGroupLib.DrawImportView((x, y) =>
                         {
-                            GetDescriptorArray() = x.m_dataArray.Concat(y ? GetDescriptorArray() : new TextToWriteOnXml[0]).ToArray();
+                            GetDescriptorArray() = (y ? GetDescriptorArray() : new TextToWriteOnXml[0]).AddRangeToArray(x.m_dataArray);
                             ReloadList();
                         });
                     }
@@ -152,7 +153,11 @@ namespace WriteEverywhere.UI
             m_tabsContainer.DrawListTabs(new Rect(0, 20, size.x, size.y - 20), allowEdit, true);
             using (new GUILayout.AreaScope(new Rect(0, 0, size.x, 20)))
             {
-                m_textGroupLib.Draw(WEUIUtils.RedButton, () => GetDescriptorArray() = new TextToWriteOnXml[0], () => new ILibableAsContainer<TextToWriteOnXml> { Data = new ListWrapper<TextToWriteOnXml>() { listVal = GetDescriptorArray().ToList() } }, m_textGroupLib.FooterDraw);
+                m_textGroupLib.Draw(WEUIUtils.RedButton, () =>
+                {
+                    GetDescriptorArray() = new TextToWriteOnXml[0];
+                    ReloadList();
+                }, () => new ILibableAsContainer<TextToWriteOnXml> { Data = new ListWrapper<TextToWriteOnXml>() { listVal = GetDescriptorArray().ToList() } }, m_textGroupLib.FooterDraw);
             }
         }
 

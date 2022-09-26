@@ -169,8 +169,8 @@ namespace WriteEverywhere.UI
         {
             m_modelFilter.DrawButton(size.x, m_currentInfo?.GetUncheckedLocalizedTitle());
             var headerArea0 = new Rect(0, 25, size.x, 25);
-            var headerArea1 = new Rect(0, 50, size.x, 25);
-            var bodyArea = new Rect(0, 75, size.x, size.y - 75);
+            var headerArea1 = new Rect(0, 50, size.x, 45);
+            var bodyArea = new Rect(0, 95, size.x, size.y - 95);
             if (CurrentInfo && m_detailUI.CurrentSource != Xml.ConfigurationSource.NONE)
             {
                 using (new GUILayout.AreaScope(headerArea0))
@@ -190,6 +190,10 @@ namespace WriteEverywhere.UI
             {
                 using (new GUILayout.AreaScope(headerArea1))
                 {
+                    if (GUIKwyttoCommons.AddToggle(Str.we_buildingEditor_lockCameraToEditingProp, LockSelection, out var newval))
+                    {
+                        LockSelection = newval;
+                    }
                     using (var scope = new GUILayout.ScrollViewScope(m_horizontalScrollSubBuildings))
                     {
                         SubBuildingSel = GUILayout.SelectionGrid(SubBuildingSel, m_currentInfoListTitles, m_currentInfoListTitles.Length, GUILayout.MinWidth(40));

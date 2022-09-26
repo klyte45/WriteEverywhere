@@ -84,7 +84,7 @@ namespace WriteEverywhere
             }
             return null;
         }
-        public Mesh frameMesh { get; private set; }
+        public Mesh FrameMesh { get; private set; }
 
         private void ReadShaders(AssetBundle bundle, out Dictionary<string, Shader> m_loadedShaders)
         {
@@ -99,22 +99,13 @@ namespace WriteEverywhere
                     string effectiveName = filename.Split('.')[0].Split('/').Last();
                     shader.name = $"klyte/wts/{effectiveName}";
                     m_loadedShaders[shader.name] = (shader);
-
-                    try
-                    {
-                        LogUtils.DoWarnLog("SH TXT:\n" + bundle.LoadAsset<TextAsset>(filename)?.text);
-                    }
-                    catch
-                    {
-
-                    }
                 }
                 if (filename.EndsWith(".fbx"))
                 {
                     Mesh mesh = bundle.LoadAsset<Mesh>(filename);
                     var vertices = mesh.vertices.ToArray();
                     mesh.vertices = vertices;
-                    frameMesh = mesh;
+                    FrameMesh = mesh;
                 }
             }
         }

@@ -76,6 +76,10 @@ namespace WriteEverywhere.UI
                 }
 
             }
+            else
+            {
+                GUILayout.Label(Str.we_buildingEditor_noParametersUsedThisInstance);
+            }
         }
 
 

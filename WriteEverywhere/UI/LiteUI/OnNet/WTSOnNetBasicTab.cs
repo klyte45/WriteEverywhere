@@ -218,10 +218,33 @@ namespace WriteEverywhere.UI
             GUIKwyttoCommons.AddVector3Field(areaRect.x, item.PropPosition, Str.WTS_ONNETEDITOR_POSITIONOFFSET, f_SegmentPositionOffset);
             GUIKwyttoCommons.AddVector3Field(areaRect.x, item.PropRotation, Str.WTS_ONNETEDITOR_ROTATION, f_SegmentRotationOffset);
             GUIKwyttoCommons.AddVector3Field(areaRect.x, item.Scale, Str.WTS_ONNETEDITOR_SCALE, f_SegmentScaleOffset);
+
+            using (new GUILayout.HorizontalScope())
+            {
+                GUILayout.FlexibleSpace();
+                if (GUILayout.Button(Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_COPYTOCLIPBOARD))
+                {
+                    m_clipboard = XmlUtils.DefaultXmlSerialize(item);
+                }
+                if (m_clipboard != null)
+                {
+                    if (GUILayout.Button(Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_PASTEFROMCLIPBOARD))
+                    {
+                        m_onImportFromLib(XmlUtils.DefaultXmlDeserialize<OnNetInstanceCacheContainerXml>(m_clipboard), false);
+                    }
+                }
+                else
+                {
+                    GUILayout.FlexibleSpace();
+                }
+
+            };
+
             GUILayout.FlexibleSpace();
             xmlLibItem.Draw(RedButton, m_onDelete, () => m_lastItem, xmlLibItem.FooterDraw);
         }
 
+        private string m_clipboard;
         public void Reset()
         {
             xmlLibItem.ResetStatus();

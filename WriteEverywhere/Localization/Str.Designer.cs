@@ -79,11 +79,29 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Current focus instance (origin is 0).
+        /// </summary>
+        internal static string we_buildingEditor_currentFocusInstance {
+            get {
+                return ResourceManager.GetString("we_buildingEditor_currentFocusInstance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Props texts.
         /// </summary>
         internal static string we_buildingEditor_layoutEditorTabText {
             get {
                 return ResourceManager.GetString("we_buildingEditor_layoutEditorTabText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Lock camera to editing prop.
+        /// </summary>
+        internal static string we_buildingEditor_lockCameraToEditingProp {
+            get {
+                return ResourceManager.GetString("we_buildingEditor_lockCameraToEditingProp", resourceCulture);
             }
         }
         
@@ -129,6 +147,24 @@ namespace WriteEverywhere.Localization {
         internal static string we_buildingEditor_pickerBtn {
             get {
                 return ResourceManager.GetString("we_buildingEditor_pickerBtn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Distance between instances.
+        /// </summary>
+        internal static string we_buildingEditor_repeatLayoutDirection {
+            get {
+                return ResourceManager.GetString("we_buildingEditor_repeatLayoutDirection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Instances of this prop layout.
+        /// </summary>
+        internal static string we_buildingEditor_repeatLayoutTimes {
+            get {
+                return ResourceManager.GetString("we_buildingEditor_repeatLayoutTimes", resourceCulture);
             }
         }
         

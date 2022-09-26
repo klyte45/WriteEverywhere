@@ -83,6 +83,7 @@ void surfBack(Input IN, inout SurfaceOutput o){
 	fixed4 effColor = _BackfaceColor * .99 + .005; 
 	o.Albedo = effColor;
 	o.Alpha = t.a;
+	o.Emission = t * effColor * _SurfProperties.z * t.a * 10;
 	normalPass(t, uv, o);
 }
 

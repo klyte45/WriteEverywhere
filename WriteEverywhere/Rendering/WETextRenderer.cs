@@ -52,12 +52,7 @@ namespace WriteEverywhere.Rendering
                 block.Clear();
                 CalculateIllumination(refID, boardIdx, secIdx, textDescriptor, block, ref colorToSet, instanceFlags, instanceFlags2);
                 block.SetVector(SHADER_PROP_DIMENSIONS, textItem.finalSize);
-                block.SetFloat(SHADER_PROP_PIXELS_METERS, renderInfo.m_pixelDensityMeters);
-                block.SetVector(SHADER_PROP_BORDERS, renderInfo.m_borders);
-
-
-                defaultCallsCounter++;
-                Graphics.DrawMesh(renderInfo.m_mesh, matrix, renderInfo.m_generatedMaterial, srcInfo.m_prefabDataIndex, null, 0, block);
+                RenderBri(renderInfo, ref defaultCallsCounter, matrix, srcInfo.m_prefabDataIndex, block);
 
                 positionAccumulator += (Vector3)matrix.GetColumn(3) + new Vector3(0, renderInfo.m_mesh.bounds.center.y * matrix.GetColumn(1).y);
                 if (currentEditingSizeLine)
@@ -104,6 +99,17 @@ namespace WriteEverywhere.Rendering
 
             }
             return positionAccumulator / textMatrixes.Count;
+        }
+
+        public static int RenderBri(BasicRenderInformation renderInfo, ref int defaultCallsCounter, Matrix4x4 matrix, int layer, MaterialPropertyBlock block)
+        {
+            block.SetFloat(SHADER_PROP_PIXELS_METERS, renderInfo.m_pixelDensityMeters);
+            block.SetVector(SHADER_PROP_BORDERS, renderInfo.m_borders);
+
+
+            defaultCallsCounter++;
+            Graphics.DrawMesh(renderInfo.m_mesh, matrix, renderInfo.m_generatedMaterial, layer, null, 0, block);
+            return defaultCallsCounter;
         }
 
         private static Matrix4x4 DrawBgMesh(ref Matrix4x4 propMatrix, Vector2 size, Color color, Color backColor, float verticalAlignment, MaterialPropertyBlock materialPropertyBlock, PlacingSettings placingSettings,

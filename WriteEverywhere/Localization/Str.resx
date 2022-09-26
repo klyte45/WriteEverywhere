@@ -1008,4 +1008,16 @@ Try force spawning anywhere, like setting the model to a transport line.</value>
   <data name="we_generalTextEditor_labelForParamListing" xml:space="preserve">
     <value>Label for parameter list</value>
   </data>
+  <data name="we_buildingEditor_currentFocusInstance" xml:space="preserve">
+    <value>Current focus instance (origin is 0)</value>
+  </data>
+  <data name="we_buildingEditor_repeatLayoutDirection" xml:space="preserve">
+    <value>Distance between instances</value>
+  </data>
+  <data name="we_buildingEditor_repeatLayoutTimes" xml:space="preserve">
+    <value>Instances of this prop layout</value>
+  </data>
+  <data name="we_buildingEditor_lockCameraToEditingProp" xml:space="preserve">
+    <value>Lock camera to editing prop</value>
+  </data>
 </root>

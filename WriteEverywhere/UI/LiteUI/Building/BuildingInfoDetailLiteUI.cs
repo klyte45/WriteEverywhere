@@ -47,7 +47,6 @@ namespace WriteEverywhere.UI
         private readonly Texture2D m_copy;
         private readonly Texture2D m_paste;
         private readonly Texture2D m_importLib;
-        private readonly Texture2D m_save;
         private readonly Texture2D m_exportLib;
         private readonly GUIColorPicker m_colorPicker;
         private readonly GUIRootWindowBase m_root;
@@ -97,7 +96,6 @@ namespace WriteEverywhere.UI
             m_paste = KResourceLoader.LoadTextureKwytto(CommonsSpriteNames.K45_Paste);
             m_importLib = KResourceLoader.LoadTextureKwytto(CommonsSpriteNames.K45_Import);
             m_exportLib = KResourceLoader.LoadTextureKwytto(CommonsSpriteNames.K45_Export);
-            m_save = KResourceLoader.LoadTextureKwytto(CommonsSpriteNames.K45_Save);
 
             m_colorPicker = colorPicker;
             m_root = colorPicker.GetComponentInParent<GUIRootWindowBase>();
@@ -155,6 +153,7 @@ namespace WriteEverywhere.UI
                     }
                     break;
                 case FooterBarStatus.AskingToImport:
+                case FooterBarStatus.AskingToImportAdditive:
                     xmlLibList.DrawImportView(
                         (x, isAdd) =>
                     {
@@ -165,12 +164,13 @@ namespace WriteEverywhere.UI
                         }).ToArray();
                         if (isAdd)
                         {
-                            CurrentEditingLayout.PropInstances.AddRangeToArray(newItems);
+                            CurrentEditingLayout.PropInstances = CurrentEditingLayout.PropInstances.AddRangeToArray(newItems);
                         }
                         else
                         {
                             CurrentEditingLayout.PropInstances = CurrentEditingLayout.PropInstances.Where(y => y.SubBuildingPivotReference != subbuildingIdx).Concat(newItems).ToArray();
                         }
+                        SaveAndReload();
                     }
                     );
                     break;
@@ -290,13 +290,13 @@ namespace WriteEverywhere.UI
         private void GoTo(State newState) => CurrentLocalState = newState;
 
         #region Extra buttons
-        private void AddExtraButtonsList()
+        private void AddExtraButtonsList(bool canEdit)
         {
-            if (GUILayout.Button(Str.we_roadEditor_importAdding))
+            if (canEdit && GUILayout.Button(Str.we_roadEditor_importAdding))
             {
                 xmlLibList.GoToImportAdditive();
             }
-            if (GUILayout.Button(Str.we_roadEditor_importReplacing))
+            if (canEdit && GUILayout.Button(Str.we_roadEditor_importReplacing))
             {
                 xmlLibList.GoToImport();
             }
@@ -304,7 +304,7 @@ namespace WriteEverywhere.UI
             {
                 xmlLibList.GoToExport();
             }
-            if (GUILayout.Button(Str.WTS_SEGMENT_CLEARDATA))
+            if (canEdit && GUILayout.Button(Str.WTS_SEGMENT_CLEARDATA))
             {
                 xmlLibList.GoToRemove();
             }
@@ -443,6 +443,12 @@ namespace WriteEverywhere.UI
             data.SaveName = CurrentEditingLayout.PropInstances[PropSel].SaveName;
             data.SubBuildingPivotReference = m_currentSubBuilding;
             CurrentEditingLayout.PropInstances[PropSel] = data;
+            SaveAndReload();
+        }
+
+        private void SaveAndReload()
+        {
+            WTSBuildingPropsSingleton.SetCityDescriptor(CurrentEditingInfo, CurrentEditingLayout);
             var oldListSel = m_tabsContainer.ListSel;
             OnChangeInfo(CurrentEditingInfo, m_currentSubBuilding);
             m_tabsContainer.ListSel = oldListSel;

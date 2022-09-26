@@ -96,7 +96,7 @@ namespace WriteEverywhere.Singleton
             bool result = false;
             ref Building building = ref BuildingManager.instance.m_buildings.m_buffer[buildingID];
             GetTargetDescriptor(building.Info.name, out _, out WriteOnBuildingXml targetDescriptor);
-            for (int i = 0; i < Data.BuildingCachedPositionsData[buildingID].Length; i++)
+            for (int i = 0; i < targetDescriptor.PropInstances.Length && i < Data.BuildingCachedPositionsData[buildingID].Length; i++)
             {
                 var descriptor = targetDescriptor.PropInstances[i];
                 var targetProp = descriptor.SimpleProp;
@@ -124,7 +124,7 @@ namespace WriteEverywhere.Singleton
             ref Building building = ref BuildingManager.instance.m_buildings.m_buffer[buildingID];
             float buildingAngle = building.m_angle * Mathf.Rad2Deg;
             GetTargetDescriptor(building.Info.name, out _, out WriteOnBuildingXml targetDescriptor);
-            for (int i = 0; i < targetDescriptor.PropInstances.Length; i++)
+            for (int i = 0; i < targetDescriptor.PropInstances.Length && i < Data.BuildingCachedPositionsData[buildingID].Length; i++)
             {
                 var descriptor = targetDescriptor.PropInstances[i];
                 var targetProp = descriptor.SimpleProp;
@@ -166,12 +166,34 @@ namespace WriteEverywhere.Singleton
                 {
                     StartCoroutine(DoMapStopPoints(refName, data.Info, 1f));//TODO: Thresold salvo em algum lugar
                 }
-                if (!(m_buildingStopsDescriptor[refName] is null))
+                if (!(m_buildingStopsDescriptor[refName] is null) && subBuildingIdx == 0)
                 {
+                    float angle = SimulationManager.instance.m_currentTickIndex;
                     for (int i = 0; i < m_buildingStopsDescriptor[refName].Length; i++)
                     {
-                        m_onOverlayRenderQueue.Add(Tuple.New(renderInstance.m_dataMatrix1.MultiplyPoint(m_buildingStopsDescriptor[refName][i].platformLine.Position(0.5f)),
-                               m_buildingStopsDescriptor[refName][i].width / 2, m_colorOrder[i % m_colorOrder.Length]));
+                        var color = m_colorOrder[i % m_colorOrder.Length];
+                        var position = m_buildingStopsDescriptor[refName][i].platformLine.Position(0.5f);
+                        var circleSize = m_buildingStopsDescriptor[refName][i].width * .333333333f;
+                        m_onOverlayRenderQueue.Add(new DrawInformation
+                        {
+                            position = renderInstance.m_dataMatrix1.MultiplyPoint(position),
+                            circleSize = circleSize,
+                            color = m_colorOrder[i % m_colorOrder.Length],
+                            layer = data.Info.m_prefabDataLayer,
+                            text = $"P{i + 1}"
+                        });
+
+
+                        var bri = FontServer.instance[MainController.DEFAULT_FONT_KEY].DrawString(ModInstance.Controller, $"{i + 1}", default, FontServer.instance.ScaleEffective);
+                        if (bri != null)
+                        {
+                            overlayBlock.Clear();
+                            overlayBlock.SetColor(WETextRenderer.SHADER_PROP_BACK_COLOR, color);
+                            overlayBlock.SetColor(WETextRenderer.SHADER_PROP_COLOR, color);
+                            overlayBlock.SetVector(WETextRenderer.SHADER_PROP_SURF_PROPERTIES, new Vector4(1, 0, 1));
+                            WETextRenderer.RenderBri(bri, ref BuildingManager.instance.m_drawCallData.m_batchedCalls, renderInstance.m_dataMatrix1 * Matrix4x4.TRS(position + new Vector3(0, 3, 0), Quaternion.Euler(new Vector3(0, angle, 0)), new Vector3(.05f * circleSize, .05f * circleSize, .05f * circleSize))
+                                , data.Info.m_prefabDataLayer, overlayBlock);
+                        }
                     }
                 }
             }
@@ -204,21 +226,21 @@ namespace WriteEverywhere.Singleton
             m_buildingStopsDescriptor[refName] = result.Value;
         }
 
-
+        private static readonly MaterialPropertyBlock overlayBlock = new MaterialPropertyBlock();
 
 
         public static void AfterEndOverlayImpl(RenderManager.CameraInfo cameraInfo)
         {
-
             if (BuildingLiteUI.Instance.Visible)
             {
-                foreach (Tuple<Vector3, float, Color> tuple in ModInstance.Controller.BuildingPropsSingleton.m_onOverlayRenderQueue)
+                float angle = SimulationManager.instance.m_currentTickIndex;
+                foreach (var tuple in ModInstance.Controller.BuildingPropsSingleton.m_onOverlayRenderQueue)
                 {
                     Singleton<RenderManager>.instance.OverlayEffect.DrawCircle(cameraInfo,
-                       tuple.Third,
-                       tuple.First,
-                       tuple.Second * 2,
-                       -1, 1280f, false, true);
+                       tuple.color,
+                       tuple.position,
+                       tuple.circleSize * 2,
+                    -1, 1280f, false, true);
                 }
                 ModInstance.Controller.BuildingPropsSingleton.m_onOverlayRenderQueue.Clear();
             }
@@ -258,7 +280,16 @@ namespace WriteEverywhere.Singleton
 
         }
 
-        private readonly List<Tuple<Vector3, float, Color>> m_onOverlayRenderQueue = new List<Tuple<Vector3, float, Color>>();
+        private readonly List<DrawInformation> m_onOverlayRenderQueue = new List<DrawInformation>();
+
+        private struct DrawInformation
+        {
+            public Vector3 position;
+            public float circleSize;
+            public Color color;
+            public string text;
+            public int layer;
+        }
 
         internal static readonly Color[] m_colorOrder = new Color[]
         {
@@ -271,7 +302,7 @@ namespace WriteEverywhere.Singleton
             Color.Lerp(Color.blue, Color.magenta,0.5f),
             Color.magenta,
             Color.white,
-            Color.black,
+            Color.gray,
             Color.Lerp( Color.red,                                    Color.black,0.5f),
             Color.Lerp( Color.Lerp(Color.red, Color.yellow,0.5f),     Color.black,0.5f),
             Color.Lerp( Color.yellow,                                 Color.black,0.5f),
@@ -331,19 +362,19 @@ namespace WriteEverywhere.Singleton
                 }
             }
             Vector3 targetPostion = item.m_cachedPosition;
-            for (int i = 0; i <= targetDescriptor.ArrayRepeatTimes; i++)
+            var hasFixedCamera = false;
+            for (int i = 0; i < targetDescriptor.ArrayRepeatTimes; i++)
             {
                 if (i > 0)
                 {
                     targetPostion = item.m_cachedMatrix.MultiplyPoint(targetDescriptor.PropPosition + (i * (Vector3)targetDescriptor.ArrayRepeat));
                 }
-                RenderSign(parentDescriptor, ref data, cameraInfo, buildingID, idx, targetPostion, item.m_cachedRotation, layerMask, targetDescriptor, targetProp);
-
+                RenderSign(parentDescriptor, ref data, cameraInfo, buildingID, idx, targetPostion, item.m_cachedRotation, layerMask, targetDescriptor, targetProp, i, ref hasFixedCamera);
             }
         }
         private static float targetHeight;
         private uint lastFrameOverriden;
-        private void RenderSign(WriteOnBuildingXml parentDescriptor, ref Building data, RenderManager.CameraInfo cameraInfo, ushort buildingId, int boardIdx, Vector3 position, Vector3 rotation, int layerMask, WriteOnBuildingPropXml targetDescriptor, PropInfo cachedProp)
+        private void RenderSign(WriteOnBuildingXml parentDescriptor, ref Building data, RenderManager.CameraInfo cameraInfo, ushort buildingId, int boardIdx, Vector3 position, Vector3 rotation, int layerMask, WriteOnBuildingPropXml targetDescriptor, PropInfo cachedProp, int arrayIdx, ref bool hasFixedCamera)
         {
             var propname = targetDescriptor.m_simplePropName;
             if (propname is null)
@@ -352,7 +383,6 @@ namespace WriteEverywhere.Singleton
             }
             Color parentColor = WEDynamicTextRenderingRules.RenderPropMesh(cachedProp, cameraInfo, buildingId, boardIdx, 0, layerMask, data.m_angle, position, Vector4.zero, rotation, targetDescriptor.PropScale, targetDescriptor, out Matrix4x4 propMatrix, out bool rendered, new InstanceID { Building = buildingId });
 
-            var hasFixedCamera = false;
             if (rendered)
             {
                 for (int j = 0; j < targetDescriptor.TextDescriptors.Length; j++)
@@ -364,7 +394,7 @@ namespace WriteEverywhere.Singleton
                             && BuildingLiteUI.LockSelection
                             && BuildingLiteUI.Instance.IsOnTextEditor
                             && BuildingLiteUI.Instance.CurrentGrabbedId == buildingId
-                            /* && i == WTSOnNetLiteUI.LockSelectionInstanceNum*/
+                            && BuildingUIBasicTab.CurrentFocusInstance == arrayIdx
                             && BuildingLiteUI.Instance.CurrentTextSel == j
                             && BuildingLiteUI.Instance.CurrentPropSel == boardIdx
                             && !ModInstance.Controller.BuildingToolInstance.enabled;
@@ -382,10 +412,10 @@ namespace WriteEverywhere.Singleton
                 }
 
                 if (BuildingLiteUI.LockSelection &&
-                    (!BuildingLiteUI.Instance.IsOnTextEditor || !hasFixedCamera)
-                     /*&&( i == BuildingLiteUI.LockSelectionInstanceNum || BuildingLiteUI.LockSelectionTextIdx < 0)*/
-                     && BuildingLiteUI.Instance.Visible
+                    (!BuildingLiteUI.Instance.IsOnTextEditor || !hasFixedCamera || BuildingLiteUI.Instance.CurrentTextSel < 0)
+                    && BuildingLiteUI.Instance.Visible
                     && (BuildingLiteUI.Instance.CurrentGrabbedId == buildingId)
+                    && BuildingUIBasicTab.CurrentFocusInstance == arrayIdx
                     && BuildingLiteUI.Instance.CurrentPropSel == boardIdx
                     && !ModInstance.Controller.BuildingToolInstance.enabled)
                 {
@@ -506,13 +536,12 @@ namespace WriteEverywhere.Singleton
                                     {
                                         LogUtils.DoLog($"stop {stopId} => relPos = {relPos}; dist = {dist}; diffY = {diffY}");
                                     }
-
                                     return dist < maxDist && diffY < maxHeightDiff;
                                 })
                                 .Select(stopId =>
                                 {
                                     float anglePlat = (m_buildingStopsDescriptor[buildingName][i].directionPath.GetAngleXZ() + 360 + angleBuilding) % 360;
-                                    return UpdateStopInformation(stopId, buildingName, i, anglePlat, nmInstance);
+                                    return UpdateStopInformation(stopId, buildingName.TrimToNull() ?? $"[STOP {stopId}]", i, anglePlat, nmInstance);
                                 }).Where(x => x.m_lineId != 0).ToArray();
                             if (ModInstance.DebugMode)
                             {
@@ -792,6 +821,7 @@ namespace WriteEverywhere.Singleton
             }
             else
             {
+                desc.BuildingInfoName = info.name;
                 WTSBuildingData.Instance.CityDescriptors[info.name] = desc;
             }
             WTSBuildingData.Instance.CleanCache();

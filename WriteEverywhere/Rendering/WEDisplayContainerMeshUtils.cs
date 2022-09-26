@@ -123,7 +123,7 @@ namespace WriteEverywhere.Rendering
             var A3 = new Vector3(frontWH.x * .5f + offsetX, frontWH.y * -.5f, 0); //A3
 
 
-            mesh = WEAssetLibrary.instance.frameMesh.Copy();
+            mesh = WEAssetLibrary.instance.FrameMesh.Copy();
             mesh.vertices = mesh.vertices.Select(
                 v => v.y > 0.9f
                         ? v.z > 0.9f

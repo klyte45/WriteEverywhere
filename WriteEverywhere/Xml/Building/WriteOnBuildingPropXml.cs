@@ -88,7 +88,7 @@ namespace WriteEverywhere.Xml
             }
         }
         [XmlIgnore]
-        private int m_arrayRepeatTimes = 0;
+        private int m_arrayRepeatTimes = 1;
         [XmlAttribute("arrayRepeatTimes")]
         public int ArrayRepeatTimes
         {
@@ -99,7 +99,7 @@ namespace WriteEverywhere.Xml
                 {
                     BasicIUserMod.Instance.RequireRunCoroutine("OnChangeMatrixData", OnChangeMatrixData());
                 }
-                m_arrayRepeatTimes = value;
+                m_arrayRepeatTimes = Mathf.Clamp(value, 1, 9999);
             }
         }
 

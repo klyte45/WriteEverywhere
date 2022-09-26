@@ -124,6 +124,7 @@ namespace WriteEverywhere.Singleton
             }
             else
             {
+                desc.VehicleAssetName = info.name;
                 WTSVehicleData.Instance.CityDescriptors[info.name] = desc;
             }
             WTSVehicleData.Instance.CleanCache();

@@ -77,8 +77,6 @@ namespace WriteEverywhere.UI
                 {
                     results.Add(Tuple.New(name, (ushort)i));
                 }
-
-
                 if (i % 750 == 0)
                 {
                     yield return 0;

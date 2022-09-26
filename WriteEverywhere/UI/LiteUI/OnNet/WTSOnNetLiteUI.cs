@@ -55,7 +55,8 @@ namespace WriteEverywhere.UI
                 new WTSOnNetBasicTab(OnImportSingle, OnDelete, this),
                 new WTSOnNetTargetsTab(),
                 new WTSOnNetParamsTab(),
-                m_textEditorTab =  new WTSOnNetTextTab(m_colorPicker, () => CurrentEditingInstance?.BoardsData[ListSel]?.SimpleCachedProp, () =>
+                m_textEditorTab =  new WTSOnNetTextTab(m_colorPicker, () => CurrentEditingInstance?.BoardsData[ListSel]?.SimpleCachedProp,
+                () =>
                 {
                     if(ListSel>=0 && CurrentEditingInstance?.BoardsData[ListSel] != null)
                     {
@@ -69,7 +70,7 @@ namespace WriteEverywhere.UI
                         return ref CurrentEditingInstance.BoardsData[ListSel].RefFontName;
                     }
                     throw new System.Exception("Invalid call!!!");
-                })
+                }, ()=>ListSel>=0)
             };
             m_tabsContainer = new GUIBasicListingTabsContainer<OnNetInstanceCacheContainerXml>(tabs, OnAdd, GetSideList, GetSelectedItem, OnSetCurrentItem, AddExtraButtonsList);
             m_textEditorTabIdx = Array.IndexOf(tabs, m_textEditorTab);
@@ -162,13 +163,13 @@ namespace WriteEverywhere.UI
             }
         }
 
-        private void AddExtraButtonsList()
+        private void AddExtraButtonsList(bool canEdit)
         {
-            if (GUILayout.Button(Str.we_roadEditor_importAdding))
+            if (canEdit && GUILayout.Button(Str.we_roadEditor_importAdding))
             {
                 xmlLibList.GoToImportAdditive();
             }
-            if (GUILayout.Button(Str.we_roadEditor_importReplacing))
+            if (canEdit && GUILayout.Button(Str.we_roadEditor_importReplacing))
             {
                 xmlLibList.GoToImport();
             }
@@ -176,7 +177,7 @@ namespace WriteEverywhere.UI
             {
                 xmlLibList.GoToExport();
             }
-            if (GUILayout.Button(Str.WTS_SEGMENT_CLEARDATA))
+            if (canEdit && GUILayout.Button(Str.WTS_SEGMENT_CLEARDATA))
             {
                 xmlLibList.GoToRemove();
             }
@@ -251,7 +252,9 @@ namespace WriteEverywhere.UI
         {
             data.SaveName = CurrentEditingInstance.BoardsData[m_tabsContainer.ListSel].SaveName;
             CurrentEditingInstance.BoardsData[m_tabsContainer.ListSel] = data;
+            var oldSel = m_tabsContainer.ListSel;
             ReloadSegment();
+            m_tabsContainer.ListSel = oldSel;
         }
         #endregion
     }

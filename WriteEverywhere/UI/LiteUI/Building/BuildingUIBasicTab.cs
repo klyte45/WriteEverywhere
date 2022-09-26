@@ -34,6 +34,7 @@ namespace WriteEverywhere.UI
 
         private static readonly PivotPosition[] pivotOptionsValues = Enum.GetValues(typeof(PivotPosition)).Cast<PivotPosition>().ToArray();
         private static readonly string[] pivotOptions = pivotOptionsValues.Select(x => x.GetLocalizedName()).ToArray();
+        public static int CurrentFocusInstance { get => m_currentFocusInstance; private set => m_currentFocusInstance = value; }
 
         private enum State
         {
@@ -69,6 +70,7 @@ namespace WriteEverywhere.UI
         public Texture TabIcon { get; } = KResourceLoader.LoadTextureKwytto(CommonsSpriteNames.K45_Settings);
 
         private GUIRootWindowBase baseContainer;
+        private static int m_currentFocusInstance;
 
         public BuildingUIBasicTab(Action<WriteOnBuildingPropXml, bool> onImport, Action onDelete, GUIRootWindowBase baseContainer)
         {
@@ -150,9 +152,22 @@ namespace WriteEverywhere.UI
             m_layoutFilter.DrawButton(areaRect.x, PropIndexes.GetListName(item.SimpleProp));
             GUILayout.Space(12);
 
-            GUIKwyttoCommons.AddVector3Field(areaRect.x, item.PropPosition, Str.WTS_ONNETEDITOR_POSITIONOFFSET, f_SegmentPositionOffset);
-            GUIKwyttoCommons.AddVector3Field(areaRect.x, item.PropRotation, Str.WTS_ONNETEDITOR_ROTATION, f_SegmentRotationOffset);
-            GUIKwyttoCommons.AddVector3Field(areaRect.x, item.Scale, Str.WTS_ONNETEDITOR_SCALE, f_SegmentScaleOffset);
+            GUIKwyttoCommons.AddIntField(areaRect.x, Str.we_buildingEditor_repeatLayoutTimes, item.ArrayRepeatTimes, (x) => item.ArrayRepeatTimes = x, canEdit, 1);
+            if (item.ArrayRepeatTimes > 1)
+            {
+                GUIKwyttoCommons.AddVector3Field(areaRect.x, item.ArrayRepeat, Str.we_buildingEditor_repeatLayoutDirection, "ArrayDir", canEdit);
+                GUIKwyttoCommons.AddIntField(areaRect.x, Str.we_buildingEditor_currentFocusInstance, ref m_currentFocusInstance, true, 0, item.ArrayRepeatTimes - 1);
+            }
+            else
+            {
+                m_currentFocusInstance = 0;
+            }
+
+            GUILayout.Space(12);
+
+            GUIKwyttoCommons.AddVector3Field(areaRect.x, item.PropPosition, Str.WTS_ONNETEDITOR_POSITIONOFFSET, f_SegmentPositionOffset, canEdit);
+            GUIKwyttoCommons.AddVector3Field(areaRect.x, item.PropRotation, Str.WTS_ONNETEDITOR_ROTATION, f_SegmentRotationOffset, canEdit);
+            GUIKwyttoCommons.AddVector3Field(areaRect.x, item.Scale, Str.WTS_ONNETEDITOR_SCALE, f_SegmentScaleOffset, canEdit);
             using (new GUILayout.HorizontalScope())
             {
                 if (xmlLibItem.Status == FooterBarStatus.Normal)
@@ -162,7 +177,7 @@ namespace WriteEverywhere.UI
                     GUIKwyttoCommons.SquareTextureButton(m_deleteItem, Str.WTS_DELETETEXTITEM, m_onDelete, canEdit);
                     GUILayout.FlexibleSpace();
                     GUIKwyttoCommons.SquareTextureButton(m_copy, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_COPYTOCLIPBOARD, () => CopyToClipboard(item));
-                    GUIKwyttoCommons.SquareTextureButton(m_paste, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_PASTEFROMCLIPBOARD, () => m_onImport(item, false), canEdit && !(m_clipboard is null));
+                    GUIKwyttoCommons.SquareTextureButton(m_paste, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_PASTEFROMCLIPBOARD, () => m_onImport(XmlUtils.DefaultXmlDeserialize<WriteOnBuildingPropXml>(m_clipboard), false), canEdit && !(m_clipboard is null));
                     GUILayout.FlexibleSpace();
                     GUIKwyttoCommons.SquareTextureButton(m_importLib, Str.WTS_IMPORTLAYOUT_LIB, xmlLibItem.GoToImport, canEdit); ;
                     GUIKwyttoCommons.SquareTextureButton(m_exportLib, Str.WTS_EXPORTLAYOUT_LIB, xmlLibItem.GoToExport);
