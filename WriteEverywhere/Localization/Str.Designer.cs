@@ -70,6 +70,24 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a This building is not a transport station..
+        /// </summary>
+        internal static string we_buildingEditor_buildingIsNotTransportStation {
+            get {
+                return ResourceManager.GetString("we_buildingEditor_buildingIsNotTransportStation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Change priority order.
+        /// </summary>
+        internal static string we_buildingEditor_changePriorityOrder {
+            get {
+                return ResourceManager.GetString("we_buildingEditor_changePriorityOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Current Building: {0} (ID: {1}).
         /// </summary>
         internal static string we_buildingEditor_currentBuildingBeingEdited {
@@ -151,6 +169,24 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Platform name (click to toggle).
+        /// </summary>
+        internal static string we_buildingEditor_platformNameClickToToggle {
+            get {
+                return ResourceManager.GetString("we_buildingEditor_platformNameClickToToggle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Platform #{0}.
+        /// </summary>
+        internal static string we_buildingEditor_platformNamePlaceholder {
+            get {
+                return ResourceManager.GetString("we_buildingEditor_platformNamePlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Distance between instances.
         /// </summary>
         internal static string we_buildingEditor_repeatLayoutDirection {
@@ -183,6 +219,34 @@ namespace WriteEverywhere.Localization {
         internal static string we_buildingEditor_subBuildingNumTitle {
             get {
                 return ResourceManager.GetString("we_buildingEditor_subBuildingNumTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a This station has no stops..
+        /// </summary>
+        internal static string we_buildingEditor_thisStationHasNoStops {
+            get {
+                return ResourceManager.GetString("we_buildingEditor_thisStationHasNoStops", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a The platform order will define which information show in texts of this prop. The priority order will be used to determine from where to get the lines passing thru this building, following the order below. The platforms in the top will have priority over others to get information like color, as example.
+        ///The platforms are highlighted and numbered in the game..
+        /// </summary>
+        internal static string we_buildingEditor_transportStation_platformSelectionInfo {
+            get {
+                return ResourceManager.GetString("we_buildingEditor_transportStation_platformSelectionInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Transport station settings.
+        /// </summary>
+        internal static string we_buildingEditor_transportStationSettings {
+            get {
+                return ResourceManager.GetString("we_buildingEditor_transportStationSettings", resourceCulture);
             }
         }
         

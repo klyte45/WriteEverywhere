@@ -1020,4 +1020,14 @@ Try force spawning anywhere, like setting the model to a transport line.</value>
   <data name="we_buildingEditor_lockCameraToEditingProp" xml:space="preserve">
     <value>Lock camera to editing prop</value>
   </data>
+  <data name="we_buildingEditor_transportStation_platformSelectionInfo" xml:space="preserve">    <value>The platform order will define which information show in texts of this prop. The priority order will be used to determine from where to get the lines passing thru this building, following the order below. The platforms in the top will have priority over others to get information like color, as example.
+The platforms are highlighted and numbered in the game.</value>  </data>
+
+  <data name="we_buildingEditor_buildingIsNotTransportStation" xml:space="preserve">    <value>This building is not a transport station.</value>  </data>
+  <data name="we_buildingEditor_changePriorityOrder" xml:space="preserve">    <value>Change priority order</value>  </data>
+  <data name="we_buildingEditor_platformNameClickToToggle" xml:space="preserve">    <value>Platform name (click to toggle)</value>  </data>
+  <data name="we_buildingEditor_platformNamePlaceholder" xml:space="preserve">    <value>Platform #{0}</value>  </data>
+  <data name="we_buildingEditor_thisStationHasNoStops" xml:space="preserve">    <value>This station has no stops.</value>  </data>
+  <data name="we_buildingEditor_transportStationSettings" xml:space="preserve">    <value>Transport station settings</value>  </data>
+
 </root>

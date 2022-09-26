@@ -106,6 +106,7 @@ namespace WriteEverywhere.UI
             var root = colorPicker.GetComponentInParent<GUIRootWindowBase>();
             var tabs = new IGUITab<WriteOnBuildingPropXml>[] {
                 new BuildingUIBasicTab(OnImportSingle, OnDelete, root),
+                new BuildingUIPublicTransportTab(()=>CurrentEditingInfo),
                 m_textEditorTab =  new BuildingUITextTab(m_colorPicker, () => CurrentEditingLayout.PropInstances[PropSel].SimpleProp, () =>
                 {
                     if(PropSel>=0 && CurrentEditingLayout.PropInstances[PropSel] != null)
