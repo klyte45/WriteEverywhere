@@ -1,6 +1,7 @@
 ﻿extern alias TLM;
 
 using TLM::Bridge_WE2TLM;
+using WriteEverywhere.Singleton;
 
 namespace WriteEverywhere.Rendering
 {
@@ -10,7 +11,7 @@ namespace WriteEverywhere.Rendering
         public ushort nodeId;
         public long? Id { get => nodeId; set => nodeId = (ushort)(value ?? 0); }
 
-        public FormatableString Name
+        public FormattableString Name
         {
             get
             {
@@ -18,7 +19,7 @@ namespace WriteEverywhere.Rendering
                 {
                     identifier = ModInstance.Controller.ConnectorTLM.GetLineName(new WTSLine() { lineId = nodeId, regional = true });
                 }
-                return name;
+                return name.AsFormattable();
             }
         }
 
@@ -34,7 +35,7 @@ namespace WriteEverywhere.Rendering
             }
         }
 
-        private FormatableString name;
+        private string name;
         private string identifier;
         public void PurgeCache(CacheErasingFlags cacheToPurge, InstanceID refID)
         {

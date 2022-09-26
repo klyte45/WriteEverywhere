@@ -34,8 +34,6 @@ The goal is that any level of configuration (text, group of texts, prop with tex
 
 - Buildings that don't have a main building (like some parks) won't render the added props
 - The integrations with TLM, Addr. and VS aren't working yet
-- There are missing some UI for features of buildings related to platforms for stations
-- BG can't be illuminated yet
 - Locales aren't available yet because the English strings needs to be reviewed before it - possibly have a lot of garbage from WTS around here...
 - Some labels may not make sense to actual feature (needs mapping which ones)
 - Fallbacks from integrations weren't fully reviewed yet and may be inconsistent (specially the ones related to TLM)
@@ -47,6 +45,6 @@ The goal is that any level of configuration (text, group of texts, prop with tex
 - For vehicles, the font scaling and the content would need to be redone, but the text positions might be preserved if porting from there.
 - The road nodes feature WAS REMOVED. It may get back as a node prop feature in next builds.
 - The abreviations WERE REMOVED from this mod. It may be implemented in Addresses mod instead.
-- The savegame files locations are not shared between WE and WTS.
+- The savegame files locations are not shared between WE and WTS, so one won't replace another's file.
 
 </size>

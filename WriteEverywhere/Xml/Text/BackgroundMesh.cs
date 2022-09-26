@@ -21,12 +21,12 @@ namespace WriteEverywhere.Xml
         [XmlIgnore]
         private Vector2Xml m_size = new Vector2Xml();
         [XmlIgnore]
-        public Color m_bgMainColor;
+        public Color m_bgFrontColor = Color.white;
         [XmlAttribute("color")]
-        public string BgColorStr { get => ColorExtensions.ToRGB(m_bgMainColor); set => m_bgMainColor = ColorExtensions.FromRGBSafe(value) ?? default; }
+        public string BgColorStr { get => ColorExtensions.ToRGB(m_bgFrontColor); set => m_bgFrontColor = ColorExtensions.FromRGBSafe(value) ?? default; }
 
         [XmlIgnore]
-        public Color m_cachedBackColor = Color.white;
+        public Color m_cachedBackColor = Color.black;
         [XmlAttribute("backColor")]
         public string BackColorStr { get => ColorExtensions.ToRGB(m_cachedBackColor); set => m_cachedBackColor = ((Color?)ColorExtensions.FromRGBSafe(value)) ?? Color.black; }
 
@@ -44,6 +44,12 @@ namespace WriteEverywhere.Xml
         public TextParameterWrapper BgImage => bgImage;
         [XmlIgnore]
         private TextParameterWrapper bgImage;
+
+
+        [XmlAttribute("colorSource")]
+        public ColoringSource m_colorSource;
+        [XmlAttribute("normalStrength")]
+        public float m_normalStrength;
 
         [XmlAttribute("bgImage")]
         public string BgImageAsUri

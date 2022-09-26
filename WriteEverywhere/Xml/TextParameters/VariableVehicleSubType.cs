@@ -1,5 +1,6 @@
 ﻿extern alias TLM;
 
+using Kwytto.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -78,12 +79,12 @@ namespace WriteEverywhere.Xml
                     ref Vehicle[] buffer7 = ref VehicleManager.instance.m_vehicles.m_buffer;
                     ref Vehicle targetVehicle7 = ref buffer7[buffer7[vehicleId].GetFirstVehicle(vehicleId)];
                     var regLine2 = ModInstance.Controller.ConnectorTLM.GetVehicleLine(vehicleId);
-                    return ModInstance.Controller.ConnectorTLM.GetStopName(targetVehicle7.m_targetBuilding, regLine2);
+                    return varWrapper.TryFormat(ModInstance.Controller.ConnectorTLM.GetStopName(targetVehicle7.m_targetBuilding, regLine2).AsFormattable());
                 case VariableVehicleSubType.PrevStopLine:
                     ref Vehicle[] buffer5 = ref VehicleManager.instance.m_vehicles.m_buffer;
                     ref Vehicle targetVehicle5 = ref buffer5[buffer5[vehicleId].GetFirstVehicle(vehicleId)];
                     var regLine3 = ModInstance.Controller.ConnectorTLM.GetVehicleLine(vehicleId);
-                    return ModInstance.Controller.ConnectorTLM.GetStopName(TransportLine.GetPrevStop(targetVehicle5.m_targetBuilding), regLine3);
+                    return varWrapper.TryFormat(ModInstance.Controller.ConnectorTLM.GetStopName(TransportLine.GetPrevStop(targetVehicle5.m_targetBuilding), regLine3).AsFormattable());
                 case VariableVehicleSubType.LastStopLine:
                     ref Vehicle[] buffer2 = ref VehicleManager.instance.m_vehicles.m_buffer;
                     ref Vehicle targetVehicle = ref buffer2[buffer2[vehicleId].GetFirstVehicle(vehicleId)];
@@ -100,12 +101,12 @@ namespace WriteEverywhere.Xml
                         var lastTarget = TransportLine.GetPrevStop(target);
                         StopInformation stopInfo = WTSStopUtils.GetStopDestinationData(lastTarget);
                         var result =
-                              stopInfo.m_destinationString ?? (
+                              stopInfo.m_destinationString.TrimToNull() ?? (
                               stopInfo.m_destinationId != 0
                                 ? ModInstance.Controller.ConnectorTLM.GetStopName(stopInfo.m_destinationId, regLine4)
                                 : ModInstance.Controller.ConnectorTLM.GetStopName(targetVehicle.m_targetBuilding, regLine4)
                             );
-                        return result;
+                        return varWrapper.TryFormat(result.AsFormattable());
                     }
                 case VariableVehicleSubType.OwnNumber:
                     return WTSCacheSingleton.instance.GetVehicle(vehicleId).Identifier;
@@ -122,7 +123,7 @@ namespace WriteEverywhere.Xml
                         ref Vehicle vehicle = ref buffer[targetVehicleId];
                         return vehicle.m_targetBuilding == 0 || (vehicle.m_flags & Vehicle.Flags.GoingBack) != 0
                             ? vehicle.m_sourceBuilding.ToString("D5")
-                            : $"R{vehicle.m_targetBuilding.ToString("X4")}";
+                            : $"R{vehicle.m_targetBuilding:X4}";
                     }
                 case VariableVehicleSubType.LineFullName:
                     var regLine = ModInstance.Controller.ConnectorTLM.GetVehicleLine(vehicleId);

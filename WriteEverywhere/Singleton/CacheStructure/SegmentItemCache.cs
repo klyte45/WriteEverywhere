@@ -3,6 +3,7 @@
 using ADR::Bridge_WE2ADR;
 using UnityEngine;
 using WriteEverywhere.Localization;
+using WriteEverywhere.Singleton;
 using static CardinalPoint;
 
 namespace WriteEverywhere.Rendering
@@ -11,41 +12,41 @@ namespace WriteEverywhere.Rendering
     {
         public ushort segmentId;
         public long? Id { get => segmentId; set => segmentId = (ushort)(value ?? 0); }
-        public FormatableString FullStreetName
+        public FormattableString FullStreetName
         {
             get
             {
                 if (fullStreetName is null)
                 {
-                    fullStreetName = new FormatableString(ModInstance.Controller.ConnectorADR.GetStreetFullName(segmentId));
+                    fullStreetName = ModInstance.Controller.ConnectorADR.GetStreetFullName(segmentId);
                 }
-                return fullStreetName;
+                return fullStreetName.AsFormattable();
             }
         }
-        public FormatableString StreetName
+        public FormattableString StreetName
         {
             get
             {
                 if (streetName is null)
                 {
-                    streetName = new FormatableString((NetManager.instance.m_segments.m_buffer[segmentId].m_flags & NetSegment.Flags.CustomName) == 0
+                    streetName = (NetManager.instance.m_segments.m_buffer[segmentId].m_flags & NetSegment.Flags.CustomName) == 0
                         ? ModInstance.Controller.ConnectorADR.GetStreetSuffix(segmentId)
-                        : ModInstance.Controller.ConnectorADR.GetStreetSuffixCustom(segmentId));
+                        : ModInstance.Controller.ConnectorADR.GetStreetSuffixCustom(segmentId);
                 }
-                return streetName;
+                return streetName.AsFormattable();
             }
         }
-        public FormatableString StreetQualifier
+        public FormattableString StreetQualifier
         {
             get
             {
                 if (streetQualifier is null)
                 {
-                    streetQualifier = new FormatableString((NetManager.instance.m_segments.m_buffer[segmentId].m_flags & NetSegment.Flags.CustomName) == 0
+                    streetQualifier = (NetManager.instance.m_segments.m_buffer[segmentId].m_flags & NetSegment.Flags.CustomName) == 0
                         ? ModInstance.Controller.ConnectorADR.GetStreetQualifier(segmentId)
-                        : ModInstance.Controller.ConnectorADR.GetStreetQualifierCustom(segmentId));
+                        : ModInstance.Controller.ConnectorADR.GetStreetQualifierCustom(segmentId);
                 }
-                return streetQualifier;
+                return streetQualifier.AsFormattable();
             }
         }
 
@@ -197,9 +198,9 @@ namespace WriteEverywhere.Rendering
             }
         }
 
-        private FormatableString fullStreetName;
-        private FormatableString streetName;
-        private FormatableString streetQualifier;
+        private string fullStreetName;
+        private string streetName;
+        private string streetQualifier;
         private string postalCode;
         private byte? parkId;
         private byte? districtId;

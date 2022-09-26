@@ -1,10 +1,13 @@
-﻿using ColossalFramework;
+﻿extern alias TLM;
+
+using ColossalFramework;
 using ColossalFramework.Math;
 using Kwytto.Utils;
 using SpriteFontPlus.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using TLM::Bridge_WE2TLM;
 using UnityEngine;
 using WriteEverywhere.Utils;
 using WriteEverywhere.Xml;
@@ -31,14 +34,14 @@ namespace WriteEverywhere.Rendering
             {
                 return default;
             }
-            var textColor = GetTextColor(refID, boardIdx, secIdx, baseWrite, textDescriptor);
+            var textColor = GetTargetColor(refID, boardIdx, secIdx, baseWrite, textDescriptor.ColoringConfig.m_colorSource, textDescriptor.ColoringConfig.m_cachedColor, textDescriptor.ColoringConfig.m_useFixedIfMultiline);
             Vector3 scl = baseWrite.PropScale;
-            return DrawTextBri(refID, boardIdx, secIdx, ref propMatrix, textDescriptor, bri, ref textColor, textDescriptor.PlacingConfig, ref parentColor, srcInfo, ref scl, textDescriptor.m_horizontalAlignment, textDescriptor.MaxWidthMeters, instanceFlags, instanceFlags2, currentEditingSizeLine, ref defaultCallsCounter);
+            return DrawTextBri(baseWrite, refID, boardIdx, secIdx, ref propMatrix, textDescriptor, bri, ref textColor, textDescriptor.PlacingConfig, ref parentColor, srcInfo, ref scl, textDescriptor.m_horizontalAlignment, textDescriptor.MaxWidthMeters, instanceFlags, instanceFlags2, currentEditingSizeLine, ref defaultCallsCounter);
 
         }
 
         private static readonly MaterialPropertyBlock block = new MaterialPropertyBlock();
-        private static Vector3 DrawTextBri(ushort refID, int boardIdx, int secIdx, ref Matrix4x4 propMatrix, TextToWriteOnXml textDescriptor,
+        private static Vector3 DrawTextBri(BaseWriteOnXml baseWrite, ushort refID, int boardIdx, int secIdx, ref Matrix4x4 propMatrix, TextToWriteOnXml textDescriptor,
         BasicRenderInformation renderInfo, ref Color colorToSet, PlacingSettings placingSettings, ref Color parentColor, PrefabInfo srcInfo,
         ref Vector3 baseScale, float horizontalAlignment, float maxWidth, int instanceFlags, int instanceFlags2, bool currentEditingSizeLine, ref int defaultCallsCounter)
         {
@@ -50,7 +53,10 @@ namespace WriteEverywhere.Rendering
                 Matrix4x4 matrix = propMatrix * textItem.baseMatrix;
 
                 block.Clear();
-                CalculateIllumination(refID, boardIdx, secIdx, textDescriptor, block, ref colorToSet, instanceFlags, instanceFlags2);
+                var surfProperties = CalculateIllumination(refID, boardIdx, secIdx, textDescriptor, instanceFlags, instanceFlags2);
+                block.SetVector(SHADER_PROP_SURF_PROPERTIES, surfProperties);
+                block.SetColor(SHADER_PROP_COLOR, colorToSet *= Color.Lerp(new Color32(200, 200, 200, 255), Color.white, surfProperties.z));
+                block.SetColor(SHADER_PROP_BACK_COLOR, textDescriptor.ColoringConfig.UseFrontColorAsBackColor ? colorToSet : textDescriptor.ColoringConfig.m_cachedBackColor);
                 block.SetVector(SHADER_PROP_DIMENSIONS, textItem.finalSize);
                 RenderBri(renderInfo, ref defaultCallsCounter, matrix, srcInfo.m_prefabDataIndex, block);
 
@@ -62,34 +68,33 @@ namespace WriteEverywhere.Rendering
                         Color.magenta,
                         Color.magenta,
                         .5f,
-                        block,
+                        block, default,
                         textItem.placingSettings,
-                        ref baseScale,
-                        horizontalAlignment,
                         textItem,
-                        null, srcInfo,
-                        ModInstance.Controller.AtlasesLibrary.GetWhiteTextureBRI(),
-                        textDescriptor.TextLineHeight,
+                        null,
+                        srcInfo,
+                        ModInstance.Controller.AtlasesLibrary.GetWhiteTextureBRI(), textDescriptor.TextLineHeight,
                         ref defaultCallsCounter,
+                        0,
                         1,
                         ModInstance.Controller.highlightMaterial);
                 }
                 if (((Vector2)textDescriptor.BackgroundMeshSettings.Size).sqrMagnitude != 0)
                 {
+                    var bgColor = GetTargetColor(refID, boardIdx, secIdx, baseWrite, textDescriptor.BackgroundMeshSettings.m_colorSource, textDescriptor.BackgroundMeshSettings.m_bgFrontColor, textDescriptor.ColoringConfig.m_useFixedIfMultiline);
                     Matrix4x4 containerMatrix = DrawBgMesh(ref propMatrix,
                         textDescriptor.BackgroundMeshSettings.Size,
-                        textDescriptor.BackgroundMeshSettings.m_bgMainColor,
+                        bgColor,
                         textDescriptor.BackgroundMeshSettings.m_cachedBackColor,
                         textDescriptor.BackgroundMeshSettings.m_verticalAlignment,
-                        block,
+                        block, surfProperties,
                         textItem.placingSettings,
-                        ref baseScale,
-                        textDescriptor.BackgroundMeshSettings.m_horizontalAlignment,
                         textItem,
-                        textDescriptor.BackgroundMeshSettings.BgImage, srcInfo,
-                        ModInstance.Controller.AtlasesLibrary.GetWhiteTextureBRI(),
-                        textDescriptor.TextLineHeight,
+                        textDescriptor.BackgroundMeshSettings.BgImage,
+                        srcInfo,
+                        ModInstance.Controller.AtlasesLibrary.GetWhiteTextureBRI(), textDescriptor.TextLineHeight,
                         ref defaultCallsCounter,
+                        textDescriptor.BackgroundMeshSettings.m_normalStrength,
                         currentEditingSizeLine ? 2 : 1);
                     if (textDescriptor.BackgroundMeshSettings.m_useFrame)
                     {
@@ -105,18 +110,18 @@ namespace WriteEverywhere.Rendering
         {
             block.SetFloat(SHADER_PROP_PIXELS_METERS, renderInfo.m_pixelDensityMeters);
             block.SetVector(SHADER_PROP_BORDERS, renderInfo.m_borders);
-
-
             defaultCallsCounter++;
             Graphics.DrawMesh(renderInfo.m_mesh, matrix, renderInfo.m_generatedMaterial, layer, null, 0, block);
             return defaultCallsCounter;
         }
 
-        private static Matrix4x4 DrawBgMesh(ref Matrix4x4 propMatrix, Vector2 size, Color color, Color backColor, float verticalAlignment, MaterialPropertyBlock materialPropertyBlock, PlacingSettings placingSettings,
-            ref Vector3 baseScale, float horizontalAlignment, TextRenderDescriptor textMatrixTuple, TextParameterWrapper bgImage, PrefabInfo srcInfo,
-             BasicRenderInformation bgBri, float lineHeight, ref int defaultCallsCounter, float zDistanceMultiplier, Material overrideMaterial = null)
+        private static Matrix4x4 DrawBgMesh(ref Matrix4x4 propMatrix, Vector2 size, Color color, Color backColor, float verticalAlignment, MaterialPropertyBlock materialPropertyBlock, Vector4 surfProperties,
+            PlacingSettings placingSettings, TextRenderDescriptor textMatrixTuple, TextParameterWrapper bgImage, PrefabInfo srcInfo, BasicRenderInformation bgBri, float lineHeight,
+             ref int defaultCallsCounter, float normalStrength, float zDistanceMultiplier, Material overrideMaterial = null)
         {
             materialPropertyBlock.Clear();
+            materialPropertyBlock.SetColor(SHADER_PROP_SURF_PROPERTIES, new Vector4(normalStrength, 0, surfProperties.z));
+            color *= Color.Lerp(new Color32(200, 200, 200, 255), Color.white, surfProperties.z);
             materialPropertyBlock.SetColor(SHADER_PROP_COLOR, color);
             materialPropertyBlock.SetColor(SHADER_PROP_BACK_COLOR, backColor);
 
@@ -329,7 +334,7 @@ namespace WriteEverywhere.Rendering
         }
 
         #region Illumination handling
-        private static void CalculateIllumination(ushort refID, int boardIdx, int secIdx, TextToWriteOnXml textDescriptor, MaterialPropertyBlock materialPropertyBlock, ref Color colorToSet, int instanceFlags, int instanceFlags2)
+        private static Vector4 CalculateIllumination(ushort refID, int boardIdx, int secIdx, TextToWriteOnXml textDescriptor, int instanceFlags, int instanceFlags2)
         {
             Vector4 surfProperties = default;
             var randomizer = new Randomizer((refID << 8) + (boardIdx << 2) + secIdx);
@@ -355,9 +360,6 @@ namespace WriteEverywhere.Rendering
                     surfProperties.z = textDescriptor.IlluminationConfig.m_illuminationStrength;
                     break;
             }
-            colorToSet *= Color.Lerp(new Color32(200, 200, 200, 255), Color.white, surfProperties.z);
-            materialPropertyBlock.SetColor(SHADER_PROP_COLOR, colorToSet);
-
 
             if (surfProperties.z > 0 && textDescriptor.IlluminationConfig.BlinkType != BlinkType.None)
             {
@@ -365,22 +367,15 @@ namespace WriteEverywhere.Rendering
             }
 
             surfProperties.x = textDescriptor.IlluminationConfig.m_illuminationDepth;
-            materialPropertyBlock.SetVector(SHADER_PROP_SURF_PROPERTIES, surfProperties);
-            materialPropertyBlock.SetColor(SHADER_PROP_BACK_COLOR, textDescriptor.ColoringConfig.UseFrontColorAsBackColor ? colorToSet : textDescriptor.ColoringConfig.m_cachedBackColor);
+            return surfProperties;
         }
         private static void CalculateBlinkEffect(TextToWriteOnXml textDescriptor, ref Vector4 objectIndex, ref Randomizer randomizer)
         {
             float num = m_daynightOffTime + (randomizer.Int32(100000u) * 1E-05f);
-            Vector4 blinkVector;
-            if (textDescriptor.IlluminationConfig.BlinkType == BlinkType.Custom)
-            {
-                blinkVector = textDescriptor.IlluminationConfig.CustomBlink;
-            }
-            else
-            {
-                blinkVector = LightEffect.GetBlinkVector((LightEffect.BlinkType)textDescriptor.IlluminationConfig.BlinkType);
-            }
-            float num2 = num * 3.71f + Singleton<SimulationManager>.instance.m_simulationTimer / blinkVector.w;
+            Vector4 blinkVector = textDescriptor.IlluminationConfig.BlinkType == BlinkType.Custom
+                ? (Vector4)textDescriptor.IlluminationConfig.CustomBlink
+                : LightEffect.GetBlinkVector((LightEffect.BlinkType)textDescriptor.IlluminationConfig.BlinkType);
+            float num2 = num * 3.71f + (Singleton<SimulationManager>.instance.m_simulationTimer / blinkVector.w);
             num2 = (num2 - Mathf.Floor(num2)) * blinkVector.w;
             float num3 = MathUtils.SmoothStep(blinkVector.x, blinkVector.y, num2);
             float num4 = MathUtils.SmoothStep(blinkVector.w, blinkVector.z, num2);
@@ -388,17 +383,25 @@ namespace WriteEverywhere.Rendering
         }
         #endregion
 
-        private static Color GetTextColor(ushort refID, int boardIdx, int secIdx, BaseWriteOnXml descriptor, TextToWriteOnXml textDescriptor)
+        private static Color GetTargetColor(ushort refID, int boardIdx, int secIdx, BaseWriteOnXml descriptor, ColoringSource clrSrc, Color? cachedClr, bool cachedIfMultiline)
         {
-            if (textDescriptor.ColoringConfig.UseContrastColor)
+            if (clrSrc == ColoringSource.ContrastProp)
             {
                 return GetContrastColor(refID, boardIdx, secIdx, descriptor);
             }
-            else if (textDescriptor.ColoringConfig.m_cachedColor != null)
+            else if (descriptor is WriteOnBuildingPropXml bpx
+                && (clrSrc == ColoringSource.PlatformLine || clrSrc == ColoringSource.ContrastPlatformLine))
             {
-                return textDescriptor.ColoringConfig.m_cachedColor;
+                var targetStopsList = WTSStopUtils.GetAllTargetStopInfo(bpx, refID);
+                if (targetStopsList.Length == 0 || (targetStopsList.Length > 1 && cachedIfMultiline))
+                {
+                    return cachedClr ?? Color.white;
+                }
+                var effectiveStop = targetStopsList[0];
+                var effColor = ModInstance.Controller.ConnectorTLM.GetLineColor(new WTSLine(effectiveStop));
+                return clrSrc == ColoringSource.PlatformLine ? effColor : effColor.ContrastColor();
             }
-            return Color.white;
+            return cachedClr ?? Color.white;
         }
         public static Color GetContrastColor(ushort refID, int boardIdx, int secIdx, BaseWriteOnXml instance)
         {

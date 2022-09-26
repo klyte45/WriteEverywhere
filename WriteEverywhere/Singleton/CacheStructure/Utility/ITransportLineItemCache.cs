@@ -3,7 +3,7 @@
     public interface ITransportLineItemCache : IItemCache
     {
         string Identifier { get; }
-        FormatableString Name { get; }
+        FormattableString Name { get; }
     }
 
 }

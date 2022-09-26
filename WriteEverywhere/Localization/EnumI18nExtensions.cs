@@ -139,6 +139,17 @@ namespace WriteEverywhere.Localization
                 case YCloneType.None: return Str.we_Enum__YCloneType_None;
                 case YCloneType.OnX: return Str.we_Enum__YCloneType_OnX;
                 case YCloneType.OnZ: return Str.we_Enum__YCloneType_OnZ;
+                case ColoringSource.Fixed: return Str.we_Enum__ColoringSource_Fixed;
+                case ColoringSource.ContrastProp: return Str.we_Enum__ColoringSource_ContrastProp;
+                case ColoringSource.PlatformLine: return Str.we_Enum__ColoringSource_PlatformLine;
+                case ColoringSource.ContrastPlatformLine: return Str.we_Enum__ColoringSource_ContrastPlatformLine;
+                case TextRenderingClass.None: return Str.we_Enum__TextRenderingClass_None;
+                case TextRenderingClass.RoadNodes: return Str.we_Enum__TextRenderingClass_RoadNodes;
+                case TextRenderingClass.Buildings: return Str.we_Enum__TextRenderingClass_Buildings;
+                case TextRenderingClass.PlaceOnNet: return Str.we_Enum__TextRenderingClass_PlaceOnNet;
+                case TextRenderingClass.Vehicle: return Str.we_Enum__TextRenderingClass_Vehicle;
+                case TextRenderingClass.Any: return Str.we_Enum__TextRenderingClass_Any;
+                case TextRenderingClass.BgMesh: return Str.we_Enum__TextRenderingClass_BgMesh;
 
 
             }

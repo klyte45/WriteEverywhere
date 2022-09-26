@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using WriteEverywhere.Singleton;
 
 namespace WriteEverywhere.Rendering
 {
@@ -7,15 +8,15 @@ namespace WriteEverywhere.Rendering
         public byte parkId;
         public long? Id { get => parkId; set => parkId = (byte)(value ?? 0); }
 
-        public FormatableString Name
+        public FormattableString Name
         {
             get
             {
                 if (name is null)
                 {
-                    name = new FormatableString(DistrictManager.instance.GetParkName(parkId));
+                    name = DistrictManager.instance.GetParkName(parkId);
                 }
-                return name;
+                return name.AsFormattable();
             }
         }
         public int AreaSqMeters
@@ -63,7 +64,7 @@ namespace WriteEverywhere.Rendering
             }
         }
 
-        private FormatableString name;
+        private string name;
         private int? areaSqMeters;
         public void PurgeCache(CacheErasingFlags cacheToPurge, InstanceID refID)
         {

@@ -41,6 +41,7 @@ namespace WriteEverywhere.UI
             {
                 item.IlluminationConfig.IlluminationType = (MaterialType)newVal;
             }
+            GUIKwyttoCommons.AddToggle(Str.we_textEditor_useAlsoForBg, ref item.IlluminationConfig.m_useForBg);
             if (item.IlluminationConfig.IlluminationType != MaterialType.OPAQUE)
             {
 

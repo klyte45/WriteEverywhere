@@ -12,6 +12,8 @@ namespace WriteEverywhere.Xml
         public float m_illuminationStrength = 1;
         [XmlAttribute("depth")]
         public float m_illuminationDepth = 0;
+        [XmlAttribute("useInBg")]
+        public bool m_useForBg = false;
         [XmlAttribute("blinkType")]
         public BlinkType BlinkType { get; set; } = BlinkType.None;
         [XmlElement("customBlinkParams")]

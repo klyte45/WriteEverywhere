@@ -1,6 +1,4 @@
-﻿using Kwytto.Utils;
-using SpriteFontPlus.Utility;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using WriteEverywhere.Singleton;
@@ -179,7 +177,7 @@ namespace WriteEverywhere.Xml
                 case VariableSegmentTargetSubType.HwCodeShort: return WTSCacheSingleton.instance.GetSegment(targId).HwCodeShort;
                 case VariableSegmentTargetSubType.HwCodeLong: return WTSCacheSingleton.instance.GetSegment(targId).HwCodeLong;
                 case VariableSegmentTargetSubType.HwDettachedPrefix: return WTSCacheSingleton.instance.GetSegment(targId).HwDettachedPrefix;
-                case VariableSegmentTargetSubType.HwIdentifierSuffix: return WTSCacheSingleton.instance.GetSegment(targId).HwIdentifierSuffix;               
+                case VariableSegmentTargetSubType.HwIdentifierSuffix: return WTSCacheSingleton.instance.GetSegment(targId).HwIdentifierSuffix;
                 default:
                     return null;
             }

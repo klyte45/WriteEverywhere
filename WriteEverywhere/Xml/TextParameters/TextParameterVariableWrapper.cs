@@ -371,6 +371,6 @@ namespace WriteEverywhere.Xml
 
         public string TryFormat(float value, float multiplier) => (value * multiplier).ToString(paramContainer.numberFormat);
         public string TryFormat(long value) => value.ToString(paramContainer.numberFormat);
-        public string TryFormat(FormatableString value) => value.GetFormatted(paramContainer.stringFormat);
+        public string TryFormat(FormattableString value) => value.GetFormatted(paramContainer.stringFormat);
     }
 }

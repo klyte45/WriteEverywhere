@@ -109,7 +109,7 @@ namespace WriteEverywhere.UI
                     new GeneralWritingEditorGeneralTab(()=> m_currentLayout.TextDescriptors),
                     positionTab = new GeneralWritingEditorPositionsSizesTab(root),
                     new GeneralWritingEditorForegroundTab(m_colorPicker),
-                    new GeneralWritingEditorBoxSettingsTab(m_colorPicker, ()=> m_currentInfo),
+                    new GeneralWritingEditorBgMeshSettingsTab(m_colorPicker, ()=> m_currentInfo),
                     new GeneralWritingEditorIlluminationTab(m_colorPicker),
                     new GeneralWritingEditorContentTab(m_colorPicker, ()=> m_currentInfo, TextRenderingClass.Vehicle)
                     };

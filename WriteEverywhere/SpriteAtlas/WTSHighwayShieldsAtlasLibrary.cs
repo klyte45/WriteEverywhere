@@ -176,13 +176,13 @@ namespace WriteEverywhere.Sprites
                     //Color textColor;
                     //switch (textDescriptor.ColoringConfig.ColorSource)
                     //{
-                    //    case ColoringSettings.ColoringSource.Contrast:
+                    //    case ColoringSource.Contrast:
                     //        textColor = targetColor.ContrastColor();
                     //        break;
-                    //    case ColoringSettings.ColoringSource.Parent:
+                    //    case ColoringSource.Parent:
                     //        textColor = targetColor;
                     //        break;
-                    //    case ColoringSettings.ColoringSource.Fixed:
+                    //    case ColoringSource.Fixed:
                     //    default:
                     //        textColor = textDescriptor.ColoringConfig.m_cachedColor;
                     //        break;

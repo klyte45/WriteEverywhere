@@ -66,7 +66,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="**\*.cs" Exclude="Localization\Str.Designer.cs" />   
+    <Compile Include="**\*.cs" Exclude="Localization\Str.Designer.cs" />
+    <Compile Include="Enums\ColoringSource.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KwyttoUtilityWE\KwyttoUtilityWE.csproj">

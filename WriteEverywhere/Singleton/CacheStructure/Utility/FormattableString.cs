@@ -1,6 +1,6 @@
 ﻿namespace WriteEverywhere.Rendering
 {
-    public class FormatableString
+    public class FormattableString
     {
         private string value;
         private string upper;
@@ -9,7 +9,7 @@
         private string lowerAbbreviated;
         private string upperAbbreviated;
 
-        public FormatableString(string value) => Value = value;
+        public FormattableString(string value) => Value = value;
 
         public string Get(bool uppercase, bool abbreviated)
             => uppercase
@@ -17,7 +17,7 @@
                 : abbreviated ? Abbreviated : Value;
 
         public string GetFormatted(string format)
-            => format is null 
+            => format is null
                 ? Value
                 : format.Contains("U")
                     ? format.Contains("A") ? UpperAbbreviated : Upper

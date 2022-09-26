@@ -8,8 +8,6 @@ namespace WriteEverywhere.Xml
 {
     public class ColoringSettings
     {
-        [XmlAttribute("useContrastColor")]
-        public bool UseContrastColor { get => ColorSource == ColoringSource.Contrast; set => ColorSource = value ? ColoringSource.Contrast : ColoringSource.Fixed; }
         [XmlIgnore]
         public Color m_cachedColor = Color.white;
         [XmlAttribute("color")]
@@ -21,15 +19,12 @@ namespace WriteEverywhere.Xml
         public bool UseFrontColorAsBackColor { get => m_cachedBackColor == Color.clear; set => m_cachedBackColor = value ? Color.clear : Color.black; }
         [XmlAttribute("backColor")]
         public string BackColor { get => m_cachedBackColor == Color.clear ? null : ColorExtensions.ToRGB(m_cachedBackColor); set => m_cachedBackColor = value.IsNullOrWhiteSpace() ? Color.clear : ((Color?)ColorExtensions.FromRGBSafe(value)) ?? Color.clear; }
-        [XmlAttribute("colorSource")]
-        public ColoringSource ColorSource { get; set; } = ColoringSource.Fixed;
 
-        public enum ColoringSource
-        {
-            Fixed,
-            Contrast,
-            Parent
-        }
+        [XmlAttribute("fixedIfMultiline")]
+        public bool m_useFixedIfMultiline;
+
+        [XmlAttribute("colorSource")]
+        public ColoringSource m_colorSource = ColoringSource.Fixed;
     }
 
 }

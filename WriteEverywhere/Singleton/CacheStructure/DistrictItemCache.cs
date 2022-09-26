@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using WriteEverywhere.Singleton;
 
 namespace WriteEverywhere.Rendering
 {
@@ -6,15 +7,15 @@ namespace WriteEverywhere.Rendering
     {
         public byte districtId;
         public long? Id { get => districtId; set => districtId = (byte)(value ?? 0); }
-        public FormatableString Name
+        public FormattableString Name
         {
             get
             {
                 if (name is null)
                 {
-                    name = new FormatableString(districtId == 0 ? SimulationManager.instance.m_metaData.m_CityName : DistrictManager.instance.GetDistrictName(districtId));
+                    name = districtId == 0 ? SimulationManager.instance.m_metaData.m_CityName : DistrictManager.instance.GetDistrictName(districtId);
                 }
-                return name;
+                return name.AsFormattable();
             }
         }
         public int AreaSqMeters
@@ -74,7 +75,7 @@ namespace WriteEverywhere.Rendering
             }
         }
 
-        private FormatableString name;
+        private string name;
         private int? areaSqMeters;
         private uint? population;
         private long lastPopUpdate;

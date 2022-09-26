@@ -2,6 +2,7 @@
 
 using ADR::Bridge_WE2ADR;
 using Kwytto.Utils;
+using WriteEverywhere.Singleton;
 
 namespace WriteEverywhere.Rendering
 {
@@ -10,15 +11,15 @@ namespace WriteEverywhere.Rendering
         public ushort buildingId;
         public long? Id { get => buildingId; set => buildingId = (ushort)(value ?? 0); }
 
-        public FormatableString Name
+        public FormattableString Name
         {
             get
             {
                 if (name is null)
                 {
-                    name = new FormatableString(BuildingManager.instance.GetBuildingName(buildingId, InstanceID.Empty) ?? "");
+                    name = BuildingManager.instance.GetBuildingName(buildingId, InstanceID.Empty) ?? "";
                 }
-                return name;
+                return name.AsFormattable();
             }
         }
         public ushort SegmentId
@@ -62,7 +63,7 @@ namespace WriteEverywhere.Rendering
             }
         }
 
-        private FormatableString name = null;
+        private string name = null;
         private ushort? segmentId;
         private int? addressNumber;
         public void PurgeCache(CacheErasingFlags cacheToPurge, InstanceID refID)

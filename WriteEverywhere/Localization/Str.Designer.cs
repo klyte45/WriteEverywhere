@@ -332,6 +332,42 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Contrast from PT line color.
+        /// </summary>
+        internal static string we_Enum__ColoringSource_ContrastPlatformLine {
+            get {
+                return ResourceManager.GetString("we_Enum__ColoringSource_ContrastPlatformLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Contrast from prop color.
+        /// </summary>
+        internal static string we_Enum__ColoringSource_ContrastProp {
+            get {
+                return ResourceManager.GetString("we_Enum__ColoringSource_ContrastProp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Fixed.
+        /// </summary>
+        internal static string we_Enum__ColoringSource_Fixed {
+            get {
+                return ResourceManager.GetString("we_Enum__ColoringSource_Fixed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a PT line color.
+        /// </summary>
+        internal static string we_Enum__ColoringSource_PlatformLine {
+            get {
+                return ResourceManager.GetString("we_Enum__ColoringSource_PlatformLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Workshop.
         /// </summary>
         internal static string we_Enum__ConfigurationSource_ASSET {
@@ -458,6 +494,69 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Any kind.
+        /// </summary>
+        internal static string we_Enum__TextRenderingClass_Any {
+            get {
+                return ResourceManager.GetString("we_Enum__TextRenderingClass_Any", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Image for Background.
+        /// </summary>
+        internal static string we_Enum__TextRenderingClass_BgMesh {
+            get {
+                return ResourceManager.GetString("we_Enum__TextRenderingClass_BgMesh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Buildings.
+        /// </summary>
+        internal static string we_Enum__TextRenderingClass_Buildings {
+            get {
+                return ResourceManager.GetString("we_Enum__TextRenderingClass_Buildings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a None.
+        /// </summary>
+        internal static string we_Enum__TextRenderingClass_None {
+            get {
+                return ResourceManager.GetString("we_Enum__TextRenderingClass_None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Place on segments.
+        /// </summary>
+        internal static string we_Enum__TextRenderingClass_PlaceOnNet {
+            get {
+                return ResourceManager.GetString("we_Enum__TextRenderingClass_PlaceOnNet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Road nodes.
+        /// </summary>
+        internal static string we_Enum__TextRenderingClass_RoadNodes {
+            get {
+                return ResourceManager.GetString("we_Enum__TextRenderingClass_RoadNodes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Vehicles.
+        /// </summary>
+        internal static string we_Enum__TextRenderingClass_Vehicle {
+            get {
+                return ResourceManager.GetString("we_Enum__TextRenderingClass_Vehicle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Center.
         /// </summary>
         internal static string we_Enum__UIHorizontalAlignment_Center {
@@ -576,6 +675,34 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Mesh front color.
+        /// </summary>
+        internal static string we_generalTextEditor_bgFrontColor {
+            get {
+                return ResourceManager.GetString("we_generalTextEditor_bgFrontColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Mesh front color
+        ///&lt;i&gt;(if fixed color on multiple lines is active for the text)&lt;/i&gt;.
+        /// </summary>
+        internal static string we_generalTextEditor_bgFrontColorForMultilineIfActive {
+            get {
+                return ResourceManager.GetString("we_generalTextEditor_bgFrontColorForMultilineIfActive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a To generate frame, enable the background.
+        /// </summary>
+        internal static string we_generalTextEditor_bgRequiredForFrame {
+            get {
+                return ResourceManager.GetString("we_generalTextEditor_bgRequiredForFrame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Box inner color.
         /// </summary>
         internal static string we_generalTextEditor_boxInnerColor {
@@ -594,11 +721,38 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Color source.
+        /// </summary>
+        internal static string we_generalTextEditor_colorSource {
+            get {
+                return ResourceManager.GetString("we_generalTextEditor_colorSource", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Background depth effect (based on Alpha).
+        /// </summary>
+        internal static string we_generalTextEditor_depthNormalBg {
+            get {
+                return ResourceManager.GetString("we_generalTextEditor_depthNormalBg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Text backface color.
         /// </summary>
         internal static string we_generalTextEditor_fontBackfaceColor {
             get {
                 return ResourceManager.GetString("we_generalTextEditor_fontBackfaceColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Generated frame settings.
+        /// </summary>
+        internal static string we_generalTextEditor_frameSettings {
+            get {
+                return ResourceManager.GetString("we_generalTextEditor_frameSettings", resourceCulture);
             }
         }
         
@@ -654,6 +808,15 @@ namespace WriteEverywhere.Localization {
         internal static string we_generalTextEditor_useBackground {
             get {
                 return ResourceManager.GetString("we_generalTextEditor_useBackground", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Use fixed color if multiple lines are found at platforms (instead of first of them).
+        /// </summary>
+        internal static string we_generalTextEditor_useFixedIfMultiline {
+            get {
+                return ResourceManager.GetString("we_generalTextEditor_useFixedIfMultiline", resourceCulture);
             }
         }
         
@@ -936,6 +1099,16 @@ namespace WriteEverywhere.Localization {
         internal static string we_textEditor_needPropSelectedWarning {
             get {
                 return ResourceManager.GetString("we_textEditor_needPropSelectedWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Also illuminate the background
+        ///&lt;i&gt;Alpha from image will be mask for illumination cookie&lt;/i&gt;.
+        /// </summary>
+        internal static string we_textEditor_useAlsoForBg {
+            get {
+                return ResourceManager.GetString("we_textEditor_useAlsoForBg", resourceCulture);
             }
         }
         

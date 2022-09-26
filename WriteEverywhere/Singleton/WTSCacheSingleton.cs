@@ -1,15 +1,14 @@
 extern alias TLM;
-
 using ColossalFramework;
 using Kwytto.Utils;
-using WriteEverywhere.Rendering;
-using WriteEverywhere.Utils;
 using SpriteFontPlus;
 using SpriteFontPlus.Utility;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 using TLM::Bridge_WE2TLM;
+using UnityEngine;
+using WriteEverywhere.Rendering;
 
 namespace WriteEverywhere.Singleton
 {
@@ -23,6 +22,7 @@ namespace WriteEverywhere.Singleton
         private readonly NonSequentialList<DistrictItemCache> m_cacheDistricts = new NonSequentialList<DistrictItemCache>();
         private readonly NonSequentialList<ParkItemCache> m_cacheParks = new NonSequentialList<ParkItemCache>();
         private readonly NonSequentialList<BuildingItemCache> m_cacheBuildings = new NonSequentialList<BuildingItemCache>();
+        private readonly Dictionary<string, FormattableString> m_cacheStringsFormattable = new Dictionary<string, FormattableString>();
 
         private IEnumerator PurgeCache(CacheErasingFlags cacheFlags, InstanceID instanceID)
         {
@@ -170,13 +170,24 @@ namespace WriteEverywhere.Singleton
         public DistrictItemCache GetDistrict(ushort id) => SafeGetter(m_cacheDistricts, id);
         public ParkItemCache GetPark(ushort id) => SafeGetter(m_cacheParks, id);
         public BuildingItemCache GetBuilding(ushort id) => SafeGetter(m_cacheBuildings, id);
+        public FormattableString AsFormattable(string s)
+        {
+            if (!m_cacheStringsFormattable.ContainsKey(s))
+            {
+                m_cacheStringsFormattable[s] = new FormattableString(s);
+            }
+            return m_cacheStringsFormattable[s];
+        }
 
         public static BasicRenderInformation GetTextData(string text, string prefix, string suffix, DynamicSpriteFont primaryFont, string overrideFont)
         {
             string str = $"{prefix}{text}{suffix}";
             return (FontServer.instance[overrideFont] ?? primaryFont ?? FontServer.instance[MainController.DEFAULT_FONT_KEY])?.DrawString(ModInstance.Controller, str, default, FontServer.instance.ScaleEffective);
         }
-
+    }
+    public static class StringFormattableExtensions
+    {
+        public static FormattableString AsFormattable(this string s) => WTSCacheSingleton.instance.AsFormattable(s);
     }
 }
 

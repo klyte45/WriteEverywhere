@@ -23,6 +23,9 @@ namespace WriteEverywhere.UI
         private readonly string[] m_fontClasses = EnumI18nExtensions.GetAllValuesI18n<FontClass>();
         private readonly GUIRootWindowBase m_root;
 
+        private static readonly string[] contrastOptions = EnumI18nExtensions.GetAllValuesI18n<ColoringSource>();
+        private static readonly ColoringSource[] contrastValues = Enum.GetValues(typeof(ColoringSource)).Cast<ColoringSource>().ToArray();
+
         public GeneralWritingEditorForegroundTab(GUIColorPicker colorPicker)
         {
             m_picker = colorPicker;
@@ -51,23 +54,22 @@ namespace WriteEverywhere.UI
         private void NormalDraw(Vector2 tabAreaSize, TextToWriteOnXml item, bool isEditable)
         {
             GUILayout.Label($"<i>{Str.WTS_FONTFACE_SETTINGS}</i>");
-            bool useContrast = item.ColoringConfig.UseContrastColor;
-            if (GUIKwyttoCommons.AddToggle(Str.WTS_USE_CONTRAST_COLOR, ref useContrast, isEditable))
-            {
-                item.ColoringConfig.UseContrastColor = useContrast;
-            }
-            bool backFaceIsFrontFace = item.ColoringConfig.UseFrontColorAsBackColor;
-            if (GUIKwyttoCommons.AddToggle(Str.we_generalTextEditor_backfaceFontColorIsSameAsFrontFace, ref backFaceIsFrontFace, isEditable))
-            {
-                item.ColoringConfig.UseFrontColorAsBackColor = backFaceIsFrontFace;
-            }
-            if (!useContrast)
+            GUIKwyttoCommons.AddComboBox(tabAreaSize.x, Str.we_generalTextEditor_colorSource, ref item.ColoringConfig.m_colorSource, contrastOptions, contrastValues, m_root, isEditable);
+            GUIKwyttoCommons.AddToggle(Str.we_generalTextEditor_useFixedIfMultiline, ref item.ColoringConfig.m_useFixedIfMultiline, isEditable, item.ColoringConfig.m_colorSource == ColoringSource.PlatformLine || item.ColoringConfig.m_colorSource == ColoringSource.ContrastPlatformLine);
+
+            if (item.ColoringConfig.m_colorSource == ColoringSource.Fixed || (item.ColoringConfig.m_useFixedIfMultiline && (item.ColoringConfig.m_colorSource == ColoringSource.PlatformLine || item.ColoringConfig.m_colorSource == ColoringSource.ContrastPlatformLine)))
             {
                 GUIKwyttoCommons.AddColorPicker(Str.WTS_TEXT_COLOR, m_picker, ref item.ColoringConfig.m_cachedColor, isEditable);
             }
             else
             {
                 GUILayout.Space(12);
+            }
+
+            bool backFaceIsFrontFace = item.ColoringConfig.UseFrontColorAsBackColor;
+            if (GUIKwyttoCommons.AddToggle(Str.we_generalTextEditor_backfaceFontColorIsSameAsFrontFace, ref backFaceIsFrontFace, isEditable))
+            {
+                item.ColoringConfig.UseFrontColorAsBackColor = backFaceIsFrontFace;
             }
             if (!backFaceIsFrontFace)
             {
