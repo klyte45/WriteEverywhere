@@ -34,7 +34,8 @@ namespace WriteEverywhere
         public static readonly SavedFloat UIScaleSaved = new SavedFloat("K45_WE_uiScale", Settings.gameSettingsFile, 1);
         public static readonly SavedFloat UIOpacitySaved = new SavedFloat("K45_WE_uiOpacity", Settings.gameSettingsFile, .85f);
 
-        public override IUUIButtonContainerPlaceholder[] UUIButtons => new IUUIButtonContainerPlaceholder[]
+        private IUUIButtonContainerPlaceholder[] cachedUUI;
+        public override IUUIButtonContainerPlaceholder[] UUIButtons => cachedUUI ?? (cachedUUI = new IUUIButtonContainerPlaceholder[]
         {
             new UUIToolButtonContainerPlaceholder(
                 buttonName :  $"{SimpleName} - {Str.WTS_PICK_A_SEGMENT}",
@@ -54,7 +55,7 @@ namespace WriteEverywhere
              iconPath: "VehicleEditorIcon",
              windowGetter: ()=>WTSVehicleLiteUI.Instance
              ),
-        };
+        });
 
         public override void Group9SettingsUI(UIHelper group9)
         {

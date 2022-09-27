@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.UI;
+using Kwytto.Localization;
 using System;
 using System.Linq;
 using WriteEverywhere.Xml;
