@@ -44,7 +44,7 @@ namespace WriteEverywhere.UI
         {
             hasChanged = false;
             var currentTool = ToolsModifierControl.toolController.CurrentTool;
-            if (GUILayout.Button(Str.we_buildingEditor_pickerBtn, currentTool is BuildingEditorTool currentToolVeh ? WEUIUtils.GreenButton : GUI.skin.button, GUILayout.Width(100)))
+            if (GUILayout.Button(Str.we_buildingEditor_pickerBtn, currentTool is BuildingEditorTool currentToolVeh ? WEUIUtils.GreenButton : GUI.skin.button))
             {
                 var vehTool = ToolsModifierControl.toolController.GetComponent<BuildingEditorTool>();
                 vehTool.GetHoverColor = (x) => BuildingManager.instance.m_buildings.m_buffer[x].Info == m_buildingInfoGetter() ? BuildingEditorTool.m_hoverColor : BuildingEditorTool.m_removeColor;

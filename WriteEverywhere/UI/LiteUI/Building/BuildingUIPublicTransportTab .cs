@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using Kwytto.LiteUI;
 using Kwytto.UI;
 using Kwytto.Utils;
 using System;
@@ -44,7 +45,7 @@ namespace WriteEverywhere.UI
                 using (new GUILayout.HorizontalScope())
                 {
                     GUILayout.Label(Str.we_buildingEditor_platformNameClickToToggle);
-                    GUILayout.Label(Str.we_buildingEditor_changePriorityOrder, GUILayout.Width(60));
+                    GUILayout.Label(Str.we_buildingEditor_changePriorityOrder, GUILayout.Width(60 * GUIWindow.ResolutionMultiplier));
                 }
                 using (var scroll = new GUILayout.ScrollViewScope(m_scrollPos))
                 {

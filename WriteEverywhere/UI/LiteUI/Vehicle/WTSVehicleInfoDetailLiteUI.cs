@@ -76,7 +76,7 @@ namespace WriteEverywhere.UI
         public int TextDescriptorIndexSelected => m_tabsContainer.ListSel;
         public VehicleInfo CurrentEditingInfo => m_currentInfo;
         public bool IsOnTextDimensionsView => m_tabsContainer.CurrentTabIdx == m_sizeEditorTabIdx;
-        public string CurrentSkin => m_currentSkin == m_availableSkinsOptions[0] ? null : m_currentSkin;
+        public string CurrentSkin => m_availableSkinsOptions is null || m_availableSkinsOptions.Length == 0 || m_currentSkin == m_availableSkinsOptions[0] ? null : m_currentSkin;
         private readonly int m_sizeEditorTabIdx;
 
         public WTSVehicleInfoDetailLiteUI(GUIColorPicker colorPicker)
@@ -111,6 +111,7 @@ namespace WriteEverywhere.UI
                     positionTab = new GeneralWritingEditorPositionsSizesTab(root),
                     new GeneralWritingEditorForegroundTab(m_colorPicker),
                     new GeneralWritingEditorBgMeshSettingsTab(m_colorPicker, ()=> m_currentInfo),
+                    new GeneralWritingEditorFrameSettingsTab(m_colorPicker,()=>m_currentInfo),
                     new GeneralWritingEditorIlluminationTab(m_colorPicker),
                     new GeneralWritingEditorContentTab(m_colorPicker, ()=> m_currentInfo, TextRenderingClass.Vehicle)
                     };
@@ -197,7 +198,7 @@ namespace WriteEverywhere.UI
                         GUILayout.Label(m_currentSource.ValueToI18n(), skinNoWrap);
                         GUILayout.FlexibleSpace();
                     }
-                    using (new GUILayout.VerticalScope(GUILayout.MaxWidth(300)))
+                    using (new GUILayout.VerticalScope(GUILayout.MaxWidth(300 * GUIWindow.ResolutionMultiplier)))
                     {
                         using (new GUILayout.HorizontalScope())
                         {

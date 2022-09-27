@@ -8,6 +8,7 @@ using UnityEngine;
 using WriteEverywhere.Data;
 using WriteEverywhere.Localization;
 using WriteEverywhere.Tools;
+using WriteEverywhere.Utils;
 
 namespace WriteEverywhere.UI
 {
@@ -56,7 +57,7 @@ namespace WriteEverywhere.UI
         {
             hasChanged = false;
             var currentTool = ToolsModifierControl.toolController.CurrentTool;
-            if (GUILayout.Button(Str.we_vehicleEditor_pickerBtn, currentTool is VehicleEditorTool currentToolVeh ? GreenButton : GUI.skin.button, GUILayout.Width(100)))
+            if (GUILayout.Button(Str.we_vehicleEditor_pickerBtn, currentTool is VehicleEditorTool currentToolVeh ? WEUIUtils.GreenButton : GUI.skin.button))
             {
                 var vehTool = ToolsModifierControl.toolController.GetComponent<VehicleEditorTool>();
                 vehTool.OnVehicleSelect += (x) =>
@@ -109,32 +110,6 @@ namespace WriteEverywhere.UI
             }
         }
 
-        private GUIStyle m_greenButton;
-        private GUIStyle m_redButton;
-        internal GUIStyle GreenButton
-        {
-            get
-            {
-                if (m_greenButton is null)
-                {
-                    m_greenButton = new GUIStyle(Skin.button)
-                    {
-                        normal = new GUIStyleState()
-                        {
-                            background = GUIKwyttoCommons.darkGreenTexture,
-                            textColor = Color.white
-                        },
-                        hover = new GUIStyleState()
-                        {
-                            background = GUIKwyttoCommons.greenTexture,
-                            textColor = Color.black
-                        },
-                    };
-                }
-                return m_greenButton;
-            }
-        }
-
         internal void Reset()
         {
             m_currentState = State.Normal;
@@ -174,9 +149,9 @@ namespace WriteEverywhere.UI
         private VehicleInfo m_currentInfo;
         private Vector2 m_horizontalScroll;
 
-        protected override void DrawWindow()
+        protected override void DrawWindow(Vector2 size)
         {
-            var area = new Rect(5, 25, WindowRect.width - 10, WindowRect.height - 25);
+            var area = new Rect(5 * GUIWindow.ResolutionMultiplier, 0, size.x - 10 * GUIWindow.ResolutionMultiplier, size.y);
             using (new GUILayout.AreaScope(area))
             {
                 switch (m_currentState)
@@ -197,13 +172,13 @@ namespace WriteEverywhere.UI
 
             if (CurrentInfo)
             {
-                var headerArea = new Rect(0, 25, size.x, 25); ;
-                var bodyArea = new Rect(0, 50, size.x, size.y - 50);
+                var headerArea = new Rect(0, 25 * GUIWindow.ResolutionMultiplier, size.x, 25 * GUIWindow.ResolutionMultiplier); ;
+                var bodyArea = new Rect(0, 50 * GUIWindow.ResolutionMultiplier, size.x, size.y - 50 * GUIWindow.ResolutionMultiplier);
                 using (new GUILayout.AreaScope(headerArea))
                 {
                     using (var scope = new GUILayout.ScrollViewScope(m_horizontalScroll))
                     {
-                        TrailerSel = GUILayout.SelectionGrid(TrailerSel, m_currentInfoList.Select((_, i) => i == 0 ? Str.we_vehicleEditor_headVehicleTitle : string.Format(Str.we_vehicleEditor_trailerNumTitle, i)).ToArray(), m_currentInfoList.Count, GUILayout.MinWidth(40));
+                        TrailerSel = GUILayout.SelectionGrid(TrailerSel, m_currentInfoList.Select((_, i) => i == 0 ? Str.we_vehicleEditor_headVehicleTitle : string.Format(Str.we_vehicleEditor_trailerNumTitle, i)).ToArray(), m_currentInfoList.Count, GUILayout.MinWidth(40 * GUIWindow.ResolutionMultiplier));
                         m_horizontalScroll = scope.scrollPosition;
                     }
                 }

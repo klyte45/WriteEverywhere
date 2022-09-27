@@ -143,7 +143,7 @@ namespace WriteEverywhere.UI
 
         protected override bool requireModal => false;
 
-        protected override void DrawWindow()
+        protected override void DrawWindow(Vector2 size)
         {
             if (currentSegmentId == 0)
             {
@@ -152,11 +152,11 @@ namespace WriteEverywhere.UI
             }
             if (xmlLibList.Status != FooterBarStatus.AskingToImport && xmlLibList.Status != FooterBarStatus.AskingToImportAdditive)
             {
-                RegularDraw();
+                RegularDraw(size);
             }
             else
             {
-                using (new GUILayout.AreaScope(new Rect(5, 30, WindowRect.width - 10, WindowRect.height - 30)))
+                using (new GUILayout.AreaScope(new Rect(5 * GUIWindow.ResolutionMultiplier, 5 * GUIWindow.ResolutionMultiplier, size.x - 10 * GUIWindow.ResolutionMultiplier, size.y - 10 * GUIWindow.ResolutionMultiplier)))
                 {
                     xmlLibList.DrawImportView(OnSelectBoardList);
                 }
@@ -184,13 +184,13 @@ namespace WriteEverywhere.UI
         }
 
 
-        private void RegularDraw()
+        private void RegularDraw(Vector2 size)
         {
             if (CurrentEditingInstance is null)
             {
                 return;
             }
-            var headerArea = new Rect(5, 24, WindowRect.width - 10, 20);
+            var headerArea = new Rect(5 * GUIWindow.ResolutionMultiplier, 0, size.x - 10 * GUIWindow.ResolutionMultiplier, 20 * ResolutionMultiplier);
             if (xmlLibList.Status == FooterBarStatus.Normal)
             {
                 using (new GUILayout.AreaScope(headerArea))
@@ -206,7 +206,7 @@ namespace WriteEverywhere.UI
             {
                 xmlLibList.Draw(RedButton, OnDeleteList, OnGetCurrentList);
             }
-            m_tabsContainer.DrawListTabs(new Rect(0, 44, WindowRect.width, WindowRect.height - 50));
+            m_tabsContainer.DrawListTabs(new Rect(0, 20 * ResolutionMultiplier, size.x, size.y - 20 * ResolutionMultiplier));
         }
 
         #region Tab Actions

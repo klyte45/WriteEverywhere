@@ -33,7 +33,7 @@ The goal is that any level of configuration (text, group of texts, prop with tex
 <size=25>Some known issues</size>
 
 - Buildings that don't have a main building (like some parks) won't render the added props
-- The integrations with TLM, Addr. and VS aren't working yet
+- The integrations with TLM and Addr. aren't working yet. VS integration must be OK.
 - Locales aren't available yet because the English strings needs to be reviewed before it - possibly have a lot of garbage from WTS around here...
 - Some labels may not make sense to actual feature (needs mapping which ones)
 - Fallbacks from integrations weren't fully reviewed yet and may be inconsistent (specially the ones related to TLM)

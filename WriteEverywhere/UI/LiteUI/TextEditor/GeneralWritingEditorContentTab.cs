@@ -57,15 +57,15 @@ namespace WriteEverywhere.UI
                     }
                     using (new GUILayout.HorizontalScope())
                     {
-                        GUILayout.Label("#", GUILayout.Width(25));
+                        GUILayout.Label("#", GUILayout.Width(25 * GUIWindow.ResolutionMultiplier));
                         GUILayout.Label(Str.WTS_CONTENT_TEXTVALUE);
                         GUILayout.Label(Str.WTS_PARAMSEQ_STEPLENGTH, new GUIStyle(GUI.skin.label)
                         {
                             alignment = TextAnchor.MiddleRight,
                             wordWrap = false,
-                        }, GUILayout.Width(100));
-                        GUILayout.Label(Str.WTS_PARAMSEQ_ACTIONS, GUILayout.Width(60));
-                        GUILayout.Space(30);
+                        }, GUILayout.Width(100 * GUIWindow.ResolutionMultiplier));
+                        GUILayout.Label(Str.WTS_PARAMSEQ_ACTIONS, GUILayout.Width(60 * GUIWindow.ResolutionMultiplier));
+                        GUILayout.Space(30 * GUIWindow.ResolutionMultiplier);
                         var rect = GUILayoutUtility.GetLastRect();
                         rect.height = 18;
                         if (isEditable && GUI.Button(rect, "+"))
@@ -80,7 +80,7 @@ namespace WriteEverywhere.UI
                         {
                             using (new GUILayout.HorizontalScope())
                             {
-                                GUILayout.Label((line + 1).ToString(), GUILayout.Width(25));
+                                GUILayout.Label((line + 1).ToString(), GUILayout.Width(25 * GUIWindow.ResolutionMultiplier));
                                 GUIKwyttoCommons.AddButtonSelector(seqItem?.Value?.ToString(), () => OnGoToPicker(currentItem, line), isEditable, new GUIStyle(GUI.skin.button)
                                 {
                                     alignment = TextAnchor.MiddleLeft,
@@ -96,7 +96,7 @@ namespace WriteEverywhere.UI
                                 }
                                 else
                                 {
-                                    GUILayout.Label(seqItem.m_length.ToString("#,##0") + "Fr.", GUILayout.Width(25));
+                                    GUILayout.Label(seqItem.m_length.ToString("#,##0") + "Fr.", GUILayout.Width(25 * GUIWindow.ResolutionMultiplier));
                                 }
                                 GUILayout.Space(30);
                                 var rect = GUILayoutUtility.GetLastRect();

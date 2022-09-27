@@ -194,7 +194,8 @@ namespace WriteEverywhere.Sprites
             {
                 KwyttoDialog.ShowModal(new KwyttoDialog.BindProperties
                 {
-                    message = $"{Str.WTS_CUSTOMSPRITE_ERRORHEADER}:\n\t{string.Join("\n\t", errors.ToArray())}",
+                    message = $"{Str.WTS_CUSTOMSPRITE_ERRORHEADER}:",
+                    scrollText = $"\t{string.Join("\n\t", errors.ToArray())}",
                     buttons = new[]{
                         KwyttoDialog.SpaceBtn,
                         new KwyttoDialog.ButtonDefinition

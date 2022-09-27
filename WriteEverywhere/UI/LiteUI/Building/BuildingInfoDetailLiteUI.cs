@@ -184,18 +184,18 @@ namespace WriteEverywhere.UI
             using (new GUILayout.VerticalScope())
             {
                 var isEditable = m_currentSource == ConfigurationSource.CITY || m_currentSource == ConfigurationSource.SKIN;
-                using (new GUILayout.HorizontalScope(GUILayout.Height(70)))
+                using (new GUILayout.HorizontalScope(GUILayout.Height(80 * GUIWindow.ResolutionMultiplier)))
                 {
                     using (new GUILayout.VerticalScope(GUILayout.ExpandWidth(true)))
                     {
                         var skinNoWrap = new GUIStyle(GUI.skin.label) { wordWrap = false };
-                        GUILayout.Label($"<color=#FFFF00>{Str.WTS_CURRENTSELECTION}</color>", skinNoWrap, GUILayout.MaxWidth(140));
+                        GUILayout.Label($"<color=#FFFF00>{Str.WTS_CURRENTSELECTION}</color>", skinNoWrap, GUILayout.MaxWidth(200 * GUIWindow.ResolutionMultiplier));
                         GUILayout.Label(CurrentEditingInfo.GetUncheckedLocalizedTitle(), skinNoWrap);
                         GUILayout.Label($"<color=#FFFF00>{Str.WTS_CURRENTLY_USING}</color>", skinNoWrap);
-                        GUILayout.Label(m_currentSource.ValueToI18n(), skinNoWrap, GUILayout.MaxWidth(140));
+                        GUILayout.Label(m_currentSource.ValueToI18n(), skinNoWrap, GUILayout.MaxWidth(200 * GUIWindow.ResolutionMultiplier));
                         GUILayout.FlexibleSpace();
                     }
-                    using (new GUILayout.VerticalScope(GUILayout.MaxWidth(300)))
+                    using (new GUILayout.VerticalScope())
                     {
                         using (new GUILayout.HorizontalScope())
                         {

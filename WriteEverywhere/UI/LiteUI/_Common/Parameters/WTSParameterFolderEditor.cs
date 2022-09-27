@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Kwytto.LiteUI;
+using System;
 using System.Linq;
 using UnityEngine;
 using WriteEverywhere.Localization;
@@ -59,7 +60,7 @@ namespace WriteEverywhere.UI
             var selectLayout = GUILayout.SelectionGrid(Array.IndexOf(tab.m_searchResult.Value, tab.SelectedValue), tab.m_searchResult.Value, 1, new GUIStyle(GUI.skin.button)
             {
                 alignment = TextAnchor.MiddleLeft
-            }, GUILayout.Width((areaRect.x / 2) - 25));
+            }, GUILayout.Width((areaRect.x / 2) - 25 * GUIWindow.ResolutionMultiplier));
             if (selectLayout >= 0)
             {
                 OnSelectItem(tab, selectLayout);

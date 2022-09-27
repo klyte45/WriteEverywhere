@@ -85,7 +85,7 @@ namespace WriteEverywhere.Singleton
                 KwyttoDialog.ShowModal(new KwyttoDialog.BindProperties
                 {
                     title = "WTS - Errors loading vehicle Files",
-                    message = string.Join("\r\n", errorList.ToArray()),
+                    scrollText = string.Join("\r\n", errorList.ToArray()),
                     buttons = KwyttoDialog.basicOkButtonBar,
                     showClose = true
 

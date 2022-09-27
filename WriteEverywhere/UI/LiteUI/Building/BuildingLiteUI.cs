@@ -73,7 +73,7 @@ namespace WriteEverywhere.UI
         {
             hasChanged = false;
             var currentTool = ToolsModifierControl.toolController.CurrentTool;
-            if (GUILayout.Button(Str.we_buildingEditor_pickerBtn, currentTool is BuildingEditorTool currentToolVeh ? WEUIUtils.GreenButton : GUI.skin.button, GUILayout.Width(100)))
+            if (GUILayout.Button(Str.we_buildingEditor_pickerBtn, currentTool is BuildingEditorTool currentToolVeh ? WEUIUtils.GreenButton : GUI.skin.button))
             {
                 var vehTool = ToolsModifierControl.toolController.GetComponent<BuildingEditorTool>();
                 vehTool.OnBuildingSelect += (x) =>
@@ -148,9 +148,9 @@ namespace WriteEverywhere.UI
         private Vector2 m_horizontalScrollGeneral;
         private int m_editorTypeSel;
 
-        protected override void DrawWindow()
+        protected override void DrawWindow(Vector2 size)
         {
-            var area = new Rect(5, 25, WindowRect.width - 10, WindowRect.height - 25);
+            var area = new Rect(5 * GUIWindow.ResolutionMultiplier, 0, size.x - 10 * GUIWindow.ResolutionMultiplier, size.y);
             using (new GUILayout.AreaScope(area))
             {
                 switch (m_currentState)
@@ -168,16 +168,16 @@ namespace WriteEverywhere.UI
         protected void DrawNormal(Vector2 size)
         {
             m_modelFilter.DrawButton(size.x, m_currentInfo?.GetUncheckedLocalizedTitle());
-            var headerArea0 = new Rect(0, 25, size.x, 25);
-            var headerArea1 = new Rect(0, 50, size.x, 45);
-            var bodyArea = new Rect(0, 95, size.x, size.y - 95);
+            var headerArea0 = new Rect(0, 25 * ResolutionMultiplier, size.x, 25 * ResolutionMultiplier);
+            var headerArea1 = new Rect(0, 50 * ResolutionMultiplier, size.x, 45 * ResolutionMultiplier);
+            var bodyArea = new Rect(0, 95 * ResolutionMultiplier, size.x, size.y - 95 * ResolutionMultiplier);
             if (CurrentInfo && m_detailUI.CurrentSource != Xml.ConfigurationSource.NONE)
             {
                 using (new GUILayout.AreaScope(headerArea0))
                 {
                     using (var scope = new GUILayout.ScrollViewScope(m_horizontalScrollGeneral))
                     {
-                        m_editorTypeSel = GUILayout.SelectionGrid(m_editorTypeSel, new[] { Str.we_buildingEditor_layoutEditorTabText, Str.we_buildingEditor_paramEditorTabText }, 2, GUILayout.MinWidth(40));
+                        m_editorTypeSel = GUILayout.SelectionGrid(m_editorTypeSel, new[] { Str.we_buildingEditor_layoutEditorTabText, Str.we_buildingEditor_paramEditorTabText }, 2, GUILayout.MinWidth(40 * GUIWindow.ResolutionMultiplier));
                         m_horizontalScrollGeneral = scope.scrollPosition;
                     }
                 }
@@ -196,7 +196,7 @@ namespace WriteEverywhere.UI
                     }
                     using (var scope = new GUILayout.ScrollViewScope(m_horizontalScrollSubBuildings))
                     {
-                        SubBuildingSel = GUILayout.SelectionGrid(SubBuildingSel, m_currentInfoListTitles, m_currentInfoListTitles.Length, GUILayout.MinWidth(40));
+                        SubBuildingSel = GUILayout.SelectionGrid(SubBuildingSel, m_currentInfoListTitles, m_currentInfoListTitles.Length, GUILayout.MinWidth(40 * GUIWindow.ResolutionMultiplier));
                         m_horizontalScrollSubBuildings = scope.scrollPosition;
                     }
                 }

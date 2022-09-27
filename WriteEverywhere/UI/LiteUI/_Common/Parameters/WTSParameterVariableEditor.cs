@@ -62,7 +62,7 @@ namespace WriteEverywhere.UI
                 var selectOpt = GUILayout.SelectionGrid(-1, tab.m_searchResult.Value, 1, new GUIStyle(GUI.skin.button)
                 {
                     alignment = TextAnchor.MiddleLeft
-                }, GUILayout.Width((areaRect.x / 2) - 25));
+                }, GUILayout.Width((areaRect.x / 2) - 25 * GUIWindow.ResolutionMultiplier));
                 if (selectOpt >= 0)
                 {
                     VariableOnSelectItem(tab, selectOpt, ref hoverIdx, paramEditor);
