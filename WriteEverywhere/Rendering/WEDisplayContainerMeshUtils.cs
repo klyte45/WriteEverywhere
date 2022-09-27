@@ -14,7 +14,7 @@ namespace WriteEverywhere.Rendering
         public const float FRONT_BORDER_BASE = 0.05f;
 
         private const float offsetX = 0f;
-        private static float constMultiplierVertex => MainController.__constMultiplierVertex;
+        private static float constMultiplierVertex => WEMainController.__constMultiplierVertex;
 
         public static void GenerateDisplayContainer(Vector2 frontWH, Vector2 backWH, Vector2 backCenterOffset, float frontDepth, float backDepth, float frontBorderThickness, out Mesh mesh, out Vector3[] glassVerts)
         {

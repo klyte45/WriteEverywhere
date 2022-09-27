@@ -15,6 +15,7 @@ namespace WriteEverywhere.ModShared
 {
     internal class BridgeTLMFallback : IBridge
     {
+        public override int Priority { get; } = 1000;
         public override LineLogoParameter GetLineLogoParameters(WTSLine lineObj)
         {
             if (!lineObj.regional)
@@ -303,7 +304,6 @@ namespace WriteEverywhere.ModShared
             TransferManager.TransferReason.Bus
         };
 
-        public override uint Priority => 1000;
     }
 }
 

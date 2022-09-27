@@ -6,6 +6,7 @@ namespace WriteEverywhere.ModShared
 {
     public class BridgeVSFallback : IBridge
     {
+        public override int Priority { get; } = 1000;
         public override bool IsAvailable { get; } = false;
 
         public override void ApplySkin(VehicleInfo info, string skinName, string contents) { }

@@ -148,10 +148,10 @@ namespace WriteEverywhere.Rendering
             return containerMatrix;
         }
 
-        internal static ref Vector2[] cachedUvGlass => ref MainController.__cachedUvGlass;
-        internal static ref Vector2[] cachedUvFrame => ref MainController.__cachedUvFrame;
-        internal static ref Material m_rotorMaterial => ref MainController.m_rotorMaterial;
-        internal static ref Material m_outsideMaterial => ref MainController.m_outsideMaterial;
+        internal static ref Vector2[] cachedUvGlass => ref WEMainController.__cachedUvGlass;
+        internal static ref Vector2[] cachedUvFrame => ref WEMainController.__cachedUvFrame;
+        internal static ref Material m_rotorMaterial => ref WEMainController.m_rotorMaterial;
+        internal static ref Material m_outsideMaterial => ref WEMainController.m_outsideMaterial;
 
         private static Vector2[] baseUv = new Vector2[] { Vector2.zero, Vector2.right, Vector2.right + Vector2.up, Vector2.up };
 

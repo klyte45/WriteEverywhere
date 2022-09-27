@@ -326,9 +326,9 @@ namespace WriteEverywhere.UI
         #region Top buttons
         private void ExportLayout() => m_vehicleLib.GoToExport();
         private void ImportLayout() => m_vehicleLib.GoToImport();
-        private void ExportAsset() => ExportTo(Path.Combine(Path.GetDirectoryName(PackageManager.FindAssetByName(m_currentInfo.name)?.package?.packagePath), $"{MainController.m_defaultFileNameVehiclesXml}.xml"));
+        private void ExportAsset() => ExportTo(Path.Combine(Path.GetDirectoryName(PackageManager.FindAssetByName(m_currentInfo.name)?.package?.packagePath), $"{WEMainController.m_defaultFileNameVehiclesXml}.xml"));
 
-        private void ExportGlobal() => ExportTo(Path.Combine(MainController.DefaultVehiclesConfigurationFolder, $"{MainController.m_defaultFileNameVehiclesXml}_{PackageManager.FindAssetByName(m_currentParentInfo.name)?.package.packageMainAsset ?? m_currentParentInfo.name}.xml"));
+        private void ExportGlobal() => ExportTo(Path.Combine(WEMainController.DefaultVehiclesConfigurationFolder, $"{WEMainController.m_defaultFileNameVehiclesXml}_{PackageManager.FindAssetByName(m_currentParentInfo.name)?.package.packageMainAsset ?? m_currentParentInfo.name}.xml"));
         private void ExportSkin() => ModInstance.Controller.ConnectorVS.ApplySkin(m_currentInfo, m_currentSkin, XmlUtils.DefaultXmlSerialize(m_currentLayout));
 
         private void ExportTo(string output)
@@ -421,7 +421,7 @@ namespace WriteEverywhere.UI
             ModInstance.Controller?.VehicleTextsSingleton?.LoadAllVehiclesConfigurations();
             OnChangeInfo(m_currentInfo, m_currentParentInfo);
         }
-        private void GoToGlobalFolder() => ColossalFramework.Utils.OpenInFileBrowser(MainController.DefaultVehiclesConfigurationFolder);
+        private void GoToGlobalFolder() => ColossalFramework.Utils.OpenInFileBrowser(WEMainController.DefaultVehiclesConfigurationFolder);
         #endregion
 
         #region Search font

@@ -70,13 +70,13 @@ namespace WriteEverywhere.Data
                 case FontClass.Regular:
                     return null;
                 case FontClass.PublicTransport:
-                    return m_publicTransportLineSymbolFont ?? (allowNull ? null : MainController.DEFAULT_FONT_KEY);
+                    return m_publicTransportLineSymbolFont ?? (allowNull ? null : WEMainController.DEFAULT_FONT_KEY);
                 case FontClass.ElectronicBoards:
-                    return ElectronicFont ?? (allowNull ? null : MainController.DEFAULT_FONT_KEY);
+                    return ElectronicFont ?? (allowNull ? null : WEMainController.DEFAULT_FONT_KEY);
                 case FontClass.Stencil:
-                    return StencilFont ?? (allowNull ? null : MainController.DEFAULT_FONT_KEY);
+                    return StencilFont ?? (allowNull ? null : WEMainController.DEFAULT_FONT_KEY);
                 case FontClass.HighwayShields:
-                    return HighwayShieldsFont ?? (allowNull ? null : MainController.DEFAULT_FONT_KEY);
+                    return HighwayShieldsFont ?? (allowNull ? null : WEMainController.DEFAULT_FONT_KEY);
             }
             return null;
         }

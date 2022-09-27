@@ -1,12 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using Kwytto.Interfaces;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 namespace Bridge_WE2TLM
 {
-    public abstract class IBridge
+    public abstract class IBridge : IBridgePrioritizable
     {
-        public abstract uint Priority { get; }
+        public abstract int Priority { get; }
         public abstract LineLogoParameter GetLineLogoParameters(WTSLine lineObj);
         public abstract ushort GetStopBuildingInternal(ushort stopId, WTSLine lineObj);
         public abstract string GetStopName(ushort stopId, WTSLine lineObj);

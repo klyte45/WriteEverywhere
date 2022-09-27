@@ -217,7 +217,7 @@ namespace WriteEverywhere.Xml
                     ()=>   propDesc.DescriptorOverrideFont,
                     ()=>   propGroup?.FontName,
                     ()=>   WTSEtcData.Instance.FontSettings.GetTargetFont(propDesc.RenderingClass),
-                    ()=>   MainController.DEFAULT_FONT_KEY,
+                    ()=>   WEMainController.DEFAULT_FONT_KEY,
             });
 
         internal static BasicRenderInformation GetRenderInfo(WriteOnBuildingXml propGroup, BaseWriteOnXml propDesc, TextToWriteOnXml textDescriptor, ushort refId, int secIdx, int tercIdx, out IEnumerable<BasicRenderInformation> multipleOutput)

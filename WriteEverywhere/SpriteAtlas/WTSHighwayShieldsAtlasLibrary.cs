@@ -78,7 +78,7 @@ namespace WriteEverywhere.Sprites
                 }
 
                 var drawingCoroutine = CoroutineWithData.From(this, RenderHighwayShield(
-                    FontServer.instance[layoutDescriptor.FontName] ?? FontServer.instance[WTSEtcData.Instance.FontSettings.HighwayShieldsFont] ?? FontServer.instance[MainController.DEFAULT_FONT_KEY],
+                    FontServer.instance[layoutDescriptor.FontName] ?? FontServer.instance[WTSEtcData.Instance.FontSettings.HighwayShieldsFont] ?? FontServer.instance[WEMainController.DEFAULT_FONT_KEY],
                     layoutDescriptor, hwData));
                 yield return drawingCoroutine.Coroutine;
                 while (!CheckHwShieldCoroutineCanContinue())

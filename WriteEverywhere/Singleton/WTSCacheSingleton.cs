@@ -181,7 +181,7 @@ namespace WriteEverywhere.Singleton
         public static BasicRenderInformation GetTextData(string text, string prefix, string suffix, DynamicSpriteFont primaryFont, string overrideFont)
         {
             string str = $"{prefix}{text}{suffix}";
-            return (FontServer.instance[overrideFont] ?? primaryFont ?? FontServer.instance[MainController.DEFAULT_FONT_KEY])?.DrawString(ModInstance.Controller, str, default, FontServer.instance.ScaleEffective);
+            return (FontServer.instance[overrideFont] ?? primaryFont ?? FontServer.instance[WEMainController.DEFAULT_FONT_KEY])?.DrawString(ModInstance.Controller, str, default, FontServer.instance.ScaleEffective);
         }
     }
     public static class StringFormattableExtensions

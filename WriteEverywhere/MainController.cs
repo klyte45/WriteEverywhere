@@ -13,7 +13,6 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 using WriteEverywhere.Data;
-using WriteEverywhere.ModShared;
 using WriteEverywhere.Rendering;
 using WriteEverywhere.Singleton;
 using WriteEverywhere.Sprites;
@@ -22,7 +21,7 @@ using WriteEverywhere.UI;
 
 namespace WriteEverywhere
 {
-    public class MainController : BaseController<ModInstance, MainController>
+    public class WEMainController : BaseController<ModInstance, WEMainController>
     {
         public static string FOLDER_PATH => ModInstance.ModSettingsRootFolder;
 
@@ -92,9 +91,9 @@ namespace WriteEverywhere
         #endregion
 
         #region Bridges
-        public ADR::Bridge_WE2ADR.IBridge ConnectorADR { get; } = new BridgeADRFallback();
-        public TLM::Bridge_WE2TLM.IBridge ConnectorTLM { get; } = new BridgeTLMFallback();
-        public VS::Bridge_WE2VS.IBridge ConnectorVS { get; } = new BridgeVSFallback();
+        public ADR::Bridge_WE2ADR.IBridge ConnectorADR { get; } = BridgeUtils.GetMostPrioritaryImplementation<ADR::Bridge_WE2ADR.IBridge>();
+        public TLM::Bridge_WE2TLM.IBridge ConnectorTLM { get; } = BridgeUtils.GetMostPrioritaryImplementation<TLM::Bridge_WE2TLM.IBridge>();
+        public VS::Bridge_WE2VS.IBridge ConnectorVS { get; } = BridgeUtils.GetMostPrioritaryImplementation<VS::Bridge_WE2VS.IBridge>();
         #endregion
 
         #region OnNet

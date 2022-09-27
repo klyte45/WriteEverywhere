@@ -10,6 +10,7 @@ namespace WriteEverywhere.ModShared
 {
     internal class BridgeADRFallback : IBridge
     {
+        public override int Priority { get; } = 1000;
 
         public override string GetStreetSuffix(ushort idx)
         {
@@ -33,6 +34,7 @@ namespace WriteEverywhere.ModShared
         private readonly Color[] m_randomColors = { Color.black, Color.gray, Color.white, Color.red, new Color32(0xFF, 0x88, 0, 0xFf), Color.yellow, Color.green, Color.cyan, Color.blue, Color.magenta };
 
         public override bool AddressesAvailable { get; } = false;
+
 
         public override bool GetAddressStreetAndNumber(Vector3 sidewalk, Vector3 midPosBuilding, out int number, out string streetName) => SegmentUtils.GetBasicAddressStreetAndNumber(sidewalk, midPosBuilding, out number, out streetName);
         public override Color GetDistrictColor(ushort districtId) => m_randomColors[districtId % m_randomColors.Length];

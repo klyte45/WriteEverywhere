@@ -82,7 +82,10 @@ namespace WriteEverywhere.Singleton
                 }
                 if (!skin.IsNullOrWhiteSpace())
                 {
-                    target = connVS.GetSkin(vehicle, skin);
+                    target = connVS.GetSkin(vehicle, skin) ?? new LayoutDescriptorVehicleXml
+                    {
+                        VehicleAssetName = vehicle.name
+                    };
                     source = ConfigurationSource.SKIN;
                     return;
                 }
@@ -247,7 +250,7 @@ namespace WriteEverywhere.Singleton
 
         #region IO 
 
-        private static string DefaultFilename { get; } = $"{MainController.m_defaultFileNameVehiclesXml}.xml";
+        private static string DefaultFilename { get; } = $"{WEMainController.m_defaultFileNameVehiclesXml}.xml";
 
         public void LoadAllVehiclesConfigurations()
         {
@@ -256,8 +259,8 @@ namespace WriteEverywhere.Singleton
             Data.GlobalDescriptors.Clear();
             Data.AssetsDescriptors.Clear();
             KFileUtils.ScanPrefabsFolders<VehicleInfo>(DefaultFilename, LoadDescriptorsFromXmlAsset);
-            LogUtils.DoLog($"DefaultVehiclesConfigurationFolder = {MainController.DefaultVehiclesConfigurationFolder}");
-            foreach (string filename in Directory.GetFiles(MainController.DefaultVehiclesConfigurationFolder, "*.xml"))
+            LogUtils.DoLog($"DefaultVehiclesConfigurationFolder = {WEMainController.DefaultVehiclesConfigurationFolder}");
+            foreach (string filename in Directory.GetFiles(WEMainController.DefaultVehiclesConfigurationFolder, "*.xml"))
             {
                 try
                 {

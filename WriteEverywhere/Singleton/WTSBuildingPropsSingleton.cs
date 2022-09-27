@@ -25,7 +25,7 @@ namespace WriteEverywhere.Singleton
 {
     public class WTSBuildingPropsSingleton : MonoBehaviour
     {
-        public DynamicSpriteFont DrawFont => FontServer.instance[Data.DefaultFont] ?? FontServer.instance[MainController.DEFAULT_FONT_KEY];
+        public DynamicSpriteFont DrawFont => FontServer.instance[Data.DefaultFont] ?? FontServer.instance[WEMainController.DEFAULT_FONT_KEY];
         private readonly Dictionary<string, StopPointDescriptorLanes[]> m_buildingStopsDescriptor = new Dictionary<string, StopPointDescriptorLanes[]>();
         public WTSBuildingData Data => WTSBuildingData.Instance;
         public SimpleXmlDictionary<string, WriteOnBuildingXml> CityDescriptors => Data.CityDescriptors;
@@ -184,7 +184,7 @@ namespace WriteEverywhere.Singleton
                         });
 
 
-                        var bri = FontServer.instance[MainController.DEFAULT_FONT_KEY].DrawString(ModInstance.Controller, string.Format(position.y < 0 ? "[{0}]" : "{0}", i + 1), default, FontServer.instance.ScaleEffective);
+                        var bri = FontServer.instance[WEMainController.DEFAULT_FONT_KEY].DrawString(ModInstance.Controller, string.Format(position.y < 0 ? "[{0}]" : "{0}", i + 1), default, FontServer.instance.ScaleEffective);
                         if (bri != null)
                         {
                             overlayBlock.Clear();
@@ -720,7 +720,7 @@ namespace WriteEverywhere.Singleton
         }
 
 
-        private static string DefaultFilename { get; } = $"{MainController.m_defaultFileNameBuildingsXml}.xml";
+        private static string DefaultFilename { get; } = $"{WEMainController.m_defaultFileNameBuildingsXml}.xml";
 
         public void LoadAllBuildingConfigurations()
         {
@@ -729,8 +729,8 @@ namespace WriteEverywhere.Singleton
             var errorList = new List<string>();
             Data.GlobalDescriptors.Clear();
             Data.AssetsDescriptors.Clear();
-            LogUtils.DoLog($"DefaultBuildingsConfigurationFolder = {MainController.DefaultBuildingsConfigurationFolder}");
-            foreach (string filename in Directory.GetFiles(MainController.DefaultBuildingsConfigurationFolder, "*.xml"))
+            LogUtils.DoLog($"DefaultBuildingsConfigurationFolder = {WEMainController.DefaultBuildingsConfigurationFolder}");
+            foreach (string filename in Directory.GetFiles(WEMainController.DefaultBuildingsConfigurationFolder, "*.xml"))
             {
                 try
                 {

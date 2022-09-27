@@ -28,9 +28,9 @@ namespace WriteEverywhere.Sprites
 
         protected void Awake()
         {
-            KFileUtils.ScanPrefabsFoldersDirectory<VehicleInfo>(MainController.EXTRA_SPRITES_FILES_FOLDER_ASSETS, LoadImagesFromPrefab);
-            KFileUtils.ScanPrefabsFoldersDirectory<BuildingInfo>(MainController.EXTRA_SPRITES_FILES_FOLDER_ASSETS, LoadImagesFromPrefab);
-            KFileUtils.ScanPrefabsFoldersDirectory<PropInfo>(MainController.EXTRA_SPRITES_FILES_FOLDER_ASSETS, LoadImagesFromPrefab);
+            KFileUtils.ScanPrefabsFoldersDirectory<VehicleInfo>(WEMainController.EXTRA_SPRITES_FILES_FOLDER_ASSETS, LoadImagesFromPrefab);
+            KFileUtils.ScanPrefabsFoldersDirectory<BuildingInfo>(WEMainController.EXTRA_SPRITES_FILES_FOLDER_ASSETS, LoadImagesFromPrefab);
+            KFileUtils.ScanPrefabsFoldersDirectory<PropInfo>(WEMainController.EXTRA_SPRITES_FILES_FOLDER_ASSETS, LoadImagesFromPrefab);
 
             ResetTransportAtlas();
             TransportManager.instance.eventLineColorChanged += (x) => PurgeLine(new WTSLine(x, false));
@@ -169,10 +169,10 @@ namespace WriteEverywhere.Sprites
         {
             LocalAtlases.Clear();
             var errors = new List<string>();
-            var folders = new string[] { MainController.ExtraSpritesFolder }.Concat(Directory.GetDirectories(MainController.ExtraSpritesFolder));
+            var folders = new string[] { WEMainController.ExtraSpritesFolder }.Concat(Directory.GetDirectories(WEMainController.ExtraSpritesFolder));
             foreach (var dir in folders)
             {
-                bool isRoot = dir == MainController.ExtraSpritesFolder;
+                bool isRoot = dir == WEMainController.ExtraSpritesFolder;
                 var spritesToAdd = new List<WEImageInfo>();
                 WTSAtlasLoadingUtils.LoadAllImagesFromFolderRef(dir, ref spritesToAdd, ref errors, false);
                 if (isRoot || spritesToAdd.Count > 0)
@@ -322,7 +322,7 @@ namespace WriteEverywhere.Sprites
                 }
                 var drawingCoroutine = CoroutineWithData.From(this, RenderSpriteLine(
                     FontServer.instance[WTSEtcData.Instance.FontSettings.PublicTransportLineSymbolFont] ??
-                    FontServer.instance[MainController.DEFAULT_FONT_KEY], LocalAtlases[string.Empty], lineParams.fileName, lineParams.color, lineParams.text));
+                    FontServer.instance[WEMainController.DEFAULT_FONT_KEY], LocalAtlases[string.Empty], lineParams.fileName, lineParams.color, lineParams.text));
                 yield return drawingCoroutine.Coroutine;
                 while (!CheckTransportLineCoroutineCanContinue())
                 {
@@ -366,7 +366,7 @@ namespace WriteEverywhere.Sprites
         {
             if (font is null)
             {
-                font = FontServer.instance[MainController.DEFAULT_FONT_KEY];
+                font = FontServer.instance[WEMainController.DEFAULT_FONT_KEY];
             }
 
             WEImageInfo spriteInfo = atlas[spriteName];

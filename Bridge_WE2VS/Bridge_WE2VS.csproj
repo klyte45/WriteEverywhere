@@ -47,7 +47,7 @@
       <HintPath>..\..\_managed\ICities.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="System" />
+    <Reference Include="System" /> 
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -61,22 +61,17 @@
     <ProjectReference Include="..\KwyttoUtilityWE\KwyttoUtilityWE.csproj">
       <Project>{27c920f8-f40f-4d56-bcb6-9c9025ed0aac}</Project>
       <Name>KwyttoUtilityWE</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\WriteEverywhere.Xml\WriteEverywhere.Xml.csproj">
       <Project>{eeb0f9cd-62f2-4e4e-9ac7-21d66e0b7696}</Project>
       <Name>WriteEverywhere.Xml</Name>
       <Aliases>WE</Aliases>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>set "ModDir=%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(SolutionName)\"
-rmdir /s /q "%25ModDir%25"
-
-mkdir "%25ModDir%25"
-xcopy /y /e "$(TargetDir)*" "%25ModDir%25"
-del "%25ModDir%25*.pdb"
-</PostBuildEvent>
   </PropertyGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

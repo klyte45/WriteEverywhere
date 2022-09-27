@@ -59,8 +59,8 @@ namespace WriteEverywhere.Singleton
             LogUtils.DoLog("LOADING HW SHIELDS CONFIG START -----------------------------");
             var errorList = new List<string>();
             Data.GlobalDescriptors.Clear();
-            LogUtils.DoLog($"DefaultHwShieldsConfigurationFolder = {MainController.DefaultHwShieldsConfigurationFolder}");
-            foreach (string filename in Directory.GetFiles(MainController.DefaultHwShieldsConfigurationFolder, "*.xml"))
+            LogUtils.DoLog($"DefaultHwShieldsConfigurationFolder = {WEMainController.DefaultHwShieldsConfigurationFolder}");
+            foreach (string filename in Directory.GetFiles(WEMainController.DefaultHwShieldsConfigurationFolder, "*.xml"))
             {
                 try
                 {

@@ -63,14 +63,13 @@
     <Compile Include="StopInformation.cs" />
     <Compile Include="WTSLine.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\KwyttoUtilityWE\KwyttoUtilityWE.csproj">
+      <Project>{27C920F8-F40F-4D56-BCB6-9C9025ED0AAC}</Project>
+      <Name>KwyttoUtilityWE</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>set "ModDir=%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(SolutionName)\"
-rmdir /s /q "%25ModDir%25"
-
-mkdir "%25ModDir%25"
-xcopy /y /e "$(TargetDir)*" "%25ModDir%25"
-del "%25ModDir%25*.pdb"
-</PostBuildEvent>
   </PropertyGroup>
 </Project>

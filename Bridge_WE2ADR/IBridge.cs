@@ -1,12 +1,15 @@
-﻿using System.Collections;
+﻿using Kwytto.Interfaces;
+using System.Collections;
 using UnityEngine;
 using static Bridge_WE2ADR.SegmentUtils;
 
 namespace Bridge_WE2ADR
 {
-    public abstract class IBridge : MonoBehaviour
+    public abstract class IBridge : MonoBehaviour, IBridgePrioritizable
     {
         public abstract bool AddressesAvailable { get; }
+        public abstract int Priority { get; }
+
         public abstract Color GetDistrictColor(ushort districtId);
         public abstract Vector2 GetStartPoint();
         public virtual string GetStreetFullName(ushort idx) => NetManager.instance.GetSegmentName(idx);

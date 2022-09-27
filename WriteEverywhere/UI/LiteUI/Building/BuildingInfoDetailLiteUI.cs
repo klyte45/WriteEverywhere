@@ -312,9 +312,9 @@ namespace WriteEverywhere.UI
         }
         private void ExportLayout() => xmlLibList.GoToExport();
         private void ImportLayout() => xmlLibList.GoToImport();
-        private void ExportAsset() => ExportTo(Path.Combine(Path.GetDirectoryName(PackageManager.FindAssetByName(CurrentEditingInfo.name)?.package?.packagePath), $"{MainController.m_defaultFileNameBuildingsXml}.xml"));
+        private void ExportAsset() => ExportTo(Path.Combine(Path.GetDirectoryName(PackageManager.FindAssetByName(CurrentEditingInfo.name)?.package?.packagePath), $"{WEMainController.m_defaultFileNameBuildingsXml}.xml"));
 
-        private void ExportGlobal() => ExportTo(Path.Combine(MainController.DefaultBuildingsConfigurationFolder, $"{MainController.m_defaultFileNameBuildingsXml}_{CurrentEditingInfo.name}.xml"));
+        private void ExportGlobal() => ExportTo(Path.Combine(WEMainController.DefaultBuildingsConfigurationFolder, $"{WEMainController.m_defaultFileNameBuildingsXml}_{CurrentEditingInfo.name}.xml"));
 
         private void ExportTo(string output)
         {
@@ -385,7 +385,7 @@ namespace WriteEverywhere.UI
             ModInstance.Controller?.BuildingPropsSingleton?.LoadAllBuildingConfigurations();
             OnChangeInfo(CurrentEditingInfo, m_currentSubBuilding);
         }
-        private void GoToGlobalFolder() => ColossalFramework.Utils.OpenInFileBrowser(MainController.DefaultBuildingsConfigurationFolder);
+        private void GoToGlobalFolder() => ColossalFramework.Utils.OpenInFileBrowser(WEMainController.DefaultBuildingsConfigurationFolder);
         #endregion
 
         #region Search font

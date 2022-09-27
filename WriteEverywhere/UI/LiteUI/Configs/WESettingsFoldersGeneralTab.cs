@@ -26,16 +26,16 @@ namespace WriteEverywhere.UI
                             }
                             if (GUILayout.Button(Str.we_settings_reloadFonts) && FontServer.exists)
                             {
-                                MainController.ReloadFontsFromPath();
+                                WEMainController.ReloadFontsFromPath();
                             }
                         }
                         GUILayout.Space(12);
-                        DoButtonToFolderDraw(Str.WTS_DEFAULT_BUILDINGS_CONFIG_PATH_TITLE, MainController.DefaultBuildingsConfigurationFolder);
-                        DoButtonToFolderDraw(Str.WTS_DEFAULT_VEHICLES_CONFIG_PATH_TITLE, MainController.DefaultVehiclesConfigurationFolder);
-                        DoButtonToFolderDraw(Str.WTS_DEFAULT_PROP_LAYOUTS_PATH_TITLE, MainController.DefaultPropsLayoutConfigurationFolder);
-                        DoButtonToFolderDraw(Str.WTS_DEFAULT_HWSHIELDS_CONFIG_PATH_TITLE, MainController.DefaultHwShieldsConfigurationFolder);
-                        DoButtonToFolderDraw(Str.WTS_FONT_FILES_PATH_TITLE, MainController.FontFilesPath);
-                        DoButtonToFolderDraw(Str.WTS_EXTRA_SPRITES_PATH_TITLE, MainController.ExtraSpritesFolder);
+                        DoButtonToFolderDraw(Str.WTS_DEFAULT_BUILDINGS_CONFIG_PATH_TITLE, WEMainController.DefaultBuildingsConfigurationFolder);
+                        DoButtonToFolderDraw(Str.WTS_DEFAULT_VEHICLES_CONFIG_PATH_TITLE, WEMainController.DefaultVehiclesConfigurationFolder);
+                        DoButtonToFolderDraw(Str.WTS_DEFAULT_PROP_LAYOUTS_PATH_TITLE, WEMainController.DefaultPropsLayoutConfigurationFolder);
+                        DoButtonToFolderDraw(Str.WTS_DEFAULT_HWSHIELDS_CONFIG_PATH_TITLE, WEMainController.DefaultHwShieldsConfigurationFolder);
+                        DoButtonToFolderDraw(Str.WTS_FONT_FILES_PATH_TITLE, WEMainController.FontFilesPath);
+                        DoButtonToFolderDraw(Str.WTS_EXTRA_SPRITES_PATH_TITLE, WEMainController.ExtraSpritesFolder);
                        
                     }
                     m_scrollPosition = scroll.scrollPosition;

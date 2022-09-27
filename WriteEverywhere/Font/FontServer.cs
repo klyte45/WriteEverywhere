@@ -26,7 +26,7 @@ namespace SpriteFontPlus
 
         private float m_qualityMultiplier = 1f;
 
-        private int DefaultTextureSize => MainController.DefaultTextureSizeFont;
+        private int DefaultTextureSize => WEMainController.DefaultTextureSizeFont;
 
         private int FontSizeEffective => Mathf.RoundToInt(m_targetHeight * m_qualityMultiplier);
         public Vector2 ScaleEffective => Vector2.one / m_qualityMultiplier;

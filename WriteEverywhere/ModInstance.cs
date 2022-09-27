@@ -13,7 +13,7 @@ using WriteEverywhere.UI;
 [assembly: AssemblyVersion("0.0.0.10000")]
 namespace WriteEverywhere
 {
-    public class ModInstance : BasicIUserMod<ModInstance, MainController>
+    public class ModInstance : BasicIUserMod<ModInstance, WEMainController>
     {
         public override string SimpleName { get; } = "Write Everywhere";
         public override string SafeName { get; } = "WriteEverywhere";

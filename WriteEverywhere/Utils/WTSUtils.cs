@@ -68,11 +68,11 @@ namespace WriteEverywhere.Utils
             {
                 if (force)
                 {
-                    MainController.ReloadFontsFromPath();
+                    WEMainController.ReloadFontsFromPath();
                 }
                 var items = FontServer.instance.GetAllFonts().ToList();
                 items.Sort();
-                items.Remove(MainController.DEFAULT_FONT_KEY);
+                items.Remove(WEMainController.DEFAULT_FONT_KEY);
                 items.Insert(0, Str.WTS_DEFAULT_FONT_LABEL);
                 if (hasDefaultOption)
                 {
