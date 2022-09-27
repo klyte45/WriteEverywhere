@@ -1,6 +1,8 @@
 ﻿extern alias VS;
 extern alias WE;
 using Bridge_WE2VS;
+using Kwytto.Utils;
+using System.Collections.Generic;
 using UnityEngine;
 using VS::VehicleSkins.ModShared;
 using WriteEverywhere.Xml;
@@ -10,6 +12,10 @@ namespace K45_WE2VS
     public class BridgeVS : IBridge
     {
         public override bool IsAvailable { get; } = true;
+        public override bool IsBridgeEnabled { get; } = PluginUtils.VerifyModsEnabled(new Dictionary<ulong, string> { }, new List<string>
+        {
+          typeof(VSFacade).Assembly.GetName().Name
+        }).Count > 0;
 
         public override int Priority { get; } = 0;
 

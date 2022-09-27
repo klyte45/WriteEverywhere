@@ -8,6 +8,8 @@ namespace Bridge_WE2TLM
     public abstract class IBridge : IBridgePrioritizable
     {
         public abstract int Priority { get; }
+        public abstract bool IsBridgeEnabled { get; }
+
         public abstract LineLogoParameter GetLineLogoParameters(WTSLine lineObj);
         public abstract ushort GetStopBuildingInternal(ushort stopId, WTSLine lineObj);
         public abstract string GetStopName(ushort stopId, WTSLine lineObj);

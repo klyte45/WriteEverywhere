@@ -10,6 +10,7 @@ namespace Bridge_WE2VS
         public abstract bool IsAvailable { get; }
 
         public abstract int Priority { get; }
+        public abstract bool IsBridgeEnabled { get; }
 
         public abstract bool GetSkinLayout(VehicleInfo info, ushort vehicleId, bool isParked, out ILayoutDescriptorVehicleXml layout);
         public abstract string[] ListAllSkins(VehicleInfo info);

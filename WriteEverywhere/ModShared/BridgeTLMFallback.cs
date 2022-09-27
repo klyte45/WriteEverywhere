@@ -16,6 +16,7 @@ namespace WriteEverywhere.ModShared
     internal class BridgeTLMFallback : IBridge
     {
         public override int Priority { get; } = 1000;
+        public override bool IsBridgeEnabled { get; } = true;
         public override LineLogoParameter GetLineLogoParameters(WTSLine lineObj)
         {
             if (!lineObj.regional)

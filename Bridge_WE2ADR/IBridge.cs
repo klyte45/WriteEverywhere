@@ -9,6 +9,7 @@ namespace Bridge_WE2ADR
     {
         public abstract bool AddressesAvailable { get; }
         public abstract int Priority { get; }
+        public abstract bool IsBridgeEnabled { get; }
 
         public abstract Color GetDistrictColor(ushort districtId);
         public abstract Vector2 GetStartPoint();
