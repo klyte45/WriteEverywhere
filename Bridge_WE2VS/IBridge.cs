@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Bridge_WE2VS
 {
-    public abstract class IBridge : MonoBehaviour, IBridgePrioritizable
+    public abstract class IBridge : IBridgePrioritizable
     {
         public abstract bool IsAvailable { get; }
 

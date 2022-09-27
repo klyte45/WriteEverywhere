@@ -5,7 +5,7 @@ using static Bridge_WE2ADR.SegmentUtils;
 
 namespace Bridge_WE2ADR
 {
-    public abstract class IBridge : MonoBehaviour, IBridgePrioritizable
+    public abstract class IBridge : IBridgePrioritizable
     {
         public abstract bool AddressesAvailable { get; }
         public abstract int Priority { get; }

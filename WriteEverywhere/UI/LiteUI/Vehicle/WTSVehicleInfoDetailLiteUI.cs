@@ -76,6 +76,7 @@ namespace WriteEverywhere.UI
         public int TextDescriptorIndexSelected => m_tabsContainer.ListSel;
         public VehicleInfo CurrentEditingInfo => m_currentInfo;
         public bool IsOnTextDimensionsView => m_tabsContainer.CurrentTabIdx == m_sizeEditorTabIdx;
+        public string CurrentSkin => m_currentSkin == m_availableSkinsOptions[0] ? null : m_currentSkin;
         private readonly int m_sizeEditorTabIdx;
 
         public WTSVehicleInfoDetailLiteUI(GUIColorPicker colorPicker)

@@ -12,6 +12,7 @@ using UnityEngine;
 using VS::Bridge_WE2VS;
 using WriteEverywhere.Data;
 using WriteEverywhere.Localization;
+using WriteEverywhere.ModShared;
 using WriteEverywhere.Rendering;
 using WriteEverywhere.UI;
 using WriteEverywhere.Xml;
@@ -73,7 +74,7 @@ namespace WriteEverywhere.Singleton
             }
 
             var connVS = ModInstance.Controller.ConnectorVS;
-            if (connVS.IsAvailable)
+            if (connVS.IsAvailable && (vehicleId != WEFacade.CurrentGrabbedVehicleId || !WEFacade.CurrentSelectedSkin.IsNullOrWhiteSpace()))
             {
                 if (vehicleId >= 0 && connVS.GetSkinLayout(vehicle, (ushort)vehicleId, false, out target))
                 {
@@ -82,10 +83,7 @@ namespace WriteEverywhere.Singleton
                 }
                 if (!skin.IsNullOrWhiteSpace())
                 {
-                    target = connVS.GetSkin(vehicle, skin) ?? new LayoutDescriptorVehicleXml
-                    {
-                        VehicleAssetName = vehicle.name
-                    };
+                    target = connVS.GetSkin(vehicle, skin);
                     source = ConfigurationSource.SKIN;
                     return;
                 }

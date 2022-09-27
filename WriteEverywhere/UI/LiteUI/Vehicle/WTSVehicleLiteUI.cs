@@ -19,6 +19,7 @@ namespace WriteEverywhere.UI
         public int CurrentTextSel => m_detailUI.TextDescriptorIndexSelected;
         public bool IsOnTextDimensionsView => m_detailUI.IsOnTextDimensionsView;
         public VehicleInfo CurrentEditingInfo => m_detailUI.CurrentEditingInfo;
+        public string CurrentSkin => m_detailUI.CurrentSkin;
 
         public override void Awake()
         {
