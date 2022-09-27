@@ -10,7 +10,7 @@ using WriteEverywhere.Localization;
 using WriteEverywhere.Tools;
 using WriteEverywhere.UI;
 
-[assembly: AssemblyVersion("0.0.0.10001")]
+[assembly: AssemblyVersion("0.0.0.10002")]
 namespace WriteEverywhere
 {
     public class ModInstance : BasicIUserMod<ModInstance, WEMainController>
@@ -18,7 +18,6 @@ namespace WriteEverywhere
         public override string SimpleName { get; } = "Write Everywhere";
         public override string SafeName { get; } = "WriteEverywhere";
         public override string Description { get; } = Str.root_modDescription;
-        public override float UIScale => Mathf.Clamp(UIScaleSaved.value, 0.5f, 2);
 
         public override string Acronym => "WE";
 

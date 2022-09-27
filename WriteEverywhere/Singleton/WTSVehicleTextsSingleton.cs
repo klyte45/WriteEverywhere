@@ -74,7 +74,7 @@ namespace WriteEverywhere.Singleton
             }
 
             var connVS = ModInstance.Controller.ConnectorVS;
-            if (connVS.IsAvailable && (vehicleId != WEFacade.CurrentGrabbedVehicleId || !WEFacade.CurrentSelectedSkin.IsNullOrWhiteSpace()))
+            if (connVS.IsAvailable && (!WEFacade.IsWEVehicleEditorOpen || vehicleId != WEFacade.CurrentGrabbedVehicleId || !WEFacade.CurrentSelectedSkin.IsNullOrWhiteSpace()))
             {
                 if (vehicleId >= 0 && connVS.GetSkinLayout(vehicle, (ushort)vehicleId, false, out target))
                 {
