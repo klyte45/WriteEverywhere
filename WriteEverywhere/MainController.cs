@@ -122,6 +122,14 @@ namespace WriteEverywhere
             ToolsModifierControl.toolController.AddExtraToolToController<BuildingEditorTool>();
             ToolsModifierControl.toolController.AddExtraToolToController<RoadSegmentTool>();
             ToolsModifierControl.toolController.AddExtraToolToController<VehicleEditorTool>();
+
+            KFileUtils.EnsureFolderCreation(DefaultBuildingsConfigurationFolder);
+            KFileUtils.EnsureFolderCreation(DefaultVehiclesConfigurationFolder);
+            KFileUtils.EnsureFolderCreation(DefaultPropsLayoutConfigurationFolder);
+            KFileUtils.EnsureFolderCreation(DefaultHwShieldsConfigurationFolder);
+            KFileUtils.EnsureFolderCreation(FontFilesPath);
+            KFileUtils.EnsureFolderCreation(ExtraSpritesFolder);
+
             FontServer.Ensure();
             FontServer.instance.SetQualityMultiplier(WESettingsQualityTab.m_qualityArray[ModInstance.FontQuality]);
             ReloadFontsFromPath();

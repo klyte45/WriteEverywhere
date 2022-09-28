@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace WriteEverywhere.ModShared
 {
-    internal class BridgeADRFallback : IBridge
+    public class BridgeADRFallback : IBridge
     {
         public override int Priority { get; } = 1000;
 

@@ -13,7 +13,7 @@ using static ItemClass;
 
 namespace WriteEverywhere.ModShared
 {
-    internal class BridgeTLMFallback : IBridge
+    public class BridgeTLMFallback : IBridge
     {
         public override int Priority { get; } = 1000;
         public override bool IsBridgeEnabled { get; } = true;
