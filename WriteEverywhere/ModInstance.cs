@@ -30,8 +30,6 @@ namespace WriteEverywhere
         public static readonly SavedFloat ClockPrecision = new SavedFloat("K45_WE_clockPrecision", Settings.gameSettingsFile, 15);
         public static readonly SavedBool ClockShowLeadingZero = new SavedBool("K45_WE_clockShowLeadingZero", Settings.gameSettingsFile, true);
         public static readonly SavedBool Clock12hFormat = new SavedBool("K45_WE_clock12hFormat", Settings.gameSettingsFile, false);
-        public static readonly SavedFloat UIScaleSaved = new SavedFloat("K45_WE_uiScale", Settings.gameSettingsFile, 1);
-        public static readonly SavedFloat UIOpacitySaved = new SavedFloat("K45_WE_uiOpacity", Settings.gameSettingsFile, .85f);
 
         private IUUIButtonContainerPlaceholder[] cachedUUI;
         public override IUUIButtonContainerPlaceholder[] UUIButtons => cachedUUI ?? (cachedUUI = new IUUIButtonContainerPlaceholder[]

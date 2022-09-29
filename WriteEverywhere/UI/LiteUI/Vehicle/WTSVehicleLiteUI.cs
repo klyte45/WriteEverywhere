@@ -12,7 +12,7 @@ using WriteEverywhere.Utils;
 
 namespace WriteEverywhere.UI
 {
-    internal class WTSVehicleLiteUI : IOpacityChangingGUI
+    internal class WTSVehicleLiteUI : GUIOpacityChanging
     {
         public static WTSVehicleLiteUI Instance { get; private set; }
         public int TrailerSel { get; private set; } = 0;
@@ -35,9 +35,9 @@ namespace WriteEverywhere.UI
         protected override void OnOpacityChanged(float newVal)
         {
             base.OnOpacityChanged(newVal);
-            BgTextureSubgroup.SetPixel(0, 0, new Color(bgSubgroup.r, bgSubgroup.g, bgSubgroup.b, ModInstance.UIOpacitySaved));
+            BgTextureSubgroup.SetPixel(0, 0, new Color(bgSubgroup.r, bgSubgroup.g, bgSubgroup.b, ModInstance.Instance.UIOpacity));
             BgTextureSubgroup.Apply();
-            BgTextureNote.SetPixel(0, 0, new Color(bgNote.r, bgNote.g, bgNote.b, ModInstance.UIOpacitySaved));
+            BgTextureNote.SetPixel(0, 0, new Color(bgNote.r, bgNote.g, bgNote.b, ModInstance.Instance.UIOpacity));
             BgTextureNote.Apply();
         }
         private enum State
@@ -91,15 +91,19 @@ namespace WriteEverywhere.UI
             bgSubgroup = ModInstance.Instance.ModColor.SetBrightness(.20f);
 
             BgTextureSubgroup = new Texture2D(1, 1);
-            BgTextureSubgroup.SetPixel(0, 0, new Color(bgSubgroup.r, bgSubgroup.g, bgSubgroup.b, ModInstance.UIOpacitySaved));
+            BgTextureSubgroup.SetPixel(0, 0, new Color(bgSubgroup.r, bgSubgroup.g, bgSubgroup.b, ModInstance.Instance.UIOpacity));
             BgTextureSubgroup.Apply();
 
 
             bgNote = ModInstance.Instance.ModColor.SetBrightness(.60f);
             BgTextureNote = new Texture2D(1, 1);
-            BgTextureNote.SetPixel(0, 0, new Color(bgNote.r, bgNote.g, bgNote.b, ModInstance.UIOpacitySaved));
+            BgTextureNote.SetPixel(0, 0, new Color(bgNote.r, bgNote.g, bgNote.b, ModInstance.Instance.UIOpacity));
             BgTextureNote.Apply();
 
+        }
+
+        public WTSVehicleLiteUI()
+        {
         }
 
         public void Update()

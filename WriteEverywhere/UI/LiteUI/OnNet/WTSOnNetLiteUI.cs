@@ -12,7 +12,7 @@ using WriteEverywhere.Xml;
 
 namespace WriteEverywhere.UI
 {
-    internal class WTSOnNetLiteUI : IOpacityChangingGUI
+    internal class WTSOnNetLiteUI : GUIOpacityChanging
     {
         public static WTSOnNetLiteUI Instance { get; private set; }
         private GUIBasicListingTabsContainer<OnNetInstanceCacheContainerXml> m_tabsContainer;

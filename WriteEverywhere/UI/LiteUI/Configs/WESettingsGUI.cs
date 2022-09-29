@@ -1,4 +1,5 @@
 ﻿using ColossalFramework.UI;
+using Kwytto.LiteUI;
 using Kwytto.UI;
 using Kwytto.Utils;
 using UnityEngine;
@@ -6,7 +7,7 @@ using WriteEverywhere.Localization;
 
 namespace WriteEverywhere.UI
 {
-    internal class WESettingsGUI : IOpacityChangingGUI
+    internal class WESettingsGUI : GUIOpacityChanging
     {
         public static WESettingsGUI Instance
         {
@@ -17,7 +18,6 @@ namespace WriteEverywhere.UI
                     instance = GameObjectUtils.CreateElement<WESettingsGUI>(UIView.GetAView().transform);
                     instance.Init(Str.we_settings_windowTitle, new Rect(128, 128, 680, 420), resizable: true, minSize: new Vector2(440, 260));
                     var tabs = new IGUIVerticalITab[] {
-                        new WESettingsUITab(),
                         new WESettingsFoldersGeneralTab(),
                         new WESettingsQualityTab(instance),
                         new WESettingsClockTab(instance),
