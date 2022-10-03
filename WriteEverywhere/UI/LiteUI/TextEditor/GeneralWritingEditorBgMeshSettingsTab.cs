@@ -43,8 +43,8 @@ namespace WriteEverywhere.UI
                     {
                         GUIKwyttoCommons.AddComboBox(tabAreaSize.x, Str.we_generalTextEditor_colorSource, ref item.BackgroundMeshSettings.m_colorSource, contrastOptions, contrastValues, m_root, isEditable);
                         bool isPlatformRelative = item.BackgroundMeshSettings.m_colorSource == ColoringSource.PlatformLine || item.BackgroundMeshSettings.m_colorSource == ColoringSource.ContrastPlatformLine;
-                        GUIKwyttoCommons.AddColorPicker(isPlatformRelative ? Str.we_generalTextEditor_bgFrontColorForMultilineIfActive : Str.we_generalTextEditor_bgFrontColor, m_picker, ref item.BackgroundMeshSettings.m_bgFrontColor, isEditable);
-                        GUIKwyttoCommons.AddColorPicker(Str.we_generalTextEditor_backgroundBackfaceColor, m_picker, ref item.BackgroundMeshSettings.m_cachedBackColor, isEditable);
+                        GUIKwyttoCommons.AddColorPicker(isPlatformRelative ? Str.we_generalTextEditor_bgFrontColorForMultilineIfActive : Str.we_generalTextEditor_bgFrontColor, m_picker, item.BackgroundMeshSettings.m_bgFrontColor, (x) => item.BackgroundMeshSettings.m_bgFrontColor = x.Value, isEditable);
+                        GUIKwyttoCommons.AddColorPicker(Str.we_generalTextEditor_backgroundBackfaceColor, m_picker, item.BackgroundMeshSettings.m_cachedBackColor, (x) => item.BackgroundMeshSettings.m_cachedBackColor = x.Value, isEditable);
                         changedFrame |= GUIKwyttoCommons.AddVector2Field(tabAreaSize.x, item.BackgroundMeshSettings.Size, Str.WTS_TEXTBACKGROUNDSIZEGENERATED, Str.WTS_TEXTBACKGROUNDSIZEGENERATED, isEditable, .001f);
                         var param = item.BackgroundMeshSettings.BgImage;
                         GUIKwyttoCommons.AddButtonSelector(tabAreaSize.x, Str.we_generalTextEditor_backgroundImage, param is null ? GUIKwyttoCommons.v_null : param.IsEmpty ? GUIKwyttoCommons.v_empty : param.ToString(), () => GoToPicker(-1, TextContent.ParameterizedSpriteSingle, param, item), isEditable);

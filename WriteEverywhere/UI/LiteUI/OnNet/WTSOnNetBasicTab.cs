@@ -85,10 +85,10 @@ namespace WriteEverywhere.UI
         }
 
         public Texture TabIcon { get; } = KResourceLoader.LoadTextureKwytto(CommonsSpriteNames.K45_Settings);
-        public static int LockSelectionInstanceNum { get => lockSelectionInstanceNum; private set => lockSelectionInstanceNum = value; }
+        public static int LockSelectionInstanceNum { get => lockSelectionInstanceNum ?? -1; private set => lockSelectionInstanceNum = value; }
 
         private GUIRootWindowBase baseContainer;
-        private static int lockSelectionInstanceNum;
+        private static int? lockSelectionInstanceNum;
 
         public WTSOnNetBasicTab(Action<OnNetInstanceCacheContainerXml, bool> onImportFromLib, Action onDelete, GUIRootWindowBase baseContainer)
         {

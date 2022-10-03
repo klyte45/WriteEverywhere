@@ -164,7 +164,6 @@ namespace WriteEverywhere
             EventOnPostalCodeChanged += WTSCacheSingleton.ClearCachePostalCode;
             EventOnZeroMarkerChanged += OnNameSeedChanged;
 
-
         }
 
         private IEnumerator OnNameSeedChanged(ushort segmentId)

@@ -59,7 +59,7 @@ namespace WriteEverywhere.UI
 
             if (item.ColoringConfig.m_colorSource == ColoringSource.Fixed || (item.ColoringConfig.m_useFixedIfMultiline && (item.ColoringConfig.m_colorSource == ColoringSource.PlatformLine || item.ColoringConfig.m_colorSource == ColoringSource.ContrastPlatformLine)))
             {
-                GUIKwyttoCommons.AddColorPicker(Str.WTS_TEXT_COLOR, m_picker, ref item.ColoringConfig.m_cachedColor, isEditable);
+                GUIKwyttoCommons.AddColorPicker(Str.WTS_TEXT_COLOR, m_picker, item.ColoringConfig.m_cachedColor, (x) => item.ColoringConfig.m_cachedColor = x ?? Color.white, isEditable);
             }
             else
             {
@@ -73,7 +73,7 @@ namespace WriteEverywhere.UI
             }
             if (!backFaceIsFrontFace)
             {
-                GUIKwyttoCommons.AddColorPicker(Str.we_generalTextEditor_fontBackfaceColor, m_picker, ref item.ColoringConfig.m_cachedBackColor, isEditable);
+                GUIKwyttoCommons.AddColorPicker(Str.we_generalTextEditor_fontBackfaceColor, m_picker, item.ColoringConfig.m_cachedBackColor, (x) => item.ColoringConfig.m_cachedBackColor = x.Value, isEditable);
             }
             else
             {

@@ -152,11 +152,11 @@ namespace WriteEverywhere.UI
             m_layoutFilter.DrawButton(areaRect.x, PropIndexes.GetListName(item.SimpleProp));
             GUILayout.Space(12);
 
-            GUIKwyttoCommons.AddIntField(areaRect.x, Str.we_buildingEditor_repeatLayoutTimes, item.ArrayRepeatTimes, (x) => item.ArrayRepeatTimes = x, canEdit, 1);
+            GUIKwyttoCommons.AddIntField(areaRect.x, Str.we_buildingEditor_repeatLayoutTimes, item.ArrayRepeatTimes, (x) => item.ArrayRepeatTimes = (int)x, canEdit, 1);
             if (item.ArrayRepeatTimes > 1)
             {
                 GUIKwyttoCommons.AddVector3Field(areaRect.x, item.ArrayRepeat, Str.we_buildingEditor_repeatLayoutDirection, "ArrayDir", canEdit);
-                GUIKwyttoCommons.AddIntField(areaRect.x, Str.we_buildingEditor_currentFocusInstance, ref m_currentFocusInstance, true, 0, item.ArrayRepeatTimes - 1);
+                GUIKwyttoCommons.AddIntField(areaRect.x, Str.we_buildingEditor_currentFocusInstance, m_currentFocusInstance, (x) => m_currentFocusInstance = x.Value, true, 0, item.ArrayRepeatTimes - 1);
             }
             else
             {

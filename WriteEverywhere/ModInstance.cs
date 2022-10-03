@@ -3,6 +3,8 @@ using ColossalFramework;
 using ColossalFramework.UI;
 using Kwytto.Interfaces;
 using Kwytto.Utils;
+using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Reflection;
 using UnityEngine;
@@ -10,7 +12,7 @@ using WriteEverywhere.Localization;
 using WriteEverywhere.Tools;
 using WriteEverywhere.UI;
 
-[assembly: AssemblyVersion("0.0.0.10005")]
+[assembly: AssemblyVersion("0.0.0.10006")]
 namespace WriteEverywhere
 {
     public class ModInstance : BasicIUserMod<ModInstance, WEMainController>
@@ -30,6 +32,12 @@ namespace WriteEverywhere
         public static readonly SavedFloat ClockPrecision = new SavedFloat("K45_WE_clockPrecision", Settings.gameSettingsFile, 15);
         public static readonly SavedBool ClockShowLeadingZero = new SavedBool("K45_WE_clockShowLeadingZero", Settings.gameSettingsFile, true);
         public static readonly SavedBool Clock12hFormat = new SavedBool("K45_WE_clock12hFormat", Settings.gameSettingsFile, false);
+        protected override Dictionary<string, Func<IBridgePrioritizable>> ModBridges { get; } = new Dictionary<string, Func<IBridgePrioritizable>>()
+        {
+            ["Vehicle Skins"] = () => controller?.ConnectorVS,
+            ["Addresses"] = () => controller?.ConnectorADR,
+            ["T. Lines Manager"] = () => controller?.ConnectorTLM,
+        };
 
         private IUUIButtonContainerPlaceholder[] cachedUUI;
         public override IUUIButtonContainerPlaceholder[] UUIButtons => cachedUUI ?? (cachedUUI = new IUUIButtonContainerPlaceholder[]
@@ -71,5 +79,6 @@ namespace WriteEverywhere
 
             });
         }
+
     }
 }

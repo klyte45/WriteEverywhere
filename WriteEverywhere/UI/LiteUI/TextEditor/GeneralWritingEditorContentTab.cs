@@ -50,8 +50,8 @@ namespace WriteEverywhere.UI
                     {
                         item.ParameterSequence = new TextParameterSequence(new[] { new TextParameterSequenceItem("", m_targetRenderingClass) }, m_targetRenderingClass);
                     }
-                    var paramSeq = item.ParameterSequence; 
-                    if (paramSeq.Any(x=>x.IsParameter))
+                    var paramSeq = item.ParameterSequence;
+                    if (paramSeq.Any(x => x.IsParameter))
                     {
                         GUIKwyttoCommons.TextWithLabel(tabAreaSize.x, Str.we_generalTextEditor_labelForParamListing, item.ParameterDisplayName, (x) => item.ParameterDisplayName = x, isEditable);
                     }
@@ -89,7 +89,7 @@ namespace WriteEverywhere.UI
                                 if (isEditable)
                                 {
                                     int newLenght;
-                                    if ((newLenght = GUIIntField.IntField($"{Str.WTS_PARAMSEQ_STEPLENGTH} " + line, (int)seqItem.m_length, 0)) != seqItem.m_length)
+                                    if ((newLenght = GUIIntField.IntField($"{Str.WTS_PARAMSEQ_STEPLENGTH} " + line, (int)seqItem.m_length, 0).Value) != seqItem.m_length)
                                     {
                                         paramSeq.SetLengthAt(line, newLenght);
                                     }

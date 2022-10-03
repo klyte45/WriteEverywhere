@@ -59,9 +59,9 @@ namespace WriteEverywhere.UI
                             GUIKwyttoCommons.AddToggle(Str.we_generalTextEditor_usePrefabColor, ref item.BackgroundMeshSettings.FrameMeshSettings.m_inheritColor, isEditable);
                             if (!item.BackgroundMeshSettings.FrameMeshSettings.m_inheritColor)
                             {
-                                GUIKwyttoCommons.AddColorPicker(Str.WTS_BOXMESH_OUTERCOLOR, m_picker, ref item.BackgroundMeshSettings.FrameMeshSettings.m_cachedOutsideColor, isEditable);
+                                GUIKwyttoCommons.AddColorPicker(Str.WTS_BOXMESH_OUTERCOLOR, m_picker, item.BackgroundMeshSettings.FrameMeshSettings.m_cachedOutsideColor, (x) => item.BackgroundMeshSettings.FrameMeshSettings.m_cachedOutsideColor = x.Value, isEditable);
                             }
-                            changedFrame |= GUIKwyttoCommons.AddColorPicker(Str.WTS_TEXT_CONTAINERGLASSCOLOR, m_picker, ref item.BackgroundMeshSettings.FrameMeshSettings.m_cachedGlassColor, isEditable);
+                            changedFrame |= GUIKwyttoCommons.AddColorPicker(Str.WTS_TEXT_CONTAINERGLASSCOLOR, m_picker, item.BackgroundMeshSettings.FrameMeshSettings.m_cachedGlassColor, (x) => item.BackgroundMeshSettings.FrameMeshSettings.m_cachedGlassColor = x.Value, isEditable);
 
                             GUILayout.Space(10);
                             GUILayout.Label($"<color=#FFFF00>{Str.WTS_BOXMESH_EFFECTSGROUP_LABEL}</color>");
