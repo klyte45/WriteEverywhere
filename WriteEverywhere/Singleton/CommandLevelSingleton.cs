@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using WriteEverywhere.Localization;
 using WriteEverywhere.Plugins;
+using WriteEverywhere.Plugins.Ext;
 
 namespace WriteEverywhere.Singleton
 {

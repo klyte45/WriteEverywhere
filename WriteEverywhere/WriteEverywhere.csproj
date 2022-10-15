@@ -130,6 +130,10 @@
       <Project>{92746969-350C-453C-8439-4D573C1B98A1}</Project>
       <Name>WriteEverywhere.Localization</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WriteEverywhere.Plugins.Ext\WriteEverywhere.Plugins.Ext.csproj">
+      <Project>{22c465bd-2d18-4bc0-9850-8e11d174a35a}</Project>
+      <Name>WriteEverywhere.Plugins.Ext</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WriteEverywhere.Plugins\WriteEverywhere.Plugins.csproj">
       <Project>{0c80a069-4d04-45c6-867a-ad3bff5b372b}</Project>
       <Name>WriteEverywhere.Plugins</Name>

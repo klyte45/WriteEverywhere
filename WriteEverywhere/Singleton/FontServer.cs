@@ -81,7 +81,7 @@ namespace WriteEverywhere.Singleton
             return true;
         }
 
-        private static Shader GetDefaultFontShader() => ModInstance.Controller.defaultFrameShader;
+        private static Shader GetDefaultFontShader() => ModInstance.Controller.defaultTextShader;
 
         public void ClearFonts() => m_fontRegistered.Clear();
 
