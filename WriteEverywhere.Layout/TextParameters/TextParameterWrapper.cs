@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using WriteEverywhere.Plugins;
+using WriteEverywhere.Xml;
 
-namespace WriteEverywhere.Xml
+namespace WriteEverywhere.Layout
 {
     public class TextParameterWrapper : ITextParameterWrapper
     {

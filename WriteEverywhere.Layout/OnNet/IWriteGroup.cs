@@ -1,4 +1,4 @@
-﻿namespace WriteEverywhere.Xml
+﻿namespace WriteEverywhere.Layout
 {
     public interface IWriteGroup
     {

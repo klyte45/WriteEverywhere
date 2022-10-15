@@ -64,7 +64,7 @@ namespace WriteEverywhere.UI
             else WTSParameterImageEditor<T>.ImageOnSelectItem(tab, selectLayout, this);
         }
 
-        public void OnHoverVar(WTSBaseParamsTab<T> tab, int autoSelectVal, CommandLevel commandLevel)
+        public void OnHoverVar(WTSBaseParamsTab<T> tab, int autoSelectVal, BaseCommandLevel commandLevel)
         {
             if (tab.IsTextVariable) WTSParameterVariableEditor<T>.VariableOnHoverVar(tab, autoSelectVal, commandLevel, ref m_hoverIdx);
         }

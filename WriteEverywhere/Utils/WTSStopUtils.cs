@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using TLM::Bridge_WE2TLM;
-using WriteEverywhere.Xml;
+using WriteEverywhere.Layout;
 
 namespace WriteEverywhere.Utils
 {

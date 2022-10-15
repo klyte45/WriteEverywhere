@@ -1,8 +1,8 @@
 ﻿using Kwytto.LiteUI;
 using System;
 using UnityEngine;
+using WriteEverywhere.Layout;
 using WriteEverywhere.Localization;
-using WriteEverywhere.Xml;
 
 namespace WriteEverywhere.UI
 {

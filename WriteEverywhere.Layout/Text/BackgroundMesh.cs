@@ -3,8 +3,9 @@ using Kwytto.Utils;
 using System.Xml;
 using System.Xml.Serialization;
 using UnityEngine;
+using WriteEverywhere.Xml;
 
-namespace WriteEverywhere.Xml
+namespace WriteEverywhere.Layout
 {
     public class BackgroundMesh
     {

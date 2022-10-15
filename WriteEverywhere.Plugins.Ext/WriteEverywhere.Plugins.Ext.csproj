@@ -39,8 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WEVariableExtension.cs" />
+    <Compile Include="**\*.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WriteEverywhere.Font\WriteEverywhere.Font.csproj">
@@ -48,7 +47,7 @@
       <Name>WriteEverywhere.Font</Name>
     </ProjectReference>
     <ProjectReference Include="..\WriteEverywhere.Layout\WriteEverywhere.Layout.csproj">
-      <Project>{C1EF6364-94B2-4662-8F43-484EE9364EED}</Project>
+      <Project>{c1ef6364-94b2-4662-8f43-484ee9364eed}</Project>
       <Name>WriteEverywhere.Layout</Name>
     </ProjectReference>
     <ProjectReference Include="..\WriteEverywhere.Plugins\WriteEverywhere.Plugins.csproj">

@@ -2,7 +2,7 @@
 
 using Kwytto.Interfaces;
 using UnityEngine;
-using WE::WriteEverywhere.Xml;
+using WE::WriteEverywhere.Layout;
 
 namespace Bridge_WE2VS
 {

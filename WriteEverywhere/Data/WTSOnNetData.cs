@@ -1,14 +1,13 @@
 ﻿using ICities;
 using Kwytto.Data;
 using Kwytto.Utils;
-using WriteEverywhere.Singleton;
-using WriteEverywhere.Xml;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Serialization;
 using UnityEngine;
-using WriteEverywhere.Localization;
+using WriteEverywhere.Layout;
+using WriteEverywhere.Singleton;
 
 namespace WriteEverywhere.Data
 {

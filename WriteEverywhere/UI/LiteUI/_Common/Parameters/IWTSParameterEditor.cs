@@ -13,6 +13,6 @@ namespace WriteEverywhere.UI
 
         string[] OnFilterParam(WTSBaseParamsTab<T> tab);
         void OnSelectItem(WTSBaseParamsTab<T> tab, int selectLayout);
-        void OnHoverVar(WTSBaseParamsTab<T> wTSBaseParamsTab, int autoSelectVal, CommandLevel commandLevel);
+        void OnHoverVar(WTSBaseParamsTab<T> wTSBaseParamsTab, int autoSelectVal, BaseCommandLevel commandLevel);
     }
 }

@@ -162,7 +162,7 @@ namespace WriteEverywhere.UI
         public string[] OnFilterParam(WTSBaseParamsTab<T> tab) => ImageOnFilterParam(tab);
         public void OnSelectItem(WTSBaseParamsTab<T> tab, int selectLayout) => ImageOnSelectItem(tab, selectLayout, this);
 
-        public void OnHoverVar(WTSBaseParamsTab<T> wTSBaseParamsTab, int autoSelectVal, CommandLevel commandLevel)
+        public void OnHoverVar(WTSBaseParamsTab<T> wTSBaseParamsTab, int autoSelectVal, BaseCommandLevel commandLevel)
         {
         }
     }

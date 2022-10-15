@@ -1,8 +1,9 @@
 ﻿
 
 using Kwytto.Interfaces;
+using WriteEverywhere.Xml;
 
-namespace WriteEverywhere.Xml
+namespace WriteEverywhere.Layout
 {
     public interface ILayoutDescriptorVehicleXml : ILibable
     {

@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace WriteEverywhere.Plugins
 {
-    public enum VariableSegmentTargetSubType
+    public enum VariableSegmentSubType
     {
         None,
         StreetSuffix,
@@ -40,7 +40,7 @@ namespace WriteEverywhere.Plugins
         public static Dictionary<Enum, CommandLevel> ReadCommandTree()
         {
             Dictionary<Enum, CommandLevel> result = new Dictionary<Enum, CommandLevel>();
-            foreach (var value in Enum.GetValues(typeof(VariableSegmentTargetSubType)).Cast<VariableSegmentTargetSubType>())
+            foreach (var value in Enum.GetValues(typeof(VariableSegmentSubType)).Cast<VariableSegmentSubType>())
             {
                 if (value == 0)
                 {
@@ -51,46 +51,46 @@ namespace WriteEverywhere.Plugins
             }
             return result;
         }
-        public static CommandLevel GetCommandLevel(this VariableSegmentTargetSubType var)
+        public static CommandLevel GetCommandLevel(this VariableSegmentSubType var)
         {
             switch (var)
             {
-                case VariableSegmentTargetSubType.MileageMeters:
-                case VariableSegmentTargetSubType.MileageKilometers:
-                case VariableSegmentTargetSubType.MileageMiles:
-                case VariableSegmentTargetSubType.DistrictAreaM2:
-                case VariableSegmentTargetSubType.DistrictAreaKm2:
-                case VariableSegmentTargetSubType.DistrictAreaMi2:
-                case VariableSegmentTargetSubType.ParkAreaM2:
-                case VariableSegmentTargetSubType.ParkAreaKm2:
-                case VariableSegmentTargetSubType.ParkAreaMi2:
-                case VariableSegmentTargetSubType.DistanceFromReferenceKilometers:
-                case VariableSegmentTargetSubType.DistanceFromReferenceMeters:
-                case VariableSegmentTargetSubType.DistanceFromReferenceMiles:
+                case VariableSegmentSubType.MileageMeters:
+                case VariableSegmentSubType.MileageKilometers:
+                case VariableSegmentSubType.MileageMiles:
+                case VariableSegmentSubType.DistrictAreaM2:
+                case VariableSegmentSubType.DistrictAreaKm2:
+                case VariableSegmentSubType.DistrictAreaMi2:
+                case VariableSegmentSubType.ParkAreaM2:
+                case VariableSegmentSubType.ParkAreaKm2:
+                case VariableSegmentSubType.ParkAreaMi2:
+                case VariableSegmentSubType.DistanceFromReferenceKilometers:
+                case VariableSegmentSubType.DistanceFromReferenceMeters:
+                case VariableSegmentSubType.DistanceFromReferenceMiles:
                     return CommandLevel.m_numberFormatFloat;
-                case VariableSegmentTargetSubType.DistrictPopulation:
+                case VariableSegmentSubType.DistrictPopulation:
                     return CommandLevel.m_numberFormatInt;
-                case VariableSegmentTargetSubType.StreetSuffix:
-                case VariableSegmentTargetSubType.StreetNameComplete:
-                case VariableSegmentTargetSubType.StreetPrefix:
-                case VariableSegmentTargetSubType.District:
-                case VariableSegmentTargetSubType.Park:
-                case VariableSegmentTargetSubType.ParkOrDistrict:
-                case VariableSegmentTargetSubType.DistrictOrPark:
+                case VariableSegmentSubType.StreetSuffix:
+                case VariableSegmentSubType.StreetNameComplete:
+                case VariableSegmentSubType.StreetPrefix:
+                case VariableSegmentSubType.District:
+                case VariableSegmentSubType.Park:
+                case VariableSegmentSubType.ParkOrDistrict:
+                case VariableSegmentSubType.DistrictOrPark:
                     return CommandLevel.m_stringFormat;
-                case VariableSegmentTargetSubType.PostalCode:
-                case VariableSegmentTargetSubType.Direction:
-                case VariableSegmentTargetSubType.HwCodeShort:
-                case VariableSegmentTargetSubType.HwCodeLong:
-                case VariableSegmentTargetSubType.HwDettachedPrefix:
-                case VariableSegmentTargetSubType.HwIdentifierSuffix:
+                case VariableSegmentSubType.PostalCode:
+                case VariableSegmentSubType.Direction:
+                case VariableSegmentSubType.HwCodeShort:
+                case VariableSegmentSubType.HwCodeLong:
+                case VariableSegmentSubType.HwDettachedPrefix:
+                case VariableSegmentSubType.HwIdentifierSuffix:
                     return CommandLevel.m_appendPrefix;
                 default:
                     return null;
             }
         }
 
-        public static bool ReadData(this VariableSegmentTargetSubType var, string[] relativeParams, ref Enum subtype, out VariableExtraParameterContainer extraParams)
+        public static bool ReadData(this VariableSegmentSubType var, string[] relativeParams, ref Enum subtype, out VariableExtraParameterContainer extraParams)
         {
             var cmdLevel = var.GetCommandLevel();
             if (cmdLevel is null)

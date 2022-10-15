@@ -4,15 +4,15 @@ using ColossalFramework.Globalization;
 using Kwytto.LiteUI;
 using Kwytto.UI;
 using Kwytto.Utils;
-using WriteEverywhere.Font;
 using System;
 using System.Collections;
 using System.Globalization;
 using System.Linq;
 using UnityEngine;
+using WriteEverywhere.Layout;
 using WriteEverywhere.Localization;
-using WriteEverywhere.Xml;
 using WriteEverywhere.Singleton;
+using WriteEverywhere.Xml;
 
 namespace WriteEverywhere.UI
 {

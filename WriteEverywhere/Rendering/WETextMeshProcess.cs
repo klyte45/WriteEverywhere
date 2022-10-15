@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using WriteEverywhere.Data;
 using WriteEverywhere.Font.Utility;
+using WriteEverywhere.Layout;
 using WriteEverywhere.Singleton;
 using WriteEverywhere.Xml;
 

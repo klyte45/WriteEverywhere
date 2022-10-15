@@ -4,7 +4,7 @@ using Kwytto.Interfaces;
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace WriteEverywhere.Xml
+namespace WriteEverywhere.Layout
 {
     [XmlRoot("vehicleDescriptors")]
     public class ExportableLayoutDescriptorVehicleXml

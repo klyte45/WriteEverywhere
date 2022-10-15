@@ -5,7 +5,7 @@ using Kwytto.Utils;
 using System.Collections.Generic;
 using UnityEngine;
 using VS::VehicleSkins.ModShared;
-using WriteEverywhere.Xml;
+using WriteEverywhere.Layout;
 
 namespace K45_WE2VS
 {

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Serialization;
 using UnityEngine;
-using WriteEverywhere.Xml;
+using WriteEverywhere.Layout;
 
 namespace WriteEverywhere.Data
 {

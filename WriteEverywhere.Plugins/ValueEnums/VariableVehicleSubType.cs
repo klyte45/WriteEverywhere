@@ -17,20 +17,7 @@ namespace WriteEverywhere.Plugins
 
     public static class VariableVehicleSubTypeExtensions
     {
-        public static Dictionary<Enum, CommandLevel> ReadCommandTree()
-        {
-            Dictionary<Enum, CommandLevel> result = new Dictionary<Enum, CommandLevel>();
-            foreach (var value in Enum.GetValues(typeof(VariableVehicleSubType)).Cast<VariableVehicleSubType>())
-            {
-                if (value == 0)
-                {
-                    continue;
-                }
-
-                result[value] = value.GetCommandLevel();
-            }
-            return result;
-        }
+       
         public static CommandLevel GetCommandLevel(this VariableVehicleSubType var)
         {
             switch (var)

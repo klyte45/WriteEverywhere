@@ -1,6 +1,7 @@
 ﻿using System.Xml.Serialization;
+using WriteEverywhere.Xml;
 
-namespace WriteEverywhere.Xml
+namespace WriteEverywhere.Layout
 {
     public class TextParameterXmlContainer
     {

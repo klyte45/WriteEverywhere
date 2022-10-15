@@ -112,7 +112,7 @@ namespace WriteEverywhere.UI
             return null;
         }
 
-        public void OnHoverVar(WTSBaseParamsTab<T> wTSBaseParamsTab, int autoSelectVal, CommandLevel commandLevel)
+        public void OnHoverVar(WTSBaseParamsTab<T> wTSBaseParamsTab, int autoSelectVal, BaseCommandLevel commandLevel)
         {
         }
     }

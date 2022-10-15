@@ -16,11 +16,11 @@ using UnityEngine;
 using WriteEverywhere.Data;
 using WriteEverywhere.Font;
 using WriteEverywhere.Font.Utility;
+using WriteEverywhere.Layout;
 using WriteEverywhere.Localization;
 using WriteEverywhere.Rendering;
 using WriteEverywhere.Singleton;
 using WriteEverywhere.Utils;
-using WriteEverywhere.Xml;
 using static ColossalFramework.UI.UITextureAtlas;
 
 namespace WriteEverywhere.Sprites

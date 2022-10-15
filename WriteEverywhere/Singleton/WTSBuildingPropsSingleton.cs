@@ -1,11 +1,9 @@
 ﻿extern alias TLM;
-
 using ColossalFramework;
 using ColossalFramework.Math;
 using ColossalFramework.UI;
 using Kwytto.LiteUI;
 using Kwytto.Utils;
-using WriteEverywhere.Font;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,6 +13,8 @@ using System.Xml.Serialization;
 using TLM::Bridge_WE2TLM;
 using UnityEngine;
 using WriteEverywhere.Data;
+using WriteEverywhere.Font;
+using WriteEverywhere.Layout;
 using WriteEverywhere.Rendering;
 using WriteEverywhere.UI;
 using WriteEverywhere.Utils;

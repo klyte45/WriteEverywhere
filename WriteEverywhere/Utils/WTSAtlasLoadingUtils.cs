@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using WriteEverywhere.Layout;
 using WriteEverywhere.Localization;
-using WriteEverywhere.Xml;
 
 namespace WriteEverywhere.Utils
 {

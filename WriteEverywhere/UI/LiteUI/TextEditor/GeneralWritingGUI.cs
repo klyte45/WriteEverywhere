@@ -10,6 +10,7 @@ using System.Collections;
 using System.Globalization;
 using System.Linq;
 using UnityEngine;
+using WriteEverywhere.Layout;
 using WriteEverywhere.Libraries;
 using WriteEverywhere.Localization;
 using WriteEverywhere.Singleton;

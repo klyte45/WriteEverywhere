@@ -3,9 +3,9 @@ using Kwytto.UI;
 using Kwytto.Utils;
 using System;
 using UnityEngine;
+using WriteEverywhere.Layout;
 using WriteEverywhere.Libraries;
 using WriteEverywhere.Localization;
-using WriteEverywhere.Xml;
 
 namespace WriteEverywhere.UI
 {

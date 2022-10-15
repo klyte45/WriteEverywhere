@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using WriteEverywhere.Data;
 using WriteEverywhere.Font;
 using WriteEverywhere.Font.Utility;
+using WriteEverywhere.Layout;
 using WriteEverywhere.Singleton;
 
 namespace WriteEverywhere.Xml

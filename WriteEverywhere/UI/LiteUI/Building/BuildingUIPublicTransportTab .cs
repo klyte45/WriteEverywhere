@@ -5,10 +5,10 @@ using Kwytto.Utils;
 using System;
 using System.Linq;
 using UnityEngine;
+using WriteEverywhere.Layout;
 using WriteEverywhere.Localization;
 using WriteEverywhere.Singleton;
 using WriteEverywhere.Utils;
-using WriteEverywhere.Xml;
 
 namespace WriteEverywhere.UI
 {

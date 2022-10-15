@@ -1,5 +1,4 @@
 ﻿extern alias VS;
-
 using ColossalFramework;
 using ColossalFramework.Globalization;
 using ColossalFramework.Packaging;
@@ -8,7 +7,6 @@ using Kwytto.LiteUI;
 using Kwytto.Localization;
 using Kwytto.UI;
 using Kwytto.Utils;
-using WriteEverywhere.Font;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -16,7 +14,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using UnityEngine;
-using VS::Bridge_WE2VS;
+using WriteEverywhere.Layout;
 using WriteEverywhere.Libraries;
 using WriteEverywhere.Localization;
 using WriteEverywhere.Singleton;

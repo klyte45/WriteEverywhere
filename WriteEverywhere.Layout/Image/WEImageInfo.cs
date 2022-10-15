@@ -1,7 +1,7 @@
 ﻿using Kwytto.Utils;
 using UnityEngine;
 
-namespace WriteEverywhere.Xml
+namespace WriteEverywhere.Layout
 {
     public class WEImageInfo
     {

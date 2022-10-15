@@ -8,24 +8,29 @@ using WriteEverywhere.Xml;
 namespace WriteEverywhere.Plugins
 {
     public delegate void CommandLevelValidate(TextRenderingClass renderingClass, string[] parameterPath, ref Enum type, ref Enum subtype, ref byte index, out VariableExtraParameterContainer paramContainer);
-    public class RootCommandLevel : CommandLevel
+
+    public abstract class BaseCommandLevel
     {
-        public CommandLevelValidate Validate { get; set; }
-
-    }
-
-
-    public class CommandLevel
-    {
-
         public Enum defaultValue;
-        public Dictionary<Enum, CommandLevel> nextLevelOptions;
         public string regexValidValues;
         public CommandLevel nextLevelByRegex;
         public Func<string> descriptionKey;
 
         public int level;
+        public abstract IEnumerable<Enum> NextLevelsKeys { get; }
+    }
 
+    public class BaseCommandLevel<C> : BaseCommandLevel where C : BaseCommandLevel
+    {
+        public Dictionary<Enum, C> nextLevelOptions;
+
+
+        public override IEnumerable<Enum> NextLevelsKeys => nextLevelOptions.Keys;
+
+    }
+
+    public class CommandLevel : BaseCommandLevel<CommandLevel>
+    {
         public void ParseFormatting(string[] relativeParams, out VariableExtraParameterContainer extraParameterContainer)
         {
             extraParameterContainer = default;
@@ -88,7 +93,7 @@ namespace WriteEverywhere.Plugins
         }
 
 
-        public static string FromParameterPath(IEnumerable<string> path) => string.Join("/", path.Select(x => Regex.Replace(x, @"([^\\])/|^/", "$1\\/")).ToArray()) + "/";
+        public static string FromParameterPath(IEnumerable<string> path) => string.Join("", path.Select(x => Regex.Replace(x, @"([^\\])/|^/", "$1\\/") + "/").ToArray());
 
         public const string PROTOCOL_VARIABLE = "var://";
 

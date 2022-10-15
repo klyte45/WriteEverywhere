@@ -2,9 +2,9 @@
 using Kwytto.UI;
 using Kwytto.Utils;
 using UnityEngine;
+using WriteEverywhere.Layout;
 using WriteEverywhere.Localization;
 using WriteEverywhere.Tools;
-using WriteEverywhere.Xml;
 
 namespace WriteEverywhere.UI
 {

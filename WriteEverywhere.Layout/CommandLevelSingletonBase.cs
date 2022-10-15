@@ -1,40 +1,55 @@
 ﻿using ColossalFramework;
+using Kwytto.Interfaces;
+using Kwytto.Utils;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using WriteEverywhere.Plugins;
+using WriteEverywhere.Xml;
 
-namespace WriteEverywhere.Singleton
+namespace WriteEverywhere.Layout
 {
+
     public abstract class CommandLevelSingletonBase : MonoBehaviour
     {
-        private Dictionary<Enum, RootCommandLevel> commandTree;
-        public static CommandLevelSingletonBase Instance { get; private set; }
-
-        private void Awake()
+        protected static CommandLevelSingletonBase m_instance;
+        internal static CommandLevelSingletonBase Instance
         {
-            Instance = this;
-            commandTree = ReadCommandTree();
+            get
+            {
+                if (m_instance is null)
+                {
+                    m_instance = BasicIUserMod.Instance.OwnGO.AddComponent(ReflectionUtils.GetInterfaceImplementations(typeof(CommandLevelSingletonBase)).First()) as CommandLevelSingletonBase;
+                }
+                return m_instance;
+            }
         }
 
-        protected abstract Dictionary<Enum, RootCommandLevel> ReadCommandTree();
+
+        protected void Awake()
+        {
+            OnAwake();
+        }
+        protected abstract void OnAwake();
+        protected abstract IEnumerable<Enum> GetKeys();
+        public abstract void ReadVariableData(TextRenderingClass clazz, string[] path, out Enum refEnum, ref Enum type, ref Enum subtype, ref byte index, out VariableExtraParameterContainer paramContainer);
         protected abstract string GetRootDescText();
         protected abstract string ValueToI18n(Enum value);
-        public static string[] GetParameterPath(string input, out Enum refEnum)
+
+        public static string[] GetParameterPath(string input)
         {
-            var path = Regex.Split(input, @"(?<!\\)/").Select(x => x.Replace("\\/", "/")).ToArray();
-            refEnum = Instance?.commandTree.Keys.Where(x => x.ToString() == path[0]).FirstOrDefault();
-            return path;
+            return Regex.Split(input, @"(?<!\\)/").Select(x => x.Replace("\\/", "/")).ToArray();
         }
 
-        public CommandLevel OnFilterParamByText(string inputText, out string currentLocaleDesc)
+        public BaseCommandLevel OnFilterParamByText(string inputText, out string currentLocaleDesc)
         {
-            if ((inputText?.Length ?? 0) >= 4 && inputText.StartsWith(CommandLevel.PROTOCOL_VARIABLE))
+            if (inputText?.StartsWith(CommandLevel.PROTOCOL_VARIABLE) ?? false)
             {
-                var parameterPath = GetParameterPath(inputText.Substring(CommandLevel.PROTOCOL_VARIABLE.Length), out _);
-                return IterateInCommandTree(out currentLocaleDesc, parameterPath, null, null, 0);
+                var parameterPath = GetParameterPath(inputText.Substring(CommandLevel.PROTOCOL_VARIABLE.Length));
+                return IterateInCommandTree(out currentLocaleDesc, parameterPath);
             }
             else
             {
@@ -44,22 +59,22 @@ namespace WriteEverywhere.Singleton
         }
 
 
-        private CommandLevel IterateInCommandTree(out string currentLocaleDesc, string[] parameterPath, Enum levelKey, CommandLevel currentLevel, int level)
+        private BaseCommandLevel IterateInCommandTree(out string currentLocaleDesc, string[] parameterPath, Enum levelKey = null, CommandLevel currentLevel = null, int level = 0)
         {
-            if (currentLevel is null)
+            if (currentLevel is null || level < 1)
             {
-                if (level < parameterPath.Length - 1)
+                var varType = GetRootEnumNextLevelFor(parameterPath[0]);
+                if (varType != default)
                 {
-                    var validKey = commandTree.Keys.Where(x => x.ToString() == parameterPath[level]).FirstOrDefault();
-                    if (validKey != default)
-                    {
-                        return IterateInCommandTree(out currentLocaleDesc, parameterPath, validKey, currentLevel.nextLevelOptions[validKey], level + 1);
-                    }
+                    return IterateInCommandTree(out currentLocaleDesc, parameterPath, varType, GetRootNextLevelFor(varType), 1);
                 }
-                currentLocaleDesc = GetRootDescText();
-                return null;
+                else
+                {
+                    currentLocaleDesc = GetRootDescText();
+                }
+                return GetRootCommandLevel();
             }
-            else if (level < parameterPath.Length - 1)
+            if (level < parameterPath.Length - 1)
             {
                 if (currentLevel.defaultValue != null)
                 {
@@ -99,5 +114,15 @@ namespace WriteEverywhere.Singleton
             currentLevel.level = level;
             return currentLevel;
         }
+
+        protected abstract BaseCommandLevel GetRootCommandLevel();
+        protected abstract Enum GetRootEnumNextLevelFor(string v);
+        protected abstract CommandLevel GetRootNextLevelFor(Enum e);
+
+        public static string GetEnumKeyValue(Enum input, int level)
+        {
+            return level >= 0 || input is VariableType ? input.ToString() : $"{input.GetType().Name}::{input}";
+        }
+
     }
 }

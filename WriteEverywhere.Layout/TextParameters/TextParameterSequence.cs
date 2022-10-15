@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using WriteEverywhere.Xml;
 
-namespace WriteEverywhere.Xml
+namespace WriteEverywhere.Layout
 {
     public class TextParameterSequence : IEnumerable<TextParameterSequenceItem>
     {

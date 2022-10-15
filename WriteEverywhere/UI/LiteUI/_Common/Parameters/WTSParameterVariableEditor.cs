@@ -83,7 +83,7 @@ namespace WriteEverywhere.UI
                 if (cl.defaultValue is null || hoverIdx == selectOpt)
                 {
                     var value = tab.m_searchResult.Value[selectOpt];
-                    var paramPath = CommandLevelSingleton.GetParameterPath(tab.SelectedValue ?? "", out _);
+                    var paramPath = CommandLevelSingleton.GetParameterPath(tab.SelectedValue ?? "");
                     tab.SetSelectedValue(CommandLevel.FromParameterPath(paramPath.Take(cl.level).Concat(new[] { value == GUIKwyttoCommons.v_empty ? "" : value })));
                     tab.m_searchResult.Value = new string[0];
                     tab.SearchText = "";
@@ -97,28 +97,28 @@ namespace WriteEverywhere.UI
             }
             else if (selectOpt == 0 && cl.level > 0)
             {
-                var paramPath = CommandLevelSingleton.GetParameterPath(tab.SelectedValue ?? "", out _);
+                var paramPath = CommandLevelSingleton.GetParameterPath(tab.SelectedValue ?? "").ToArray();
                 tab.SetSelectedValue(CommandLevel.FromParameterPath(paramPath.Take(cl.level - 1)));
                 tab.m_searchResult.Value = new string[0];
                 hoverIdx = -1;
                 if (CommandLevelSingleton.Instance.OnFilterParamByText(tab.GetCurrentParamString(), out _).defaultValue is null)
                 {
-                    tab.SearchText = paramPath[cl.level - 1];
+                    tab.SearchText = paramPath[cl.level];
                     tab.RestartFilterCoroutine(paramEditor);
                 }
                 else
                 {
                     tab.SearchText = "";
-                    tab.RestartFilterCoroutine(paramEditor, paramPath[cl.level - 1]);
+                    tab.RestartFilterCoroutine(paramEditor, paramPath[cl.level]);
                 }
             }
         }
 
-        public static void VariableOnHoverVar(WTSBaseParamsTab<T> tab, int selectOpt, CommandLevel cl, ref int hoverIdx)
+        public static void VariableOnHoverVar(WTSBaseParamsTab<T> tab, int selectOpt, BaseCommandLevel cl, ref int hoverIdx)
         {
             hoverIdx = selectOpt;
             var str = tab.m_searchResult.Value[selectOpt];
-            var key = cl.nextLevelOptions.Where(z => z.Key.ToString() == str).FirstOrDefault().Key;
+            var key = cl.NextLevelsKeys.Where(z => CommandLevelSingleton.GetEnumKeyValue(z, cl.level) == str).FirstOrDefault();
             tab.SetVariableDescription(key is null ? "" : $"<color=#00FF00>{key}</color>\n\n" + key.ValueToI18n());
         }
 
@@ -136,7 +136,7 @@ namespace WriteEverywhere.UI
                     + currentDescription);
                 return cmdResult.regexValidValues != null
                     ? Regex.IsMatch(tab.SearchText, cmdResult.regexValidValues) ? (new[] { Regex.Replace(tab.SearchText, @"([^\\])/|^/", "$1\\/") }) : (new string[0])
-                    : cmdResult.nextLevelOptions?.Select(x => x.Key.ToString()).Where(x => x.ToLower().Contains(tab.SearchText)).OrderBy(x => x).ToArray();
+                    : cmdResult.NextLevelsKeys?.Select(x => CommandLevelSingleton.GetEnumKeyValue(x, cmdResult.level)).Where(x => x.ToLower().Contains(tab.SearchText)).OrderBy(x => x).ToArray();
             }
         }
 
@@ -144,6 +144,6 @@ namespace WriteEverywhere.UI
         public void DrawRightPanel(WTSBaseParamsTab<T> tab, Vector2 areaRect) => VariableDrawRightPanel(tab, areaRect);
         public string[] OnFilterParam(WTSBaseParamsTab<T> tab) => VariableOnFilterParam(tab);
         public void OnSelectItem(WTSBaseParamsTab<T> tab, int selectLayout) => VariableOnSelectItem(tab, selectLayout, ref m_hoverIdx, this);
-        public void OnHoverVar(WTSBaseParamsTab<T> tab, int autoSelectVal, CommandLevel commandLevel) => VariableOnHoverVar(tab, autoSelectVal, commandLevel, ref m_hoverIdx);
+        public void OnHoverVar(WTSBaseParamsTab<T> tab, int autoSelectVal, BaseCommandLevel commandLevel) => VariableOnHoverVar(tab, autoSelectVal, commandLevel, ref m_hoverIdx);
     }
 }

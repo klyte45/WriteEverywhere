@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using UnityEngine;
 using WriteEverywhere.Data;
+using WriteEverywhere.Layout;
 using WriteEverywhere.Libraries;
 using WriteEverywhere.Localization;
 using WriteEverywhere.Tools;

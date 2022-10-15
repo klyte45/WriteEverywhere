@@ -2,6 +2,7 @@
 using Kwytto.Data;
 using Kwytto.Utils;
 using System.Xml.Serialization;
+using WriteEverywhere.Layout;
 using WriteEverywhere.Xml;
 
 namespace WriteEverywhere.Data

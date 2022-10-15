@@ -4,6 +4,7 @@ using Kwytto.Interfaces;
 using System.Xml;
 using System.Xml.Serialization;
 using UnityEngine;
+using WriteEverywhere.Layout;
 
 namespace WriteEverywhere.Xml
 {

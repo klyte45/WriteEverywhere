@@ -1,19 +1,74 @@
 ﻿extern alias TLM;
 
 using Kwytto.Utils;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using TLM::Bridge_WE2TLM;
 using WriteEverywhere.Data;
+using WriteEverywhere.Font.Utility;
+using WriteEverywhere.Layout;
 using WriteEverywhere.Plugins;
+using WriteEverywhere.Plugins.Ext;
 using WriteEverywhere.Singleton;
 using WriteEverywhere.Utils;
+using WriteEverywhere.Xml;
 
-namespace WriteEverywhere.Xml
+namespace WriteEverywhere.Variables
 {
 
-    internal static class VariableVehicleSubTypeExtensions
+    public sealed class CurrentVehicleVariable : WEVariableExtensionEnum
     {
+        public override Enum RootMenuEnumValueWithPrefix { get; } = VariableType.CurrentVehicle;
 
-        public static string GetFormattedString(this VariableVehicleSubType var, ushort vehicleId, TextParameterVariableWrapper varWrapper)
+        public override string RootMenuDescription => VariableType.CurrentVehicle.ValueToI18n();
+
+        public override Enum DefaultValue { get; } = VariableVehicleSubType.None;
+
+        public override Enum[] AccessibleSubmenusEnum { get; } = Enum.GetValues(typeof(VariableVehicleSubType)).Cast<Enum>().Where(x => (VariableVehicleSubType)x != VariableVehicleSubType.None).ToArray();
+        public override Dictionary<Enum, CommandLevel> CommandTree => ReadCommandTree();
+        private static Dictionary<Enum, CommandLevel> ReadCommandTree()
+        {
+            Dictionary<Enum, CommandLevel> result = new Dictionary<Enum, CommandLevel>();
+            foreach (var value in Enum.GetValues(typeof(VariableVehicleSubType)).Cast<VariableVehicleSubType>())
+            {
+                if (value == 0)
+                {
+                    continue;
+                }
+
+                result[value] = value.GetCommandLevel();
+            }
+            return result;
+        }
+
+        public override string GetTargetTextForVehicle(TextParameterVariableWrapper wrapper, ushort vehicleId, TextToWriteOnXml textDescriptor, out IEnumerable<BasicRenderInformation> multipleOutput)
+        {
+            multipleOutput = null;
+            var subtype = wrapper.subtype;
+            var originalCommand = wrapper.m_originalCommand;
+            return vehicleId == 0 || !(subtype is VariableVehicleSubType targetSubtype) || targetSubtype == VariableVehicleSubType.None
+                ? $"{subtype}@currVehicle"
+                : $"{GetFormattedString(targetSubtype, vehicleId, wrapper) ?? originalCommand}";
+        }
+        public override bool Supports(TextRenderingClass renderingClass) => renderingClass == TextRenderingClass.Any || renderingClass == TextRenderingClass.Vehicle;
+        protected override void Validate_Internal(string[] parameterPath, ref Enum type, ref Enum subtype, ref byte index, ref VariableExtraParameterContainer paramContainer)
+        {
+            if (parameterPath.Length >= 2)
+            {
+                try
+                {
+                    if (Enum.Parse(typeof(VariableVehicleSubType), parameterPath[1]) is VariableVehicleSubType tt
+                        && tt.ReadData(parameterPath.Skip(2).ToArray(), ref subtype, out paramContainer))
+                    {
+                        type = VariableType.CurrentVehicle;
+                        paramContainer.contentType = TextContent.ParameterizedText;
+                    }
+                }
+                catch { }
+            }
+        }
+        private static string GetFormattedString(VariableVehicleSubType var, ushort vehicleId, TextParameterVariableWrapper varWrapper)
         {
             if (vehicleId == 0)
             {
@@ -78,6 +133,5 @@ namespace WriteEverywhere.Xml
                     return null;
             }
         }
-
     }
 }

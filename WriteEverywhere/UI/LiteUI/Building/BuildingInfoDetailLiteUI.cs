@@ -22,6 +22,7 @@ using WriteEverywhere.Localization;
 using WriteEverywhere.Singleton;
 using WriteEverywhere.Utils;
 using WriteEverywhere.Xml;
+using WriteEverywhere.Layout;
 
 namespace WriteEverywhere.UI
 {

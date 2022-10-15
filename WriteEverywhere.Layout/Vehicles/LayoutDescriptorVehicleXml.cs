@@ -5,8 +5,9 @@ using Kwytto.Utils;
 using System.Linq;
 using System.Xml;
 using System.Xml.Serialization;
+using WriteEverywhere.Xml;
 
-namespace WriteEverywhere.Xml
+namespace WriteEverywhere.Layout
 {
     [XmlRoot("vehicleDescriptor")]
     public class LayoutDescriptorVehicleXml : BaseWriteOnXml, ILibable, ILayoutDescriptorVehicleXml

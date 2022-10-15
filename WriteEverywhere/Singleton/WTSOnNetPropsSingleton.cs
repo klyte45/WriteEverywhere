@@ -4,6 +4,7 @@ using Kwytto.Utils;
 using System.Collections.Generic;
 using UnityEngine;
 using WriteEverywhere.Data;
+using WriteEverywhere.Layout;
 using WriteEverywhere.Rendering;
 using WriteEverywhere.UI;
 using WriteEverywhere.Xml;

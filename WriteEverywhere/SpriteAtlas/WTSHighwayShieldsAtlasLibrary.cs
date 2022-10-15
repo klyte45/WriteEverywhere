@@ -1,12 +1,13 @@
 ﻿extern alias ADR;
 using Kwytto.Utils;
-using WriteEverywhere.Font;
-using WriteEverywhere.Font.Utility;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using WriteEverywhere.Data;
+using WriteEverywhere.Font;
+using WriteEverywhere.Font.Utility;
+using WriteEverywhere.Layout;
 using WriteEverywhere.Singleton;
 using WriteEverywhere.Utils;
 using WriteEverywhere.Xml;

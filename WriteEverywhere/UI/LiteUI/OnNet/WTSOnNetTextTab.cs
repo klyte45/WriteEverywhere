@@ -3,6 +3,7 @@ using Kwytto.UI;
 using Kwytto.Utils;
 using System;
 using UnityEngine;
+using WriteEverywhere.Layout;
 using WriteEverywhere.Xml;
 
 namespace WriteEverywhere.UI

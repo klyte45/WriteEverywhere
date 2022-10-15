@@ -1,7 +1,7 @@
 ﻿using System.Xml.Serialization;
 using UnityEngine;
 
-namespace WriteEverywhere.Xml
+namespace WriteEverywhere.Layout
 {
     [XmlRoot("ImageInformation")]
     public class WEImageInfoXml

@@ -1,4 +1,6 @@
-﻿namespace WriteEverywhere.Xml
+﻿using WriteEverywhere.Xml;
+
+namespace WriteEverywhere.Layout
 {
     public class TextParameterSequenceItem : IParameterizableVariable
     {
