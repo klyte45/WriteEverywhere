@@ -17,16 +17,14 @@ namespace WriteEverywhere.Plugins
         public Func<string> descriptionKey;
 
         public int level;
-        public abstract IEnumerable<Enum> NextLevelsKeys { get; }
+        public abstract IEnumerable<Enum> GetNextLevelsKeys(TextRenderingClass renderingClass);
+        public virtual bool Supports(TextRenderingClass clazz) => true;
     }
 
     public class BaseCommandLevel<C> : BaseCommandLevel where C : BaseCommandLevel
     {
         public Dictionary<Enum, C> nextLevelOptions;
-
-
-        public override IEnumerable<Enum> NextLevelsKeys => nextLevelOptions.Keys;
-
+        public override IEnumerable<Enum> GetNextLevelsKeys(TextRenderingClass renderingClass) => nextLevelOptions.Where(x => x.Value.Supports(renderingClass)).Select(x => x.Key);
     }
 
     public class CommandLevel : BaseCommandLevel<CommandLevel>

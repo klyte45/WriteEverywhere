@@ -157,12 +157,12 @@ namespace WriteEverywhere.UI
             return null;
         }
 
-        public void DrawLeftPanel(WTSBaseParamsTab<T> tab, Vector2 areaRect) => ImageDrawLeftPanel(tab, areaRect, this);
+        public void DrawLeftPanel(TextRenderingClass renderingClass, WTSBaseParamsTab<T> tab, Vector2 areaRect) => ImageDrawLeftPanel(tab, areaRect, this);
         public void DrawRightPanel(WTSBaseParamsTab<T> tab, Vector2 areaRect) => ImageDrawRightPanel(tab, areaRect);
-        public string[] OnFilterParam(WTSBaseParamsTab<T> tab) => ImageOnFilterParam(tab);
-        public void OnSelectItem(WTSBaseParamsTab<T> tab, int selectLayout) => ImageOnSelectItem(tab, selectLayout, this);
+        public string[] OnFilterParam(TextRenderingClass renderingClass, WTSBaseParamsTab<T> tab) => ImageOnFilterParam(tab);
+        public void OnSelectItem(TextRenderingClass renderingClass, WTSBaseParamsTab<T> tab, int selectLayout) => ImageOnSelectItem(tab, selectLayout, this);
 
-        public void OnHoverVar(WTSBaseParamsTab<T> wTSBaseParamsTab, int autoSelectVal, BaseCommandLevel commandLevel)
+        public void OnHoverVar(TextRenderingClass renderingClass, WTSBaseParamsTab<T> wTSBaseParamsTab, int autoSelectVal, BaseCommandLevel commandLevel)
         {
         }
     }

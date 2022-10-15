@@ -32,6 +32,7 @@ namespace WriteEverywhere.UI
         private Vector2 m_leftPanelScroll;
         private Vector2 m_rightPanelScroll;
         private int m_currentEditingParam = 0;
+        protected abstract TextRenderingClass RenderingClass { get; }
 
         internal readonly string Text = Color.green.ToRGB();
         internal readonly string Image = Color.cyan.ToRGB();
@@ -114,7 +115,7 @@ namespace WriteEverywhere.UI
             {
                 using (var scroll = new GUILayout.ScrollViewScope(m_leftPanelScroll, false, true, GUILayout.Width(areaRect.x / 2), GUILayout.Height(areaRect.y - topHeight - 30 * GUIWindow.ResolutionMultiplier)))
                 {
-                    paramEditor.DrawLeftPanel(this, areaRect);
+                    paramEditor.DrawLeftPanel(RenderingClass, this, areaRect);
                     m_leftPanelScroll = scroll.scrollPosition;
                 };
                 using (new GUILayout.VerticalScope(GUILayout.Width(areaRect.x / 2 - 20 * GUIWindow.ResolutionMultiplier), GUILayout.Height(areaRect.y - topHeight - 30 * GUIWindow.ResolutionMultiplier)))
@@ -271,13 +272,13 @@ namespace WriteEverywhere.UI
         {
             yield return 0;
             var baseArr = GetCurrentParamString().Count(x => x == '/') >= 3 ? new[] { "<color=#FFFF00><<</color>" } : new string[0];
-            yield return m_searchResult.Value = baseArr.AddRangeToArray(paramEditor.OnFilterParam(this)?.Select(x => x.IsNullOrWhiteSpace() ? GUIKwyttoCommons.v_empty : x).ToArray() ?? new string[0]);
+            yield return m_searchResult.Value = baseArr.AddRangeToArray(paramEditor.OnFilterParam(RenderingClass, this)?.Select(x => x.IsNullOrWhiteSpace() ? GUIKwyttoCommons.v_empty : x).ToArray() ?? new string[0]);
             if (autoselect != null)
             {
                 var autoSelectVal = Array.IndexOf(m_searchResult.Value, autoselect);
                 if (autoSelectVal > 0)
                 {
-                    paramEditor.OnHoverVar(this, autoSelectVal, CommandLevelSingleton.Instance.OnFilterParamByText(GetCurrentParamString(), out _));
+                    paramEditor.OnHoverVar(RenderingClass, this, autoSelectVal, CommandLevelSingleton.Instance.OnFilterParamByText(GetCurrentParamString(), out _));
                 }
             }
         }

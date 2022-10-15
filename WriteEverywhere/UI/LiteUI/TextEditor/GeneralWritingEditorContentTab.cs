@@ -12,6 +12,7 @@ namespace WriteEverywhere.UI
 {
     internal class GeneralWritingEditorContentTab : WTSBaseParamsTab<TextToWriteOnXml>
     {
+        protected override TextRenderingClass RenderingClass => m_targetRenderingClass;
         public override Texture TabIcon { get; } = KResourceLoader.LoadTextureKwytto(CommonsSpriteNames.K45_DiskDrive);
 
         private static readonly TextContent[] m_contents = new[] { TextContent.ParameterizedText, TextContent.ParameterizedSpriteSingle, TextContent.ParameterizedSpriteFolder, TextContent.TextParameterSequence };

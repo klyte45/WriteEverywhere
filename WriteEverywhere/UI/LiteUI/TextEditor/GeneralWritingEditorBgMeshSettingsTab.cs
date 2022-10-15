@@ -11,6 +11,7 @@ namespace WriteEverywhere.UI
     internal class GeneralWritingEditorBgMeshSettingsTab : WTSBaseParamsTab<TextToWriteOnXml>
     {
 
+        protected override TextRenderingClass RenderingClass => TextRenderingClass.BgMesh;
         private readonly GUIColorPicker m_picker;
         private readonly GUIRootWindowBase m_root;
         private Vector2 m_scrollPos;

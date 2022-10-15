@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using WriteEverywhere.Localization;
 using WriteEverywhere.Plugins;
+using WriteEverywhere.Xml;
 
 namespace WriteEverywhere.UI
 {
@@ -45,9 +46,9 @@ namespace WriteEverywhere.UI
             return 80;
         }
         private int m_hoverIdx;
-        public void DrawLeftPanel(WTSBaseParamsTab<T> tab, Vector2 areaRect)
+        public void DrawLeftPanel(TextRenderingClass renderingClass, WTSBaseParamsTab<T> tab, Vector2 areaRect)
         {
-            if (tab.IsTextVariable) WTSParameterVariableEditor<T>.VariableDrawLeftPanel(tab, areaRect, ref m_hoverIdx, this);
+            if (tab.IsTextVariable) WTSParameterVariableEditor<T>.VariableDrawLeftPanel(renderingClass, tab, areaRect, ref m_hoverIdx, this);
             else WTSParameterImageEditor<T>.ImageDrawLeftPanel(tab, areaRect, this);
         }
 
@@ -57,16 +58,16 @@ namespace WriteEverywhere.UI
             else WTSParameterImageEditor<T>.ImageDrawRightPanel(tab, areaRect);
         }
 
-        public string[] OnFilterParam(WTSBaseParamsTab<T> tab) => (tab.IsTextVariable) ? WTSParameterVariableEditor<T>.VariableOnFilterParam(tab) : WTSParameterImageEditor<T>.ImageOnFilterParam(tab);
-        public void OnSelectItem(WTSBaseParamsTab<T> tab, int selectLayout)
+        public string[] OnFilterParam(TextRenderingClass renderingClass, WTSBaseParamsTab<T> tab) => (tab.IsTextVariable) ? WTSParameterVariableEditor<T>.VariableOnFilterParam(renderingClass, tab) : WTSParameterImageEditor<T>.ImageOnFilterParam(tab);
+        public void OnSelectItem(TextRenderingClass renderingClass, WTSBaseParamsTab<T> tab, int selectLayout)
         {
-            if (tab.IsTextVariable) WTSParameterVariableEditor<T>.VariableOnSelectItem(tab, selectLayout, ref m_hoverIdx, this);
+            if (tab.IsTextVariable) WTSParameterVariableEditor<T>.VariableOnSelectItem(renderingClass, tab, selectLayout, ref m_hoverIdx, this);
             else WTSParameterImageEditor<T>.ImageOnSelectItem(tab, selectLayout, this);
         }
 
-        public void OnHoverVar(WTSBaseParamsTab<T> tab, int autoSelectVal, BaseCommandLevel commandLevel)
+        public void OnHoverVar(TextRenderingClass renderingClass, WTSBaseParamsTab<T> tab, int autoSelectVal, BaseCommandLevel commandLevel)
         {
-            if (tab.IsTextVariable) WTSParameterVariableEditor<T>.VariableOnHoverVar(tab, autoSelectVal, commandLevel, ref m_hoverIdx);
+            if (tab.IsTextVariable) WTSParameterVariableEditor<T>.VariableOnHoverVar(renderingClass, tab, autoSelectVal, commandLevel, ref m_hoverIdx);
         }
     }
 }

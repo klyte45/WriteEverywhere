@@ -110,6 +110,9 @@ namespace WriteEverywhere.UI
         }
 
         public override Texture TabIcon { get; } = KResourceLoader.LoadTextureKwytto(CommonsSpriteNames.K45_AbsoluteMode);
+
+        protected override TextRenderingClass RenderingClass => TextRenderingClass.Buildings;
+
         protected override string GetAssetName(BuildingParametersData item) => item.assetName;
         protected override void SetTextParameter(BuildingParametersData item, int currentEditingParam, string paramValue) => item.SetTextParameter(currentEditingParam, paramValue);
         protected override void DrawListing(Vector2 size, BuildingParametersData item, bool isEditable)

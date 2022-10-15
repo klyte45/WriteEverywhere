@@ -3,6 +3,7 @@ using System;
 using UnityEngine;
 using WriteEverywhere.Layout;
 using WriteEverywhere.Localization;
+using WriteEverywhere.Xml;
 
 namespace WriteEverywhere.UI
 {
@@ -13,10 +14,12 @@ namespace WriteEverywhere.UI
         private Vector2 m_scrollPos;
         private readonly Func<PrefabInfo> m_infoGetter;
 
-        public GeneralWritingEditorFrameSettingsTab(GUIColorPicker picker, Func<PrefabInfo> infoGetter)
+        protected override TextRenderingClass RenderingClass { get; }
+        public GeneralWritingEditorFrameSettingsTab(GUIColorPicker picker, Func<PrefabInfo> infoGetter, TextRenderingClass renderingClass)
         {
             m_picker = picker;
             m_infoGetter = infoGetter;
+            RenderingClass = renderingClass;
         }
 
         public override Texture TabIcon { get; } = GUIKwyttoCommons.GetByNameFromDefaultAtlas("ToolbarIconProps");

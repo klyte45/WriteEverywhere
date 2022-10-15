@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using WriteEverywhere.Localization;
 using WriteEverywhere.Plugins;
+using WriteEverywhere.Xml;
 
 namespace WriteEverywhere.UI
 {
@@ -55,7 +56,7 @@ namespace WriteEverywhere.UI
             return 50;
         }
 
-        public void DrawLeftPanel(WTSBaseParamsTab<T> tab, Vector2 areaRect)
+        public void DrawLeftPanel(TextRenderingClass renderingClass, WTSBaseParamsTab<T> tab, Vector2 areaRect)
         {
             var selectLayout = GUILayout.SelectionGrid(Array.IndexOf(tab.m_searchResult.Value, tab.SelectedValue), tab.m_searchResult.Value, 1, new GUIStyle(GUI.skin.button)
             {
@@ -63,7 +64,7 @@ namespace WriteEverywhere.UI
             }, GUILayout.Width((areaRect.x / 2) - 25 * GUIWindow.ResolutionMultiplier));
             if (selectLayout >= 0)
             {
-                OnSelectItem(tab, selectLayout);
+                OnSelectItem(renderingClass, tab, selectLayout);
             }
 
         }
@@ -78,7 +79,7 @@ namespace WriteEverywhere.UI
             }
         }
 
-        public void OnSelectItem(WTSBaseParamsTab<T> tab, int selectLayout)
+        public void OnSelectItem(TextRenderingClass renderingClass, WTSBaseParamsTab<T> tab, int selectLayout)
         {
             tab.SetSelectedFolder(tab.m_searchResult.Value[selectLayout] == "<ROOT>" ? "" : tab.m_searchResult.Value[selectLayout]);
             if (tab.IsLocal)
@@ -92,7 +93,7 @@ namespace WriteEverywhere.UI
             }
         }
 
-        public string[] OnFilterParam(WTSBaseParamsTab<T> tab)
+        public string[] OnFilterParam(TextRenderingClass renderingClass, WTSBaseParamsTab<T> tab)
         {
             switch (tab.CurrentState)
             {
@@ -112,7 +113,7 @@ namespace WriteEverywhere.UI
             return null;
         }
 
-        public void OnHoverVar(WTSBaseParamsTab<T> wTSBaseParamsTab, int autoSelectVal, BaseCommandLevel commandLevel)
+        public void OnHoverVar(TextRenderingClass renderingClass, WTSBaseParamsTab<T> wTSBaseParamsTab, int autoSelectVal, BaseCommandLevel commandLevel)
         {
         }
     }
