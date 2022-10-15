@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using WriteEverywhere.Plugins;
-using WriteEverywhere.Utils;
+using WriteEverywhere.Singleton;
 using WriteEverywhere.Xml;
 
 namespace WriteEverywhere.UI
@@ -239,14 +239,14 @@ namespace WriteEverywhere.UI
         {
             if ((CurrentState == State.GettingText || (CurrentState == State.GettingAny && IsTextVariable)) && IsVariable)
             {
-                var cl = CommandLevel.OnFilterParamByText(GetCurrentParamString(), out _);
+                var cl = CommandLevelSingleton.Instance.OnFilterParamByText(GetCurrentParamString(), out _);
                 if (m_searchResult.Value.Contains(SearchText))
                 {
-                    SelectedValue = CommandLevel.FromParameterPath(CommandLevel.GetParameterPath(SelectedValue ?? "", out _).Take(cl.level).Concat(new[] { SearchText }));
+                    SelectedValue = CommandLevel.FromParameterPath(CommandLevelSingleton.GetParameterPath(SelectedValue ?? "", out _).Take(cl.level).Concat(new[] { SearchText }));
                 }
                 if (parameterEditor.HoverIdx > 0 && parameterEditor.HoverIdx < m_searchResult.Value.Length)
                 {
-                    SelectedValue = CommandLevel.FromParameterPath(CommandLevel.GetParameterPath(SelectedValue ?? "", out _).Take(cl.level).Concat(new[] { m_searchResult.Value[parameterEditor.HoverIdx] }));
+                    SelectedValue = CommandLevel.FromParameterPath(CommandLevelSingleton.GetParameterPath(SelectedValue ?? "", out _).Take(cl.level).Concat(new[] { m_searchResult.Value[parameterEditor.HoverIdx] }));
                 }
                 SetTextParameter(item, m_currentEditingParam, GetCurrentParamString());
             }
@@ -276,7 +276,7 @@ namespace WriteEverywhere.UI
                 var autoSelectVal = Array.IndexOf(m_searchResult.Value, autoselect);
                 if (autoSelectVal > 0)
                 {
-                    paramEditor.OnHoverVar(this, autoSelectVal, CommandLevel.OnFilterParamByText(GetCurrentParamString(), out _));
+                    paramEditor.OnHoverVar(this, autoSelectVal, CommandLevelSingleton.Instance.OnFilterParamByText(GetCurrentParamString(), out _));
                 }
             }
         }

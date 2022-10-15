@@ -115,6 +115,8 @@ namespace WriteEverywhere
         internal WTSBuildingPropsSingleton BuildingPropsSingleton { get; private set; }
         #endregion
 
+        public CommandLevelSingleton CommandLevelSingleton { get; private set; }
+
         public void Awake()
         {
             ToolsModifierControl.toolController.AddExtraToolToController<SegmentEditorPickerTool>();
@@ -137,6 +139,7 @@ namespace WriteEverywhere
             BuildingPropsSingleton = gameObject.AddComponent<WTSBuildingPropsSingleton>();
             HighwayShieldsSingleton = gameObject.AddComponent<WTSHighwayShieldsSingleton>();
             HighwayShieldsAtlasLibrary = gameObject.AddComponent<WTSHighwayShieldsAtlasLibrary>();
+            CommandLevelSingleton = gameObject.AddComponent<CommandLevelSingleton>();
         }
 
         protected override void StartActions()

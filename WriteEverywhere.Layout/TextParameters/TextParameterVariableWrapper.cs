@@ -1,6 +1,7 @@
 ﻿
 using System;
 using WriteEverywhere.Plugins;
+using WriteEverywhere.Singleton;
 
 namespace WriteEverywhere.Xml
 {
@@ -12,7 +13,7 @@ namespace WriteEverywhere.Xml
         public TextParameterVariableWrapper(string input, TextRenderingClass renderingClass = TextRenderingClass.Any)
         {
             m_originalCommand = input;
-            var parameterPath = CommandLevel.GetParameterPath(input, out m_varType);
+            var parameterPath = CommandLevelSingletonBase.GetParameterPath(input, out m_varType);
             if (parameterPath.Length > 0)
             {
                 if (m_varType is VariableType varTypeParsed)

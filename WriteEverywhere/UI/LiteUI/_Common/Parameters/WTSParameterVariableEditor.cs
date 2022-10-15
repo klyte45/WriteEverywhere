@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using UnityEngine;
 using WriteEverywhere.Localization;
 using WriteEverywhere.Plugins;
+using WriteEverywhere.Singleton;
 
 namespace WriteEverywhere.UI
 {
@@ -76,13 +77,13 @@ namespace WriteEverywhere.UI
 
         public static void VariableOnSelectItem(WTSBaseParamsTab<T> tab, int selectOpt, ref int hoverIdx, IWTSParameterEditor<T> paramEditor)
         {
-            var cl = CommandLevel.OnFilterParamByText(tab.GetCurrentParamString(), out _);
+            var cl = CommandLevelSingleton.Instance.OnFilterParamByText(tab.GetCurrentParamString(), out _);
             if (selectOpt > 0 || (cl.level == 0 && selectOpt == 0))
             {
                 if (cl.defaultValue is null || hoverIdx == selectOpt)
                 {
                     var value = tab.m_searchResult.Value[selectOpt];
-                    var paramPath = CommandLevel.GetParameterPath(tab.SelectedValue ?? "", out _);
+                    var paramPath = CommandLevelSingleton.GetParameterPath(tab.SelectedValue ?? "", out _);
                     tab.SetSelectedValue(CommandLevel.FromParameterPath(paramPath.Take(cl.level).Concat(new[] { value == GUIKwyttoCommons.v_empty ? "" : value })));
                     tab.m_searchResult.Value = new string[0];
                     tab.SearchText = "";
@@ -96,11 +97,11 @@ namespace WriteEverywhere.UI
             }
             else if (selectOpt == 0 && cl.level > 0)
             {
-                var paramPath = CommandLevel.GetParameterPath(tab.SelectedValue ?? "", out _);
+                var paramPath = CommandLevelSingleton.GetParameterPath(tab.SelectedValue ?? "", out _);
                 tab.SetSelectedValue(CommandLevel.FromParameterPath(paramPath.Take(cl.level - 1)));
                 tab.m_searchResult.Value = new string[0];
                 hoverIdx = -1;
-                if (CommandLevel.OnFilterParamByText(tab.GetCurrentParamString(), out _).defaultValue is null)
+                if (CommandLevelSingleton.Instance.OnFilterParamByText(tab.GetCurrentParamString(), out _).defaultValue is null)
                 {
                     tab.SearchText = paramPath[cl.level - 1];
                     tab.RestartFilterCoroutine(paramEditor);
@@ -123,7 +124,7 @@ namespace WriteEverywhere.UI
 
         public static string[] VariableOnFilterParam(WTSBaseParamsTab<T> tab)
         {
-            var cmdResult = CommandLevel.OnFilterParamByText(tab.GetCurrentParamString(), out string currentDescription);
+            var cmdResult = CommandLevelSingleton.Instance.OnFilterParamByText(tab.GetCurrentParamString(), out string currentDescription);
             if (cmdResult is null)
             {
                 return null;
