@@ -13,10 +13,10 @@ namespace Bridge_WE2ADR
 
         public abstract Color GetDistrictColor(ushort districtId);
         public abstract Vector2 GetStartPoint();
-        public virtual string GetStreetFullName(ushort idx) => NetManager.instance.GetSegmentName(idx);
-        public abstract string GetStreetSuffix(ushort idx);
-        public abstract string GetStreetQualifier(ushort idx);
-        public abstract string GetStreetPostalCode(Vector3 position, ushort idx);
+        public virtual string GetStreetFullName(ushort segmentId) => NetManager.instance.GetSegmentName(segmentId);
+        public abstract string GetStreetSuffix(ushort segmentId);
+        public abstract string GetStreetQualifier(ushort segmentId);
+        public abstract string GetStreetPostalCode(Vector3 position, ushort segmentId);
         public abstract bool GetAddressStreetAndNumber(Vector3 sidewalk, Vector3 midPosBuilding, out int number, out string streetName);
         public virtual string GetStreetSuffixCustom(ushort idx)
         {

@@ -67,10 +67,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BridgeVS.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Bridge_WE2VS\Bridge_WE2VS.csproj">
       <Project>{a48b01d6-0b04-40aa-a5df-c76a73ffcbb5}</Project>
       <Name>Bridge_WE2VS</Name>
@@ -89,6 +85,9 @@
       <Project>{291D9EA9-6945-4EA3-8756-37464D40F450}</Project>
       <Name>WriteEverywhere</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="**/*.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
