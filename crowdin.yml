@@ -1,3 +1,3 @@
 files:
-  - source: /WriteEverywhere/Localization/Str.resx
-    translation: /WriteEverywhere/Localization/Str.%two_letters_code%.resx
+  - source: /WriteEverywhere.Localization/Str.resx
+    translation: /WriteEverywhere.Localization/Str.%two_letters_code%.resx

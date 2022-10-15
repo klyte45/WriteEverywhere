@@ -67,27 +67,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Localization\Str.*.resx" />
-    <EmbeddedResource Include="Localization\Str.resx">
-      <LastGenOutput>Str.Designer.cs</LastGenOutput>
-      <Generator>ResXFileCodeGenerator</Generator>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Localization\Str.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Str.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Shader\**\*.unity3d" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="UI\VersionNotes.txt" />
-    <Compile Include="**\*.cs" Exclude="Localization\Str.Designer.cs" />
+    <Compile Include="**\*.cs" />
   </ItemGroup>
   <!-- <ItemGroup> -->
   <!-- <Reference Include="TransportLinesManager">  -->
@@ -132,6 +117,18 @@
     <ProjectReference Include="..\KwyttoUtilityWE\KwyttoUtilityWE.csproj">
       <Project>{27c920f8-f40f-4d56-bcb6-9c9025ed0aac}</Project>
       <Name>KwyttoUtilityWE</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WriteEverywhere.Font\WriteEverywhere.Font.csproj">
+      <Project>{560c395e-18d9-44f3-9b3c-d6e5ed455720}</Project>
+      <Name>WriteEverywhere.Font</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WriteEverywhere.Localization\WriteEverywhere.Localization.csproj">
+      <Project>{92746969-350C-453C-8439-4D573C1B98A1}</Project>
+      <Name>WriteEverywhere.Localization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WriteEverywhere.Plugins\WriteEverywhere.Plugins.csproj">
+      <Project>{0c80a069-4d04-45c6-867a-ad3bff5b372b}</Project>
+      <Name>WriteEverywhere.Plugins</Name>
     </ProjectReference>
     <ProjectReference Include="..\WriteEverywhere.Xml\WriteEverywhere.Xml.csproj">
       <Project>{eeb0f9cd-62f2-4e4e-9ac7-21d66e0b7696}</Project>

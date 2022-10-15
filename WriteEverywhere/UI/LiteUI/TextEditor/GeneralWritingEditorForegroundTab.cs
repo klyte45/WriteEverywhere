@@ -4,7 +4,7 @@ using ColossalFramework.Globalization;
 using Kwytto.LiteUI;
 using Kwytto.UI;
 using Kwytto.Utils;
-using SpriteFontPlus;
+using WriteEverywhere.Font;
 using System;
 using System.Collections;
 using System.Globalization;
@@ -12,6 +12,7 @@ using System.Linq;
 using UnityEngine;
 using WriteEverywhere.Localization;
 using WriteEverywhere.Xml;
+using WriteEverywhere.Singleton;
 
 namespace WriteEverywhere.UI
 {

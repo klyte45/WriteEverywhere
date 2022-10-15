@@ -1,9 +1,9 @@
 using ColossalFramework.UI;
 using Kwytto.LiteUI;
-using SpriteFontPlus;
 using System.Linq;
 using UnityEngine;
 using WriteEverywhere.Localization;
+using WriteEverywhere.Singleton;
 
 namespace WriteEverywhere.Utils
 {

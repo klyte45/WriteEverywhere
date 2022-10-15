@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using WriteEverywhere.Xml;
+using WriteEverywhere.Plugins;
 
 namespace WriteEverywhere.UI
 {

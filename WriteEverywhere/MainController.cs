@@ -5,7 +5,6 @@ extern alias VS;
 using ColossalFramework.UI;
 using Kwytto.Interfaces;
 using Kwytto.Utils;
-using SpriteFontPlus;
 using System;
 using System.Collections;
 using System.Collections.Generic;

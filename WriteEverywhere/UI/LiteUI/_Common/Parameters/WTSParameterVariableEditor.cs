@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using WriteEverywhere.Localization;
-using WriteEverywhere.Xml;
+using WriteEverywhere.Plugins;
 
 namespace WriteEverywhere.UI
 {
@@ -82,7 +82,7 @@ namespace WriteEverywhere.UI
                 if (cl.defaultValue is null || hoverIdx == selectOpt)
                 {
                     var value = tab.m_searchResult.Value[selectOpt];
-                    var paramPath = CommandLevel.GetParameterPath(tab.SelectedValue ?? "");
+                    var paramPath = CommandLevel.GetParameterPath(tab.SelectedValue ?? "", out _);
                     tab.SetSelectedValue(CommandLevel.FromParameterPath(paramPath.Take(cl.level).Concat(new[] { value == GUIKwyttoCommons.v_empty ? "" : value })));
                     tab.m_searchResult.Value = new string[0];
                     tab.SearchText = "";
@@ -96,7 +96,7 @@ namespace WriteEverywhere.UI
             }
             else if (selectOpt == 0 && cl.level > 0)
             {
-                var paramPath = CommandLevel.GetParameterPath(tab.SelectedValue ?? "");
+                var paramPath = CommandLevel.GetParameterPath(tab.SelectedValue ?? "", out _);
                 tab.SetSelectedValue(CommandLevel.FromParameterPath(paramPath.Take(cl.level - 1)));
                 tab.m_searchResult.Value = new string[0];
                 hoverIdx = -1;

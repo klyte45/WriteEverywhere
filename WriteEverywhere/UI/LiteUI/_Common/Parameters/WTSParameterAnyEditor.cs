@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using WriteEverywhere.Localization;
-using WriteEverywhere.Xml;
+using WriteEverywhere.Plugins;
 
 namespace WriteEverywhere.UI
 {

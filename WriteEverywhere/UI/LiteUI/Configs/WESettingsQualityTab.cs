@@ -1,10 +1,10 @@
-﻿using FontStashSharp;
-using Kwytto.LiteUI;
+﻿using Kwytto.LiteUI;
 using Kwytto.UI;
-using SpriteFontPlus;
 using System;
 using UnityEngine;
+using WriteEverywhere.Font;
 using WriteEverywhere.Localization;
+using WriteEverywhere.Singleton;
 
 namespace WriteEverywhere.UI
 {

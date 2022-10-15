@@ -1,7 +1,7 @@
 ﻿extern alias ADR;
 using Kwytto.Utils;
-using SpriteFontPlus;
-using SpriteFontPlus.Utility;
+using WriteEverywhere.Font;
+using WriteEverywhere.Font.Utility;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;

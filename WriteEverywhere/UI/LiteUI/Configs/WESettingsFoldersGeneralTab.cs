@@ -1,8 +1,8 @@
 ﻿using Kwytto.UI;
 using Kwytto.Utils;
-using SpriteFontPlus;
 using UnityEngine;
 using WriteEverywhere.Localization;
+using WriteEverywhere.Singleton;
 
 namespace WriteEverywhere.UI
 {
@@ -18,7 +18,7 @@ namespace WriteEverywhere.UI
                 {
                     using (new GUILayout.VerticalScope())
                     {
-                        using(new GUILayout.HorizontalScope())
+                        using (new GUILayout.HorizontalScope())
                         {
                             if (GUILayout.Button(Str.WTS_REFRESH_IMAGES_FOLDER))
                             {
@@ -36,7 +36,7 @@ namespace WriteEverywhere.UI
                         DoButtonToFolderDraw(Str.WTS_DEFAULT_HWSHIELDS_CONFIG_PATH_TITLE, WEMainController.DefaultHwShieldsConfigurationFolder);
                         DoButtonToFolderDraw(Str.WTS_FONT_FILES_PATH_TITLE, WEMainController.FontFilesPath);
                         DoButtonToFolderDraw(Str.WTS_EXTRA_SPRITES_PATH_TITLE, WEMainController.ExtraSpritesFolder);
-                       
+
                     }
                     m_scrollPosition = scroll.scrollPosition;
                 }

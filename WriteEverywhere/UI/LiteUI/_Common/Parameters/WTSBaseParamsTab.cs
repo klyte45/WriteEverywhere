@@ -10,6 +10,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using WriteEverywhere.Plugins;
 using WriteEverywhere.Utils;
 using WriteEverywhere.Xml;
 
@@ -241,11 +242,11 @@ namespace WriteEverywhere.UI
                 var cl = CommandLevel.OnFilterParamByText(GetCurrentParamString(), out _);
                 if (m_searchResult.Value.Contains(SearchText))
                 {
-                    SelectedValue = CommandLevel.FromParameterPath(CommandLevel.GetParameterPath(SelectedValue ?? "").Take(cl.level).Concat(new[] { SearchText }));
+                    SelectedValue = CommandLevel.FromParameterPath(CommandLevel.GetParameterPath(SelectedValue ?? "", out _).Take(cl.level).Concat(new[] { SearchText }));
                 }
                 if (parameterEditor.HoverIdx > 0 && parameterEditor.HoverIdx < m_searchResult.Value.Length)
                 {
-                    SelectedValue = CommandLevel.FromParameterPath(CommandLevel.GetParameterPath(SelectedValue ?? "").Take(cl.level).Concat(new[] { m_searchResult.Value[parameterEditor.HoverIdx] }));
+                    SelectedValue = CommandLevel.FromParameterPath(CommandLevel.GetParameterPath(SelectedValue ?? "", out _).Take(cl.level).Concat(new[] { m_searchResult.Value[parameterEditor.HoverIdx] }));
                 }
                 SetTextParameter(item, m_currentEditingParam, GetCurrentParamString());
             }

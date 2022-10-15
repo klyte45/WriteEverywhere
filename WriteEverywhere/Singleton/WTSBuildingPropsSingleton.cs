@@ -5,7 +5,7 @@ using ColossalFramework.Math;
 using ColossalFramework.UI;
 using Kwytto.LiteUI;
 using Kwytto.Utils;
-using SpriteFontPlus;
+using WriteEverywhere.Font;
 using System;
 using System.Collections;
 using System.Collections.Generic;

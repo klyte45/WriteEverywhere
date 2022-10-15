@@ -1,12 +1,14 @@
 ﻿using ColossalFramework;
 using Kwytto.Utils;
-using SpriteFontPlus;
-using SpriteFontPlus.Utility;
+using WriteEverywhere.Font;
+using WriteEverywhere.Font.Utility;
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using WriteEverywhere.Data;
+using WriteEverywhere.Plugins;
 using WriteEverywhere.Utils;
+using WriteEverywhere.Singleton;
 
 namespace WriteEverywhere.Xml
 {
@@ -38,9 +40,9 @@ namespace WriteEverywhere.Xml
             }
         }
         public ParameterType ParamType { get; private set; }
-        public TextContent VariableValueTextContent => ParamType == ParameterType.VARIABLE ? VariableValue.m_varType.ToContent() : TextContent.None;
+        public TextContent VariableValueTextContent => ParamType == ParameterType.VARIABLE ? VariableValue.paramContainer.contentType : TextContent.None;
         public bool IsEmpty { get; private set; }
-        public bool IsParameter => VariableValue?.m_varType == VariableType.Parameter;
+        public bool IsParameter => VariableValue?.m_varType is VariableType v && v == VariableType.Parameter;
 
         public int GetParamIdx => VariableValue?.paramContainer.paramIdx ?? -1;
 

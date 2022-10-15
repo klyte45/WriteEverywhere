@@ -1,6 +1,6 @@
 ﻿extern alias TLM;
 extern alias VS;
-using SpriteFontPlus.Utility;
+using WriteEverywhere.Font.Utility;
 using System.Collections.Generic;
 using System.Linq;
 using WriteEverywhere.Data;

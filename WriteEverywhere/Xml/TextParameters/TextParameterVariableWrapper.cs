@@ -1,12 +1,13 @@
 ﻿extern alias VS;
 
 using Kwytto.Utils;
-using SpriteFontPlus;
-using SpriteFontPlus.Utility;
+using WriteEverywhere.Font;
+using WriteEverywhere.Font.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using WriteEverywhere.Data;
+using WriteEverywhere.Plugins;
 using WriteEverywhere.Rendering;
 using WriteEverywhere.Singleton;
 
@@ -15,133 +16,27 @@ namespace WriteEverywhere.Xml
     public class TextParameterVariableWrapper
     {
         public readonly string m_originalCommand;
-        public readonly VariableType m_varType;
+        public readonly Enum m_varType;
 
         public TextParameterVariableWrapper(string input, TextRenderingClass renderingClass = TextRenderingClass.Any)
         {
             m_originalCommand = input;
-            var parameterPath = CommandLevel.GetParameterPath(input);
+            var parameterPath = CommandLevel.GetParameterPath(input, out m_varType);
             if (parameterPath.Length > 0)
             {
-                m_varType = VariableType.Invalid;
-                try
+                if (m_varType is VariableType varTypeParsed)
                 {
-                    m_varType = (VariableType)Enum.Parse(typeof(VariableType), parameterPath[0]);
-                }
-                catch { }
-                if (!m_varType.Supports(renderingClass))
-                {
-                    return;
-                }
-                switch (m_varType)
-                {
-                    case VariableType.SegmentTarget:
-                        if (parameterPath.Length >= 3 && byte.TryParse(parameterPath[1], out byte targIdx))
-                        {
-                            try
-                            {
-                                if (Enum.Parse(typeof(VariableSegmentTargetSubType), parameterPath[2]) is VariableSegmentTargetSubType tt
-                                    && tt.ReadData(parameterPath.Skip(3).ToArray(), ref subtype, out paramContainer))
-                                {
-                                    index = targIdx;
-                                    type = VariableType.SegmentTarget;
-                                }
-                            }
-                            catch { }
-                        }
-                        break;
-                    case VariableType.CurrentSegment:
-                        if (parameterPath.Length >= 2)
-                        {
-                            try
-                            {
-                                if (Enum.Parse(typeof(VariableSegmentTargetSubType), parameterPath[1]) is VariableSegmentTargetSubType tt
-                                    && tt.ReadData(parameterPath.Skip(2).ToArray(), ref subtype, out paramContainer))
-                                {
-                                    type = VariableType.CurrentSegment;
-                                }
-                            }
-                            catch { }
-                        }
-                        break;
-                    case VariableType.CityData:
-                        if (parameterPath.Length >= 2)
-                        {
-                            try
-                            {
-                                if (Enum.Parse(typeof(VariableCitySubType), parameterPath[1]) is VariableCitySubType tt
-                                    && tt.ReadData(parameterPath.Skip(2).ToArray(), ref subtype, out paramContainer))
-                                {
-                                    type = VariableType.CityData;
-                                    break;
-                                }
-                            }
-                            catch { }
-                        }
-                        break;
-                    case VariableType.CurrentBuilding:
-                        if (parameterPath.Length >= 2)
-                        {
-                            try
-                            {
-                                if (Enum.Parse(typeof(VariableBuildingSubType), parameterPath[1]) is VariableBuildingSubType tt
-                                    && tt.ReadData(parameterPath.Skip(2).ToArray(), ref subtype, out paramContainer))
-                                {
-                                    type = VariableType.CurrentBuilding;
-                                    break;
-                                }
-                            }
-                            catch { }
-                        }
-                        break;
-                    case VariableType.CurrentVehicle:
-                        if (parameterPath.Length >= 2)
-                        {
-                            try
-                            {
-                                if (Enum.Parse(typeof(VariableVehicleSubType), parameterPath[1]) is VariableVehicleSubType tt
-                                    && tt.ReadData(parameterPath.Skip(2).ToArray(), ref subtype, out paramContainer))
-                                {
-                                    type = VariableType.CurrentVehicle;
-                                    break;
-                                }
-                            }
-                            catch { }
-                        }
-                        break;
-                    case VariableType.Parameter:
-                        if (parameterPath.Length >= 2)
-                        {
-                            try
-                            {
-                                if (int.TryParse(parameterPath[1], out var idx))
-                                {
-                                    paramContainer.paramIdx = idx;
-                                    type = VariableType.Parameter;
-                                    break;
-                                }
-                            }
-                            catch { }
-                        }
-                        break;
+                    varTypeParsed.Validate(renderingClass, parameterPath, ref type, ref subtype, ref index, out paramContainer);
                 }
             }
         }
 
 
-        private VariableType type = VariableType.Invalid;
+        private Enum type = VariableType.Invalid;
         private byte index = 0;
         private Enum subtype = VariableSegmentTargetSubType.None;
-        public readonly VariableExtraParameterContainer paramContainer = default;
+        public VariableExtraParameterContainer paramContainer = default;
 
-        public struct VariableExtraParameterContainer
-        {
-            public string numberFormat;
-            public string stringFormat;
-            public string prefix;
-            public string suffix;
-            public int paramIdx;
-        }
 
 
         internal BasicRenderInformation GetTargetText(WriteOnBuildingXml propGroupDescriptor, BaseWriteOnXml instance, TextToWriteOnXml textDescriptor, DynamicSpriteFont targetFont, ushort refId, int secRefId, int tercRefId, out IEnumerable<BasicRenderInformation> multipleOutput)
