@@ -75,6 +75,10 @@
       <Project>{27c920f8-f40f-4d56-bcb6-9c9025ed0aac}</Project>
       <Name>KwyttoUtilityWE</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WriteEverywhere.Layout\WriteEverywhere.Layout.csproj">
+      <Project>{C1EF6364-94B2-4662-8F43-484EE9364EED}</Project>
+      <Name>WriteEverywhere.Layout</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WriteEverywhere.Xml\WriteEverywhere.Xml.csproj">
       <Project>{eeb0f9cd-62f2-4e4e-9ac7-21d66e0b7696}</Project>
       <Name>WriteEverywhere.Xml</Name>

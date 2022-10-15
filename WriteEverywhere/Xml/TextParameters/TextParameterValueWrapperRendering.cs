@@ -1,57 +1,32 @@
-﻿extern alias VS;
-
+﻿extern alias TLM;
 using Kwytto.Utils;
-using WriteEverywhere.Font;
-using WriteEverywhere.Font.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using WriteEverywhere.Data;
+using WriteEverywhere.Font;
+using WriteEverywhere.Font.Utility;
 using WriteEverywhere.Plugins;
 using WriteEverywhere.Rendering;
 using WriteEverywhere.Singleton;
 
 namespace WriteEverywhere.Xml
 {
-    public class TextParameterVariableWrapper
+    internal static class TextParameterValueWrapperRendering
     {
-        public readonly string m_originalCommand;
-        public readonly Enum m_varType;
-
-        public TextParameterVariableWrapper(string input, TextRenderingClass renderingClass = TextRenderingClass.Any)
+        internal static BasicRenderInformation GetTargetText(this TextParameterVariableWrapper wrapper, WriteOnBuildingXml propGroupDescriptor, BaseWriteOnXml instance, TextToWriteOnXml textDescriptor, DynamicSpriteFont targetFont, ushort refId, int secRefId, int tercRefId, out IEnumerable<BasicRenderInformation> multipleOutput)
         {
-            m_originalCommand = input;
-            var parameterPath = CommandLevel.GetParameterPath(input, out m_varType);
-            if (parameterPath.Length > 0)
-            {
-                if (m_varType is VariableType varTypeParsed)
-                {
-                    varTypeParsed.Validate(renderingClass, parameterPath, ref type, ref subtype, ref index, out paramContainer);
-                }
-            }
-        }
-
-
-        private Enum type = VariableType.Invalid;
-        private byte index = 0;
-        private Enum subtype = VariableSegmentTargetSubType.None;
-        public VariableExtraParameterContainer paramContainer = default;
-
-
-
-        internal BasicRenderInformation GetTargetText(WriteOnBuildingXml propGroupDescriptor, BaseWriteOnXml instance, TextToWriteOnXml textDescriptor, DynamicSpriteFont targetFont, ushort refId, int secRefId, int tercRefId, out IEnumerable<BasicRenderInformation> multipleOutput)
-        {
-            string targetStr = m_originalCommand;
+            string targetStr = wrapper.m_originalCommand;
             switch (instance)
             {
                 case OnNetInstanceCacheContainerXml cc:
-                    targetStr = GetTargetTextForNet(cc, refId, textDescriptor, out multipleOutput);
+                    targetStr = wrapper.GetTargetTextForNet(cc, refId, textDescriptor, out multipleOutput);
                     break;
                 case WriteOnBuildingPropXml bd:
-                    targetStr = GetTargetTextForBuilding(propGroupDescriptor, bd, refId, textDescriptor, out multipleOutput);
+                    targetStr = wrapper.GetTargetTextForBuilding(propGroupDescriptor, bd, refId, textDescriptor, out multipleOutput);
                     break;
                 case LayoutDescriptorVehicleXml ve:
-                    targetStr = GetTargetTextForVehicle(refId, textDescriptor, out multipleOutput);
+                    targetStr = wrapper.GetTargetTextForVehicle(refId, textDescriptor, out multipleOutput);
                     break;
                 default:
                     multipleOutput = null;
@@ -62,19 +37,22 @@ namespace WriteEverywhere.Xml
 
 
 
-        public string GetTargetTextForBuilding(WriteOnBuildingXml propGroupDescriptor, WriteOnBuildingPropXml buildingDescriptor, ushort buildingId, TextToWriteOnXml textDescriptor, out IEnumerable<BasicRenderInformation> multipleOutput)
+        public static string GetTargetTextForBuilding(this TextParameterVariableWrapper wrapper, WriteOnBuildingXml propGroupDescriptor, WriteOnBuildingPropXml buildingDescriptor, ushort buildingId, TextToWriteOnXml textDescriptor, out IEnumerable<BasicRenderInformation> multipleOutput)
         {
             multipleOutput = null;
+            var type = wrapper.type;
+            var subtype = wrapper.subtype;
+            var originalCommand = wrapper.m_originalCommand;
             switch (type)
             {
                 case VariableType.CurrentBuilding:
                     return buildingId == 0 || buildingDescriptor is null || !(subtype is VariableBuildingSubType targetSubtype2) || targetSubtype2 == VariableBuildingSubType.None
                         ? $"{subtype}@currBuilding"
-                        : $"{targetSubtype2.GetFormattedString(buildingDescriptor.m_platforms, buildingId, this) ?? m_originalCommand}";
+                        : $"{targetSubtype2.GetFormattedString(buildingDescriptor.m_platforms, buildingId, wrapper) ?? originalCommand}";
                 case VariableType.CityData:
                     if ((subtype is VariableCitySubType targetCitySubtype))
                     {
-                        return $"{targetCitySubtype.GetFormattedString(this) ?? m_originalCommand}";
+                        return $"{targetCitySubtype.GetFormattedString(wrapper) ?? originalCommand}";
                     }
                     break;
                 case VariableType.Parameter:
@@ -83,7 +61,7 @@ namespace WriteEverywhere.Xml
                     {
                         return "<NO PARAMS SET FOR BUILDING!>";
                     }
-                    var paramIdx = paramContainer.paramIdx;
+                    var paramIdx = wrapper.paramContainer.paramIdx;
                     switch (textDescriptor.textContent)
                     {
                         case TextContent.None:
@@ -93,7 +71,7 @@ namespace WriteEverywhere.Xml
                         Text:
                             if (buildingParam.GetParameter(paramIdx) is TextParameterWrapper tpw)
                             {
-                                var result = tpw.GetTargetText(propGroupDescriptor, buildingDescriptor, textDescriptor, TextParameterWrapper.GetTargetFont(propGroupDescriptor, buildingDescriptor, textDescriptor), buildingId, 0, 0, out multipleOutput);
+                                var result = tpw.GetTargetText(propGroupDescriptor, buildingDescriptor, textDescriptor, TextParameterWrapperRendering.GetTargetFont(propGroupDescriptor, buildingDescriptor, textDescriptor), buildingId, 0, 0, out multipleOutput);
                                 if (result is null && (multipleOutput is null || multipleOutput?.Count() == 0))
                                 {
                                     return $"<EMPTY PARAM#{paramIdx} NOT SET>";
@@ -147,56 +125,63 @@ namespace WriteEverywhere.Xml
                     break;
             }
 
-            return m_originalCommand;
+            return originalCommand;
         }
 
-        public string GetTargetTextForVehicle(ushort vehicleId, TextToWriteOnXml textDescriptor, out IEnumerable<BasicRenderInformation> multipleOutput)
+        public static string GetTargetTextForVehicle(this TextParameterVariableWrapper wrapper, ushort vehicleId, TextToWriteOnXml textDescriptor, out IEnumerable<BasicRenderInformation> multipleOutput)
         {
             multipleOutput = null;
+            var type = wrapper.type;
+            var subtype = wrapper.subtype;
+            var originalCommand = wrapper.m_originalCommand;
             switch (type)
             {
                 case VariableType.CurrentBuilding:
                     var buildingId = VehicleManager.instance.m_vehicles.m_buffer[vehicleId].m_sourceBuilding;
                     return buildingId == 0 || !(subtype is VariableBuildingSubType targetSubtype) || targetSubtype == VariableBuildingSubType.None
                         ? $"{subtype}@vehicleSrcBuilding"
-                        : $"{targetSubtype.GetFormattedString(null, buildingId, this) ?? m_originalCommand}";
+                        : $"{targetSubtype.GetFormattedString(null, buildingId, wrapper) ?? originalCommand}";
                 case VariableType.CurrentVehicle:
                     return vehicleId == 0 || !(subtype is VariableVehicleSubType targetSubtype2) || targetSubtype2 == VariableVehicleSubType.None
                         ? $"{subtype}@currVehicle"
-                        : $"{targetSubtype2.GetFormattedString(vehicleId, this) ?? m_originalCommand}";
+                        : $"{targetSubtype2.GetFormattedString(vehicleId, wrapper) ?? originalCommand}";
                 case VariableType.CityData:
                     if ((subtype is VariableCitySubType targetCitySubtype))
                     {
-                        return $"{targetCitySubtype.GetFormattedString(this) ?? m_originalCommand}";
+                        return $"{targetCitySubtype.GetFormattedString(wrapper) ?? originalCommand}";
                     }
                     break;
             }
-            return m_originalCommand;
+            return originalCommand;
         }
 
-        internal string GetTargetTextForNet(BaseWriteOnXml descriptor, ushort segmentId, TextToWriteOnXml textDescriptor, out IEnumerable<BasicRenderInformation> multipleOutput)
+        internal static string GetTargetTextForNet(this TextParameterVariableWrapper wrapper, OnNetInstanceCacheContainerXml propDescriptor, ushort segmentId, TextToWriteOnXml textDescriptor, out IEnumerable<BasicRenderInformation> multipleOutput)
         {
             multipleOutput = null;
-            var propDescriptor = descriptor as OnNetInstanceCacheContainerXml;
+            var type = wrapper.type;
+            var subtype = wrapper.subtype;
+            var originalCommand = wrapper.m_originalCommand;
+            var paramContainer = wrapper.paramContainer;
+            var index = wrapper.index;
             switch (type)
             {
                 case VariableType.SegmentTarget:
                     var targId = propDescriptor?.GetTargetSegment(index) ?? 0;
                     return targId == 0 || !(subtype is VariableSegmentTargetSubType targetSubtype) || targetSubtype == VariableSegmentTargetSubType.None
                         ? $"{paramContainer.prefix}{subtype}@targ{index}{paramContainer.suffix}"
-                        : $"{paramContainer.prefix}{targetSubtype.GetFormattedString(propDescriptor, targId, this) ?? m_originalCommand}{paramContainer.suffix}";
+                        : $"{paramContainer.prefix}{targetSubtype.GetFormattedString(propDescriptor, targId, wrapper) ?? originalCommand}{paramContainer.suffix}";
                 case VariableType.CurrentSegment:
                     return segmentId == 0 || !(subtype is VariableSegmentTargetSubType targetSubtype2) || targetSubtype2 == VariableSegmentTargetSubType.None
                         ? $"{paramContainer.prefix}{subtype}@currSeg"
-                        : $"{paramContainer.prefix}{targetSubtype2.GetFormattedString(propDescriptor, segmentId, this) ?? m_originalCommand}{paramContainer.suffix}";
+                        : $"{paramContainer.prefix}{targetSubtype2.GetFormattedString(propDescriptor, segmentId, wrapper) ?? originalCommand}{paramContainer.suffix}";
                 case VariableType.CityData:
                     if ((subtype is VariableCitySubType targetCitySubtype))
                     {
-                        return $"{paramContainer.prefix}{targetCitySubtype.GetFormattedString(this) ?? m_originalCommand}{paramContainer.suffix}";
+                        return $"{paramContainer.prefix}{targetCitySubtype.GetFormattedString(wrapper) ?? originalCommand}{paramContainer.suffix}";
                     }
                     break;
                 case VariableType.Invalid:
-                    return $"<UNSUPPORTED PATH: {m_originalCommand}>";
+                    return $"<UNSUPPORTED PATH: {originalCommand}>";
                 case VariableType.Parameter:
                     var paramIdx = paramContainer.paramIdx;
                     switch (textDescriptor.textContent)
@@ -208,7 +193,7 @@ namespace WriteEverywhere.Xml
                         Text:
                             if (propDescriptor.GetParameter(paramIdx) is TextParameterWrapper tpw)
                             {
-                                var result = tpw.GetTargetText(null, descriptor, textDescriptor, TextParameterWrapper.GetTargetFont(null, propDesc: descriptor, textDesc: textDescriptor), segmentId, 0, 0, out multipleOutput);
+                                var result = tpw.GetTargetText(null, propDescriptor, textDescriptor, TextParameterWrapperRendering.GetTargetFont(null, propDesc: propDescriptor, textDesc: textDescriptor), segmentId, 0, 0, out multipleOutput);
                                 if (result is null && (multipleOutput is null || multipleOutput?.Count() == 0))
                                 {
                                     return $"<EMPTY PARAM#{paramIdx} NOT SET>";
@@ -223,13 +208,13 @@ namespace WriteEverywhere.Xml
                         case TextContent.ParameterizedSpriteFolder:
                         ImageFolder:
                             multipleOutput = propDescriptor.GetParameter(paramIdx) is TextParameterWrapper tpw2
-                                ? (new[] { tpw2.GetSpriteFromCycle(textDescriptor, descriptor.TargetAssetParameter, segmentId, 0, 0) })
+                                ? (new[] { tpw2.GetSpriteFromCycle(textDescriptor, propDescriptor.TargetAssetParameter, segmentId, 0, 0) })
                                 : (IEnumerable<BasicRenderInformation>)(new[] { ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(null, "FrameParamsNotSet") });
                             return null;
                         case TextContent.ParameterizedSpriteSingle:
                         ImageSingle:
                             multipleOutput = new[] {propDescriptor.GetParameter(paramIdx)  is TextParameterWrapper tpw3
-                                ? tpw3.GetSpriteFromParameter(descriptor.TargetAssetParameter)
+                                ? tpw3.GetSpriteFromParameter(propDescriptor.TargetAssetParameter)
                                 : ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(null, "FrameParamsNotSet") };
                             return null;
                         case TextContent.Any:
@@ -261,11 +246,11 @@ namespace WriteEverywhere.Xml
                     }
                     break;
             }
-            return m_originalCommand;
+            return originalCommand;
         }
 
-        public string TryFormat(float value, float multiplier) => (value * multiplier).ToString(paramContainer.numberFormat);
-        public string TryFormat(long value) => value.ToString(paramContainer.numberFormat);
-        public string TryFormat(FormattableString value) => value.GetFormatted(paramContainer.stringFormat);
+        public static string TryFormat(this TextParameterVariableWrapper wrapper, float value, float multiplier) => (value * multiplier).ToString(wrapper.paramContainer.numberFormat);
+        public static string TryFormat(this TextParameterVariableWrapper wrapper, long value) => value.ToString(wrapper.paramContainer.numberFormat);
+        public static string TryFormat(this TextParameterVariableWrapper wrapper, FormattableString value) => value.GetFormatted(wrapper.paramContainer.stringFormat);
     }
 }

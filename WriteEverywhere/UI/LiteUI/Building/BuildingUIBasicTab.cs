@@ -33,7 +33,7 @@ namespace WriteEverywhere.UI
 
 
         private static readonly PivotPosition[] pivotOptionsValues = Enum.GetValues(typeof(PivotPosition)).Cast<PivotPosition>().ToArray();
-        private static readonly string[] pivotOptions = pivotOptionsValues.Select(x => x.GetLocalizedName()).ToArray();
+        private static readonly string[] pivotOptions = pivotOptionsValues.Select(x => x.ValueToI18n()).ToArray();
         public static int CurrentFocusInstance { get => m_currentFocusInstance; private set => m_currentFocusInstance = value; }
 
         private enum State

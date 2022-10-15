@@ -1,11 +1,10 @@
-﻿extern alias VS;
+﻿
 using Kwytto.Interfaces;
 
 using Kwytto.Utils;
 using System.Linq;
 using System.Xml;
 using System.Xml.Serialization;
-using VS::Bridge_WE2VS;
 
 namespace WriteEverywhere.Xml
 {

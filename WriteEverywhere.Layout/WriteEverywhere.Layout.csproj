@@ -4,14 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{291D9EA9-6945-4EA3-8756-37464D40F450}</ProjectGuid>
+    <ProjectGuid>{C1EF6364-94B2-4662-8F43-484EE9364EED}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WriteEverywhere</RootNamespace>
-    <AssemblyName>WriteEverywhere</AssemblyName>
+    <RootNamespace>WriteEverywhere.Layout</RootNamespace>
+    <AssemblyName>WriteEverywhere.Layout</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <Deterministic>false</Deterministic>
+    <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,7 +21,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -57,78 +56,22 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="UnifiedUILib">
-      <HintPath>..\libs\UnifiedUILib.dll</HintPath>
-      <Aliases>UUI</Aliases>
-    </Reference>
     <Reference Include="UnityEngine">
       <HintPath>..\..\_managed\UnityEngine.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Shader\**\*.unity3d" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="UI\VersionNotes.txt" />
     <Compile Include="**\*.cs" />
   </ItemGroup>
-  <!-- <ItemGroup> -->
-  <!-- <Reference Include="TransportLinesManager">  -->
-  <!-- <HintPath>..\..\_appdataMods\TLM\TransportLinesManager.dll</HintPath> -->
-  <!-- <Aliases>TLM</Aliases> -->
-  <!-- <Private>False</Private> -->
-  <!-- <Required>False</Required> -->
-  <!-- </Reference> -->
-  <!-- <Reference Include="Addresses"> -->
-  <!-- <HintPath>..\..\_appdataMods\ADR\KlyteAddresses.dll</HintPath> -->
-  <!-- <Aliases>ADR</Aliases> -->
-  <!-- <Private>False</Private> -->
-  <!-- <Required>False</Required> -->
-  <!-- </Reference> -->
-  <!-- <Reference Include="VehicleSkins"> -->
-  <!-- <HintPath>..\..\_appdataMods\VS\KlyteVehicleSkins.dll</HintPath> -->
-  <!-- <Aliases>VS</Aliases> -->
-  <!-- <Private>False</Private> -->
-  <!-- <Required>False</Required> -->
-  <!-- </Reference> -->
-  <!-- </ItemGroup> -->
   <ItemGroup>
-    <EmbeddedResource Include="UI\**\*.png" />
-    <EmbeddedResource Include="UI\**\*.ttf" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Bridge_WE2ADR\Bridge_WE2ADR.csproj">
-      <Project>{60d2e312-654f-499b-a0e0-8786a5a66cf2}</Project>
-      <Name>Bridge_WE2ADR</Name>
-      <Aliases>ADR</Aliases>
-    </ProjectReference>
-    <ProjectReference Include="..\Bridge_WE2TLM\Bridge_WE2TLM.csproj">
-      <Project>{9993bf38-0db8-4959-a4a6-701ab67ec55d}</Project>
-      <Name>Bridge_WE2TLM</Name>
-      <Aliases>TLM</Aliases>
-    </ProjectReference>
-    <ProjectReference Include="..\Bridge_WE2VS\Bridge_WE2VS.csproj">
-      <Project>{a48b01d6-0b04-40aa-a5df-c76a73ffcbb5}</Project>
-      <Name>Bridge_WE2VS</Name>
-      <Aliases>VS</Aliases>
-    </ProjectReference>
     <ProjectReference Include="..\KwyttoUtilityWE\KwyttoUtilityWE.csproj">
-      <Project>{27c920f8-f40f-4d56-bcb6-9c9025ed0aac}</Project>
+      <Project>{27C920F8-F40F-4D56-BCB6-9C9025ED0AAC}</Project>
       <Name>KwyttoUtilityWE</Name>
     </ProjectReference>
     <ProjectReference Include="..\WriteEverywhere.Font\WriteEverywhere.Font.csproj">
-      <Project>{560c395e-18d9-44f3-9b3c-d6e5ed455720}</Project>
+      <Project>{560C395E-18D9-44F3-9B3C-D6E5ED455720}</Project>
       <Name>WriteEverywhere.Font</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\WriteEverywhere.Layout\WriteEverywhere.Layout.csproj">
-      <Project>{c1ef6364-94b2-4662-8f43-484ee9364eed}</Project>
-      <Name>WriteEverywhere.Layout</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\WriteEverywhere.Localization\WriteEverywhere.Localization.csproj">
-      <Project>{92746969-350C-453C-8439-4D573C1B98A1}</Project>
-      <Name>WriteEverywhere.Localization</Name>
     </ProjectReference>
     <ProjectReference Include="..\WriteEverywhere.Plugins\WriteEverywhere.Plugins.csproj">
       <Project>{0c80a069-4d04-45c6-867a-ad3bff5b372b}</Project>
@@ -140,13 +83,4 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>set "ModDir=%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(SolutionName)\"
-rmdir /s /q "%25ModDir%25"
-
-mkdir "%25ModDir%25"
-xcopy /y /e "$(TargetDir)*" "%25ModDir%25"
-del "%25ModDir%25*.pdb"
-</PostBuildEvent>
-  </PropertyGroup>
 </Project>

@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using WriteEverywhere.Localization;
 using WriteEverywhere.Plugins;
+using WriteEverywhere.Xml;
 
 namespace WriteEverywhere.UI
 {

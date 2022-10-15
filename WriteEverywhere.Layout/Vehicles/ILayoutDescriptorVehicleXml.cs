@@ -1,9 +1,8 @@
-﻿extern alias WE;
+﻿
 
 using Kwytto.Interfaces;
-using WE::WriteEverywhere.Xml;
 
-namespace Bridge_WE2VS
+namespace WriteEverywhere.Xml
 {
     public interface ILayoutDescriptorVehicleXml : ILibable
     {

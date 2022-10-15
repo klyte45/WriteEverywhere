@@ -47,7 +47,7 @@
       <HintPath>..\..\_managed\ICities.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="System" /> 
+    <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -63,9 +63,9 @@
       <Name>KwyttoUtilityWE</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\WriteEverywhere.Xml\WriteEverywhere.Xml.csproj">
-      <Project>{eeb0f9cd-62f2-4e4e-9ac7-21d66e0b7696}</Project>
-      <Name>WriteEverywhere.Xml</Name>
+    <ProjectReference Include="..\WriteEverywhere.Layout\WriteEverywhere.Layout.csproj">
+      <Project>{c1ef6364-94b2-4662-8f43-484ee9364eed}</Project>
+      <Name>WriteEverywhere.Layout</Name>
       <Aliases>WE</Aliases>
       <Private>False</Private>
     </ProjectReference>

@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.3.32819.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WriteEverywhere", "WriteEverywhere\WriteEverywhere.csproj", "{291D9EA9-6945-4EA3-8756-37464D40F450}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C1EF6364-94B2-4662-8F43-484EE9364EED} = {C1EF6364-94B2-4662-8F43-484EE9364EED}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bridge_WE2TLM", "Bridge_WE2TLM\Bridge_WE2TLM.csproj", "{9993BF38-0DB8-4959-A4A6-701AB67EC55D}"
 EndProject
@@ -25,6 +28,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WriteEverywhere.Localization", "WriteEverywhere.Localization\WriteEverywhere.Localization.csproj", "{92746969-350C-453C-8439-4D573C1B98A1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WriteEverywhere.Font", "WriteEverywhere.Font\WriteEverywhere.Font.csproj", "{560C395E-18D9-44F3-9B3C-D6E5ED455720}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WriteEverywhere.Layout", "WriteEverywhere.Layout\WriteEverywhere.Layout.csproj", "{C1EF6364-94B2-4662-8F43-484EE9364EED}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0C80A069-4D04-45C6-867A-AD3BFF5B372B} = {0C80A069-4D04-45C6-867A-AD3BFF5B372B}
+		{EEB0F9CD-62F2-4E4E-9AC7-21D66E0B7696} = {EEB0F9CD-62F2-4E4E-9AC7-21D66E0B7696}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -72,6 +81,10 @@ Global
 		{560C395E-18D9-44F3-9B3C-D6E5ED455720}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{560C395E-18D9-44F3-9B3C-D6E5ED455720}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{560C395E-18D9-44F3-9B3C-D6E5ED455720}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1EF6364-94B2-4662-8F43-484EE9364EED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1EF6364-94B2-4662-8F43-484EE9364EED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1EF6364-94B2-4662-8F43-484EE9364EED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1EF6364-94B2-4662-8F43-484EE9364EED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

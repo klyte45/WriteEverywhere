@@ -1,5 +1,4 @@
-﻿extern alias VS;
-
+﻿
 using Kwytto.Interfaces;
 using Kwytto.Utils;
 using System.Xml;
@@ -112,7 +111,7 @@ namespace WriteEverywhere.Xml
                 }
                 return m_simpleProp;
             }
-            internal set
+            set
             {
                 m_simplePropName = value?.name;
                 m_simpleProp = value;

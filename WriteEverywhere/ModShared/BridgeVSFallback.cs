@@ -1,6 +1,7 @@
 ﻿extern alias VS;
 using UnityEngine;
 using VS::Bridge_WE2VS;
+using WriteEverywhere.Xml;
 
 namespace WriteEverywhere.ModShared
 {

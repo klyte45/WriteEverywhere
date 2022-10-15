@@ -30,10 +30,10 @@ namespace WriteEverywhere.Xml
         public float StopMappingThresold { get; set; } = 1f;
 
         [XmlAttribute("versionWELastEdit")]
-        public string VersionWELastEdit { get => ModInstance.FullVersion; set { } }
+        public string VersionWELastEdit { get => BasicIUserMod.FullVersion; set { } }
 
         [XmlAttribute("versionWECreation")]
-        public string VersionWECreation { get; set; } = ModInstance.FullVersion;
+        public string VersionWECreation { get; set; } = BasicIUserMod.FullVersion;
 
         [XmlIgnore]
         protected WriteOnBuildingPropXml[] m_propInstances = new WriteOnBuildingPropXml[0];

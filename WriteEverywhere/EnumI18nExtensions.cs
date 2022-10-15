@@ -154,6 +154,14 @@ namespace WriteEverywhere
                 case TextRenderingClass.Any: return Str.we_Enum__TextRenderingClass_Any;
                 case TextRenderingClass.BgMesh: return Str.we_Enum__TextRenderingClass_BgMesh;
 
+                case PivotPosition.Left: return Str.we_PivotPosition__Left;
+                case PivotPosition.Right: return Str.we_PivotPosition__Right;
+                case PivotPosition.Center: return Str.we_PivotPosition__Center;
+                case PivotPosition.LeftInvert: return Str.we_PivotPosition__LeftInvert;
+                case PivotPosition.RightInvert: return Str.we_PivotPosition__RightInvert;
+                case PivotPosition.CenterInvert: return Str.we_PivotPosition__CenterInvert;
+                case PivotPosition.CenterLookingLeft: return Str.we_PivotPosition__CenterLookingLeft;
+                case PivotPosition.CenterLookingRight: return Str.we_PivotPosition__CenterLookingRight;
 
             }
             return variable.ValueToI18nKwytto();

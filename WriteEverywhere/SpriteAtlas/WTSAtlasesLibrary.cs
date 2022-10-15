@@ -20,6 +20,7 @@ using WriteEverywhere.Localization;
 using WriteEverywhere.Rendering;
 using WriteEverywhere.Singleton;
 using WriteEverywhere.Utils;
+using WriteEverywhere.Xml;
 using static ColossalFramework.UI.UITextureAtlas;
 
 namespace WriteEverywhere.Sprites

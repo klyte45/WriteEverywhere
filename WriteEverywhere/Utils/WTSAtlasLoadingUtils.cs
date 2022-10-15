@@ -1,70 +1,13 @@
 ﻿using Kwytto.Utils;
 using System.Collections.Generic;
 using System.IO;
-using System.Xml.Serialization;
 using UnityEngine;
 using WriteEverywhere.Localization;
+using WriteEverywhere.Xml;
 
 namespace WriteEverywhere.Utils
 {
-    [XmlRoot("ImageInformation")]
-    public class WEImageInfoXml
-    {
-        [XmlElement("Borders")]
-        public BorderOffsets borders;
 
-        [XmlAttribute("pixelsPerMeters")]
-        public float pixelsPerMeters = 100;
-
-        public class BorderOffsets
-        {
-            [XmlAttribute("pxLeft")]
-            public int left;
-            [XmlAttribute("pxRight")]
-            public int right;
-            [XmlAttribute("pxTop")]
-            public int top;
-            [XmlAttribute("pxBottom")]
-            public int bottom;
-
-            public Vector4 ToWEBorder(float width, float height) => new Vector4(left / width, right / width, top / height, bottom / height);
-        }
-    }
-
-    public class WEImageInfo
-    {
-        public WEImageInfo(string xmlPath)
-        {
-            this.xmlPath = xmlPath;
-        }
-        public readonly string xmlPath;
-        public Vector4 Borders { get; set; }
-        public string Name { get; set; }
-        public Texture2D Texture { get; set; }
-        public float PixelsPerMeter { get; set; }
-        public RectOffset OffsetBorders => new RectOffset(Mathf.RoundToInt(Borders.x * Texture.width), Mathf.RoundToInt(Borders.y * Texture.width), Mathf.RoundToInt(Borders.z * Texture.height), Mathf.RoundToInt(Borders.w * Texture.height));
-
-        internal void Save()
-        {
-            if (xmlPath != null)
-            {
-                var bordersOffsets = OffsetBorders;
-                var xmlContent = new WEImageInfoXml
-                {
-                    borders = new WEImageInfoXml.BorderOffsets
-                    {
-                        bottom = bordersOffsets.bottom,
-                        left = bordersOffsets.left,
-                        right = bordersOffsets.right,
-                        top = bordersOffsets.top,
-                    },
-                    pixelsPerMeters = PixelsPerMeter,
-                };
-                File.WriteAllText(xmlPath, XmlUtils.DefaultXmlSerialize(xmlContent, true));
-                ModInstance.Controller.AtlasesLibrary.LoadImagesFromLocalFolders();
-            }
-        }
-    }
 
     public static class WTSAtlasLoadingUtils
     {

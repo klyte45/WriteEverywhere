@@ -1,9 +1,9 @@
 ﻿extern alias TLM;
 extern alias VS;
-using WriteEverywhere.Font.Utility;
 using System.Collections.Generic;
 using System.Linq;
 using WriteEverywhere.Data;
+using WriteEverywhere.Font.Utility;
 using WriteEverywhere.Singleton;
 using WriteEverywhere.Xml;
 
@@ -63,9 +63,9 @@ namespace WriteEverywhere.Rendering
                 case TextContent.ParameterizedText:
                 case TextContent.ParameterizedSpriteFolder:
                 case TextContent.ParameterizedSpriteSingle:
-                    return TextParameterWrapper.GetRenderInfo(propGroupDescriptor, propDescriptor, textDescriptor, segmentId, boardIdx, secIdx, out multipleOutput);
+                    return TextParameterWrapperRendering.GetRenderInfo(propGroupDescriptor, propDescriptor, textDescriptor, segmentId, boardIdx, secIdx, out multipleOutput);
                 case TextContent.TextParameterSequence:
-                    return TextParameterWrapper.GetRenderInfo(propGroupDescriptor, textDescriptor.ParameterSequence?.GetAt(SimulationManager.instance.m_referenceFrameIndex, segmentId), propDescriptor, textDescriptor, segmentId, boardIdx, secIdx, out multipleOutput);
+                    return TextParameterWrapperRendering.GetRenderInfo(propGroupDescriptor, textDescriptor.ParameterSequence?.GetAt(SimulationManager.instance.m_referenceFrameIndex, segmentId), propDescriptor, textDescriptor, segmentId, boardIdx, secIdx, out multipleOutput);
             }
             return null;
         }

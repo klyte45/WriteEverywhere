@@ -1,7 +1,8 @@
-﻿extern alias VS;
+﻿
+
+using Kwytto.Interfaces;
 using System.Xml;
 using System.Xml.Serialization;
-using VS::Bridge_WE2VS;
 
 namespace WriteEverywhere.Xml
 {
@@ -15,7 +16,7 @@ namespace WriteEverywhere.Xml
         [XmlAttribute("WE_layoutVersion")]
         public string LayoutVersion
         {
-            get => ModInstance.FullVersion;
+            get => BasicIUserMod.FullVersion;
             set => lastLayoutVersion = value;
         }
     }
