@@ -47,17 +47,7 @@ namespace WriteEverywhere.Variables
                 ? $"{subtype}@currBuilding"
                 : $"{GetFormattedString(targetSubtype2, buildingDescriptor.m_platforms, buildingId, wrapper) ?? wrapper.m_originalCommand}";
         }
-
-        public override string GetTargetTextForVehicle(TextParameterVariableWrapper wrapper, ushort vehicleId, TextToWriteOnXml textDescriptor, out IEnumerable<BasicRenderInformation> multipleOutput)
-        {
-            multipleOutput = null;
-            var buildingId = VehicleManager.instance.m_vehicles.m_buffer[vehicleId].m_sourceBuilding;
-            return buildingId == 0 || !(wrapper.subtype is VariableBuildingSubType targetSubtype) || targetSubtype == VariableBuildingSubType.None
-                ? $"{wrapper.subtype}@vehicleSrcBuilding"
-                : $"{GetFormattedString(targetSubtype, null, buildingId, wrapper) ?? wrapper.m_originalCommand}";
-
-        }
-        public override bool Supports(TextRenderingClass renderingClass) => renderingClass == TextRenderingClass.Any || renderingClass == TextRenderingClass.Buildings || renderingClass == TextRenderingClass.Vehicle;
+        public override bool Supports(TextRenderingClass renderingClass) => renderingClass == TextRenderingClass.Any || renderingClass == TextRenderingClass.Buildings;
         protected override void Validate_Internal(string[] parameterPath, ref Enum type, ref Enum subtype, ref byte index, ref VariableExtraParameterContainer paramContainer)
         {
             if (parameterPath.Length >= 2)

@@ -8,6 +8,7 @@
         CurrentBuilding,
         CurrentVehicle,
         CurrentSegment,
+        VehicleBuilding,
         Parameter
     }
 }

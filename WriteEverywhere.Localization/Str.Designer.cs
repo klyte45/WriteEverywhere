@@ -2437,6 +2437,15 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Variables relative to the source building where the vehicle went from.
+        /// </summary>
+        public static string WTS_PARAMVARS_DESC__VariableType_VehicleBuilding {
+            get {
+                return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableType_VehicleBuilding", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Last stop of line (destination).
         /// </summary>
         public static string WTS_PARAMVARS_DESC__VariableVehicleSubType_LastStopLine {

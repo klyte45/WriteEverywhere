@@ -23,6 +23,7 @@ namespace WriteEverywhere
                         case VariableType.CurrentBuilding: return Str.WTS_PARAMVARS_DESC__VariableType_CurrentBuilding;
                         case VariableType.CurrentSegment: return Str.WTS_PARAMVARS_DESC__VariableType_CurrentSegment;
                         case VariableType.CurrentVehicle: return Str.WTS_PARAMVARS_DESC__VariableType_CurrentVehicle;
+                        case VariableType.VehicleBuilding: return Str.WTS_PARAMVARS_DESC__VariableType_VehicleBuilding;
                         case VariableType.Invalid: return Str.WTS_PARAMVARS_DESC__VariableType_Invalid;
                         case VariableType.Parameter: return Str.WTS_PARAMVARS_DESC__VariableType_Parameter;
                     }
