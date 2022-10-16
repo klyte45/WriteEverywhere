@@ -41,7 +41,7 @@ namespace WriteEverywhere.Variables
             }
         }
 
-        public override string GetTargetTextForNet(TextParameterVariableWrapper wrapper, OnNetInstanceCacheContainerXml propDescriptor, ushort segmentId, TextToWriteOnXml textDescriptor, out IEnumerable<BasicRenderInformation> multipleOutput)
+        public override string GetTargetTextForNet(TextParameterVariableWrapper wrapper, OnNetInstanceCacheContainerXml propDescriptor, ushort segmentId, int secRefId, int tercRefId, TextToWriteOnXml textDescriptor, out IEnumerable<BasicRenderInformation> multipleOutput)
         {
             multipleOutput = null;
             var paramContainer = wrapper.paramContainer;
@@ -109,7 +109,7 @@ namespace WriteEverywhere.Variables
             return null;
         }
 
-        public override string GetTargetTextForBuilding(TextParameterVariableWrapper wrapper, WriteOnBuildingXml propGroupDescriptor, WriteOnBuildingPropXml buildingDescriptor, ushort buildingId, TextToWriteOnXml textDescriptor, out IEnumerable<BasicRenderInformation> multipleOutput)
+        public override string GetTargetTextForBuilding(TextParameterVariableWrapper wrapper, WriteOnBuildingXml propGroupDescriptor, WriteOnBuildingPropXml buildingDescriptor, ushort buildingId, int secRefId, int tercRefId, TextToWriteOnXml textDescriptor, out IEnumerable<BasicRenderInformation> multipleOutput)
         {
             multipleOutput = null;
             var buildingParam = WTSBuildingData.Instance.Parameters.TryGetValue(WTSBuildingPropsSingleton.FindParentBuilding(buildingId), out var parameter) ? parameter : null;

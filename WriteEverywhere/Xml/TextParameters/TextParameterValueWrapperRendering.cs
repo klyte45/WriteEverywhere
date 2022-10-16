@@ -12,20 +12,20 @@ namespace WriteEverywhere.Xml
     {
         internal static BasicRenderInformation GetTargetText(this TextParameterVariableWrapper wrapper, WriteOnBuildingXml propGroupDescriptor, BaseWriteOnXml instance, TextToWriteOnXml textDescriptor, DynamicSpriteFont targetFont, ushort refId, int secRefId, int tercRefId, out IEnumerable<BasicRenderInformation> multipleOutput)
         {
-            string targetStr = wrapper.m_originalCommand;
+            string targetStr = "";
             var variableClass = CommandLevelSingleton.GetVariableClass(wrapper.m_varType);
             if (variableClass != null)
             {
                 switch (instance)
                 {
                     case OnNetInstanceCacheContainerXml cc:
-                        targetStr = variableClass.GetTargetTextForNet(wrapper, cc, refId, textDescriptor, out multipleOutput);
+                        targetStr = variableClass.GetTargetTextForNet(wrapper, cc, refId, secRefId, tercRefId, textDescriptor, out multipleOutput);
                         break;
                     case WriteOnBuildingPropXml bd:
-                        targetStr = variableClass.GetTargetTextForBuilding(wrapper, propGroupDescriptor, bd, refId, textDescriptor, out multipleOutput);
+                        targetStr = variableClass.GetTargetTextForBuilding(wrapper, propGroupDescriptor, bd, refId, secRefId, tercRefId, textDescriptor, out multipleOutput);
                         break;
                     case LayoutDescriptorVehicleXml ve:
-                        targetStr = variableClass.GetTargetTextForVehicle(wrapper, refId, textDescriptor, out multipleOutput);
+                        targetStr = variableClass.GetTargetTextForVehicle(wrapper, refId, secRefId, tercRefId, textDescriptor, out multipleOutput);
                         break;
                     default:
                         multipleOutput = null;

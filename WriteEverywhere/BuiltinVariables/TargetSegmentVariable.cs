@@ -24,7 +24,7 @@ namespace WriteEverywhere.Variables
             nextLevelOptions = VariableSegmentTargetSubTypeExtensions.ReadCommandTree()
         };
 
-        public override string GetTargetTextForNet(TextParameterVariableWrapper wrapper, OnNetInstanceCacheContainerXml propDescriptor, ushort segmentId, TextToWriteOnXml textDescriptor, out IEnumerable<BasicRenderInformation> multipleOutput)
+        public override string GetTargetTextForNet(TextParameterVariableWrapper wrapper, OnNetInstanceCacheContainerXml propDescriptor, ushort segmentId, int secRefId, int tercRefId, TextToWriteOnXml textDescriptor, out IEnumerable<BasicRenderInformation> multipleOutput)
         {
             multipleOutput = null;
             var subtype = wrapper.subtype;

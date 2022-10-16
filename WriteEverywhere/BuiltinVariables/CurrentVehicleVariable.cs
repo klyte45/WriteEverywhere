@@ -42,7 +42,7 @@ namespace WriteEverywhere.Variables
             return result;
         }
 
-        public override string GetTargetTextForVehicle(TextParameterVariableWrapper wrapper, ushort vehicleId, TextToWriteOnXml textDescriptor, out IEnumerable<BasicRenderInformation> multipleOutput)
+        public override string GetTargetTextForVehicle(TextParameterVariableWrapper wrapper, ushort vehicleId, int secRefId, int tercRefId, TextToWriteOnXml textDescriptor, out IEnumerable<BasicRenderInformation> multipleOutput)
         {
             multipleOutput = null;
             var subtype = wrapper.subtype;
