@@ -70,6 +70,21 @@ namespace WriteEverywhere.Plugins
                     }
                 }
             }
+            if (this == m_dateFormatting)
+            {
+                if (relativeParams.Length >= 1)
+                {
+                    extraParameterContainer.numberFormat = relativeParams[0];
+                    if (relativeParams.Length >= 2)
+                    {
+                        extraParameterContainer.prefix = relativeParams[1];
+                        if (relativeParams.Length >= 3)
+                        {
+                            extraParameterContainer.suffix = relativeParams[2];
+                        }
+                    }
+                }
+            }
             if (this == m_appendPrefix)
             {
                 if (relativeParams.Length >= 1)
@@ -130,6 +145,12 @@ namespace WriteEverywhere.Plugins
             descriptionKey = () => Str.WTS_PARAMVARS_DESC__COMMON_PARAMNUM,
             regexValidValues = "^[0-9]{1,2}$",
             nextLevelByRegex = m_endLevel
+        };
+        public static readonly CommandLevel m_dateFormatting = new CommandLevel
+        {
+            descriptionKey = () => Str.WTS_PARAMVARS_DESC__COMMON_DATEFORMAT,
+            regexValidValues = @"^([dMy]|(?!(\p{L}|\p{M})).)+$",
+            nextLevelByRegex = CommandLevel.m_appendPrefix
         };
         public static readonly CommandLevel m_endLevel = new CommandLevel
         {

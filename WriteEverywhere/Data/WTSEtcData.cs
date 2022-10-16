@@ -1,5 +1,6 @@
 ﻿using ColossalFramework;
 using Kwytto.Data;
+using System.Globalization;
 using System.Xml.Serialization;
 using WriteEverywhere.Xml;
 
@@ -15,16 +16,62 @@ namespace WriteEverywhere.Data
 
         [XmlIgnore]
         private static readonly SavedInt m_temperatureUnit = new SavedInt(Settings.temperatureUnit, Settings.gameSettingsFile, DefaultSettings.temperatureUnit, true);
+        [XmlIgnore]
+        private static readonly SavedString m_formatEnvironmentName = new SavedString("K45_WE_Environment", Settings.gameSettingsFile, CultureInfo.CurrentCulture.ToString(), true);
+        public static string FormatCultureString
+        {
+            get => m_formatEnvironmentName.value;
+            set
+            {
+                m_formatEnvironmentName.value = value;
+                try
+                {
+                    FormatCulture = CultureInfo.GetCultureInfo(value);
+                }
+                catch { }
+            }
+        }
 
-        internal static string FormatTemp(float num) => StringUtils.SafeFormat((m_temperatureUnit != 0) ? kFormatFahrenheit : kFormatCelsius, (num * (m_temperatureUnit != 0 ? 1.8 : 1)) + (m_temperatureUnit != 0 ? 32 : 0));
+        private static CultureInfo m_cachedCulture;
+        public static CultureInfo FormatCulture
+        {
+            get
+            {
+                if (m_cachedCulture is null)
+                {
+                    try
+                    {
+                        m_cachedCulture = CultureInfo.GetCultureInfo(m_formatEnvironmentName);
+                        if (m_cachedCulture.IsNeutralCulture)
+                        {
+                            m_cachedCulture = CultureInfo.GetCultureInfo("en-US");
+                        }
+                    }
+                    catch
+                    {
+                        m_cachedCulture = CultureInfo.GetCultureInfo("en-US");
+                    }
+                }
+                return m_cachedCulture;
+            }
+            set
+            {
+                if (!value.IsNeutralCulture)
+                {
+                    m_cachedCulture = value;
+                    m_formatEnvironmentName.value = value.ToString();
+                }
+            }
+        }
 
-        public const string kFormatCelsius = "{0:0}°C";
-        public const string kFormatFahrenheit = "{0:0}°F";
+        internal static string FormatTemp(float num, string numFmt) => StringUtils.SafeFormat((m_temperatureUnit != 0) ? FormatFahrenheit(numFmt) : FormatCelsius(numFmt), (num * (m_temperatureUnit != 0 ? 1.8 : 1)) + (m_temperatureUnit != 0 ? 32 : 0));
+
+        public static string FormatCelsius(string numFmt) => $"{{0:{numFmt}}}°C";
+        public static string FormatFahrenheit(string numFmt) => $"{{0:{numFmt}}}°F";
     }
     public class FontSettings
     {
         private string m_publicTransportLineSymbolFont;
-        private string highwayShieldsFont;
 
         [XmlAttribute("publicTransportFont")]
         public string PublicTransportLineSymbolFont

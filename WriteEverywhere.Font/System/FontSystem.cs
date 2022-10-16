@@ -147,6 +147,18 @@ namespace WriteEverywhere.Font
             return result;
         }
 
+        public void EnsureText(MonoBehaviour referenceGO, float x, float y, string str, Vector3 scale, UIHorizontalAlignment alignment = UIHorizontalAlignment.Center)
+        {
+            if (string.IsNullOrEmpty(str))
+            {
+                return;
+            }
+            if (!m_textCache.ContainsKey(str))
+            {
+                m_textCache[str] = null;
+                referenceGO.StartCoroutine(WriteTextureCoroutine(x, y, str, scale, alignment));
+            }
+        }
         public BasicRenderInformation DrawText(MonoBehaviour referenceGO, float x, float y, string str, Vector3 scale, UIHorizontalAlignment alignment = UIHorizontalAlignment.Center)
         {
             BasicRenderInformation bri;
@@ -173,7 +185,6 @@ namespace WriteEverywhere.Font
                 referenceGO.StartCoroutine(WriteTextureCoroutine(x, y, str, scale, alignment));
                 return null;
             }
-
         }
 
         private static uint m_lastCoroutineStep = 0;

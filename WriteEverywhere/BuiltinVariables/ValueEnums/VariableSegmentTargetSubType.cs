@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using WriteEverywhere.Plugins;
 
-namespace WriteEverywhere.Plugins
+namespace WriteEverywhere.Variables
 {
     public enum VariableSegmentSubType
     {

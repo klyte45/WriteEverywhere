@@ -584,6 +584,33 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Clock as setted up in mod settings.
+        /// </summary>
+        public static string we_Enum__VariableEnvironmentSubType_Clock {
+            get {
+                return ResourceManager.GetString("we_Enum__VariableEnvironmentSubType_Clock", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Date formatted as asked, works better when using the Real Time or alike mods.
+        /// </summary>
+        public static string we_Enum__VariableEnvironmentSubType_CustomFormattedDate {
+            get {
+                return ResourceManager.GetString("we_Enum__VariableEnvironmentSubType_CustomFormattedDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Temperature, using the game settings unit.
+        /// </summary>
+        public static string we_Enum__VariableEnvironmentSubType_Temperature {
+            get {
+                return ResourceManager.GetString("we_Enum__VariableEnvironmentSubType_Temperature", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a No cloning.
         /// </summary>
         public static string we_Enum__YCloneType_None {
@@ -995,6 +1022,24 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Clock and formatters.
+        /// </summary>
+        public static string we_settings_clockAndFormatting {
+            get {
+                return ResourceManager.GetString("we_settings_clockAndFormatting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Clock format.
+        /// </summary>
+        public static string we_settings_clockFormat {
+            get {
+                return ResourceManager.GetString("we_settings_clockFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a The default fonts will be used when none is selected in a layout, when relative to Building, Vehicle or Placing on network modes; or can be selected as font class for the other fields below..
         /// </summary>
         public static string we_settings_defaultFontDescription {
@@ -1031,11 +1076,38 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a General formatting locale.
+        /// </summary>
+        public static string we_settings_formatterLocaleCode {
+            get {
+                return ResourceManager.GetString("we_settings_formatterLocaleCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a General formatting.
+        /// </summary>
+        public static string we_settings_formattingSettings {
+            get {
+                return ResourceManager.GetString("we_settings_formattingSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Go To.
         /// </summary>
         public static string we_settings_goToFolderShort {
             get {
                 return ResourceManager.GetString("we_settings_goToFolderShort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Invalid locale code! The &lt;b&gt;{0}&lt;/b&gt; locale is being used instead!.
+        /// </summary>
+        public static string we_settings_invalidLocaleCode {
+            get {
+                return ResourceManager.GetString("we_settings_invalidLocaleCode", resourceCulture);
             }
         }
         
@@ -1984,6 +2056,16 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Use &quot;d&quot; for day/date info, &quot;M&quot; for month info and &quot;y&quot; for year info. Other letters not allowed, but can use any symbol.
+        ///Search by C# date formatting for more info..
+        /// </summary>
+        public static string WTS_PARAMVARS_DESC__COMMON_DATEFORMAT {
+            get {
+                return ResourceManager.GetString("WTS_PARAMVARS_DESC__COMMON_DATEFORMAT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Use the decimal number formatting. Examples for the number &lt;color=#FFFF00&gt;1250.65&lt;/color&gt;:
         ///&lt;color=#FFFF00&gt;0&lt;/color&gt; =&gt; &lt;color=#00FF00&gt;1251&lt;/color&gt;
         ///&lt;color=#FFFF00&gt;0.000&lt;/color&gt; =&gt; &lt;color=#00FF00&gt;1250.650&lt;/color&gt;
@@ -2406,6 +2488,15 @@ namespace WriteEverywhere.Localization {
         public static string WTS_PARAMVARS_DESC__VariableType_CurrentVehicle {
             get {
                 return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableType_CurrentVehicle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a City environment related variables, related to time, temperature and more..
+        /// </summary>
+        public static string WTS_PARAMVARS_DESC__VariableType_Environment {
+            get {
+                return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableType_Environment", resourceCulture);
             }
         }
         

@@ -1104,4 +1104,35 @@ The platforms are highlighted and numbered in the game. The underground platform
   <data name="WTS_PARAMVARS_DESC__VariableType_VehicleBuilding" xml:space="preserve">
     <value>Variables relative to the source building where the vehicle went from</value>
   </data>
+  <data name="WTS_PARAMVARS_DESC__COMMON_DATEFORMAT" xml:space="preserve">
+    <value>Use "d" for day/date info, "M" for month info and "y" for year info. Other letters not allowed, but can use any symbol.
+Search by C# date formatting for more info.</value>
+  </data>
+  <data name="we_settings_invalidLocaleCode" xml:space="preserve">
+    <value>Invalid locale code! The &lt;b&gt;{0}&lt;/b&gt; locale is being used instead!</value>
+  </data>
+  <data name="we_settings_clockAndFormatting" xml:space="preserve">
+    <value>Clock and formatters</value>
+  </data>
+  <data name="we_settings_clockFormat" xml:space="preserve">
+    <value>Clock format</value>
+  </data>
+  <data name="we_settings_formatterLocaleCode" xml:space="preserve">
+    <value>General formatting locale</value>
+  </data>
+  <data name="we_settings_formattingSettings" xml:space="preserve">
+    <value>General formatting</value>
+  </data>
+  <data name="we_Enum__VariableEnvironmentSubType_Clock" xml:space="preserve">
+    <value>Clock as setted up in mod settings</value>
+  </data>
+  <data name="we_Enum__VariableEnvironmentSubType_CustomFormattedDate" xml:space="preserve">
+    <value>Date formatted as asked, works better when using the Real Time or alike mods</value>
+  </data>
+  <data name="we_Enum__VariableEnvironmentSubType_Temperature" xml:space="preserve">
+    <value>Temperature, using the game settings unit</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableType_Environment" xml:space="preserve">
+    <value>City environment related variables, related to time, temperature and more.</value>
+  </data>
 </root>

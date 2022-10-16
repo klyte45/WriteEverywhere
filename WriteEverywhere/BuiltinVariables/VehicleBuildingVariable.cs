@@ -31,8 +31,9 @@ namespace WriteEverywhere.Variables
             return result;
         }
 
-        public override string GetTargetTextForVehicle(TextParameterVariableWrapper wrapper, ushort vehicleId, int secRefId, int tercRefId, TextToWriteOnXml textDescriptor, out IEnumerable<BasicRenderInformation> multipleOutput)
+        public override string GetTargetTextForVehicle(TextParameterVariableWrapper wrapper, ushort vehicleId, int secRefId, int tercRefId, TextToWriteOnXml textDescriptor, out IEnumerable<BasicRenderInformation> multipleOutput, out string[] preLoad)
         {
+            preLoad = null;
             multipleOutput = null;
             var buildingId = VehicleManager.instance.m_vehicles.m_buffer[vehicleId].m_sourceBuilding;
             return buildingId == 0 || !(wrapper.subtype is VariableBuildingSubType targetSubtype) || targetSubtype == VariableBuildingSubType.None

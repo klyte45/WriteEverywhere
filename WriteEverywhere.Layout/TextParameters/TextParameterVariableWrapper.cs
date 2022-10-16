@@ -11,7 +11,7 @@ namespace WriteEverywhere.Layout
         public readonly Enum m_varType;
         public readonly Enum type = VariableType.Invalid;
         public readonly byte index = 0;
-        public readonly Enum subtype = VariableSegmentSubType.None;
+        public readonly Enum subtype = VariableType.Invalid;
         public VariableExtraParameterContainer paramContainer = default;
 
         public TextParameterVariableWrapper(string input, TextRenderingClass renderingClass = TextRenderingClass.Any)

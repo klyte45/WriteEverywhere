@@ -11,7 +11,6 @@ using WriteEverywhere.Xml;
 
 namespace WriteEverywhere.Variables
 {
-
     public sealed class CurrentCityVariable : WEVariableExtensionEnum
     {
         public override Enum RootMenuEnumValueWithPrefix { get; } = VariableType.CityData;
@@ -36,19 +35,19 @@ namespace WriteEverywhere.Variables
             }
             return result;
         }
-        public override string GetTargetTextForNet(TextParameterVariableWrapper wrapper, OnNetInstanceCacheContainerXml propDescriptor, ushort segmentId, int secRefId, int tercRefId, TextToWriteOnXml textDescriptor, out IEnumerable<BasicRenderInformation> multipleOutput)
-            => GetText(wrapper, out multipleOutput);
-        public override string GetTargetTextForBuilding(TextParameterVariableWrapper wrapper, WriteOnBuildingXml propGroupDescriptor, WriteOnBuildingPropXml buildingDescriptor, ushort buildingId, int secRefId, int tercRefId, TextToWriteOnXml textDescriptor, out IEnumerable<BasicRenderInformation> multipleOutput)
-            => GetText(wrapper, out multipleOutput);
-        public override string GetTargetTextForVehicle(TextParameterVariableWrapper wrapper, ushort vehicleId, int secRefId, int tercRefId, TextToWriteOnXml textDescriptor, out IEnumerable<BasicRenderInformation> multipleOutput)
-            => GetText(wrapper, out multipleOutput);
+        public override string GetTargetTextForNet(TextParameterVariableWrapper wrapper, OnNetInstanceCacheContainerXml propDescriptor, ushort segmentId, int secRefId, int tercRefId, TextToWriteOnXml textDescriptor, out IEnumerable<BasicRenderInformation> multipleOutput, out string[] preLoad)
+            => GetText(wrapper, out multipleOutput, out preLoad);
+        public override string GetTargetTextForBuilding(TextParameterVariableWrapper wrapper, WriteOnBuildingXml propGroupDescriptor, WriteOnBuildingPropXml buildingDescriptor, ushort buildingId, int secRefId, int tercRefId, TextToWriteOnXml textDescriptor, out IEnumerable<BasicRenderInformation> multipleOutput, out string[] preLoad)
+            => GetText(wrapper, out multipleOutput, out preLoad);
+        public override string GetTargetTextForVehicle(TextParameterVariableWrapper wrapper, ushort vehicleId, int secRefId, int tercRefId, TextToWriteOnXml textDescriptor, out IEnumerable<BasicRenderInformation> multipleOutput, out string[] preLoad)
+            => GetText(wrapper, out multipleOutput, out preLoad);
 
-        private static string GetText(TextParameterVariableWrapper wrapper, out IEnumerable<BasicRenderInformation> multipleOutput)
+        private static string GetText(TextParameterVariableWrapper wrapper, out IEnumerable<BasicRenderInformation> multipleOutput, out string[] preLoad)
         {
+            preLoad = null;
             multipleOutput = null;
             return $"{wrapper.paramContainer.prefix}{GetFormattedString(wrapper.subtype, wrapper) ?? wrapper.m_originalCommand}{wrapper.paramContainer.suffix}";
         }
-
         protected override void Validate_Internal(string[] parameterPath, ref Enum type, ref Enum subtype, ref byte index, ref VariableExtraParameterContainer paramContainer)
         {
             paramContainer = default;
@@ -79,7 +78,6 @@ namespace WriteEverywhere.Variables
                     return null;
             }
         }
-
         public override bool Supports(TextRenderingClass renderingClass) => true;
     }
 }

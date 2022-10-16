@@ -9,6 +9,7 @@
         CurrentVehicle,
         CurrentSegment,
         VehicleBuilding,
-        Parameter
+        Parameter,
+        Environment
     }
 }

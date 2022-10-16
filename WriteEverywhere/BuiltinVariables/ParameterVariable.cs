@@ -41,8 +41,9 @@ namespace WriteEverywhere.Variables
             }
         }
 
-        public override string GetTargetTextForNet(TextParameterVariableWrapper wrapper, OnNetInstanceCacheContainerXml propDescriptor, ushort segmentId, int secRefId, int tercRefId, TextToWriteOnXml textDescriptor, out IEnumerable<BasicRenderInformation> multipleOutput)
+        public override string GetTargetTextForNet(TextParameterVariableWrapper wrapper, OnNetInstanceCacheContainerXml propDescriptor, ushort segmentId, int secRefId, int tercRefId, TextToWriteOnXml textDescriptor, out IEnumerable<BasicRenderInformation> multipleOutput, out string[] preLoad)
         {
+            preLoad = null;
             multipleOutput = null;
             var paramContainer = wrapper.paramContainer;
             var paramIdx = paramContainer.paramIdx;
@@ -97,20 +98,13 @@ namespace WriteEverywhere.Variables
                         }
                     }
                     return $"<ANY PARAM#{paramIdx} NOT SET>";
-                case TextContent.LinesNameList:
-                    break;
-                case TextContent.HwShield:
-                    break;
-                case TextContent.TimeTemperature:
-                    break;
-                case TextContent.LinesSymbols:
-                    break;
             }
             return null;
         }
 
-        public override string GetTargetTextForBuilding(TextParameterVariableWrapper wrapper, WriteOnBuildingXml propGroupDescriptor, WriteOnBuildingPropXml buildingDescriptor, ushort buildingId, int secRefId, int tercRefId, TextToWriteOnXml textDescriptor, out IEnumerable<BasicRenderInformation> multipleOutput)
+        public override string GetTargetTextForBuilding(TextParameterVariableWrapper wrapper, WriteOnBuildingXml propGroupDescriptor, WriteOnBuildingPropXml buildingDescriptor, ushort buildingId, int secRefId, int tercRefId, TextToWriteOnXml textDescriptor, out IEnumerable<BasicRenderInformation> multipleOutput, out string[] preLoad)
         {
+            preLoad = null;
             multipleOutput = null;
             var buildingParam = WTSBuildingData.Instance.Parameters.TryGetValue(WTSBuildingPropsSingleton.FindParentBuilding(buildingId), out var parameter) ? parameter : null;
             if (buildingParam == null || buildingParam.TextParameters.Count == 0)
@@ -169,14 +163,6 @@ namespace WriteEverywhere.Variables
                         }
                     }
                     return $"<ANY PARAM#{paramIdx} NOT SET>";
-                case TextContent.LinesNameList:
-                    break;
-                case TextContent.HwShield:
-                    break;
-                case TextContent.TimeTemperature:
-                    break;
-                case TextContent.LinesSymbols:
-                    break;
             }
             return null;
         }

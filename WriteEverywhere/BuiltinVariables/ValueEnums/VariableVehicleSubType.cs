@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using WriteEverywhere.Plugins;
 
-namespace WriteEverywhere.Plugins
+namespace WriteEverywhere.Variables
 {
     public enum VariableVehicleSubType
     {
@@ -17,7 +16,7 @@ namespace WriteEverywhere.Plugins
 
     public static class VariableVehicleSubTypeExtensions
     {
-       
+
         public static CommandLevel GetCommandLevel(this VariableVehicleSubType var)
         {
             switch (var)

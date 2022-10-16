@@ -84,11 +84,8 @@ namespace WriteEverywhere.Font
 
         public BasicRenderInformation DrawString(MonoBehaviour referenceGO, string text, Vector2 pos) => DrawString(referenceGO, text, pos, Vector2.one);
 
-        public BasicRenderInformation DrawString(MonoBehaviour referenceGO, string text, Vector2 pos, Vector2 scale)
-        {
-            BasicRenderInformation result = _fontSystem.DrawText(referenceGO, pos.x, pos.y, text, scale);
-            return result;
-        }
+        public BasicRenderInformation DrawString(MonoBehaviour referenceGO, string text, Vector2 pos, Vector2 scale) => _fontSystem.DrawText(referenceGO, pos.x, pos.y, text, scale);
+        public void EnsureText(MonoBehaviour referenceGO, string text, Vector2 pos, Vector2 scale) => _fontSystem.EnsureText(referenceGO, pos.x, pos.y, text, scale);
 
         public void AddTtf(byte[] ttf, float qualityMultiplier) => _fontSystem.AddFontMem(ttf, qualityMultiplier);
 

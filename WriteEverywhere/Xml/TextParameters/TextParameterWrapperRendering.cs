@@ -39,14 +39,6 @@ namespace WriteEverywhere.Xml
                     return textDescriptor.Value?.GetSpriteFromCycle(textDescriptor, propDesc.TargetAssetParameter, refId, secIdx, tercIdx);
                 case TextContent.ParameterizedSpriteSingle:
                     return textDescriptor.Value?.GetSpriteFromParameter(propDesc.TargetAssetParameter);
-                case TextContent.LinesNameList:
-                    break;
-                case TextContent.HwShield:
-                    break;
-                case TextContent.TimeTemperature:
-                    break;
-                case TextContent.LinesSymbols:
-                    break;
             }
             return null;
         }
@@ -92,15 +84,7 @@ namespace WriteEverywhere.Xml
                                 break;
                         }
                     }
-                    return GetTargetFont(propGroupDescriptor, instance, textDescriptor).DrawString(ModInstance.Controller, $"<SEQ PARAM IS NOT SET>", default, FontServer.instance.ScaleEffective); ;
-                case TextContent.LinesNameList:
-                    break;
-                case TextContent.HwShield:
-                    break;
-                case TextContent.TimeTemperature:
-                    break;
-                case TextContent.LinesSymbols:
-                    break;
+                    return GetTargetFont(propGroupDescriptor, instance, textDescriptor).DrawString(ModInstance.Controller, $"<SEQ PARAM IS NOT SET>", default, FontServer.instance.ScaleEffective);
             }
             return null;
         }

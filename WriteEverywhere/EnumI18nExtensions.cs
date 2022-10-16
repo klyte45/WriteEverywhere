@@ -5,6 +5,7 @@ using System.Linq;
 using WriteEverywhere.Layout;
 using WriteEverywhere.Localization;
 using WriteEverywhere.Plugins;
+using WriteEverywhere.Variables;
 using WriteEverywhere.Xml;
 
 namespace WriteEverywhere
@@ -26,6 +27,7 @@ namespace WriteEverywhere
                         case VariableType.VehicleBuilding: return Str.WTS_PARAMVARS_DESC__VariableType_VehicleBuilding;
                         case VariableType.Invalid: return Str.WTS_PARAMVARS_DESC__VariableType_Invalid;
                         case VariableType.Parameter: return Str.WTS_PARAMVARS_DESC__VariableType_Parameter;
+                        case VariableType.Environment: return Str.WTS_PARAMVARS_DESC__VariableType_Environment;
                     }
                     break;
                 case VariableCitySubType tp:
@@ -97,10 +99,6 @@ namespace WriteEverywhere
                         case TextContent.ParameterizedText: return Str.WTS_BOARD_TEXT_TYPE_DESC__ParameterizedText;
                         case TextContent.ParameterizedSpriteFolder: return Str.WTS_BOARD_TEXT_TYPE_DESC__ParameterizedSpriteFolder;
                         case TextContent.ParameterizedSpriteSingle: return Str.WTS_BOARD_TEXT_TYPE_DESC__ParameterizedSpriteSingle;
-                        case TextContent.LinesSymbols: return Str.WTS_BOARD_TEXT_TYPE_DESC__LinesSymbols;
-                        case TextContent.LinesNameList: return Str.WTS_BOARD_TEXT_TYPE_DESC__LinesNameList;
-                        case TextContent.HwShield: return Str.WTS_BOARD_TEXT_TYPE_DESC__HwShield;
-                        case TextContent.TimeTemperature: return Str.WTS_BOARD_TEXT_TYPE_DESC__TimeTemperature;
                         case TextContent.TextParameterSequence: return Str.WTS_BOARD_TEXT_TYPE_DESC__TextParameterSequence;
                         case TextContent.Any: return Str.WTS_BOARD_TEXT_TYPE_DESC__Any;
                     }
@@ -156,6 +154,11 @@ namespace WriteEverywhere
                 case PivotPosition.CenterInvert: return Str.we_PivotPosition__CenterInvert;
                 case PivotPosition.CenterLookingLeft: return Str.we_PivotPosition__CenterLookingLeft;
                 case PivotPosition.CenterLookingRight: return Str.we_PivotPosition__CenterLookingRight;
+
+                case VariableEnvironmentSubType.Clock: return Str.we_Enum__VariableEnvironmentSubType_Clock;
+                case VariableEnvironmentSubType.Temperature: return Str.we_Enum__VariableEnvironmentSubType_Temperature;
+                case VariableEnvironmentSubType.CustomFormattedDate: return Str.we_Enum__VariableEnvironmentSubType_CustomFormattedDate;
+
 
             }
             return variable.ValueToI18nKwytto();

@@ -8,8 +8,9 @@ using WriteEverywhere.Layout;
 using WriteEverywhere.Plugins;
 using WriteEverywhere.Plugins.Ext;
 using WriteEverywhere.Singleton;
+using WriteEverywhere.Xml;
 
-namespace WriteEverywhere.Xml
+namespace WriteEverywhere.Variables
 {
     public sealed class CurrentSegmentVariable : WEVariableExtensionEnum
     {
@@ -35,8 +36,9 @@ namespace WriteEverywhere.Xml
             }
             return result;
         }
-        public override string GetTargetTextForNet(TextParameterVariableWrapper wrapper, OnNetInstanceCacheContainerXml propDescriptor, ushort segmentId, int secRefId, int tercRefId, TextToWriteOnXml textDescriptor, out IEnumerable<BasicRenderInformation> multipleOutput)
+        public override string GetTargetTextForNet(TextParameterVariableWrapper wrapper, OnNetInstanceCacheContainerXml propDescriptor, ushort segmentId, int secRefId, int tercRefId, TextToWriteOnXml textDescriptor, out IEnumerable<BasicRenderInformation> multipleOutput, out string[] preLoad)
         {
+            preLoad = null;
             multipleOutput = null;
             var subtype = wrapper.subtype;
             var originalCommand = wrapper.m_originalCommand;
@@ -94,7 +96,7 @@ namespace WriteEverywhere.Xml
                     multiplier = 1 / 1609f;
                     goto case VariableSegmentSubType.MileageMeters;
                 case VariableSegmentSubType.MileageMeters:
-                    return varWrapper.TryFormat(WTSCacheSingleton.instance.GetSegment(targId).GetMetersAt(instance.SegmentPosition), multiplier);           
+                    return varWrapper.TryFormat(WTSCacheSingleton.instance.GetSegment(targId).GetMetersAt(instance.SegmentPosition), multiplier);
 
                 case VariableSegmentSubType.DistrictAreaKm2:
                     multiplier = 0.000001f;
