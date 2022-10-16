@@ -46,22 +46,7 @@ namespace WriteEverywhere.Data
         public string StencilFont { get; set; }
 
         [XmlAttribute("highwayShieldsFont")]
-        public string HighwayShieldsFont
-        {
-            get => highwayShieldsFont; set
-            {
-                {
-                    if (ModInstance.Controller is null || highwayShieldsFont != value)
-                    {
-                        highwayShieldsFont = value;
-                        if (LoadingManager.instance.m_loadingComplete)
-                        {
-                            ModInstance.Controller?.HighwayShieldsAtlasLibrary?.PurgeShields();
-                        }
-                    }
-                }
-            }
-        }
+        public string HighwayShieldsFont { get; set; }
 
         internal string GetTargetFont(FontClass fontClass, bool allowNull = false)
         {

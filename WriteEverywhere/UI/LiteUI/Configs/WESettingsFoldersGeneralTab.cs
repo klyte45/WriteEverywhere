@@ -33,7 +33,6 @@ namespace WriteEverywhere.UI
                         DoButtonToFolderDraw(Str.WTS_DEFAULT_BUILDINGS_CONFIG_PATH_TITLE, WEMainController.DefaultBuildingsConfigurationFolder);
                         DoButtonToFolderDraw(Str.WTS_DEFAULT_VEHICLES_CONFIG_PATH_TITLE, WEMainController.DefaultVehiclesConfigurationFolder);
                         DoButtonToFolderDraw(Str.WTS_DEFAULT_PROP_LAYOUTS_PATH_TITLE, WEMainController.DefaultPropsLayoutConfigurationFolder);
-                        DoButtonToFolderDraw(Str.WTS_DEFAULT_HWSHIELDS_CONFIG_PATH_TITLE, WEMainController.DefaultHwShieldsConfigurationFolder);
                         DoButtonToFolderDraw(Str.WTS_FONT_FILES_PATH_TITLE, WEMainController.FontFilesPath);
                         DoButtonToFolderDraw(Str.WTS_EXTRA_SPRITES_PATH_TITLE, WEMainController.ExtraSpritesFolder);
 

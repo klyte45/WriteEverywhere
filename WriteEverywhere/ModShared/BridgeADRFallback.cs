@@ -3,7 +3,6 @@ extern alias ADR;
 using ADR::Bridge_WE2ADR;
 using ColossalFramework.Math;
 using Kwytto.Utils;
-using System.Collections;
 using UnityEngine;
 
 namespace WriteEverywhere.ModShared
@@ -39,28 +38,8 @@ namespace WriteEverywhere.ModShared
 
         public override bool GetAddressStreetAndNumber(Vector3 sidewalk, Vector3 midPosBuilding, out int number, out string streetName) => SegmentUtils.GetBasicAddressStreetAndNumber(sidewalk, midPosBuilding, out number, out streetName);
         public override Color GetDistrictColor(ushort districtId) => m_randomColors[districtId % m_randomColors.Length];
-        public override Vector2 GetStartPoint()
-        {
-            if (m_cachedPos == null)
-            {
-                GameAreaManager.instance.GetStartTile(out int x, out int y);
-                m_cachedPos = new Vector2((x - 2) * 1920, (y - 2) * 1920);
-            }
-            return m_cachedPos.GetValueOrDefault();
-        }
-
         public override string GetStreetQualifier(ushort idx) => GetStreetFullName(idx).Replace(GetStreetSuffix(idx), "");
-        public override string GetStreetPostalCode(Vector3 position, ushort idx) => idx.ToString("D5");
-        public override AdrHighwayParameters GetHighwayData(ushort seedId) => null;
-        public override IEnumerator ListAllAvailableHighwayTypes(string filterText, out string[] result)
-        {
-            result = null;
-            return null;
-        }
-
-        public override AdrHighwayParameters GetHighwayTypeData(string typeName) => null;
         public override byte GetDirection(ushort segmentId) => SegmentUtils.GetCardinalDirectionSegment(segmentId, SegmentUtils.MileageStartSource.DEFAULT);
-        public override float GetDistanceFromCenter(ushort segmentId) => VectorUtils.XZ(NetManager.instance.m_segments.m_buffer[segmentId].m_middlePosition).magnitude;
 
     }
 }

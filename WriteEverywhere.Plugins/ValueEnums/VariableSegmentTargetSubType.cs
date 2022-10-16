@@ -12,7 +12,6 @@ namespace WriteEverywhere.Plugins
         StreetPrefix,
         District,
         Park,
-        PostalCode,
         ParkOrDistrict,
         DistrictOrPark,
         MileageMeters,
@@ -26,13 +25,6 @@ namespace WriteEverywhere.Plugins
         ParkAreaMi2,
         DistrictPopulation,
         Direction,
-        HwCodeShort,
-        HwCodeLong,
-        HwDettachedPrefix,
-        HwIdentifierSuffix,
-        DistanceFromReferenceKilometers,
-        DistanceFromReferenceMeters,
-        DistanceFromReferenceMiles,
     }
 
     public static class VariableSegmentTargetSubTypeExtensions
@@ -64,9 +56,6 @@ namespace WriteEverywhere.Plugins
                 case VariableSegmentSubType.ParkAreaM2:
                 case VariableSegmentSubType.ParkAreaKm2:
                 case VariableSegmentSubType.ParkAreaMi2:
-                case VariableSegmentSubType.DistanceFromReferenceKilometers:
-                case VariableSegmentSubType.DistanceFromReferenceMeters:
-                case VariableSegmentSubType.DistanceFromReferenceMiles:
                     return CommandLevel.m_numberFormatFloat;
                 case VariableSegmentSubType.DistrictPopulation:
                     return CommandLevel.m_numberFormatInt;
@@ -78,12 +67,7 @@ namespace WriteEverywhere.Plugins
                 case VariableSegmentSubType.ParkOrDistrict:
                 case VariableSegmentSubType.DistrictOrPark:
                     return CommandLevel.m_stringFormat;
-                case VariableSegmentSubType.PostalCode:
                 case VariableSegmentSubType.Direction:
-                case VariableSegmentSubType.HwCodeShort:
-                case VariableSegmentSubType.HwCodeLong:
-                case VariableSegmentSubType.HwDettachedPrefix:
-                case VariableSegmentSubType.HwIdentifierSuffix:
                     return CommandLevel.m_appendPrefix;
                 default:
                     return null;

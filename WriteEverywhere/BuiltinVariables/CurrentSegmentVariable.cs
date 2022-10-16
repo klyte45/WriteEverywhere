@@ -87,8 +87,6 @@ namespace WriteEverywhere.Xml
                         ? WTSCacheSingleton.instance.GetBuilding(segmentData2.OutsideConnectionId).Name
                         : WTSCacheSingleton.instance.GetDistrict(segmentData2.DistrictId).Name);
                 case VariableSegmentSubType.Park: return varWrapper.TryFormat(WTSCacheSingleton.instance.GetPark(WTSCacheSingleton.instance.GetSegment(targId).ParkId).Name);
-                case VariableSegmentSubType.PostalCode: return WTSCacheSingleton.instance.GetSegment(targId).PostalCode;
-
                 case VariableSegmentSubType.MileageKilometers:
                     multiplier = 0.001f;
                     goto case VariableSegmentSubType.MileageMeters;
@@ -96,16 +94,7 @@ namespace WriteEverywhere.Xml
                     multiplier = 1 / 1609f;
                     goto case VariableSegmentSubType.MileageMeters;
                 case VariableSegmentSubType.MileageMeters:
-                    return varWrapper.TryFormat(WTSCacheSingleton.instance.GetSegment(targId).GetMetersAt(instance.SegmentPosition), multiplier);
-
-                case VariableSegmentSubType.DistanceFromReferenceKilometers:
-                    multiplier = 0.001f;
-                    goto case VariableSegmentSubType.DistanceFromReferenceMeters;
-                case VariableSegmentSubType.DistanceFromReferenceMiles:
-                    multiplier = 1 / 1609f;
-                    goto case VariableSegmentSubType.DistanceFromReferenceMeters;
-                case VariableSegmentSubType.DistanceFromReferenceMeters:
-                    return varWrapper.TryFormat(WTSCacheSingleton.instance.GetSegment(targId).DistanceFromCenter, multiplier);
+                    return varWrapper.TryFormat(WTSCacheSingleton.instance.GetSegment(targId).GetMetersAt(instance.SegmentPosition), multiplier);           
 
                 case VariableSegmentSubType.DistrictAreaKm2:
                     multiplier = 0.000001f;
@@ -130,10 +119,6 @@ namespace WriteEverywhere.Xml
 
 
                 case VariableSegmentSubType.Direction: return WTSCacheSingleton.instance.GetSegment(targId).Direction;
-                case VariableSegmentSubType.HwCodeShort: return WTSCacheSingleton.instance.GetSegment(targId).HwCodeShort;
-                case VariableSegmentSubType.HwCodeLong: return WTSCacheSingleton.instance.GetSegment(targId).HwCodeLong;
-                case VariableSegmentSubType.HwDettachedPrefix: return WTSCacheSingleton.instance.GetSegment(targId).HwDettachedPrefix;
-                case VariableSegmentSubType.HwIdentifierSuffix: return WTSCacheSingleton.instance.GetSegment(targId).HwIdentifierSuffix;
                 default:
                     return null;
             }

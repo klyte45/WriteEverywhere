@@ -45,7 +45,6 @@ namespace WriteEverywhere
                         case VariableSegmentSubType.StreetPrefix: return Str.WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_StreetPrefix;
                         case VariableSegmentSubType.District: return Str.WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_District;
                         case VariableSegmentSubType.Park: return Str.WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_Park;
-                        case VariableSegmentSubType.PostalCode: return Str.WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_PostalCode;
                         case VariableSegmentSubType.ParkOrDistrict: return Str.WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_ParkOrDistrict;
                         case VariableSegmentSubType.DistrictOrPark: return Str.WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistrictOrPark;
                         case VariableSegmentSubType.MileageMeters: return Str.WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_MileageMeters;
@@ -59,13 +58,6 @@ namespace WriteEverywhere
                         case VariableSegmentSubType.ParkAreaMi2: return Str.WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_ParkAreaMi2;
                         case VariableSegmentSubType.DistrictPopulation: return Str.WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistrictPopulation;
                         case VariableSegmentSubType.Direction: return Str.WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_Direction;
-                        case VariableSegmentSubType.HwCodeShort: return Str.WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_HwCodeShort;
-                        case VariableSegmentSubType.HwCodeLong: return Str.WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_HwCodeLong;
-                        case VariableSegmentSubType.HwDettachedPrefix: return Str.WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_HwDettachedPrefix;
-                        case VariableSegmentSubType.HwIdentifierSuffix: return Str.WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_HwIdentifierSuffix;
-                        case VariableSegmentSubType.DistanceFromReferenceKilometers: return Str.WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistanceFromReferenceKilometers;
-                        case VariableSegmentSubType.DistanceFromReferenceMeters: return Str.WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistanceFromReferenceMeters;
-                        case VariableSegmentSubType.DistanceFromReferenceMiles: return Str.WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistanceFromReferenceMiles;
                     }
                     break;
                 case VariableVehicleSubType tp:

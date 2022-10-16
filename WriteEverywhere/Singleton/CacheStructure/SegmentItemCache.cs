@@ -2,7 +2,6 @@
 
 using ADR::Bridge_WE2ADR;
 using UnityEngine;
-using WriteEverywhere.Localization;
 using WriteEverywhere.Singleton;
 using static CardinalPoint;
 
@@ -47,18 +46,6 @@ namespace WriteEverywhere.Rendering
                         : ModInstance.Controller.ConnectorADR.GetStreetQualifierCustom(segmentId);
                 }
                 return streetQualifier.AsFormattable();
-            }
-        }
-
-        public string PostalCode
-        {
-            get
-            {
-                if (postalCode is null)
-                {
-                    postalCode = ModInstance.Controller.ConnectorADR.GetStreetPostalCode(NetManager.instance.m_segments.m_buffer[segmentId].m_middlePosition, segmentId);
-                }
-                return postalCode;
             }
         }
 
@@ -140,64 +127,6 @@ namespace WriteEverywhere.Rendering
             }
         }
 
-        public float DistanceFromCenter
-        {
-            get
-            {
-                if (distanceFromCenter is null)
-                {
-                    distanceFromCenter = ModInstance.Controller.ConnectorADR.GetDistanceFromCenter(segmentId);
-                }
-                return distanceFromCenter ?? 0;
-            }
-        }
-        public string HwCodeShort
-        {
-            get
-            {
-                if (hwCodeShort is null)
-                {
-                    FillHwParams();
-                }
-                return hwCodeShort;
-            }
-        }
-
-
-        public string HwCodeLong
-        {
-            get
-            {
-                if (hwCodeLong is null)
-                {
-                    FillHwParams();
-                }
-                return hwCodeLong;
-            }
-        }
-        public string HwDettachedPrefix
-        {
-            get
-            {
-                if (hwDettachedPrefix is null)
-                {
-                    FillHwParams();
-                }
-                return hwDettachedPrefix;
-            }
-        }
-        public string HwIdentifierSuffix
-        {
-            get
-            {
-                if (hwIdentifierSuffix is null)
-                {
-                    FillHwParams();
-                }
-                return hwIdentifierSuffix;
-            }
-        }
-
         private string fullStreetName;
         private string streetName;
         private string streetQualifier;
@@ -208,22 +137,14 @@ namespace WriteEverywhere.Rendering
         private int? endMileageMeters;
         private ushort? outsideConnectionId;
         private byte? direction8;
-        private string hwCodeShort;
-        private string hwCodeLong;
-        private string hwDettachedPrefix;
-        private string hwIdentifierSuffix;
         private float? distanceFromCenter;
 
 
         private void FillHwParams()
         {
-            var paramsHw = ModInstance.Controller.ConnectorADR.GetHighwayData(NetManager.instance.m_segments.m_buffer[segmentId].m_nameSeed);
-            hwDettachedPrefix = paramsHw?.detachedStr ?? "";
-            hwIdentifierSuffix = paramsHw?.hwIdentifier ?? "";
-            hwCodeShort = paramsHw?.shortCode ?? "";
-            hwCodeLong = paramsHw?.longCode ?? "";
-            startMileageMeters = SegmentUtils.GetNumberAt(0, segmentId, paramsHw?.mileageSrc ?? SegmentUtils.MileageStartSource.DEFAULT, paramsHw?.mileageOffset ?? 0, out _);
-            endMileageMeters = SegmentUtils.GetNumberAt(1, segmentId, paramsHw?.mileageSrc ?? SegmentUtils.MileageStartSource.DEFAULT, paramsHw?.mileageOffset ?? 0, out _);
+            ModInstance.Controller.ConnectorADR.GetMileageParameters(NetManager.instance.m_segments.m_buffer[segmentId].m_nameSeed, out var src, out var mileageOffset);
+            startMileageMeters = SegmentUtils.GetNumberAt(0, segmentId, src, mileageOffset, out _);
+            endMileageMeters = SegmentUtils.GetNumberAt(1, segmentId, src, mileageOffset, out _);
         }
 
         public void PurgeCache(CacheErasingFlags cacheToPurge, InstanceID refId)
@@ -234,10 +155,6 @@ namespace WriteEverywhere.Rendering
                 streetName = null;
                 streetQualifier = null;
                 direction8 = null;
-                hwCodeShort = null;
-                hwCodeLong = null;
-                hwDettachedPrefix = null;
-                hwIdentifierSuffix = null;
             }
 
             if (cacheToPurge.Has(CacheErasingFlags.PostalCodeParam))

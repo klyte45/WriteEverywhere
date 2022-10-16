@@ -69,13 +69,6 @@ namespace WriteEverywhere
         }
         #endregion
 
-        #region Highway Shields
-        public const string DEFAULT_HW_SHIELDS_CONFIG_FOLDER = "HighwayShieldsLayouts";
-        internal WTSHighwayShieldsAtlasLibrary HighwayShieldsAtlasLibrary { get; private set; }
-        internal WTSHighwayShieldsSingleton HighwayShieldsSingleton { get; private set; }
-        public static string DefaultHwShieldsConfigurationFolder { get; } = FOLDER_PATH + Path.DirectorySeparatorChar + DEFAULT_HW_SHIELDS_CONFIG_FOLDER;
-        #endregion
-
         #region Prop extra files
         public const string DEFAULT_GAME_PROP_LAYOUT_FOLDER = "PropsDefaultLayouts";
         public const string m_defaultFileNamePropsXml = "WTS_DefaultPropsConfig";
@@ -127,7 +120,6 @@ namespace WriteEverywhere
             KFileUtils.EnsureFolderCreation(DefaultBuildingsConfigurationFolder);
             KFileUtils.EnsureFolderCreation(DefaultVehiclesConfigurationFolder);
             KFileUtils.EnsureFolderCreation(DefaultPropsLayoutConfigurationFolder);
-            KFileUtils.EnsureFolderCreation(DefaultHwShieldsConfigurationFolder);
             KFileUtils.EnsureFolderCreation(FontFilesPath);
             KFileUtils.EnsureFolderCreation(ExtraSpritesFolder);
 
@@ -137,8 +129,6 @@ namespace WriteEverywhere
             OnNetPropsSingleton = gameObject.AddComponent<WTSOnNetPropsSingleton>();
             VehicleTextsSingleton = gameObject.AddComponent<WTSVehicleTextsSingleton>();
             BuildingPropsSingleton = gameObject.AddComponent<WTSBuildingPropsSingleton>();
-            HighwayShieldsSingleton = gameObject.AddComponent<WTSHighwayShieldsSingleton>();
-            HighwayShieldsAtlasLibrary = gameObject.AddComponent<WTSHighwayShieldsAtlasLibrary>();
         }
 
         protected override void StartActions()
