@@ -99,10 +99,10 @@
     <EmbeddedResource Include="UI\**\*.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Bridge_WE2ADR\Bridge_WE2ADR.csproj">
+    <ProjectReference Include="..\Bridge_WE2ADR\Bridge_WE2CD.csproj">
       <Project>{60d2e312-654f-499b-a0e0-8786a5a66cf2}</Project>
-      <Name>Bridge_WE2ADR</Name>
-      <Aliases>ADR</Aliases>
+      <Name>Bridge_WE2CD</Name>
+      <Aliases>CD</Aliases>
     </ProjectReference>
     <ProjectReference Include="..\Bridge_WE2TLM\Bridge_WE2TLM.csproj">
       <Project>{9993bf38-0db8-4959-a4a6-701ab67ec55d}</Project>

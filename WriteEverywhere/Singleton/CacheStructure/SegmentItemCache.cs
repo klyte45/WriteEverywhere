@@ -1,6 +1,6 @@
-﻿extern alias ADR;
+﻿extern alias CD;
 
-using ADR::Bridge_WE2ADR;
+using CD::Bridge_WE2CD;
 using UnityEngine;
 using WriteEverywhere.Singleton;
 using static CardinalPoint;
@@ -17,7 +17,7 @@ namespace WriteEverywhere.Rendering
             {
                 if (fullStreetName is null)
                 {
-                    fullStreetName = ModInstance.Controller.ConnectorADR.GetStreetFullName(segmentId);
+                    fullStreetName = ModInstance.Controller.ConnectorCD.GetStreetFullName(segmentId);
                 }
                 return fullStreetName.AsFormattable();
             }
@@ -29,8 +29,8 @@ namespace WriteEverywhere.Rendering
                 if (streetName is null)
                 {
                     streetName = (NetManager.instance.m_segments.m_buffer[segmentId].m_flags & NetSegment.Flags.CustomName) == 0
-                        ? ModInstance.Controller.ConnectorADR.GetStreetSuffix(segmentId)
-                        : ModInstance.Controller.ConnectorADR.GetStreetSuffixCustom(segmentId);
+                        ? ModInstance.Controller.ConnectorCD.GetStreetSuffix(segmentId)
+                        : ModInstance.Controller.ConnectorCD.GetStreetSuffixCustom(segmentId);
                 }
                 return streetName.AsFormattable();
             }
@@ -42,8 +42,8 @@ namespace WriteEverywhere.Rendering
                 if (streetQualifier is null)
                 {
                     streetQualifier = (NetManager.instance.m_segments.m_buffer[segmentId].m_flags & NetSegment.Flags.CustomName) == 0
-                        ? ModInstance.Controller.ConnectorADR.GetStreetQualifier(segmentId)
-                        : ModInstance.Controller.ConnectorADR.GetStreetQualifierCustom(segmentId);
+                        ? ModInstance.Controller.ConnectorCD.GetStreetQualifier(segmentId)
+                        : ModInstance.Controller.ConnectorCD.GetStreetQualifierCustom(segmentId);
                 }
                 return streetQualifier.AsFormattable();
             }
@@ -78,7 +78,7 @@ namespace WriteEverywhere.Rendering
             {
                 if (direction8 is null)
                 {
-                    direction8 = ModInstance.Controller.ConnectorADR.GetDirection(segmentId);
+                    direction8 = ModInstance.Controller.ConnectorCD.GetDirection(segmentId);
                 }
                 return ((Cardinal16)((direction8 ?? 0) * 2)).ValueToI18n();
             }
@@ -130,19 +130,17 @@ namespace WriteEverywhere.Rendering
         private string fullStreetName;
         private string streetName;
         private string streetQualifier;
-        private string postalCode;
         private byte? parkId;
         private byte? districtId;
         private int? startMileageMeters;
         private int? endMileageMeters;
         private ushort? outsideConnectionId;
         private byte? direction8;
-        private float? distanceFromCenter;
 
 
         private void FillHwParams()
         {
-            ModInstance.Controller.ConnectorADR.GetMileageParameters(NetManager.instance.m_segments.m_buffer[segmentId].m_nameSeed, out var src, out var mileageOffset);
+            ModInstance.Controller.ConnectorCD.GetMileageParameters(NetManager.instance.m_segments.m_buffer[segmentId].m_nameSeed, out var src, out var mileageOffset);
             startMileageMeters = SegmentUtils.GetNumberAt(0, segmentId, src, mileageOffset, out _);
             endMileageMeters = SegmentUtils.GetNumberAt(1, segmentId, src, mileageOffset, out _);
         }
@@ -157,10 +155,6 @@ namespace WriteEverywhere.Rendering
                 direction8 = null;
             }
 
-            if (cacheToPurge.Has(CacheErasingFlags.PostalCodeParam))
-            {
-                postalCode = null;
-            }
             if (cacheToPurge.Has(CacheErasingFlags.BuildingName | CacheErasingFlags.SegmentSize | CacheErasingFlags.OutsideConnections))
             {
                 outsideConnectionId = null;
@@ -177,11 +171,6 @@ namespace WriteEverywhere.Rendering
             {
                 startMileageMeters = null;
                 endMileageMeters = null;
-                distanceFromCenter = null;
-            }
-            if (cacheToPurge.Has(CacheErasingFlags.PostalCodeParam))
-            {
-                distanceFromCenter = null;
             }
         }
 

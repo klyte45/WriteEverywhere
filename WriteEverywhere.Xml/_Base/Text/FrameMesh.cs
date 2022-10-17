@@ -27,8 +27,10 @@ namespace WriteEverywhere.Xml
         [XmlAttribute("glassColor")]
         public string GlassColorStr { get => m_cachedGlassColor == null ? null : ColorExtensions.ToRGB(GlassColor); set => GlassColor = ColorExtensions.FromRGBSafe(value) ?? Color.black; }
 
-        [XmlAttribute("inheritColor")]
-        public bool m_inheritColor = false;
+        [XmlAttribute("colorSource")]
+        public ColoringSource m_colorSource = ColoringSource.Fixed;
+        [XmlAttribute("useFixedIfMultiline")]
+        public bool m_useFixedIfMultiline;
 
         [XmlElement("backSize")]
         public Vector2Xml BackSize

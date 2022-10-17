@@ -147,7 +147,7 @@ namespace WriteEverywhere.Rendering
                         return Color.white;
                     case ColoringMode.ByDistrict:
                         byte districtId = DistrictManager.instance.GetDistrict(BuildingManager.instance.m_buildings.m_buffer[refId].m_position);
-                        return ModInstance.Controller.ConnectorADR.GetDistrictColor(districtId);
+                        return ModInstance.Controller.ConnectorCD.GetDistrictColor(districtId);
                     case ColoringMode.FromBuilding:
                         return BuildingManager.instance.m_buildings.m_buffer[refId].Info.m_buildingAI.GetColor(refId, ref BuildingManager.instance.m_buildings.m_buffer[refId], InfoManager.InfoMode.None);
                 }

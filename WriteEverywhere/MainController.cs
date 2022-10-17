@@ -1,4 +1,4 @@
-﻿extern alias ADR;
+﻿extern alias CD;
 extern alias TLM;
 extern alias VS;
 
@@ -83,7 +83,7 @@ namespace WriteEverywhere
         #endregion
 
         #region Bridges
-        public ADR::Bridge_WE2ADR.IBridge ConnectorADR { get; } = BridgeUtils.GetMostPrioritaryImplementation<ADR::Bridge_WE2ADR.IBridge>();
+        public CD::Bridge_WE2CD.IBridge ConnectorCD { get; } = BridgeUtils.GetMostPrioritaryImplementation<CD::Bridge_WE2CD.IBridge>();
         public TLM::Bridge_WE2TLM.IBridge ConnectorTLM { get; } = BridgeUtils.GetMostPrioritaryImplementation<TLM::Bridge_WE2TLM.IBridge>();
         public VS::Bridge_WE2VS.IBridge ConnectorVS { get; } = BridgeUtils.GetMostPrioritaryImplementation<VS::Bridge_WE2VS.IBridge>();
         #endregion
@@ -152,7 +152,6 @@ namespace WriteEverywhere
             EventOnDistrictChanged += WTSCacheSingleton.ClearCacheDistrictName;
             EventOnParkChanged += WTSCacheSingleton.ClearCacheParkName;
             EventOnBuildingNameChanged += WTSCacheSingleton.ClearCacheBuildingName;
-            EventOnPostalCodeChanged += WTSCacheSingleton.ClearCachePostalCode;
             EventOnZeroMarkerChanged += OnNameSeedChanged;
 
         }
@@ -165,7 +164,6 @@ namespace WriteEverywhere
         private void OnNameSeedChanged()
         {
             WTSCacheSingleton.ClearCacheSegmentNameParam();
-            WTSCacheSingleton.ClearCachePostalCode();
             WTSCacheSingleton.ClearCacheBuildingName(null);
         }
 

@@ -1,5 +1,6 @@
 ﻿using Kwytto.LiteUI;
 using System;
+using System.Linq;
 using UnityEngine;
 using WriteEverywhere.Layout;
 using WriteEverywhere.Localization;
@@ -13,13 +14,19 @@ namespace WriteEverywhere.UI
         private readonly GUIColorPicker m_picker;
         private Vector2 m_scrollPos;
         private readonly Func<PrefabInfo> m_infoGetter;
+        private readonly string[] contrastOptions;
+        private readonly ColoringSource[] contrastValues;
+        private readonly GUIRootWindowBase m_root;
 
         protected override TextRenderingClass RenderingClass { get; }
         public GeneralWritingEditorFrameSettingsTab(GUIColorPicker picker, Func<PrefabInfo> infoGetter, TextRenderingClass renderingClass)
         {
             m_picker = picker;
+            m_root = picker.GetComponentInParent<GUIRootWindowBase>();
             m_infoGetter = infoGetter;
             RenderingClass = renderingClass;
+            contrastValues = ColoringSourceExtensions.AvailableAtClass(renderingClass);
+            contrastOptions = contrastValues.Select(x => x.ValueToI18n()).ToArray();
         }
 
         public override Texture TabIcon { get; } = GUIKwyttoCommons.GetByNameFromDefaultAtlas("ToolbarIconProps");
@@ -34,52 +41,60 @@ namespace WriteEverywhere.UI
                 {
                     using (new GUILayout.VerticalScope())
                     {
-                        bool changedFrame = false;
                         GUIKwyttoCommons.AddToggle(Str.WTS_TEXT_USEFRAME, ref item.BackgroundMeshSettings.m_useFrame, isEditable);
                         var usingFrame = item.BackgroundMeshSettings.m_useFrame;
                         if (usingFrame)
                         {
-                            changedFrame |= GUIKwyttoCommons.AddVector2Field(tabAreaSize.x, item.BackgroundMeshSettings.FrameMeshSettings.BackSize, Str.WTS_BOXMESH_BACKSIZE, Str.WTS_BOXMESH_BACKSIZE, isEditable, .001f);
-                            changedFrame |= GUIKwyttoCommons.AddVector2Field(tabAreaSize.x, item.BackgroundMeshSettings.FrameMeshSettings.BackOffset, Str.WTS_BOXMESH_BACKOFFSETFROMCENTERBOTTOM, Str.WTS_BOXMESH_BACKOFFSETFROMCENTERBOTTOM, isEditable);
-                            if (GUIKwyttoCommons.AddFloatField(tabAreaSize.x, Str.WTS_BOXMESH_DEPTH_BACK, item.BackgroundMeshSettings.FrameMeshSettings.BackDepth, out var newVal, isEditable, .001f))
+                            bool changedFrame = false;
+                            var meshSettings = item.BackgroundMeshSettings.FrameMeshSettings;
+
+                            changedFrame |= GUIKwyttoCommons.AddVector2Field(tabAreaSize.x, meshSettings.BackSize, Str.WTS_BOXMESH_BACKSIZE, Str.WTS_BOXMESH_BACKSIZE, isEditable, .001f);
+                            changedFrame |= GUIKwyttoCommons.AddVector2Field(tabAreaSize.x, meshSettings.BackOffset, Str.WTS_BOXMESH_BACKOFFSETFROMCENTERBOTTOM, Str.WTS_BOXMESH_BACKOFFSETFROMCENTERBOTTOM, isEditable);
+                            if (GUIKwyttoCommons.AddFloatField(tabAreaSize.x, Str.WTS_BOXMESH_DEPTH_BACK, meshSettings.BackDepth, out var newVal, isEditable, .001f))
                             {
-                                item.BackgroundMeshSettings.FrameMeshSettings.BackDepth = newVal;
+                                meshSettings.BackDepth = newVal;
                                 changedFrame |= true;
                             }
-                            if (GUIKwyttoCommons.AddFloatField(tabAreaSize.x, Str.WTS_BOXMESH_DEPTH_FRONT, item.BackgroundMeshSettings.FrameMeshSettings.FrontDepth, out newVal, isEditable, .001f))
+                            if (GUIKwyttoCommons.AddFloatField(tabAreaSize.x, Str.WTS_BOXMESH_DEPTH_FRONT, meshSettings.FrontDepth, out newVal, isEditable, .001f))
                             {
-                                item.BackgroundMeshSettings.FrameMeshSettings.FrontDepth = newVal;
+                                meshSettings.FrontDepth = newVal;
                                 changedFrame |= true;
                             }
-                            if (GUIKwyttoCommons.AddFloatField(tabAreaSize.x, Str.WTS_TEXT_CONTAINERFRONTBORDERTHICKNESS, item.BackgroundMeshSettings.FrameMeshSettings.FrontBorderThickness, out newVal, isEditable, 0, Mathf.Min(item.BackgroundMeshSettings.Size.X, item.BackgroundMeshSettings.Size.Y) / 2))
+                            if (GUIKwyttoCommons.AddFloatField(tabAreaSize.x, Str.WTS_TEXT_CONTAINERFRONTBORDERTHICKNESS, meshSettings.FrontBorderThickness, out newVal, isEditable, 0, Mathf.Min(item.BackgroundMeshSettings.Size.X, item.BackgroundMeshSettings.Size.Y) / 2))
                             {
-                                item.BackgroundMeshSettings.FrameMeshSettings.FrontBorderThickness = newVal;
+                                meshSettings.FrontBorderThickness = newVal;
                                 changedFrame |= true;
                             }
 
                             GUILayout.Space(10);
                             GUILayout.Label($"<color=#FFFF00>{Str.WTS_BOXMESH_COLORSGROUP_LABEL}</color>");
-                            GUIKwyttoCommons.AddToggle(Str.we_generalTextEditor_usePrefabColor, ref item.BackgroundMeshSettings.FrameMeshSettings.m_inheritColor, isEditable);
-                            if (!item.BackgroundMeshSettings.FrameMeshSettings.m_inheritColor)
+                            changedFrame |= GUIKwyttoCommons.AddComboBox(tabAreaSize.x, Str.we_generalTextEditor_colorSource, ref meshSettings.m_colorSource, contrastOptions, contrastValues, m_root, isEditable);
+                            bool isPlatformRelative = RenderingClass != TextRenderingClass.Vehicle && (meshSettings.m_colorSource == ColoringSource.PlatformLine || meshSettings.m_colorSource == ColoringSource.ContrastPlatformLine);
+                            changedFrame |= GUIKwyttoCommons.AddToggle(Str.we_generalTextEditor_useFixedIfMultiline, ref meshSettings.m_useFixedIfMultiline, isEditable, isPlatformRelative);
+                            if (meshSettings.m_colorSource == ColoringSource.Fixed || isPlatformRelative)
                             {
-                                GUIKwyttoCommons.AddColorPicker(Str.WTS_BOXMESH_OUTERCOLOR, m_picker, item.BackgroundMeshSettings.FrameMeshSettings.m_cachedOutsideColor, (x) => item.BackgroundMeshSettings.FrameMeshSettings.m_cachedOutsideColor = x.Value, isEditable);
+                                changedFrame |= GUIKwyttoCommons.AddColorPicker(Str.WTS_BOXMESH_OUTERCOLOR, m_picker, meshSettings.m_cachedOutsideColor, (x) => meshSettings.m_cachedOutsideColor = x.Value, isEditable);
                             }
-                            changedFrame |= GUIKwyttoCommons.AddColorPicker(Str.WTS_TEXT_CONTAINERGLASSCOLOR, m_picker, item.BackgroundMeshSettings.FrameMeshSettings.m_cachedGlassColor, (x) => item.BackgroundMeshSettings.FrameMeshSettings.m_cachedGlassColor = x.Value, isEditable);
+                            else
+                            {
+                                GUILayout.Space(12);
+                            }
+                            changedFrame |= GUIKwyttoCommons.AddColorPicker(Str.WTS_TEXT_CONTAINERGLASSCOLOR, m_picker, meshSettings.m_cachedGlassColor, (x) => meshSettings.m_cachedGlassColor = x.Value, isEditable);
 
                             GUILayout.Space(10);
                             GUILayout.Label($"<color=#FFFF00>{Str.WTS_BOXMESH_EFFECTSGROUP_LABEL}</color>");
-                            if (GUIKwyttoCommons.AddSlider(tabAreaSize.x, Str.WTS_TEXT_CONTAINERGLASSSPECULARITY, item.BackgroundMeshSettings.FrameMeshSettings.GlassSpecularLevel, out newVal, 0, 1, isEditable))
+                            if (GUIKwyttoCommons.AddSlider(tabAreaSize.x, Str.WTS_TEXT_CONTAINERGLASSSPECULARITY, meshSettings.GlassSpecularLevel, out newVal, 0, 1, isEditable))
                             {
-                                item.BackgroundMeshSettings.FrameMeshSettings.GlassSpecularLevel = newVal;
+                                meshSettings.GlassSpecularLevel = newVal;
                             }
-                            if (GUIKwyttoCommons.AddSlider(tabAreaSize.x, Str.WTS_TEXT_CONTAINERGLASSTRANSPARENCY, item.BackgroundMeshSettings.FrameMeshSettings.GlassTransparency, out newVal, 0, 1, isEditable))
+                            if (GUIKwyttoCommons.AddSlider(tabAreaSize.x, Str.WTS_TEXT_CONTAINERGLASSTRANSPARENCY, meshSettings.GlassTransparency, out newVal, 0, 1, isEditable))
                             {
-                                item.BackgroundMeshSettings.FrameMeshSettings.GlassTransparency = newVal;
+                                meshSettings.GlassTransparency = newVal;
                             }
-                        }
-                        if (changedFrame)
-                        {
-                            item.BackgroundMeshSettings.FrameMeshSettings.ClearCacheArray();
+                            if (changedFrame)
+                            {
+                                meshSettings.ClearCacheArray();
+                            }
                         }
                     }
                     m_scrollPos = scroll.scrollPosition;

@@ -3,7 +3,7 @@
     public enum CacheErasingFlags
     {
         SegmentNameParam = 1,
-        PostalCodeParam = 1 << 1,
+        UNUSED_1 = 1 << 1,
         ParkName = 1 << 2,
         DistrictName = 1 << 3,
         SegmentSize = 1 << 4,

@@ -61,7 +61,7 @@ namespace WriteEverywhere.UI
                 else
                 {
                     var pos = NetManager.instance.m_segments.m_buffer[targSeg].m_middlePosition;
-                    ModInstance.Controller.ConnectorADR.GetAddressStreetAndNumber(pos, pos, out int num, out string streetName);
+                    ModInstance.Controller.ConnectorCD.GetAddressStreetAndNumber(pos, pos, out int num, out string streetName);
                     cachedSegmentNames[i] = Tuple.New(targSeg, $"{((streetName?.Length ?? 0) == 0 ? NetManager.instance.m_segments.m_buffer[targSeg].Info.GetLocalizedTitle() : streetName)}, ~{num}m");
                 }
             }

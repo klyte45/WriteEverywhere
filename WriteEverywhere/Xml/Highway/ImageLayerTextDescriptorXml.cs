@@ -1,4 +1,4 @@
-﻿extern alias ADR;
+﻿extern alias CD;
 
 using Kwytto.Interfaces;
 using System.Xml;

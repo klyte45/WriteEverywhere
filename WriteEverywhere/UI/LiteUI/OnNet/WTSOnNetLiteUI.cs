@@ -122,7 +122,7 @@ namespace WriteEverywhere.UI
         }
         private void ReloadSegment()
         {
-            ModInstance.Controller.ConnectorADR.GetAddressStreetAndNumber(NetManager.instance.m_segments.m_buffer[CurrentSegmentId].m_middlePosition, NetManager.instance.m_segments.m_buffer[CurrentSegmentId].m_middlePosition, out int num, out string streetName);
+            ModInstance.Controller.ConnectorCD.GetAddressStreetAndNumber(NetManager.instance.m_segments.m_buffer[CurrentSegmentId].m_middlePosition, NetManager.instance.m_segments.m_buffer[CurrentSegmentId].m_middlePosition, out int num, out string streetName);
             Title = $"{Str.WTS_SEGMENTPLACING_TITLE}: {streetName}, ~{num}m";
             if (WTSOnNetData.Instance.m_boardsContainers[CurrentSegmentId] == null)
             {

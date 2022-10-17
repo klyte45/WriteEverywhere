@@ -34,7 +34,7 @@ namespace WriteEverywhere.Rendering
             {
                 return default;
             }
-            var textColor = GetTargetColor(refID, boardIdx, secIdx, baseWrite, textDescriptor.ColoringConfig.m_colorSource, textDescriptor.ColoringConfig.m_cachedColor, textDescriptor.ColoringConfig.m_useFixedIfMultiline);
+            var textColor = GetTargetColor(ref propMatrix, refID, boardIdx, secIdx, baseWrite, textDescriptor.ColoringConfig.m_colorSource, textDescriptor.ColoringConfig.m_cachedColor, textDescriptor.ColoringConfig.m_useFixedIfMultiline);
             Vector3 scl = baseWrite.PropScale;
             return DrawTextBri(baseWrite, refID, boardIdx, secIdx, ref propMatrix, textDescriptor, bri, ref textColor, textDescriptor.PlacingConfig, ref parentColor, srcInfo, ref scl, textDescriptor.m_horizontalAlignment, textDescriptor.MaxWidthMeters, instanceFlags, instanceFlags2, currentEditingSizeLine, ref defaultCallsCounter);
 
@@ -81,7 +81,7 @@ namespace WriteEverywhere.Rendering
                 }
                 if (((Vector2)textDescriptor.BackgroundMeshSettings.Size).sqrMagnitude != 0)
                 {
-                    var bgColor = GetTargetColor(refID, boardIdx, secIdx, baseWrite, textDescriptor.BackgroundMeshSettings.m_colorSource, textDescriptor.BackgroundMeshSettings.m_bgFrontColor, textDescriptor.ColoringConfig.m_useFixedIfMultiline);
+                    var bgColor = GetTargetColor(ref propMatrix, refID, boardIdx, secIdx, baseWrite, textDescriptor.BackgroundMeshSettings.m_colorSource, textDescriptor.BackgroundMeshSettings.m_bgFrontColor, textDescriptor.ColoringConfig.m_useFixedIfMultiline);
                     Matrix4x4 containerMatrix = DrawBgMesh(ref propMatrix,
                         textDescriptor.BackgroundMeshSettings.Size,
                         bgColor,
@@ -98,7 +98,8 @@ namespace WriteEverywhere.Rendering
                         currentEditingSizeLine ? 2 : 1);
                     if (textDescriptor.BackgroundMeshSettings.m_useFrame)
                     {
-                        DrawTextFrame(textDescriptor, block, placingSettings, ref baseScale, ref parentColor, srcInfo, ref containerMatrix, ref defaultCallsCounter);
+                        var frameConfig = textDescriptor.BackgroundMeshSettings.FrameMeshSettings;
+                        DrawTextFrame(textDescriptor, block, placingSettings, ref baseScale, GetTargetColor(ref containerMatrix, refID, boardIdx, secIdx, baseWrite, frameConfig.m_colorSource, frameConfig.OutsideColor, frameConfig.m_useFixedIfMultiline), srcInfo, ref containerMatrix, ref defaultCallsCounter);
                     }
                 }
 
@@ -152,7 +153,7 @@ namespace WriteEverywhere.Rendering
         internal static ref Material m_rotorMaterial => ref WEMainController.m_rotorMaterial;
         internal static ref Material m_outsideMaterial => ref WEMainController.m_outsideMaterial;
 
-        private static void DrawTextFrame(TextToWriteOnXml textDescriptor, MaterialPropertyBlock materialPropertyBlock, PlacingSettings placingSettings, ref Vector3 baseScale, ref Color parentColor, PrefabInfo srcInfo, ref Matrix4x4 containerMatrix, ref int defaultCallsCounter)
+        private static void DrawTextFrame(TextToWriteOnXml textDescriptor, MaterialPropertyBlock materialPropertyBlock, PlacingSettings placingSettings, ref Vector3 baseScale, Color color, PrefabInfo srcInfo, ref Matrix4x4 containerMatrix, ref int defaultCallsCounter)
         {
             var frameConfig = textDescriptor.BackgroundMeshSettings.FrameMeshSettings;
 
@@ -228,7 +229,6 @@ namespace WriteEverywhere.Rendering
             Graphics.DrawMesh(frameConfig.meshGlass, containerMatrix, m_rotorMaterial, srcInfo.m_prefabDataIndex, null, 0, materialPropertyBlock);
 
             materialPropertyBlock.Clear();
-            var color = frameConfig.m_inheritColor ? parentColor : frameConfig.OutsideColor;
             materialPropertyBlock.SetColor(SHADER_PROP_COLOR, color);
             defaultCallsCounter++;
             Graphics.DrawMesh(frameConfig.meshOuterContainer, containerMatrix, m_outsideMaterial, srcInfo.m_prefabDataIndex, null, 0, materialPropertyBlock);
@@ -380,30 +380,57 @@ namespace WriteEverywhere.Rendering
         }
         #endregion
 
-        private static Color GetTargetColor(ushort refID, int boardIdx, int secIdx, BaseWriteOnXml descriptor, ColoringSource clrSrc, Color? cachedClr, bool cachedIfMultiline)
+        private static Color GetTargetColor(ref Matrix4x4 propMatrix, ushort refID, int boardIdx, int secIdx, BaseWriteOnXml descriptor, ColoringSource clrSrc, Color? fixedColor, bool fixedIfMultiline)
         {
-            if (clrSrc == ColoringSource.ContrastProp)
+            switch (clrSrc)
             {
-                return GetContrastColor(refID, boardIdx, secIdx, descriptor);
+                case ColoringSource.Prop:
+                case ColoringSource.ContrastProp:
+                    var targetColor = WEDynamicTextRenderingRules.GetPropColor(refID, boardIdx, secIdx, descriptor, out bool colorFound);
+                    targetColor = (colorFound ? targetColor : Color.black);
+                    return clrSrc == ColoringSource.ContrastProp ? targetColor.ContrastColor() : targetColor;
+                case ColoringSource.District:
+                case ColoringSource.ContrastDistrict:
+                    Color districtColor;
+                    if (descriptor is WriteOnBuildingPropXml)
+                    {
+                        districtColor = ModInstance.Controller.ConnectorCD.GetDistrictColor(DistrictManager.instance.GetDistrict(BuildingManager.instance.m_buildings.m_buffer[refID].m_position));
+                    }
+                    else if (descriptor is WriteOnNetXml)
+                    {
+                        districtColor = ModInstance.Controller.ConnectorCD.GetDistrictColor(DistrictManager.instance.GetDistrict(propMatrix.GetColumn(3)));
+                    }
+                    else
+                    {
+                        break;
+                    }
+                    return clrSrc == ColoringSource.District ? districtColor : districtColor.ContrastColor();
+                case ColoringSource.PlatformLine:
+                case ColoringSource.ContrastPlatformLine:
+                    if (descriptor is WriteOnBuildingPropXml bpx)
+                    {
+                        var targetStopsList = WTSStopUtils.GetAllTargetStopInfo(bpx, refID);
+                        if (targetStopsList.Length == 0 || (targetStopsList.Length > 1 && fixedIfMultiline))
+                        {
+                            break;
+                        }
+                        var effectiveStop = targetStopsList[0];
+                        var effColor = ModInstance.Controller.ConnectorTLM.GetLineColor(new WTSLine(effectiveStop));
+                        return clrSrc == ColoringSource.PlatformLine ? effColor : effColor.ContrastColor();
+                    }
+                    else if (descriptor is LayoutDescriptorVehicleXml)
+                    {
+                        var line = VehicleManager.instance.m_vehicles.m_buffer[refID].m_transportLine;
+                        if (line == 0)
+                        {
+                            break;
+                        }
+                        var effColor = ModInstance.Controller.ConnectorTLM.GetLineColor(new WTSLine(line, false));
+                        return clrSrc == ColoringSource.PlatformLine ? effColor : effColor.ContrastColor();
+                    }
+                    break;
             }
-            else if (descriptor is WriteOnBuildingPropXml bpx
-                && (clrSrc == ColoringSource.PlatformLine || clrSrc == ColoringSource.ContrastPlatformLine))
-            {
-                var targetStopsList = WTSStopUtils.GetAllTargetStopInfo(bpx, refID);
-                if (targetStopsList.Length == 0 || (targetStopsList.Length > 1 && cachedIfMultiline))
-                {
-                    return cachedClr ?? Color.white;
-                }
-                var effectiveStop = targetStopsList[0];
-                var effColor = ModInstance.Controller.ConnectorTLM.GetLineColor(new WTSLine(effectiveStop));
-                return clrSrc == ColoringSource.PlatformLine ? effColor : effColor.ContrastColor();
-            }
-            return cachedClr ?? Color.white;
-        }
-        public static Color GetContrastColor(ushort refID, int boardIdx, int secIdx, BaseWriteOnXml instance)
-        {
-            var targetColor = WEDynamicTextRenderingRules.GetPropColor(refID, boardIdx, secIdx, instance, out bool colorFound);
-            return (colorFound ? targetColor : Color.black).ContrastColor();
+            return fixedColor ?? Color.white;
         }
     }
 

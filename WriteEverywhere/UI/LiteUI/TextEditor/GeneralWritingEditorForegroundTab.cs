@@ -24,14 +24,18 @@ namespace WriteEverywhere.UI
         private readonly string[] m_fontClasses = EnumI18nExtensions.GetAllValuesI18n<FontClass>();
         private readonly GUIRootWindowBase m_root;
 
-        private static readonly string[] contrastOptions = EnumI18nExtensions.GetAllValuesI18n<ColoringSource>();
-        private static readonly ColoringSource[] contrastValues = Enum.GetValues(typeof(ColoringSource)).Cast<ColoringSource>().ToArray();
+        private readonly string[] contrastOptions;
+        private readonly ColoringSource[] contrastValues;
+        private readonly TextRenderingClass srcClass;
 
-        public GeneralWritingEditorForegroundTab(GUIColorPicker colorPicker)
+        public GeneralWritingEditorForegroundTab(GUIColorPicker colorPicker, TextRenderingClass srcClass)
         {
             m_picker = colorPicker;
             m_root = colorPicker.GetComponentInParent<GUIRootWindowBase>();
             m_fontFilter = new GUIFilterItemsScreen<State>(Str.WTS_OVERRIDE_FONT, ModInstance.Controller, OnFilterParam, null, GoTo, State.Normal, State.GeneralFontPicker, acceptsNull: true);
+            contrastValues = ColoringSourceExtensions.AvailableAtClass(srcClass);
+            contrastOptions = contrastValues.Select(x => x.ValueToI18n()).ToArray();
+            this.srcClass = srcClass;
 
         }
 
@@ -56,9 +60,11 @@ namespace WriteEverywhere.UI
         {
             GUILayout.Label($"<i>{Str.WTS_FONTFACE_SETTINGS}</i>");
             GUIKwyttoCommons.AddComboBox(tabAreaSize.x, Str.we_generalTextEditor_colorSource, ref item.ColoringConfig.m_colorSource, contrastOptions, contrastValues, m_root, isEditable);
-            GUIKwyttoCommons.AddToggle(Str.we_generalTextEditor_useFixedIfMultiline, ref item.ColoringConfig.m_useFixedIfMultiline, isEditable, item.ColoringConfig.m_colorSource == ColoringSource.PlatformLine || item.ColoringConfig.m_colorSource == ColoringSource.ContrastPlatformLine);
 
-            if (item.ColoringConfig.m_colorSource == ColoringSource.Fixed || (item.ColoringConfig.m_useFixedIfMultiline && (item.ColoringConfig.m_colorSource == ColoringSource.PlatformLine || item.ColoringConfig.m_colorSource == ColoringSource.ContrastPlatformLine)))
+            bool isPlatformRelative = srcClass != TextRenderingClass.Vehicle && (item.ColoringConfig.m_colorSource == ColoringSource.PlatformLine || item.ColoringConfig.m_colorSource == ColoringSource.ContrastPlatformLine);
+            GUIKwyttoCommons.AddToggle(Str.we_generalTextEditor_useFixedIfMultiline, ref item.ColoringConfig.m_useFixedIfMultiline, isEditable, isPlatformRelative);
+
+            if (item.ColoringConfig.m_colorSource == ColoringSource.Fixed || (item.ColoringConfig.m_useFixedIfMultiline && isPlatformRelative))
             {
                 GUIKwyttoCommons.AddColorPicker(Str.WTS_TEXT_COLOR, m_picker, item.ColoringConfig.m_cachedColor, (x) => item.ColoringConfig.m_cachedColor = x ?? Color.white, isEditable);
             }

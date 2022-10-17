@@ -10,7 +10,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WriteEverywhere", "WriteEve
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bridge_WE2TLM", "Bridge_WE2TLM\Bridge_WE2TLM.csproj", "{9993BF38-0DB8-4959-A4A6-701AB67EC55D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bridge_WE2ADR", "Bridge_WE2ADR\Bridge_WE2ADR.csproj", "{60D2E312-654F-499B-A0E0-8786A5A66CF2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bridge_WE2CD", "Bridge_WE2ADR\Bridge_WE2CD.csproj", "{60D2E312-654F-499B-A0E0-8786A5A66CF2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KwyttoUtilityWE", "KwyttoUtilityWE\KwyttoUtilityWE.csproj", "{27C920F8-F40F-4D56-BCB6-9C9025ED0AAC}"
 EndProject
@@ -36,6 +36,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WriteEverywhere.Layout", "W
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WriteEverywhere.Plugins.Ext", "WriteEverywhere.Plugins.Ext\WriteEverywhere.Plugins.Ext.csproj", "{22C465BD-2D18-4BC0-9850-8E11D174A35A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "K45_WE2CD", "K45_WE2CD\K45_WE2CD.csproj", "{28CB8540-342D-4D8D-9E8B-3776E1AA09FB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -91,6 +93,10 @@ Global
 		{22C465BD-2D18-4BC0-9850-8E11D174A35A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22C465BD-2D18-4BC0-9850-8E11D174A35A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22C465BD-2D18-4BC0-9850-8E11D174A35A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28CB8540-342D-4D8D-9E8B-3776E1AA09FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28CB8540-342D-4D8D-9E8B-3776E1AA09FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28CB8540-342D-4D8D-9E8B-3776E1AA09FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28CB8540-342D-4D8D-9E8B-3776E1AA09FB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

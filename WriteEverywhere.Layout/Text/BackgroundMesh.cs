@@ -49,6 +49,8 @@ namespace WriteEverywhere.Layout
 
         [XmlAttribute("colorSource")]
         public ColoringSource m_colorSource;
+        [XmlAttribute("useFixedIfMultiline")]
+        public bool m_useFixedIfMultiline;
         [XmlAttribute("normalStrength")]
         public float m_normalStrength;
 

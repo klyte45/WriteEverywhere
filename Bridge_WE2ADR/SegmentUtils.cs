@@ -10,7 +10,7 @@ using System.Linq;
 using UnityEngine;
 
 
-namespace Bridge_WE2ADR
+namespace Bridge_WE2CD
 {
     public class SegmentUtils
     {

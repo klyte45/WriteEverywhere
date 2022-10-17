@@ -35,7 +35,7 @@ namespace WriteEverywhere
         protected override Dictionary<string, Func<IBridgePrioritizable>> ModBridges { get; } = new Dictionary<string, Func<IBridgePrioritizable>>()
         {
             ["Vehicle Skins"] = () => controller?.ConnectorVS,
-            ["Addresses"] = () => controller?.ConnectorADR,
+            ["Custom Data Mod"] = () => controller?.ConnectorCD,
             ["T. Lines Manager"] = () => controller?.ConnectorTLM,
         };
 

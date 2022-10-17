@@ -332,6 +332,15 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Contrast from District Color (Custom Data only).
+        /// </summary>
+        public static string we_Enum__ColoringSource_ContrastDistrict {
+            get {
+                return ResourceManager.GetString("we_Enum__ColoringSource_ContrastDistrict", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Contrast from PT line color.
         /// </summary>
         public static string we_Enum__ColoringSource_ContrastPlatformLine {
@@ -341,11 +350,20 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Contrast from prop color.
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Contrast from prop/vehicle color.
         /// </summary>
         public static string we_Enum__ColoringSource_ContrastProp {
             get {
                 return ResourceManager.GetString("we_Enum__ColoringSource_ContrastProp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a District Color (Custom Data only).
+        /// </summary>
+        public static string we_Enum__ColoringSource_District {
+            get {
+                return ResourceManager.GetString("we_Enum__ColoringSource_District", resourceCulture);
             }
         }
         
@@ -364,6 +382,15 @@ namespace WriteEverywhere.Localization {
         public static string we_Enum__ColoringSource_PlatformLine {
             get {
                 return ResourceManager.GetString("we_Enum__ColoringSource_PlatformLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Prop/vehicle color.
+        /// </summary>
+        public static string we_Enum__ColoringSource_Prop {
+            get {
+                return ResourceManager.GetString("we_Enum__ColoringSource_Prop", resourceCulture);
             }
         }
         

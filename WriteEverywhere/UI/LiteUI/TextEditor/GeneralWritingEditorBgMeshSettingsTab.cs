@@ -16,14 +16,18 @@ namespace WriteEverywhere.UI
         private readonly GUIRootWindowBase m_root;
         private Vector2 m_scrollPos;
         private readonly Func<PrefabInfo> m_infoGetter;
-        private static readonly string[] contrastOptions = EnumI18nExtensions.GetAllValuesI18n<ColoringSource>();
-        private static readonly ColoringSource[] contrastValues = Enum.GetValues(typeof(ColoringSource)).Cast<ColoringSource>().ToArray();
+        private readonly string[] contrastOptions;
+        private readonly ColoringSource[] contrastValues;
+        private readonly TextRenderingClass srcClass;
 
-        public GeneralWritingEditorBgMeshSettingsTab(GUIColorPicker picker, Func<PrefabInfo> infoGetter)
+        public GeneralWritingEditorBgMeshSettingsTab(GUIColorPicker picker, Func<PrefabInfo> infoGetter, TextRenderingClass srcClass)
         {
             m_picker = picker;
             m_infoGetter = infoGetter;
             m_root = picker.GetComponentInParent<GUIRootWindowBase>();
+            contrastValues = ColoringSourceExtensions.AvailableAtClass(srcClass);
+            contrastOptions = contrastValues.Select(x => x.ValueToI18n()).ToArray();
+            this.srcClass = srcClass;
         }
 
         public override Texture TabIcon { get; } = GUIKwyttoCommons.GetByNameFromDefaultAtlas("ZoningOptionFill");
@@ -35,28 +39,37 @@ namespace WriteEverywhere.UI
             {
                 using (new GUILayout.VerticalScope())
                 {
+                    var bgSettings = item.BackgroundMeshSettings;
                     bool changedFrame = false;
-                    var hasBg = ((Vector2)item.BackgroundMeshSettings.Size).sqrMagnitude >= 0.0000001f;
+                    var hasBg = ((Vector2)bgSettings.Size).sqrMagnitude >= 0.0000001f;
                     if (GUIKwyttoCommons.AddToggle(Str.we_generalTextEditor_useBackground, hasBg, out var boolVal))
                     {
-                        item.BackgroundMeshSettings.Size = boolVal ? new Kwytto.Utils.Vector2Xml { X = .001f, Y = .001f } : new Kwytto.Utils.Vector2Xml();
+                        bgSettings.Size = boolVal ? new Kwytto.Utils.Vector2Xml { X = .001f, Y = .001f } : new Kwytto.Utils.Vector2Xml();
                     }
                     if (hasBg)
                     {
-                        GUIKwyttoCommons.AddComboBox(tabAreaSize.x, Str.we_generalTextEditor_colorSource, ref item.BackgroundMeshSettings.m_colorSource, contrastOptions, contrastValues, m_root, isEditable);
-                        bool isPlatformRelative = item.BackgroundMeshSettings.m_colorSource == ColoringSource.PlatformLine || item.BackgroundMeshSettings.m_colorSource == ColoringSource.ContrastPlatformLine;
-                        GUIKwyttoCommons.AddColorPicker(isPlatformRelative ? Str.we_generalTextEditor_bgFrontColorForMultilineIfActive : Str.we_generalTextEditor_bgFrontColor, m_picker, item.BackgroundMeshSettings.m_bgFrontColor, (x) => item.BackgroundMeshSettings.m_bgFrontColor = x.Value, isEditable);
-                        GUIKwyttoCommons.AddColorPicker(Str.we_generalTextEditor_backgroundBackfaceColor, m_picker, item.BackgroundMeshSettings.m_cachedBackColor, (x) => item.BackgroundMeshSettings.m_cachedBackColor = x.Value, isEditable);
-                        changedFrame |= GUIKwyttoCommons.AddVector2Field(tabAreaSize.x, item.BackgroundMeshSettings.Size, Str.WTS_TEXTBACKGROUNDSIZEGENERATED, Str.WTS_TEXTBACKGROUNDSIZEGENERATED, isEditable, .001f);
-                        var param = item.BackgroundMeshSettings.BgImage;
+                        GUIKwyttoCommons.AddComboBox(tabAreaSize.x, Str.we_generalTextEditor_colorSource, ref bgSettings.m_colorSource, contrastOptions, contrastValues, m_root, isEditable);
+                        bool isPlatformRelative = srcClass != TextRenderingClass.Vehicle && (bgSettings.m_colorSource == ColoringSource.PlatformLine || bgSettings.m_colorSource == ColoringSource.ContrastPlatformLine);
+                        GUIKwyttoCommons.AddToggle(Str.we_generalTextEditor_useFixedIfMultiline, ref bgSettings.m_useFixedIfMultiline, isEditable, isPlatformRelative);
+                        if (bgSettings.m_colorSource == ColoringSource.Fixed || (isPlatformRelative && bgSettings.m_useFixedIfMultiline))
+                        {
+                            GUIKwyttoCommons.AddColorPicker(isPlatformRelative ? Str.we_generalTextEditor_bgFrontColorForMultilineIfActive : Str.we_generalTextEditor_bgFrontColor, m_picker, bgSettings.m_bgFrontColor, (x) => bgSettings.m_bgFrontColor = x.Value, isEditable);
+                        }
+                        else
+                        {
+                            GUILayout.Space(12);
+                        }
+                        GUIKwyttoCommons.AddColorPicker(Str.we_generalTextEditor_backgroundBackfaceColor, m_picker, bgSettings.m_cachedBackColor, (x) => bgSettings.m_cachedBackColor = x.Value, isEditable);
+                        changedFrame |= GUIKwyttoCommons.AddVector2Field(tabAreaSize.x, bgSettings.Size, Str.WTS_TEXTBACKGROUNDSIZEGENERATED, Str.WTS_TEXTBACKGROUNDSIZEGENERATED, isEditable, .001f);
+                        var param = bgSettings.BgImage;
                         GUIKwyttoCommons.AddButtonSelector(tabAreaSize.x, Str.we_generalTextEditor_backgroundImage, param is null ? GUIKwyttoCommons.v_null : param.IsEmpty ? GUIKwyttoCommons.v_empty : param.ToString(), () => GoToPicker(-1, TextContent.ParameterizedSpriteSingle, param, item), isEditable);
 
-                        GUIKwyttoCommons.AddSlider(tabAreaSize.x, Str.we_generalTextEditor_depthNormalBg, ref item.BackgroundMeshSettings.m_normalStrength, -1000, 1000, isEditable);
-                        GUIKwyttoCommons.AddSlider(tabAreaSize.x, Str.we_roadEditor_horizontalAlignmentBoxText, ref item.BackgroundMeshSettings.m_horizontalAlignment, 0, 1, isEditable);
-                        GUIKwyttoCommons.AddSlider(tabAreaSize.x, Str.we_roadEditor_verticalAlignmentBoxText, ref item.BackgroundMeshSettings.m_verticalAlignment, 0, 1, isEditable);
+                        GUIKwyttoCommons.AddSlider(tabAreaSize.x, Str.we_generalTextEditor_depthNormalBg, ref bgSettings.m_normalStrength, -1000, 1000, isEditable);
+                        GUIKwyttoCommons.AddSlider(tabAreaSize.x, Str.we_roadEditor_horizontalAlignmentBoxText, ref bgSettings.m_horizontalAlignment, 0, 1, isEditable);
+                        GUIKwyttoCommons.AddSlider(tabAreaSize.x, Str.we_roadEditor_verticalAlignmentBoxText, ref bgSettings.m_verticalAlignment, 0, 1, isEditable);
                         if (changedFrame)
                         {
-                            item.BackgroundMeshSettings.FrameMeshSettings.ClearCacheArray();
+                            bgSettings.FrameMeshSettings.ClearCacheArray();
                         }
                     }
 

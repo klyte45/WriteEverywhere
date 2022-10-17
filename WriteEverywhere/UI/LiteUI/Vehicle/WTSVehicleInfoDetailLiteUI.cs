@@ -107,8 +107,8 @@ namespace WriteEverywhere.UI
             var tabs = new IGUITab<TextToWriteOnXml>[]{
                     new GeneralWritingEditorGeneralTab(()=> m_currentLayout.TextDescriptors),
                     positionTab = new GeneralWritingEditorPositionsSizesTab(root),
-                    new GeneralWritingEditorForegroundTab(m_colorPicker),
-                    new GeneralWritingEditorBgMeshSettingsTab(m_colorPicker, ()=> m_currentInfo),
+                    new GeneralWritingEditorForegroundTab(m_colorPicker,TextRenderingClass.Vehicle),
+                    new GeneralWritingEditorBgMeshSettingsTab(m_colorPicker, ()=> m_currentInfo,TextRenderingClass.Vehicle),
                     new GeneralWritingEditorFrameSettingsTab(m_colorPicker,()=>m_currentInfo,TextRenderingClass.Vehicle),
                     new GeneralWritingEditorIlluminationTab(m_colorPicker),
                     new GeneralWritingEditorContentTab(m_colorPicker, ()=> m_currentInfo, TextRenderingClass.Vehicle)

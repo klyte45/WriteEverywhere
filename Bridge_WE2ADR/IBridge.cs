@@ -1,15 +1,15 @@
 ﻿using Kwytto.Interfaces;
 using UnityEngine;
-using static Bridge_WE2ADR.SegmentUtils;
+using static Bridge_WE2CD.SegmentUtils;
 
-namespace Bridge_WE2ADR
+namespace Bridge_WE2CD
 {
     public abstract class IBridge : IBridgePrioritizable
     {
         public abstract bool AddressesAvailable { get; }
         public abstract int Priority { get; }
         public abstract bool IsBridgeEnabled { get; }
-        public abstract Color GetDistrictColor(ushort districtId);
+        public abstract Color GetDistrictColor(byte districtId);
         public virtual void GetMileageParameters(ushort segmentSeedId, out MileageStartSource src, out int offset)
         {
             src = MileageStartSource.DEFAULT;

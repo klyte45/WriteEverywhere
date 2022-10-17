@@ -1,6 +1,6 @@
-﻿extern alias ADR;
+﻿extern alias CD;
 
-using ADR::Bridge_WE2ADR;
+using CD::Bridge_WE2CD;
 using WriteEverywhere.Singleton;
 
 namespace WriteEverywhere.Rendering
@@ -51,7 +51,7 @@ namespace WriteEverywhere.Rendering
             SegmentUtils.GetNearestSegment(b.CalculateSidewalkPosition(), out _, out float targetLength, out ushort segmentIdFound);
             if (segmentIdFound > 0)
             {
-                ModInstance.Controller.ConnectorADR.GetMileageParameters(NetManager.instance.m_segments.m_buffer[segmentIdFound].m_nameSeed, out var mileageSrc, out var mileageOffset);
+                ModInstance.Controller.ConnectorCD.GetMileageParameters(NetManager.instance.m_segments.m_buffer[segmentIdFound].m_nameSeed, out var mileageSrc, out var mileageOffset);
                 addressNumber = SegmentUtils.CalculateBuildingAddressNumber(b.m_position, segmentIdFound, targetLength, b.m_position, mileageSrc, mileageOffset);
                 segmentId = segmentIdFound;
             }

@@ -123,7 +123,7 @@ namespace WriteEverywhere.ModShared
             districtID = DistrictManager.instance.GetDistrict(location);
             return districtID > 0
                 ? DistrictManager.instance.GetDistrictName(districtID)
-                : ModInstance.Controller.ConnectorADR.GetAddressStreetAndNumber(location, location, out int number, out string streetName) && !string.IsNullOrEmpty(streetName)
+                : ModInstance.Controller.ConnectorCD.GetAddressStreetAndNumber(location, location, out int number, out string streetName) && !string.IsNullOrEmpty(streetName)
                     ? streetName + ", " + number
                     : "????";
         }

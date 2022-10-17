@@ -3,8 +3,11 @@
     public enum ColoringSource
     {
         Fixed,
+        Prop,
         ContrastProp,
         PlatformLine,
-        ContrastPlatformLine
+        ContrastPlatformLine,
+        District,
+        ContrastDistrict
     }
 }

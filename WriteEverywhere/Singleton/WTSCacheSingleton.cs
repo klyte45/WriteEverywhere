@@ -60,8 +60,6 @@ namespace WriteEverywhere.Singleton
             instance.lastCoroutine = ModInstance.Controller?.StartCoroutine(instance.PurgeCache(flags, default));
         }
 
-        public static void ClearCachePostalCode() => DoClearCacheCoroutineStart(CacheErasingFlags.PostalCodeParam);
-
         public static void ClearCacheSegmentNameParam() => DoClearCacheCoroutineStart(CacheErasingFlags.SegmentNameParam);
 
         public static void ClearCacheDistrictName() => DoClearCacheCoroutineStart(CacheErasingFlags.DistrictName | CacheErasingFlags.LineName);
