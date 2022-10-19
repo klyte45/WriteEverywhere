@@ -229,5 +229,15 @@ namespace WriteEverywhere.Singleton
             vector.y = targetHeight + (Mathf.Sin(__instance.m_currentAngle.y * Mathf.Deg2Rad) * __instance.m_targetSize);
             __instance.transform.position = vector;
         }
+
+        internal void TransferData(ushort srcSegment, ushort dstSegment)
+        {
+            Data.m_boardsContainers[dstSegment] = Data.m_boardsContainers[srcSegment];
+            Data.m_boardsContainers[srcSegment] = null;
+            if (WTSOnNetLiteUI.Instance.CurrentSegmentId == srcSegment)
+            {
+                WTSOnNetLiteUI.Instance.CurrentSegmentId = dstSegment;
+            }
+        }
     }
 }
