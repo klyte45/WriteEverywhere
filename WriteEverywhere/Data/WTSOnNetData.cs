@@ -27,7 +27,14 @@ namespace WriteEverywhere.Data
                 {
                     if (m_boardsContainers[i] != null && m_boardsContainers[i].HasAnyBoard())
                     {
-                        res[i] = m_boardsContainers[i];
+                        if ((NetManager.instance.m_segments.m_buffer[i].m_flags & NetSegment.Flags.Created) != 0)
+                        {
+                            res[i] = m_boardsContainers[i];
+                        }
+                        else
+                        {
+                            m_boardsContainers[i] = null;
+                        }
                     }
                 }
                 return res;
