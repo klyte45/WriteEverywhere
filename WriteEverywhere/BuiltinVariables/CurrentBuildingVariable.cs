@@ -41,7 +41,7 @@ namespace WriteEverywhere.Variables
         }
         public override string GetTargetTextForBuilding(TextParameterVariableWrapper wrapper, WriteOnBuildingXml propGroupDescriptor, WriteOnBuildingPropXml buildingDescriptor, ushort buildingId, int secRefId, int tercRefId, TextToWriteOnXml textDescriptor, out IEnumerable<BasicRenderInformation> multipleOutput, out string[] preLoad)
         {
-            preLoad = null; 
+            preLoad = null;
             multipleOutput = null;
             var subtype = wrapper.subtype;
             return buildingId == 0 || buildingDescriptor is null || !(subtype is VariableBuildingSubType targetSubtype2) || targetSubtype2 == VariableBuildingSubType.None
@@ -79,13 +79,13 @@ namespace WriteEverywhere.Variables
                     return varWrapper.TryFormat(WTSCacheSingleton.instance.GetBuilding(buildingId).Name);
                 case VariableBuildingSubType.NextStopLine:
                     targetStop = WTSStopUtils.GetTargetStopInfo(platforms, buildingId).FirstOrDefault();
-                    return varWrapper.TryFormat(ModInstance.Controller.ConnectorTLM.GetStopName(targetStop.m_nextStopId, new WTSLine(targetStop.m_lineId, targetStop.m_regionalLine)).AsFormattable());
+                    return targetStop.m_lineId == 0 ? "" : varWrapper.TryFormat(ModInstance.Controller.ConnectorTLM.GetStopName(targetStop.m_nextStopId, new WTSLine(targetStop.m_lineId, targetStop.m_regionalLine)).AsFormattable());
                 case VariableBuildingSubType.PrevStopLine:
                     targetStop = WTSStopUtils.GetTargetStopInfo(platforms, buildingId).FirstOrDefault();
-                    return varWrapper.TryFormat(ModInstance.Controller.ConnectorTLM.GetStopName(targetStop.m_previousStopId, new WTSLine(targetStop.m_lineId, targetStop.m_regionalLine)).AsFormattable());
+                    return targetStop.m_lineId == 0 ? "" : varWrapper.TryFormat(ModInstance.Controller.ConnectorTLM.GetStopName(targetStop.m_previousStopId, new WTSLine(targetStop.m_lineId, targetStop.m_regionalLine)).AsFormattable());
                 case VariableBuildingSubType.LastStopLine:
                     targetStop = WTSStopUtils.GetTargetStopInfo(platforms, buildingId).FirstOrDefault();
-                    return varWrapper.TryFormat(ModInstance.Controller.ConnectorTLM.GetStopName(targetStop.m_destinationId, new WTSLine(targetStop.m_lineId, targetStop.m_regionalLine)).AsFormattable());
+                    return targetStop.m_lineId == 0 ? "" : varWrapper.TryFormat(ModInstance.Controller.ConnectorTLM.GetStopName(targetStop.m_destinationId, new WTSLine(targetStop.m_lineId, targetStop.m_regionalLine)).AsFormattable());
                 case VariableBuildingSubType.PlatformNumber:
                     return varWrapper.TryFormat(platforms.FirstOrDefault() + 1);
                 default:

@@ -20,7 +20,7 @@ namespace Bridge_WE2TLM
         public abstract WTSLine GetVehicleLine(ushort vehicleId);
         public abstract WTSLine GetStopLine(ushort stopId);
 
-        protected void FillStops(WTSLine lineObj, List<DestinationPoco> destinations, StopInformation[] cacheToUpdate)
+        protected void FillStops(WTSLine lineObj, List<DestinationPoco> destinations, ref StopInformation[] cacheToUpdate)
         {
             if (destinations.Count == 0)
             {
@@ -49,7 +49,7 @@ namespace Bridge_WE2TLM
 
                 cacheToUpdate[curStop] = new StopInformation
                 {
-                    m_lineId = (ushort)lineObj.lineId,
+                    m_lineId = lineObj.lineId,
                     m_regionalLine = lineObj.regional,
                     m_destinationId = destinationId,
                     m_nextStopId = nextStop,
@@ -63,9 +63,6 @@ namespace Bridge_WE2TLM
 
             } while (curStop != 0 && curStop != firstStop);
         }
-
-        public abstract void OnAutoNameParameterChanged();
-
         public abstract string GetLineName(WTSLine lineObj);
         public abstract Color GetLineColor(WTSLine lineObj);
 

@@ -1,5 +1,4 @@
 ﻿extern alias TLM;
-
 using System.Collections.Generic;
 using System.Linq;
 using TLM::Bridge_WE2TLM;
@@ -20,18 +19,6 @@ namespace WriteEverywhere.Utils
                 return new StopInformation[0];
             }).ToArray();
 
-        internal static StopInformation[] GetTargetStopInfo(WriteOnBuildingPropXml descriptor, ushort buildingId)
-        {
-            foreach (int platform in descriptor.m_platforms)
-            {
-                if (ModInstance.Controller.BuildingPropsSingleton.m_platformToLine[buildingId] != null && ModInstance.Controller.BuildingPropsSingleton.m_platformToLine[buildingId].ElementAtOrDefault(platform)?.Length > 0)
-                {
-                    StopInformation[] line = ModInstance.Controller.BuildingPropsSingleton.m_platformToLine[buildingId][platform];
-                    return line;
-                }
-            }
-            return m_emptyInfo;
-        }
         internal static StopInformation[] GetTargetStopInfo(IEnumerable<int> platforms, ushort buildingId)
         {
             foreach (int platform in platforms)

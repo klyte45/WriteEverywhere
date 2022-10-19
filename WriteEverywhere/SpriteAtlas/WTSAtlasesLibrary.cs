@@ -254,7 +254,7 @@ namespace WriteEverywhere.Sprites
         {
             m_transportLineAtlas.Clear();
         }
-        internal void PurgeLine(WTSLine line)
+        public void PurgeLine(WTSLine line)
         {
             string id = $"{line.ToExternalRefId()}";
             if (m_transportLineAtlas.ContainsKey(id))

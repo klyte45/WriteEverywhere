@@ -39,6 +39,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WriteEverywhere.Plugins.Ext
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "K45_WE2CD", "K45_WE2CD\K45_WE2CD.csproj", "{28CB8540-342D-4D8D-9E8B-3776E1AA09FB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "K45_WE2TLM", "K45_WE2TLM\K45_WE2TLM.csproj", "{EA437BB0-2A55-42C5-8196-F82DA4479C3B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -97,6 +99,10 @@ Global
 		{28CB8540-342D-4D8D-9E8B-3776E1AA09FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{28CB8540-342D-4D8D-9E8B-3776E1AA09FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{28CB8540-342D-4D8D-9E8B-3776E1AA09FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA437BB0-2A55-42C5-8196-F82DA4479C3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA437BB0-2A55-42C5-8196-F82DA4479C3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA437BB0-2A55-42C5-8196-F82DA4479C3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA437BB0-2A55-42C5-8196-F82DA4479C3B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

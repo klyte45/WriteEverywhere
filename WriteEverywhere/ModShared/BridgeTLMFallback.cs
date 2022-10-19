@@ -8,7 +8,6 @@ using System.Linq;
 using TLM::Bridge_WE2TLM;
 using UnityEngine;
 using WriteEverywhere.Data;
-using WriteEverywhere.Singleton;
 using static ItemClass;
 
 namespace WriteEverywhere.ModShared
@@ -203,7 +202,7 @@ namespace WriteEverywhere.ModShared
             FillStops(lineObj, new List<DestinationPoco>{
                 new DestinationPoco{ stopId = startStation},
                 new DestinationPoco{ stopId = endStation}
-            }, cache);
+            }, ref cache);
         }
 
         private enum NamingType
@@ -284,11 +283,6 @@ namespace WriteEverywhere.ModShared
         public override string GetLineName(WTSLine lineObj) => lineObj.regional ? "" : TransportManager.instance.GetLineName((ushort)lineObj.lineId);
         public override Color GetLineColor(WTSLine lineObj) => lineObj.regional ? Color.white : TransportManager.instance.GetLineColor((ushort)lineObj.lineId);
 
-        public override void OnAutoNameParameterChanged()
-        {
-            ModInstance.Controller.BuildingPropsSingleton.ResetLines();
-            WTSCacheSingleton.ClearCacheLineName();
-        }
 
         private readonly TransferManager.TransferReason[] m_defaultAllowedVehicleTypes = {
             TransferManager.TransferReason.Blimp ,

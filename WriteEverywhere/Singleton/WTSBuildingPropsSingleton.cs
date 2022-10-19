@@ -233,7 +233,6 @@ namespace WriteEverywhere.Singleton
         {
             if (BuildingLiteUI.Instance.Visible)
             {
-                float angle = SimulationManager.instance.m_currentTickIndex;
                 foreach (var tuple in ModInstance.Controller.BuildingPropsSingleton.m_onOverlayRenderQueue)
                 {
                     Singleton<RenderManager>.instance.OverlayEffect.DrawCircle(cameraInfo,

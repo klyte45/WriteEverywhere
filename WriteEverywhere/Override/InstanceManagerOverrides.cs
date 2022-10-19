@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Reflection;
 using UnityEngine;
+using WriteEverywhere.ModShared;
 
 namespace WriteEverywhere.Overrides
 {
@@ -43,14 +44,14 @@ namespace WriteEverywhere.Overrides
         {
             yield return new WaitForSeconds(1);
             ModInstance.Controller.OnBuildingNameChanged(building);
-            ModInstance.Controller.ConnectorTLM.OnAutoNameParameterChanged();
+            WEFacade.OnAutoNameParameterChanged();
         }
         public static void CallSegmentRenamedEvent(ushort segment) => BuildingManager.instance.StartCoroutine(CallSegmentRenamedEvent_impl(segment));
         private static IEnumerator CallSegmentRenamedEvent_impl(ushort segment)
         {
             yield return new WaitForSeconds(1);
             ModInstance.Controller.OnSegmentNameChanged(segment);
-            ModInstance.Controller.ConnectorTLM.OnAutoNameParameterChanged();
+            WEFacade.OnAutoNameParameterChanged();
         }
 
     }

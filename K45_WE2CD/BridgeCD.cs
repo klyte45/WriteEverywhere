@@ -2,7 +2,11 @@
 
 using Bridge_WE2CD;
 using CD::CustomData.Overrides;
+using ColossalFramework.Plugins;
+using System;
+using System.Linq;
 using UnityEngine;
+using WriteEverywhere.ModShared;
 using WriteEverywhere.Singleton;
 
 namespace K45_WE2CD
@@ -11,7 +15,15 @@ namespace K45_WE2CD
     {
         public BridgeCD()
         {
-            CDFacade.Instance.EventOnBuildingNameGenStrategyChanged += () => WTSCacheSingleton.ClearCacheBuildingName(null);
+            if (!PluginManager.instance.GetPluginsInfo().Any(x => x.assemblyCount > 0 && x.isEnabled && x.ContainsAssembly(typeof(CDFacade).Assembly)))
+            {
+                throw new Exception("The Custom Data bridge isn't available due to the mod not being active. Using fallback!");
+            }
+            CDFacade.Instance.EventOnBuildingNameGenStrategyChanged += () =>
+            {
+                WTSCacheSingleton.ClearCacheBuildingName(null);
+                WEFacade.BuildingPropsSingleton.ResetLines();
+            };
         }
 
         public override bool AddressesAvailable => true;
