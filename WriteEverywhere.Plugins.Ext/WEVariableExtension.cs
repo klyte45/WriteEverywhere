@@ -24,6 +24,7 @@ namespace WriteEverywhere.Plugins.Ext
         public WEVariableExtension() { }
         public abstract Enum RootMenuEnumValueWithPrefix { get; }
         public abstract string RootMenuDescription { get; }
+        public abstract string GetSubvalueDescription(Enum subRef);
 
         protected abstract void Validate_Internal(string[] parameterPath, ref Enum type, ref Enum subtype, ref byte index, ref VariableExtraParameterContainer paramContainer);
         public virtual string GetTargetTextForBuilding(TextParameterVariableWrapper wrapper, WriteOnBuildingXml propGroupDescriptor, WriteOnBuildingPropXml buildingDescriptor, ushort buildingId, int secRefId, int tercRefId, TextToWriteOnXml textDescriptor, out IEnumerable<BasicRenderInformation> multipleOutput, out string[] preLoad)
@@ -49,7 +50,7 @@ namespace WriteEverywhere.Plugins.Ext
         public void Validate(TextRenderingClass renderingClass, string[] parameterPath, ref Enum type, ref Enum subtype, ref byte index, out VariableExtraParameterContainer paramContainer)
         {
             paramContainer = default;
-            if (!Supports(renderingClass))
+            if (renderingClass != TextRenderingClass.Any && !Supports(renderingClass))
             {
                 return;
             }

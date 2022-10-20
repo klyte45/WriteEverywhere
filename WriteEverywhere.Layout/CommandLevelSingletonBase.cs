@@ -121,7 +121,7 @@ namespace WriteEverywhere.Layout
 
         public static string GetEnumKeyValue(Enum input, int level)
         {
-            return level >= 0 || input is VariableType ? input.ToString() : $"{input.GetType().Name}::{input}";
+            return level > 0 || input is VariableType ? input.ToString() : $"{input.GetType().Name}::{input}";
         }
 
     }

@@ -71,7 +71,7 @@ namespace WriteEverywhere.Singleton
 
         public static WEVariableExtension GetVariableClass(Enum root) => root != null && ModInstance.Controller.CommandLevelSingleton.commandTree.TryGetValue(root, out var value) ? value.SrcClass : null;
 
-        protected override Enum GetRootEnumNextLevelFor(string v) => commandTree.Keys.FirstOrDefault(x => GetEnumKeyValue(x, -1) == v);
+        protected override Enum GetRootEnumNextLevelFor(string v) => commandTree.Keys.FirstOrDefault(x => GetEnumKeyValue(x, 0) == v);
 
         protected override BaseCommandLevel GetRootCommandLevel() => new BaseCommandLevel<RootCommandLevel>
         {

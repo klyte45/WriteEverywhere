@@ -63,7 +63,7 @@ namespace WriteEverywhere.Layout
                 IsEmpty = true;
                 return;
             }
-            var inputMatches = Regex.Match(value, "^(folder|assetFolder|image|assetImage)://(([^/]+)/)?([^/]+)$|^var://([a-zA-Z0-9_]+/.*)?$");
+            var inputMatches = Regex.Match(value, "^(folder|assetFolder|image|assetImage)://(([^/]+)/)?([^/]+)$|^var://(([a-zA-Z0-9_]+::)?[a-zA-Z0-9_]+/.*)?$");
             if (inputMatches.Success)
             {
                 switch (value.Split(':')[0])

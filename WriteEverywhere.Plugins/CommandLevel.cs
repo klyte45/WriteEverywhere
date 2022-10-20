@@ -24,7 +24,7 @@ namespace WriteEverywhere.Plugins
     public class BaseCommandLevel<C> : BaseCommandLevel where C : BaseCommandLevel
     {
         public Dictionary<Enum, C> nextLevelOptions;
-        public override IEnumerable<Enum> GetNextLevelsKeys(TextRenderingClass renderingClass) => nextLevelOptions.Where(x => x.Value.Supports(renderingClass)).Select(x => x.Key);
+        public override IEnumerable<Enum> GetNextLevelsKeys(TextRenderingClass renderingClass) => nextLevelOptions?.Where(x => x.Value.Supports(renderingClass)).Select(x => x.Key) ?? new Enum[0];
     }
 
     public class CommandLevel : BaseCommandLevel<CommandLevel>

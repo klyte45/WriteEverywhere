@@ -108,5 +108,6 @@ namespace WriteEverywhere.Variables
         }
 
         public override bool Supports(TextRenderingClass renderingClass) => true;
+        public override string GetSubvalueDescription(Enum subRef) => subRef.ValueToI18n();
     }
 }

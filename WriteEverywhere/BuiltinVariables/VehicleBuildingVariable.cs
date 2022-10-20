@@ -59,6 +59,7 @@ namespace WriteEverywhere.Variables
                 catch { }
             }
         }
+        public override string GetSubvalueDescription(Enum subRef) => subRef.ValueToI18n();
 
     }
 }
