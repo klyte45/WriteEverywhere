@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
+using WriteEverywhere.Assets;
 using WriteEverywhere.Data;
 using WriteEverywhere.Rendering;
 using WriteEverywhere.Singleton;
@@ -40,7 +41,7 @@ namespace WriteEverywhere
 
         #region Shader
         public WEAssetLibrary ShaderLib => WEAssetLibrary.instance;
-        public Shader defaultTextShader { get; private set; } = WEAssetLibrary.instance.GetShaders().TryGetValue("klyte/wts/wtsshader", out Shader value) ? value : value;
+        public Shader defaultTextShader { get; private set; } = WEAssetLibrary.instance.FontShader;
         public Shader defaultFrameShader { get; private set; } = Shader.Find("Custom/Buildings/Building/NoBase");
         public Shader defaultHighlightShader { get; private set; } = Shader.Find("Hidden/InternalErrorShader");
 

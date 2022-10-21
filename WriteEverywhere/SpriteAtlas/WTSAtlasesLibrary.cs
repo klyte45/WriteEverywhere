@@ -18,6 +18,7 @@ using WriteEverywhere.Font;
 using WriteEverywhere.Font.Utility;
 using WriteEverywhere.Layout;
 using WriteEverywhere.Localization;
+using WriteEverywhere.Plugins.Ext;
 using WriteEverywhere.Rendering;
 using WriteEverywhere.Singleton;
 using WriteEverywhere.Utils;
@@ -139,12 +140,8 @@ namespace WriteEverywhere.Sprites
                 LogUtils.DoWarnLog($"SPRITE NOT FOUND: {spriteName}");
                 yield break;
             }
-            var bri = new BasicRenderInformation
-            {
-                m_YAxisOverflows = new RangeVector { min = 0, max = 20 },
-                m_refText = $"<sprite asset,{assetId},{spriteName}>"
-            };
-            BuildMeshFromAtlas(bri, targetAtlas[spriteName]);
+            var info = targetAtlas[spriteName];
+            var bri = WERenderingHelper.GenerateBri(info.Texture, info.Borders, info.PixelsPerMeter);
             RegisterMesh(spriteName, bri, spriteDictCache[assetId]);
             yield break;
         }
@@ -183,7 +180,7 @@ namespace WriteEverywhere.Sprites
                     LocalAtlases[atlasName] = new Dictionary<string, WEImageInfo>();
                     if (isRoot)
                     {
-                        spritesToAdd.AddRange(UIView.GetAView().defaultAtlas.sprites.Select(x => CloneWEImageInfo(x)).ToList());
+                        spritesToAdd.AddRange(UIView.GetAView().defaultAtlas.sprites.Where(x => x?.texture != null).Select(x => CloneWEImageInfo(x)).ToList());
                     }
                     foreach (var entry in spritesToAdd)
                     {
@@ -212,7 +209,7 @@ namespace WriteEverywhere.Sprites
             }
         }
 
-        private WEImageInfo CloneWEImageInfo(SpriteInfo x) => new WEImageInfo(null)
+        private WEImageInfo CloneWEImageInfo(SpriteInfo x) => x is null ? null : new WEImageInfo(null)
         {
             Borders = new Vector4(x.border.left / x.width, x.border.bottom / x.height, x.border.right / x.width, x.border.top / x.height),
             Name = x.name,
@@ -338,13 +335,8 @@ namespace WriteEverywhere.Sprites
                 yield break;
             }
             yield return 0;
-            var bri = new BasicRenderInformation
-            {
-                m_YAxisOverflows = new RangeVector { min = 0, max = 20 },
-            };
-
-            yield return 0;
-            BuildMeshFromAtlas(bri, m_transportLineAtlas[id]);
+            var info = m_transportLineAtlas[id];
+            var bri = WERenderingHelper.GenerateBri(info.Texture, info.Borders, info.PixelsPerMeter);
             yield return 0;
             RegisterMeshSingle(line.lineId, bri, line.regional ? RegionalTransportLineCache : TransportLineCache);
             yield break;
@@ -478,57 +470,7 @@ namespace WriteEverywhere.Sprites
 
         #region Geometry
 
-        private static readonly int[] kTriangleIndices = new int[]    {
-            0,
-            1,
-            3,
-            3,
-            1,
-            2
-        };
 
-        public static readonly Mesh basicMesh = new Mesh
-        {
-            vertices = new[]
-            {
-                new Vector3(-.5f, -.5f, 0f),
-                new Vector3(0.5f, -.5f, 0f),
-                new Vector3(0.5f, 0.5f, 0f),
-                new Vector3(-.5f, 0.5f, 0f),
-            },
-            uv = new[]
-            {
-                new Vector2(1, 0),
-                new Vector2(0, 0),
-                new Vector2(0, 1),
-                new Vector2(1, 1)
-            },
-            triangles = kTriangleIndices
-        };
-
-        static WTSAtlasesLibrary()
-        {
-            WTSUtils.SolveTangents(basicMesh);
-        }
-
-
-        internal static void BuildMeshFromAtlas(BasicRenderInformation bri, WEImageInfo sprite)
-        {
-            bri.m_mesh = basicMesh;
-            bri.m_fontBaseLimits = new RangeVector { min = 0, max = 1 };
-            bri.m_YAxisOverflows = new RangeVector { min = -.5f, max = .5f };
-            bri.m_sizeMetersUnscaled = new Vector2(sprite.Texture.width / (float)sprite.Texture.height, 1);
-            bri.m_offsetScaleX = sprite.Texture.width / (float)sprite.Texture.height;
-            bri.m_generatedMaterial = new Material(FontServer.instance.DefaultShader)
-            {
-                mainTexture = sprite.Texture
-            };
-            bri.m_borders = sprite.Borders;
-            bri.m_pixelDensityMeters = sprite.PixelsPerMeter;
-            bri.m_lineOffset = .5f;
-            bri.m_expandXIfAlone = true;
-
-        }
 
 
         private static void RegisterMesh(string sprite, BasicRenderInformation bri, Dictionary<string, BasicRenderInformation> cache)
@@ -556,7 +498,7 @@ namespace WriteEverywhere.Sprites
             {
                 m_bgTexture = new BasicRenderInformation
                 {
-                    m_mesh = WTSAtlasesLibrary.basicMesh,
+                    m_mesh = WERenderingHelper.basicMesh,
                     m_fontBaseLimits = new RangeVector { min = 0, max = 1 },
                     m_YAxisOverflows = new RangeVector { min = -.5f, max = .5f },
                     m_sizeMetersUnscaled = new Vector2(1, 1),

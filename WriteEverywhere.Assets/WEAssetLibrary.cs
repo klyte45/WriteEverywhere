@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace WriteEverywhere
+namespace WriteEverywhere.Assets
 {
     public class WEAssetLibrary : SingletonLite<WEAssetLibrary>
     {
@@ -17,24 +17,27 @@ namespace WriteEverywhere
             GetShaders();
         }
 
+        private Shader m_fontShader;
+        public Shader FontShader => m_fontShader is null ? m_fontShader = WEAssetLibrary.instance.GetShaders().TryGetValue("klyte/wts/wtsshader", out Shader value) ? value : value : m_fontShader;
+
         public Dictionary<string, Shader> GetShaders()
         {
             if (m_loadedShaders is null)
             {
                 if (Application.platform == RuntimePlatform.WindowsPlayer)
                 {
-                    m_loadedShaders = LoadAllShaders("Shader.ShaderTest.unity3d");
+                    m_loadedShaders = LoadAllShaders("Assets.Bundles.ShaderTest.unity3d");
                     LogUtils.DoLog($"Shaders loaded for {Application.platform}!");
                 }
                 else if (Application.platform == RuntimePlatform.LinuxPlayer)
                 {
-                    m_loadedShaders = LoadAllShaders("Shader.ShaderTest-linux.unity3d");
+                    m_loadedShaders = LoadAllShaders("Assets.Bundles.ShaderTest-linux.unity3d");
                     LogUtils.DoLog($"Shaders loaded for {Application.platform}!");
                 }
                 else if (Application.platform == RuntimePlatform.OSXPlayer)
                 {
 
-                    m_loadedShaders = LoadAllShaders("Shader.ShaderTest-macosx.unity3d");
+                    m_loadedShaders = LoadAllShaders("Assets.Bundles.ShaderTest-macosx.unity3d");
                     LogUtils.DoLog($"Shaders loaded for {Application.platform}!");
                 }
                 else
@@ -42,7 +45,7 @@ namespace WriteEverywhere
                     m_loadedShaders = new Dictionary<string, Shader>();
                     LogUtils.DoErrorLog($"WARNING: Shaders not found for {Application.platform}!");
                 }
-                LogUtils.DoLog($"Shaders loaded:\n\t- {string.Join("\n\t- ", m_loadedShaders.Keys?.ToArray() ?? new[] { "ERRRRRR" })}");
+                LogUtils.DoLog($"Shaders loaded:\n\t- {string.Join("\n\t- ", m_loadedShaders?.Keys?.ToArray() ?? new[] { "ERRRRRR" })}");
             }
             return m_loadedShaders;
         }
@@ -52,7 +55,7 @@ namespace WriteEverywhere
         {
             LogUtils.DoWarnLog("LOADING Shaders");
             m_memoryLoaded?.Unload(true);
-            var addr = System.Environment.GetEnvironmentVariable("K45_WE_PROJECTROOT") + "/Shader/ShaderTest.unity3d";
+            var addr = System.Environment.GetEnvironmentVariable("K45_WE_PROJECTROOT") + "/Bundles/ShaderTest.unity3d";
             LogUtils.DoLog($"Loading from: {addr}");
             m_memoryLoaded = AssetBundle.LoadFromFile(addr);
             if (m_memoryLoaded != null)
@@ -75,7 +78,7 @@ namespace WriteEverywhere
         }
         private Dictionary<string, Shader> LoadAllShaders(string assetBundleName)
         {
-            var bundle = KResourceLoader.LoadBundle(assetBundleName);
+            var bundle = KResourceLoader.LoadBundle(assetBundleName, GetType().Assembly);
             if (bundle != null)
             {
                 ReadShaders(bundle, out Dictionary<string, Shader> m_loadedShaders);

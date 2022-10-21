@@ -37,11 +37,23 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="UnityEngine">
+      <HintPath>..\..\_managed\UnityEngine.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ColossalManaged">
+      <HintPath>..\..\_managed\ColossalManaged.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="**\*.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\WriteEverywhere.Assets\WriteEverywhere.Assets.csproj">
+      <Project>{60c28d63-3db6-4d67-847e-c46827d0fb3a}</Project>
+      <Name>WriteEverywhere.Assets</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WriteEverywhere.Font\WriteEverywhere.Font.csproj">
       <Project>{560C395E-18D9-44F3-9B3C-D6E5ED455720}</Project>
       <Name>WriteEverywhere.Font</Name>

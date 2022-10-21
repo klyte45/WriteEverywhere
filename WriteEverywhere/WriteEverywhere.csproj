@@ -67,120 +67,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Shader\**\*.unity3d" />
     <None Include="packages.config" />
+    <EmbeddedResource Include="UI\DefaultFont\*.ttf" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="UI\VersionNotes.txt" />
-    <Compile Include="BuiltinVariables\CurrentBuildingVariable.cs" />
-    <Compile Include="BuiltinVariables\CurrentCityVariable.cs" />
-    <Compile Include="BuiltinVariables\CurrentSegmentVariable.cs" />
-    <Compile Include="BuiltinVariables\CurrentVehicleVariable.cs" />
-    <Compile Include="BuiltinVariables\EnvironmentVariable.cs" />
-    <Compile Include="BuiltinVariables\ParameterVariable.cs" />
-    <Compile Include="BuiltinVariables\TargetSegmentVariable.cs" />
-    <Compile Include="BuiltinVariables\ValueEnums\VariableBuildingSubType.cs" />
-    <Compile Include="BuiltinVariables\ValueEnums\VariableCitySubType.cs" />
-    <Compile Include="BuiltinVariables\ValueEnums\VariableEnvironmentSubType..cs" />
-    <Compile Include="BuiltinVariables\ValueEnums\VariableSegmentTargetSubType.cs" />
-    <Compile Include="BuiltinVariables\ValueEnums\VariableVehicleSubType.cs" />
-    <Compile Include="BuiltinVariables\VehicleBuildingVariable.cs" />
-    <Compile Include="Data\BuildingParametersData.cs" />
-    <Compile Include="Data\PropLayoutCachedBuildingData.cs" />
-    <Compile Include="Data\WTSBuildingData.cs" />
-    <Compile Include="Data\WTSBuildingDataCaches.cs" />
-    <Compile Include="Data\WTSEtcData.cs" />
-    <Compile Include="Data\WTSOnNetData.cs" />
-    <Compile Include="Data\WTSVehicleData.cs" />
-    <Compile Include="EnumI18nExtensions.cs" />
-    <Compile Include="Libraries\BasicFileLib.cs" />
-    <Compile Include="MainController.cs" />
-    <Compile Include="ModInstance.cs" />
-    <Compile Include="ModShared\BridgeADRFallback.cs" />
-    <Compile Include="ModShared\BridgeTLMFallback.cs" />
-    <Compile Include="ModShared\BridgeVSFallback.cs" />
-    <Compile Include="ModShared\WEFacade.cs" />
-    <Compile Include="Override\CameraOverrides.cs" />
-    <Compile Include="Override\InstanceManagerOverrides.cs" />
-    <Compile Include="Override\NetManagerOverrides.cs" />
-    <Compile Include="Override\ToolManagerOverrides.cs" />
-    <Compile Include="Override\TransportManagerOverrides.cs" />
-    <Compile Include="Override\WritingsRendering\BuildingManagerOverrides.cs" />
-    <Compile Include="Override\WritingsRendering\RoadNodeOverrides.cs" />
-    <Compile Include="Override\WritingsRendering\VehicleAIOverrides.cs" />
-    <Compile Include="Rendering\WEDisplayContainerMeshUtils.cs" />
-    <Compile Include="Rendering\WEDynamicTextRenderingRules.cs" />
-    <Compile Include="Rendering\WETextMeshProcess.cs" />
-    <Compile Include="Rendering\WETextRenderer.cs" />
-    <Compile Include="Shader\CreateAssetBundle.cs" />
-    <Compile Include="Shader\WEAssetLibrary.cs" />
-    <Compile Include="Singleton\CacheStructure\BuildingItemCache.cs" />
-    <Compile Include="Singleton\CacheStructure\CityTransportLineItemCache.cs" />
-    <Compile Include="Singleton\CacheStructure\DistrictItemCache.cs" />
-    <Compile Include="Singleton\CacheStructure\IntercityTransportLineItemCache.cs" />
-    <Compile Include="Singleton\CacheStructure\ParkItemCache.cs" />
-    <Compile Include="Singleton\CacheStructure\SegmentItemCache.cs" />
-    <Compile Include="Singleton\CacheStructure\Utility\CacheErasingFlags.cs" />
-    <Compile Include="Singleton\CacheStructure\Utility\CacheTypes.cs" />
-    <Compile Include="Singleton\CacheStructure\Utility\FormattableString.cs" />
-    <Compile Include="Singleton\CacheStructure\Utility\IItemCache.cs" />
-    <Compile Include="Singleton\CacheStructure\Utility\ITransportLineItemCache.cs" />
-    <Compile Include="Singleton\CacheStructure\VehicleItemCache.cs" />
-    <Compile Include="Singleton\CommandLevelSingleton.cs" />
-    <Compile Include="Singleton\FontServer.cs" />
-    <Compile Include="Singleton\WTSBuildingPropsSingleton.cs" />
-    <Compile Include="Singleton\WTSCacheSingleton.cs" />
-    <Compile Include="Singleton\WTSOnNetPropsSingleton.cs" />
-    <Compile Include="Singleton\WTSVehicleTextsSingleton.cs" />
-    <Compile Include="SpriteAtlas\WTSAtlasesLibrary.cs" />
-    <Compile Include="Tools\BuildingEditorTool.cs" />
-    <Compile Include="Tools\RoadSegmentTool.cs" />
-    <Compile Include="Tools\SegmentEditorPickerTool.cs" />
-    <Compile Include="Tools\VehicleEditorTool.cs" />
-    <Compile Include="UI\LiteUI\Building\BuildingInfoDetailLiteUI.cs" />
-    <Compile Include="UI\LiteUI\Building\BuildingLiteUI.cs" />
-    <Compile Include="UI\LiteUI\Building\BuildingParamsTab.cs" />
-    <Compile Include="UI\LiteUI\Building\BuildingUIBasicTab.cs" />
-    <Compile Include="UI\LiteUI\Building\BuildingUIPublicTransportTab .cs" />
-    <Compile Include="UI\LiteUI\Building\BuildingUITextTab.cs" />
-    <Compile Include="UI\LiteUI\Configs\WESettingsClockTab.cs" />
-    <Compile Include="UI\LiteUI\Configs\WESettingsDefaultFontsTab.cs" />
-    <Compile Include="UI\LiteUI\Configs\WESettingsFoldersGeneralTab.cs" />
-    <Compile Include="UI\LiteUI\Configs\WESettingsGUI.cs" />
-    <Compile Include="UI\LiteUI\Configs\WESettingsQualityTab.cs" />
-    <Compile Include="UI\LiteUI\OnNet\WTSOnNetBasicTab.cs" />
-    <Compile Include="UI\LiteUI\OnNet\WTSOnNetLiteUI.cs" />
-    <Compile Include="UI\LiteUI\OnNet\WTSOnNetParamsTab.cs" />
-    <Compile Include="UI\LiteUI\OnNet\WTSOnNetTargetsTab.cs" />
-    <Compile Include="UI\LiteUI\OnNet\WTSOnNetTextTab.cs" />
-    <Compile Include="UI\LiteUI\TextEditor\ColoringSourceExtensions.cs" />
-    <Compile Include="UI\LiteUI\TextEditor\GeneralWritingEditorBgMeshSettingsTab.cs" />
-    <Compile Include="UI\LiteUI\TextEditor\GeneralWritingEditorContentTab.cs" />
-    <Compile Include="UI\LiteUI\TextEditor\GeneralWritingEditorForegroundTab.cs" />
-    <Compile Include="UI\LiteUI\TextEditor\GeneralWritingEditorFrameSettingsTab.cs" />
-    <Compile Include="UI\LiteUI\TextEditor\GeneralWritingEditorGeneralTab.cs" />
-    <Compile Include="UI\LiteUI\TextEditor\GeneralWritingEditorIlluminationTab.cs" />
-    <Compile Include="UI\LiteUI\TextEditor\GeneralWritingEditorPositionsSizesTab.cs" />
-    <Compile Include="UI\LiteUI\TextEditor\GeneralWritingGUI.cs" />
-    <Compile Include="UI\LiteUI\Vehicle\WTSVehicleInfoDetailLiteUI.cs" />
-    <Compile Include="UI\LiteUI\Vehicle\WTSVehicleLiteUI.cs" />
-    <Compile Include="UI\LiteUI\_Common\Parameters\IWTSParameterEditor.cs" />
-    <Compile Include="UI\LiteUI\_Common\Parameters\WTSBaseParamsTab.cs" />
-    <Compile Include="UI\LiteUI\_Common\Parameters\WTSParameterAnyEditor.cs" />
-    <Compile Include="UI\LiteUI\_Common\Parameters\WTSParameterFolderEditor.cs" />
-    <Compile Include="UI\LiteUI\_Common\Parameters\WTSParameterImageEditor.cs" />
-    <Compile Include="UI\LiteUI\_Common\Parameters\WTSParameterVariableEditor.cs" />
-    <Compile Include="Utils\MeshExtensions.cs" />
-    <Compile Include="Utils\WTSAtlasLoadingUtils.cs" />
-    <Compile Include="Utils\WTSRoadNodeCommons.cs" />
-    <Compile Include="Utils\WTSStopUtils.cs" />
-    <Compile Include="Utils\WTSUtils.cs" />
-    <Compile Include="Xml\Highway\HighwayShieldDescriptor.cs" />
-    <Compile Include="Xml\Highway\ImageLayerTextDescriptorXml.cs" />
-    <Compile Include="Xml\TextParameters\TextParameterValueWrapperRendering.cs" />
-    <Compile Include="Xml\TextParameters\TextParameterWrapperRendering.cs" />
-    <Compile Include="Xml\TextParameters\WEImageExtensions.cs" />
-    <Compile Include="Override\NetToolOverrides.cs" />
+    <Compile Include="**\*.cs" />
   </ItemGroup>
   <!-- <ItemGroup> -->
   <!-- <Reference Include="TransportLinesManager">  -->
@@ -204,7 +96,6 @@
   <!-- </ItemGroup> -->
   <ItemGroup>
     <EmbeddedResource Include="UI\**\*.png" />
-    <EmbeddedResource Include="UI\**\*.ttf" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Bridge_WE2ADR\Bridge_WE2CD.csproj">
@@ -225,6 +116,10 @@
     <ProjectReference Include="..\KwyttoUtilityWE\KwyttoUtilityWE.csproj">
       <Project>{27c920f8-f40f-4d56-bcb6-9c9025ed0aac}</Project>
       <Name>KwyttoUtilityWE</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WriteEverywhere.Assets\WriteEverywhere.Assets.csproj">
+      <Project>{60c28d63-3db6-4d67-847e-c46827d0fb3a}</Project>
+      <Name>WriteEverywhere.Assets</Name>
     </ProjectReference>
     <ProjectReference Include="..\WriteEverywhere.Font\WriteEverywhere.Font.csproj">
       <Project>{560c395e-18d9-44f3-9b3c-d6e5ed455720}</Project>

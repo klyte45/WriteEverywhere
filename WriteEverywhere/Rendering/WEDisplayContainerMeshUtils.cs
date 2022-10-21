@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using UnityEngine;
+using WriteEverywhere.Assets;
 using WriteEverywhere.Utils;
 
 namespace WriteEverywhere.Rendering
