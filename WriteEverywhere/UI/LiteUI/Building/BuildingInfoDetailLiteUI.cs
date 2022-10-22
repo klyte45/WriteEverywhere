@@ -1,4 +1,4 @@
-﻿extern alias VS;
+﻿
 
 using ColossalFramework;
 using ColossalFramework.Globalization;

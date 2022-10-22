@@ -1,9 +1,8 @@
-﻿extern alias TLM;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using TLM::Bridge_WE2TLM;
 using UnityEngine;
 using WriteEverywhere.Singleton;
+using WriteEverywhere.TransportLines;
 
 namespace WriteEverywhere.Data
 {

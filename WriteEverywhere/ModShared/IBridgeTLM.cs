@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using WriteEverywhere.TransportLines;
 
-namespace Bridge_WE2TLM
+namespace WriteEverywhere.ModShared
 {
-    public abstract class IBridge : IBridgePrioritizable
+    public abstract class IBridgeTLM : IBridgePrioritizable
     {
         public abstract int Priority { get; }
         public abstract bool IsBridgeEnabled { get; }

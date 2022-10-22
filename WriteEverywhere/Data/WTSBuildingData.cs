@@ -1,4 +1,4 @@
-﻿extern alias TLM;
+﻿
 
 using Kwytto.Data;
 using Kwytto.Utils;

@@ -1,4 +1,4 @@
-﻿extern alias TLM;
+﻿
 using System.Collections.Generic;
 using WriteEverywhere.Data;
 using WriteEverywhere.Font;

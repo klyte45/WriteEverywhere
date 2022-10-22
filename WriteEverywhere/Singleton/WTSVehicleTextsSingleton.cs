@@ -1,4 +1,4 @@
-﻿extern alias VS;
+﻿
 using ColossalFramework;
 using Kwytto.LiteUI;
 using Kwytto.Localization;
@@ -47,7 +47,7 @@ namespace WriteEverywhere.Singleton
                 return;
             }
 
-            GetTargetDescriptor(thiz.m_info, vehicleID, out _, out ILayoutDescriptorVehicleXml targetDescriptor);
+            GetTargetDescriptor(thiz.m_info, vehicleID, out _, out ILayoutDescriptorVehicleXml targetDescriptor, vehicleData.m_sourceBuilding);
 
             if (targetDescriptor is LayoutDescriptorVehicleXml layoutDescriptor)
             {
@@ -64,7 +64,7 @@ namespace WriteEverywhere.Singleton
             }
         }
 
-        internal static void GetTargetDescriptor(VehicleInfo vehicle, int vehicleId, out ConfigurationSource source, out ILayoutDescriptorVehicleXml target, string skin = null)
+        internal static void GetTargetDescriptor(VehicleInfo vehicle, int vehicleId, out ConfigurationSource source, out ILayoutDescriptorVehicleXml target, ushort buildingId, string skin = null)
         {
             if (vehicle == null)
             {
@@ -76,7 +76,7 @@ namespace WriteEverywhere.Singleton
             var connVS = ModInstance.Controller.ConnectorVS;
             if (connVS.IsAvailable && (!WEFacade.IsWEVehicleEditorOpen || vehicleId != WEFacade.CurrentGrabbedVehicleId || !WEFacade.CurrentSelectedSkin.IsNullOrWhiteSpace()))
             {
-                if (vehicleId >= 0 && connVS.GetSkinLayout(vehicle, (ushort)vehicleId, false, out target))
+                if (vehicleId >= 0 && connVS.GetSkinLayout(vehicle, (ushort)vehicleId, false, out target, buildingId))
                 {
                     source = ConfigurationSource.SKIN;
                     return;

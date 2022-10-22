@@ -1,8 +1,6 @@
-﻿extern alias CD;
-
-using CD::Bridge_WE2CD;
-using UnityEngine;
+﻿using UnityEngine;
 using WriteEverywhere.Singleton;
+using WriteEverywhere.Utils;
 using static CardinalPoint;
 
 namespace WriteEverywhere.Rendering

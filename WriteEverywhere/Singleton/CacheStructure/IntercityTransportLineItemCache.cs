@@ -1,7 +1,5 @@
-﻿extern alias TLM;
-
-using TLM::Bridge_WE2TLM;
-using WriteEverywhere.Singleton;
+﻿using WriteEverywhere.Singleton;
+using WriteEverywhere.TransportLines;
 
 namespace WriteEverywhere.Rendering
 {

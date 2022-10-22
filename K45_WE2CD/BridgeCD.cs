@@ -1,6 +1,4 @@
 ﻿extern alias CD;
-
-using Bridge_WE2CD;
 using CD::CustomData.Overrides;
 using ColossalFramework.Plugins;
 using System;
@@ -11,7 +9,7 @@ using WriteEverywhere.Singleton;
 
 namespace K45_WE2CD
 {
-    public class BridgeCD : IBridge
+    public class BridgeCD : IBridgeCD
     {
         public BridgeCD()
         {

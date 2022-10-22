@@ -1,4 +1,4 @@
-﻿extern alias VS;
+﻿
 using ColossalFramework;
 using ColossalFramework.Globalization;
 using ColossalFramework.Packaging;
@@ -309,7 +309,7 @@ namespace WriteEverywhere.UI
 
         private void ReloadSkin()
         {
-            WTSVehicleTextsSingleton.GetTargetDescriptor(m_currentInfo, -1, out m_currentSource, out var currentLayout, m_currentSkin);
+            WTSVehicleTextsSingleton.GetTargetDescriptor(m_currentInfo, -1, out m_currentSource, out var currentLayout, 0, m_currentSkin);
             m_currentLayout = currentLayout as LayoutDescriptorVehicleXml;
             m_cachedItemList = currentLayout?.TextDescriptors.Select(x => x.SaveName).ToArray();
             OnTabChanged(-1);
@@ -341,7 +341,7 @@ namespace WriteEverywhere.UI
                 .Where((x) => x.Value.PrefabName.StartsWith(assetId) || x.Value.PrefabName == m_currentInfo.name)
                 .Select(x => x.Value.Info))
                 {
-                    WTSVehicleTextsSingleton.GetTargetDescriptor(asset as VehicleInfo, -1, out _, out ILayoutDescriptorVehicleXml target);
+                    WTSVehicleTextsSingleton.GetTargetDescriptor(asset as VehicleInfo, -1, out _, out ILayoutDescriptorVehicleXml target, 0);
                     if (target is LayoutDescriptorVehicleXml layout)
                     {
                         layout.VehicleAssetName = asset.name;

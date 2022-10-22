@@ -1,4 +1,4 @@
-﻿extern alias VS;
+﻿
 
 using WriteEverywhere.Singleton;
 using WriteEverywhere.Sprites;

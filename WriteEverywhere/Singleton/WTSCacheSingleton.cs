@@ -1,14 +1,14 @@
-extern alias TLM;
+
 using ColossalFramework;
 using Kwytto.Utils;
-using WriteEverywhere.Font;
-using WriteEverywhere.Font.Utility;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using TLM::Bridge_WE2TLM;
 using UnityEngine;
+using WriteEverywhere.Font;
+using WriteEverywhere.Font.Utility;
 using WriteEverywhere.Rendering;
+using WriteEverywhere.TransportLines;
 
 namespace WriteEverywhere.Singleton
 {

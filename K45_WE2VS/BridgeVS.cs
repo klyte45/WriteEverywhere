@@ -1,6 +1,5 @@
 ﻿extern alias VS;
 extern alias WE;
-using Bridge_WE2VS;
 using ColossalFramework.Plugins;
 using Kwytto.Utils;
 using System;
@@ -9,10 +8,11 @@ using System.Linq;
 using UnityEngine;
 using VS::VehicleSkins.ModShared;
 using WriteEverywhere.Layout;
+using WriteEverywhere.ModShared;
 
 namespace K45_WE2VS
 {
-    public class BridgeVS : IBridge
+    public class BridgeVS : IBridgeVS
     {
         public BridgeVS()
         {
@@ -34,7 +34,7 @@ namespace K45_WE2VS
         {
             VehicleAssetName = info.name
         };
-        public override bool GetSkinLayout(VehicleInfo info, ushort vehicleId, bool isParked, out ILayoutDescriptorVehicleXml layout) => VSFacade.GetDescriptorForVehicle(info, vehicleId, isParked, out layout);
+        public override bool GetSkinLayout(VehicleInfo info, ushort vehicleId, bool isParked, out ILayoutDescriptorVehicleXml layout, ushort buildingId) => VSFacade.GetDescriptorForVehicle(info, vehicleId, isParked, out layout, buildingId);
         public override Material GetSkinMaterial(VehicleInfo info, string skinName) => VSFacade.GetSkinMaterial(info, skinName);
         public override string[] ListAllSkins(VehicleInfo info) => VSFacade.GetAvailableSkins(info);
     }

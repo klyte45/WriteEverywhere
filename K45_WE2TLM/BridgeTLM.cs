@@ -8,13 +8,13 @@ using System.Linq;
 using TLM::Klyte.TransportLinesManager.Extensions;
 using TLM::Klyte.TransportLinesManager.ModShared;
 using UnityEngine;
-using WE::Bridge_WE2TLM;
-using WriteEverywhere.ModShared;
-using WriteEverywhere.Singleton;
+using WE::WriteEverywhere.ModShared;
+using WE::WriteEverywhere.Singleton;
+using WE::WriteEverywhere.TransportLines;
 
 namespace K45_WE2TLM
 {
-    public class BridgeTLM : IBridge
+    public class BridgeTLM : IBridgeTLM
     {
         public override int Priority => 0;
 

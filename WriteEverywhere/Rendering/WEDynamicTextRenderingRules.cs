@@ -1,10 +1,10 @@
-﻿extern alias TLM;
+﻿
 
 using ColossalFramework.Math;
 using System.Linq;
-using TLM::Bridge_WE2TLM;
 using UnityEngine;
 using WriteEverywhere.Layout;
+using WriteEverywhere.TransportLines;
 using WriteEverywhere.Utils;
 using WriteEverywhere.Xml;
 

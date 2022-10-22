@@ -1,7 +1,5 @@
-﻿extern alias CD;
-
-using CD::Bridge_WE2CD;
-using WriteEverywhere.Singleton;
+﻿using WriteEverywhere.Singleton;
+using WriteEverywhere.Utils;
 
 namespace WriteEverywhere.Rendering
 {

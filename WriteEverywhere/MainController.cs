@@ -1,8 +1,4 @@
-﻿extern alias CD;
-extern alias TLM;
-extern alias VS;
-
-using ColossalFramework.UI;
+﻿using ColossalFramework.UI;
 using Kwytto.Interfaces;
 using Kwytto.Utils;
 using System;
@@ -13,6 +9,7 @@ using System.Linq;
 using UnityEngine;
 using WriteEverywhere.Assets;
 using WriteEverywhere.Data;
+using WriteEverywhere.ModShared;
 using WriteEverywhere.Rendering;
 using WriteEverywhere.Singleton;
 using WriteEverywhere.Sprites;
@@ -84,9 +81,9 @@ namespace WriteEverywhere
         #endregion
 
         #region Bridges
-        public CD::Bridge_WE2CD.IBridge ConnectorCD { get; } = BridgeUtils.GetMostPrioritaryImplementation<CD::Bridge_WE2CD.IBridge>();
-        public TLM::Bridge_WE2TLM.IBridge ConnectorTLM { get; } = BridgeUtils.GetMostPrioritaryImplementation<TLM::Bridge_WE2TLM.IBridge>();
-        public VS::Bridge_WE2VS.IBridge ConnectorVS { get; } = BridgeUtils.GetMostPrioritaryImplementation<VS::Bridge_WE2VS.IBridge>();
+        public IBridgeCD ConnectorCD { get; } = BridgeUtils.GetMostPrioritaryImplementation<IBridgeCD>();
+        public IBridgeTLM ConnectorTLM { get; } = BridgeUtils.GetMostPrioritaryImplementation<IBridgeTLM>();
+        public IBridgeVS ConnectorVS { get; } = BridgeUtils.GetMostPrioritaryImplementation<IBridgeVS>();
         #endregion
 
         #region OnNet

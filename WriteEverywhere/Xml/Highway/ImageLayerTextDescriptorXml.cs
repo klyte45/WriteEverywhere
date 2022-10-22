@@ -1,6 +1,4 @@
-﻿extern alias CD;
-
-using Kwytto.Interfaces;
+﻿using Kwytto.Interfaces;
 using System.Xml;
 using System.Xml.Serialization;
 using UnityEngine;

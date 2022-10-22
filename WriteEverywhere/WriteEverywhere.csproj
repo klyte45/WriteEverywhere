@@ -98,21 +98,6 @@
     <EmbeddedResource Include="UI\**\*.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Bridge_WE2ADR\Bridge_WE2CD.csproj">
-      <Project>{60d2e312-654f-499b-a0e0-8786a5a66cf2}</Project>
-      <Name>Bridge_WE2CD</Name>
-      <Aliases>CD</Aliases>
-    </ProjectReference>
-    <ProjectReference Include="..\Bridge_WE2TLM\Bridge_WE2TLM.csproj">
-      <Project>{9993bf38-0db8-4959-a4a6-701ab67ec55d}</Project>
-      <Name>Bridge_WE2TLM</Name>
-      <Aliases>TLM</Aliases>
-    </ProjectReference>
-    <ProjectReference Include="..\Bridge_WE2VS\Bridge_WE2VS.csproj">
-      <Project>{a48b01d6-0b04-40aa-a5df-c76a73ffcbb5}</Project>
-      <Name>Bridge_WE2VS</Name>
-      <Aliases>VS</Aliases>
-    </ProjectReference>
     <ProjectReference Include="..\KwyttoUtilityWE\KwyttoUtilityWE.csproj">
       <Project>{27c920f8-f40f-4d56-bcb6-9c9025ed0aac}</Project>
       <Name>KwyttoUtilityWE</Name>

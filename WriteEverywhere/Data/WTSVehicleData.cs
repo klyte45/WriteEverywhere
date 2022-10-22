@@ -1,4 +1,4 @@
-﻿extern alias VS;
+﻿
 using Kwytto.Data;
 using Kwytto.Utils;
 using System.Xml.Serialization;

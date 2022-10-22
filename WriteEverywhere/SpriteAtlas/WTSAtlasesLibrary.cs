@@ -1,4 +1,3 @@
-extern alias TLM;
 using ColossalFramework;
 using ColossalFramework.Threading;
 using ColossalFramework.UI;
@@ -11,7 +10,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using TLM::Bridge_WE2TLM;
 using UnityEngine;
 using WriteEverywhere.Data;
 using WriteEverywhere.Font;
@@ -21,6 +19,7 @@ using WriteEverywhere.Localization;
 using WriteEverywhere.Plugins.Ext;
 using WriteEverywhere.Rendering;
 using WriteEverywhere.Singleton;
+using WriteEverywhere.TransportLines;
 using WriteEverywhere.Utils;
 using static ColossalFramework.UI.UITextureAtlas;
 

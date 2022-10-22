@@ -1,5 +1,4 @@
-﻿extern alias CD;
-using ColossalFramework.Math;
+﻿using ColossalFramework.Math;
 using Kwytto.Utils;
 using System.Collections.Generic;
 using UnityEngine;

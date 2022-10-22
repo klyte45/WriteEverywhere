@@ -67,10 +67,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Bridge_WE2VS\Bridge_WE2VS.csproj">
-      <Project>{a48b01d6-0b04-40aa-a5df-c76a73ffcbb5}</Project>
-      <Name>Bridge_WE2VS</Name>
-    </ProjectReference>
     <ProjectReference Include="..\KwyttoUtilityWE\KwyttoUtilityWE.csproj">
       <Project>{27c920f8-f40f-4d56-bcb6-9c9025ed0aac}</Project>
       <Name>KwyttoUtilityWE</Name>

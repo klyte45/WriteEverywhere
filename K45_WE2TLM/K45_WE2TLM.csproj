@@ -70,16 +70,13 @@
     <Compile Include="**/*.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Bridge_WE2TLM\Bridge_WE2TLM.csproj">
-      <Project>{9993BF38-0DB8-4959-A4A6-701AB67EC55D}</Project>
-      <Name>Bridge_WE2TLM</Name>
-      <Aliases>WE</Aliases>
-    </ProjectReference>
     <ProjectReference Include="..\WriteEverywhere\WriteEverywhere.csproj">
       <Project>{291D9EA9-6945-4EA3-8756-37464D40F450}</Project>
       <Name>WriteEverywhere</Name>
+      <Aliases>WE</Aliases>
     </ProjectReference>
-  </ItemGroup>  <PropertyGroup>
+  </ItemGroup>
+  <PropertyGroup>
     <PostBuildEvent>set "ModDir=%25LOCALAPPDATA%25\Colossal Order\Cities_Skylines\Addons\Mods\$(SolutionName)\"
 
 xcopy /y /e "$(TargetPath)*" "%25ModDir%25"

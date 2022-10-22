@@ -1,13 +1,11 @@
-extern alias CD;
-
-using CD::Bridge_WE2CD;
 using ColossalFramework.Math;
 using Kwytto.Utils;
 using UnityEngine;
+using WriteEverywhere.Utils;
 
 namespace WriteEverywhere.ModShared
 {
-    public class BridgeADRFallback : IBridge
+    public class BridgeCDFallback : IBridgeCD
     {
         public override int Priority { get; } = 1000;
 

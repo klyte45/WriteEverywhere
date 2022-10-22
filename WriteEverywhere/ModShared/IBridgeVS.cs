@@ -1,19 +1,17 @@
-﻿extern alias WE;
-
-using Kwytto.Interfaces;
+﻿using Kwytto.Interfaces;
 using UnityEngine;
-using WE::WriteEverywhere.Layout;
+using WriteEverywhere.Layout;
 
-namespace Bridge_WE2VS
+namespace WriteEverywhere.ModShared
 {
-    public abstract class IBridge : IBridgePrioritizable
+    public abstract class IBridgeVS : IBridgePrioritizable
     {
         public abstract bool IsAvailable { get; }
 
         public abstract int Priority { get; }
         public abstract bool IsBridgeEnabled { get; }
 
-        public abstract bool GetSkinLayout(VehicleInfo info, ushort vehicleId, bool isParked, out ILayoutDescriptorVehicleXml layout);
+        public abstract bool GetSkinLayout(VehicleInfo info, ushort vehicleId, bool isParked, out ILayoutDescriptorVehicleXml layout, ushort buildingId);
         public abstract string[] ListAllSkins(VehicleInfo info);
         public abstract ILayoutDescriptorVehicleXml GetSkin(VehicleInfo info, string skinName);
         public abstract Material GetSkinMaterial(VehicleInfo info, string skinName);

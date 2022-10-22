@@ -1,4 +1,4 @@
-﻿extern alias TLM;
+﻿
 using UnityEngine;
 
 namespace WriteEverywhere.Data

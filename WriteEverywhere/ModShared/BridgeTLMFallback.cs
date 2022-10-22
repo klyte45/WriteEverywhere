@@ -1,18 +1,17 @@
-extern alias TLM;
 using ColossalFramework;
 using Kwytto.UI;
 using Kwytto.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using TLM::Bridge_WE2TLM;
 using UnityEngine;
 using WriteEverywhere.Data;
+using WriteEverywhere.TransportLines;
 using static ItemClass;
 
 namespace WriteEverywhere.ModShared
 {
-    public class BridgeTLMFallback : IBridge
+    public class BridgeTLMFallback : IBridgeTLM
     {
         public override int Priority { get; } = 1000;
         public override bool IsBridgeEnabled { get; } = true;
