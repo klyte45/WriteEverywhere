@@ -113,12 +113,12 @@ namespace WriteEverywhere.UI
             var topHeight = paramEditor.DrawTop(this, areaRect);
             using (new GUILayout.HorizontalScope())
             {
-                using (var scroll = new GUILayout.ScrollViewScope(m_leftPanelScroll, false, true, GUILayout.Width(areaRect.x / 2), GUILayout.Height(areaRect.y - topHeight - 30 * GUIWindow.ResolutionMultiplier)))
+                using (var scroll = new GUILayout.ScrollViewScope(m_leftPanelScroll, false, true, GUILayout.Width(areaRect.x / 2), GUILayout.Height(areaRect.y - topHeight - 35 * GUIWindow.ResolutionMultiplier)))
                 {
                     paramEditor.DrawLeftPanel(RenderingClass, this, areaRect);
                     m_leftPanelScroll = scroll.scrollPosition;
                 };
-                using (new GUILayout.VerticalScope(GUILayout.Width(areaRect.x / 2 - 20 * GUIWindow.ResolutionMultiplier), GUILayout.Height(areaRect.y - topHeight - 30 * GUIWindow.ResolutionMultiplier)))
+                using (new GUILayout.VerticalScope(GUILayout.Width(areaRect.x / 2 - 20 * GUIWindow.ResolutionMultiplier), GUILayout.Height(areaRect.y - topHeight - 35 * GUIWindow.ResolutionMultiplier)))
                 {
                     if (showRightPanel)
                     {

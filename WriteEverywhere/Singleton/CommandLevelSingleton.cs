@@ -1,7 +1,9 @@
-﻿using Kwytto.Utils;
+﻿using ColossalFramework;
+using Kwytto.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using WriteEverywhere.Layout;
 using WriteEverywhere.Localization;
 using WriteEverywhere.Plugins;
@@ -69,6 +71,12 @@ namespace WriteEverywhere.Singleton
             }
         }
 
+        public RootCommandLevel GetRootForPath(string[] path)
+        {
+            var refEnum = GetRootEnumNextLevelFor(path[0]);
+            return refEnum != default ? commandTree[refEnum] : null;
+        }
+
         public static WEVariableExtension GetVariableClass(Enum root) => root != null && ModInstance.Controller.CommandLevelSingleton.commandTree.TryGetValue(root, out var value) ? value.SrcClass : null;
 
         protected override Enum GetRootEnumNextLevelFor(string v) => commandTree.Keys.FirstOrDefault(x => GetEnumKeyValue(x, 0) == v);
@@ -79,5 +87,61 @@ namespace WriteEverywhere.Singleton
         };
 
         protected override CommandLevel GetRootNextLevelFor(Enum e) => commandTree[e];
+
+        protected override BaseCommandLevel IterateInCommandTree(out string currentLocaleDesc, string[] parameterPath)
+        {
+            var varType = GetRootEnumNextLevelFor(parameterPath[0]);
+            if (varType != default)
+            {
+                return IterateInCommandTree(out currentLocaleDesc, parameterPath, varType, GetRootNextLevelFor(varType), 1, GetRootForPath(parameterPath));
+            }
+            else
+            {
+                currentLocaleDesc = GetRootDescText();
+            }
+            return GetRootCommandLevel();
+        }
+        private BaseCommandLevel IterateInCommandTree(out string currentLocaleDesc, string[] parameterPath, Enum levelKey, CommandLevel currentLevel, int level, RootCommandLevel root)
+        {
+            if (level < parameterPath.Length - 1)
+            {
+                if (currentLevel.defaultValue != null)
+                {
+                    var varType = currentLevel.defaultValue;
+                    try
+                    {
+                        varType = (Enum)Enum.Parse(varType.GetType(), parameterPath[level]);
+                    }
+                    catch
+                    {
+
+                    }
+                    if (varType != currentLevel.defaultValue && currentLevel.nextLevelOptions.ContainsKey(varType))
+                    {
+                        return IterateInCommandTree(out currentLocaleDesc, parameterPath, varType, currentLevel.nextLevelOptions[varType], level + 1, root);
+                    }
+                }
+                else
+                {
+                    if (!currentLevel.regexValidValues.IsNullOrWhiteSpace())
+                    {
+                        if (Regex.IsMatch(parameterPath[level], $"^{currentLevel.regexValidValues}$"))
+                        {
+                            if (currentLevel.nextLevelByRegex != null)
+                            {
+                                return IterateInCommandTree(out currentLocaleDesc, parameterPath, null, currentLevel.nextLevelByRegex, level + 1, root);
+                            }
+                        }
+                    }
+                }
+            }
+            currentLocaleDesc = !(currentLevel.descriptionKey is null)
+                ? currentLevel.descriptionKey()
+                : levelKey is null
+                    ? root.SrcClass.GetSubvalueDescription(currentLevel.defaultValue)
+                    : root.SrcClass.GetSubvalueDescription(levelKey);
+            currentLevel.level = level;
+            return currentLevel;
+        }
     }
 }

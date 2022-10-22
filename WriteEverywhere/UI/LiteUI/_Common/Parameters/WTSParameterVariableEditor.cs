@@ -1,11 +1,11 @@
 ﻿using ColossalFramework;
 using Kwytto.LiteUI;
+using System.Data;
 using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using WriteEverywhere.Localization;
 using WriteEverywhere.Plugins;
-using WriteEverywhere.Plugins.Ext;
 using WriteEverywhere.Singleton;
 using WriteEverywhere.Xml;
 
@@ -120,8 +120,10 @@ namespace WriteEverywhere.UI
         {
             hoverIdx = selectOpt;
             var str = tab.m_searchResult.Value[selectOpt];
+            var paramPath = CommandLevelSingleton.GetParameterPath(tab.SelectedValue ?? "");
+            var rootLevel = CommandLevelSingleton.Instance.GetRootForPath(paramPath);
             var key = cl.GetNextLevelsKeys(renderingClass).Where(z => CommandLevelSingleton.GetEnumKeyValue(z, cl.level) == str).FirstOrDefault();
-            tab.SetVariableDescription(key is null ? "" : $"<color=#00FF00>{key}</color>\n\n" + (cl is RootCommandLevel rl ? rl.SrcClass.GetSubvalueDescription(key) : key.ValueToI18n()));
+            tab.SetVariableDescription(key is null ? "" : $"<color=#00FF00>{key}</color>\n\n" + rootLevel.SrcClass.GetSubvalueDescription(key));
         }
 
         public static string[] VariableOnFilterParam(TextRenderingClass renderingClass, WTSBaseParamsTab<T> tab)

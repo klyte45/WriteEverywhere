@@ -1,5 +1,4 @@
-﻿using ColossalFramework;
-using Kwytto.Interfaces;
+﻿using Kwytto.Interfaces;
 using Kwytto.Utils;
 using System;
 using System.Collections.Generic;
@@ -59,61 +58,8 @@ namespace WriteEverywhere.Layout
         }
 
 
-        private BaseCommandLevel IterateInCommandTree(out string currentLocaleDesc, string[] parameterPath, Enum levelKey = null, CommandLevel currentLevel = null, int level = 0)
-        {
-            if (currentLevel is null || level < 1)
-            {
-                var varType = GetRootEnumNextLevelFor(parameterPath[0]);
-                if (varType != default)
-                {
-                    return IterateInCommandTree(out currentLocaleDesc, parameterPath, varType, GetRootNextLevelFor(varType), 1);
-                }
-                else
-                {
-                    currentLocaleDesc = GetRootDescText();
-                }
-                return GetRootCommandLevel();
-            }
-            if (level < parameterPath.Length - 1)
-            {
-                if (currentLevel.defaultValue != null)
-                {
-                    var varType = currentLevel.defaultValue;
-                    try
-                    {
-                        varType = (Enum)Enum.Parse(varType.GetType(), parameterPath[level]);
-                    }
-                    catch
-                    {
+        protected abstract BaseCommandLevel IterateInCommandTree(out string currentLocaleDesc, string[] parameterPath);
 
-                    }
-                    if (varType != currentLevel.defaultValue && currentLevel.nextLevelOptions.ContainsKey(varType))
-                    {
-                        return IterateInCommandTree(out currentLocaleDesc, parameterPath, varType, currentLevel.nextLevelOptions[varType], level + 1);
-                    }
-                }
-                else
-                {
-                    if (!currentLevel.regexValidValues.IsNullOrWhiteSpace())
-                    {
-                        if (Regex.IsMatch(parameterPath[level], $"^{currentLevel.regexValidValues}$"))
-                        {
-                            if (currentLevel.nextLevelByRegex != null)
-                            {
-                                return IterateInCommandTree(out currentLocaleDesc, parameterPath, null, currentLevel.nextLevelByRegex, level + 1);
-                            }
-                        }
-                    }
-                }
-            }
-            currentLocaleDesc = !(currentLevel.descriptionKey is null)
-                ? currentLevel.descriptionKey()
-                : levelKey is null
-                    ? ValueToI18n(currentLevel.defaultValue)
-                    : ValueToI18n(levelKey);
-            currentLevel.level = level;
-            return currentLevel;
-        }
 
         protected abstract BaseCommandLevel GetRootCommandLevel();
         protected abstract Enum GetRootEnumNextLevelFor(string v);
