@@ -1,4 +1,5 @@
 ﻿using Kwytto.LiteUI;
+using Kwytto.Utils;
 using System;
 using System.Linq;
 using UnityEngine;
@@ -30,7 +31,7 @@ namespace WriteEverywhere.UI
             this.srcClass = srcClass;
         }
 
-        public override Texture TabIcon { get; } = GUIKwyttoCommons.GetByNameFromDefaultAtlas("ZoningOptionFill");
+        public override Texture TabIcon { get; } = KResourceLoader.LoadTextureKwytto(Kwytto.UI.CommonsSpriteNames.K45_PaintBucket);
 
         protected override void DrawListing(Vector2 tabAreaSize, TextToWriteOnXml item, bool isEditable)
         {

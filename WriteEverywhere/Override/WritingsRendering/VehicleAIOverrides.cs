@@ -8,18 +8,16 @@ namespace WriteEverywhere.Overrides
 
         public void Awake()
         {
-
-
             #region Hooks
             System.Reflection.MethodInfo postRenderExtraStuff = GetType().GetMethod("AfterRenderExtraStuff", RedirectorUtils.allFlags);
             LogUtils.DoLog($"Patching=> {postRenderExtraStuff}");
             AddRedirect(typeof(VehicleAI).GetMethod("RenderExtraStuff", RedirectorUtils.allFlags), null, postRenderExtraStuff);
-            System.Reflection.MethodInfo afterSpawn = GetType().GetMethod("AfterSpawnTranspile", RedirectorUtils.allFlags);
 
             #endregion
         }
-
-        public static void AfterRenderExtraStuff(VehicleAI __instance, ushort vehicleID, ref Vehicle data, RenderManager.CameraInfo cameraInfo, InstanceID id, Vector3 position, Quaternion rotation, Vector4 tyrePosition, Vector4 lightState, Vector3 scale, Vector3 swayPosition, bool underground, bool overground)
-                => ModInstance.Controller?.VehicleTextsSingleton?.AfterRenderExtraStuff(__instance, vehicleID, ref data, cameraInfo, id, position, rotation, tyrePosition, lightState, scale, swayPosition, underground, overground);
+        public static void AfterRenderExtraStuff(VehicleAI __instance, ushort vehicleID, ref Vehicle data, RenderManager.CameraInfo cameraInfo, ref Vector3 position, ref Quaternion rotation, ref Vector3 scale, ref Vector3 swayPosition)
+        {
+            ModInstance.Controller?.VehicleTextsSingleton?.AfterRenderExtraStuff(__instance, vehicleID, ref data, cameraInfo, ref position, ref rotation, ref scale, ref swayPosition);
+        }
     }
 }

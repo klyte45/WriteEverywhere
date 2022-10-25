@@ -38,7 +38,10 @@ namespace WriteEverywhere.UI
             base.Awake();
             Instance = this;
             Init($"{ModInstance.Instance.GeneralName} - {Str.we_buildingEditor_windowTitle}", new Rect(128, 128, 500, 500), resizable: true, minSize: new Vector2(500, 500));
-            m_modelFilter = new GUIFilterItemsScreen<State>(Str.we_buildingEditor_selectBuilding, ModInstance.Controller, OnFilterParam, OnBuildingSet, GoTo, State.Normal, State.SelectBuilding, otherFilters: DrawExtraFilter, extraButtonsSearch: ExtraButtonsSearch);
+            if (!SceneUtils.IsAssetEditor)
+            {
+                m_modelFilter = new GUIFilterItemsScreen<State>(Str.we_buildingEditor_selectBuilding, ModInstance.Controller, OnFilterParam, OnBuildingSet, GoTo, State.Normal, State.SelectBuilding, otherFilters: DrawExtraFilter, extraButtonsSearch: ExtraButtonsSearch);
+            }
             m_colorPicker = GameObjectUtils.CreateElement<GUIColorPicker>(transform).Init();
             m_colorPicker.Visible = false;
             m_detailUI = new BuildingInfoDetailLiteUI(m_colorPicker);
@@ -150,6 +153,20 @@ namespace WriteEverywhere.UI
 
         protected override void DrawWindow(Vector2 size)
         {
+            if (SceneUtils.IsAssetEditor)
+            {
+                var currentSelection = ToolsModifierControl.toolController.m_editPrefabInfo as BuildingInfo;
+                if (CurrentInfo != currentSelection)
+                {
+                    CurrentInfo = currentSelection;
+                    m_editorTypeSel = 0;
+                }
+                if (currentSelection is null)
+                {
+                    GUILayout.Label(Str.we_assetEditor_currentAssetIsNotBuilding);
+                    return;
+                }
+            }
             var area = new Rect(5 * GUIWindow.ResolutionMultiplier, 0, size.x - 10 * GUIWindow.ResolutionMultiplier, size.y);
             using (new GUILayout.AreaScope(area))
             {
@@ -167,11 +184,14 @@ namespace WriteEverywhere.UI
 
         protected void DrawNormal(Vector2 size)
         {
-            m_modelFilter.DrawButton(size.x, m_currentInfo?.GetUncheckedLocalizedTitle());
+            if (!SceneUtils.IsAssetEditor)
+            {
+                m_modelFilter.DrawButton(size.x, m_currentInfo?.GetUncheckedLocalizedTitle());
+            }
             var headerArea0 = new Rect(0, 25 * ResolutionMultiplier, size.x, 25 * ResolutionMultiplier);
             var headerArea1 = new Rect(0, 50 * ResolutionMultiplier, size.x, 45 * ResolutionMultiplier);
             var bodyArea = new Rect(0, 95 * ResolutionMultiplier, size.x, size.y - 95 * ResolutionMultiplier);
-            if (CurrentInfo && m_detailUI.CurrentSource != Xml.ConfigurationSource.NONE)
+            if (!SceneUtils.IsAssetEditor && CurrentInfo && m_detailUI.CurrentSource != Xml.ConfigurationSource.NONE)
             {
                 using (new GUILayout.AreaScope(headerArea0))
                 {
@@ -203,7 +223,7 @@ namespace WriteEverywhere.UI
             }
             using (new GUILayout.AreaScope(bodyArea, BgTextureSubgroup, GUI.skin.box))
             {
-                if (m_editorTypeSel == 0)
+                if (SceneUtils.IsAssetEditor || m_editorTypeSel == 0)
                 {
                     DrawLayoutEditor(bodyArea.size);
                 }

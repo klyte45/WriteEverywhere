@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using WriteEverywhere.Data;
+using WriteEverywhere.Layout;
 using WriteEverywhere.Localization;
 using WriteEverywhere.Tools;
 using WriteEverywhere.Utils;
@@ -21,13 +22,17 @@ namespace WriteEverywhere.UI
         public bool IsOnTextDimensionsView => m_detailUI.IsOnTextDimensionsView;
         public VehicleInfo CurrentEditingInfo => m_detailUI.CurrentEditingInfo;
         public string CurrentSkin => m_detailUI.CurrentSkin;
+        public List<VehicleInfo> CurrentTrailerList { get; private set; }
 
         public override void Awake()
         {
             base.Awake();
             Instance = this;
             Init($"{ModInstance.Instance.GeneralName} - {Str.WTS_VEHICLEEDITOR_WINDOWTITLE}", new Rect(128, 128, 500, 350), resizable: true, minSize: new Vector2(500, 500));
-            m_modelFilter = new GUIFilterItemsScreen<State>(Str.WTS_VEHICLEEDITOR_SELECTMODEL, ModInstance.Controller, OnFilterParam, OnVehicleSet, GoTo, State.Normal, State.SelectVehicle, otherFilters: DrawExtraFilter, extraButtonsSearch: ExtraButtonsSearch);
+            if (!SceneUtils.IsAssetEditor)
+            {
+                m_modelFilter = new GUIFilterItemsScreen<State>(Str.WTS_VEHICLEEDITOR_SELECTMODEL, ModInstance.Controller, OnFilterParam, OnVehicleSet, GoTo, State.Normal, State.SelectVehicle, otherFilters: DrawExtraFilter, extraButtonsSearch: ExtraButtonsSearch);
+            }
             m_colorPicker = GameObjectUtils.CreateElement<GUIColorPicker>(transform).Init();
             m_colorPicker.Visible = false;
             m_detailUI = new WTSVehicleInfoDetailLiteUI(m_colorPicker);
@@ -132,13 +137,13 @@ namespace WriteEverywhere.UI
                     m_currentInfo = value;
                     if (!(value is null))
                     {
-                        m_currentInfoList = new List<VehicleInfo>()
+                        CurrentTrailerList = new List<VehicleInfo>()
                         {
                             m_currentInfo
                         };
                         if (!(m_currentInfo.m_trailers is null))
                         {
-                            m_currentInfoList.AddRange(m_currentInfo.m_trailers.Select(x => x.m_info).Distinct().Where(x => x != m_currentInfo));
+                            CurrentTrailerList.AddRange(m_currentInfo.m_trailers.Select(x => x.m_info).Distinct().Where(x => x != m_currentInfo));
                         }
                         TrailerSel = 0;
                     }
@@ -149,12 +154,27 @@ namespace WriteEverywhere.UI
         protected override bool showOverModals { get; } = false;
         protected override bool requireModal { get; } = false;
 
-        private List<VehicleInfo> m_currentInfoList;
         private VehicleInfo m_currentInfo;
         private Vector2 m_horizontalScroll;
 
         protected override void DrawWindow(Vector2 size)
         {
+            if (SceneUtils.IsAssetEditor)
+            {
+                if (!(ToolsModifierControl.toolController.m_editPrefabInfo is VehicleInfo currentSelection))
+                {
+                    GUILayout.Label(Str.we_assetEditor_currentAssetIsNotBuilding);
+                    return;
+                }
+                if (CurrentInfo is null || !CurrentInfo.name.EndsWith(currentSelection.name))
+                {
+                    var assetPack = PrefabUtils.GetAssetFromPrefab(currentSelection);
+                    var descriptorsToExport = new List<LayoutDescriptorVehicleXml>();
+                    CurrentInfo = VehiclesIndexes.instance.PrefabsData
+                    .Where((x) => PrefabUtils.GetAssetFromPrefab(x.Value.Info) == assetPack)
+                    .Select(x => x.Value.Info as VehicleInfo).First(x => x?.name.EndsWith(currentSelection.name) ?? false);
+                }
+            }
             var area = new Rect(5 * GUIWindow.ResolutionMultiplier, 0, size.x - 10 * GUIWindow.ResolutionMultiplier, size.y);
             using (new GUILayout.AreaScope(area))
             {
@@ -172,26 +192,30 @@ namespace WriteEverywhere.UI
 
         protected void DrawNormal(Vector2 size)
         {
-            m_modelFilter.DrawButton(size.x, m_currentInfo?.GetUncheckedLocalizedTitle());
-
+            if (SceneUtils.IsAssetEditor)
+            {
+                GUILayout.Label(Str.we_assetEditor_dontForgetSaveAlert);
+            }
+            else
+            {
+                m_modelFilter.DrawButton(size.x, m_currentInfo?.GetUncheckedLocalizedTitle());
+            }
             if (CurrentInfo)
             {
-                var headerArea = new Rect(0, 25 * GUIWindow.ResolutionMultiplier, size.x, 25 * GUIWindow.ResolutionMultiplier); ;
+                var headerArea = new Rect(0, 25 * GUIWindow.ResolutionMultiplier, size.x, 25 * GUIWindow.ResolutionMultiplier);
                 var bodyArea = new Rect(0, 50 * GUIWindow.ResolutionMultiplier, size.x, size.y - 50 * GUIWindow.ResolutionMultiplier);
                 using (new GUILayout.AreaScope(headerArea))
                 {
                     using (var scope = new GUILayout.ScrollViewScope(m_horizontalScroll))
                     {
-                        TrailerSel = GUILayout.SelectionGrid(TrailerSel, m_currentInfoList.Select((_, i) => i == 0 ? Str.we_vehicleEditor_headVehicleTitle : string.Format(Str.we_vehicleEditor_trailerNumTitle, i)).ToArray(), m_currentInfoList.Count, GUILayout.MinWidth(40 * GUIWindow.ResolutionMultiplier));
+                        TrailerSel = GUILayout.SelectionGrid(TrailerSel, CurrentTrailerList.Select((_, i) => i == 0 ? Str.we_vehicleEditor_headVehicleTitle : string.Format(Str.we_vehicleEditor_trailerNumTitle, i)).ToArray(), CurrentTrailerList.Count, GUILayout.MinWidth(40 * GUIWindow.ResolutionMultiplier));
                         m_horizontalScroll = scope.scrollPosition;
                     }
                 }
                 using (new GUILayout.AreaScope(bodyArea, BgTextureSubgroup, GUI.skin.box))
                 {
-                    m_detailUI.DoDraw(new Rect(default, bodyArea.size), m_currentInfoList[TrailerSel], m_currentInfoList[0]);
+                    m_detailUI.DoDraw(new Rect(default, bodyArea.size), CurrentTrailerList[TrailerSel], CurrentTrailerList[0]);
                 }
-
-
             }
         }
         protected override void OnWindowDestroyed() => Destroy(m_colorPicker);

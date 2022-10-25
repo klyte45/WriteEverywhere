@@ -62,7 +62,26 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="**\*.cs" />
+    <Compile Include="Building\WriteOnBuildingPropXml.cs" />
+    <Compile Include="Building\WriteOnBuildingXml.cs" />
+    <Compile Include="CommandLevelSingletonBase.cs" />
+    <Compile Include="Image\WEImageInfo.cs" />
+    <Compile Include="Image\WEImageInfoXml.cs" />
+    <Compile Include="OnNet\IWriteGroup.cs" />
+    <Compile Include="OnNet\PivotPosition.cs" />
+    <Compile Include="OnNet\WriteOnNetGroupXml.cs" />
+    <Compile Include="OnNet\WriteOnNetXml.cs" />
+    <Compile Include="PlaceInstance\OnNetPlaceInstanceContainerXml.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TextParameters\TextParameterSequence.cs" />
+    <Compile Include="TextParameters\TextParameterSequenceItem.cs" />
+    <Compile Include="TextParameters\TextParameterVariableWrapper.cs" />
+    <Compile Include="TextParameters\TextParameterWrapper.cs" />
+    <Compile Include="TextParameters\TextParameterXmlContainer.cs" />
+    <Compile Include="Text\BackgroundMesh.cs" />
+    <Compile Include="Text\TextToWriteOnXml.cs" />
+    <Compile Include="Vehicles\ILayoutDescriptorVehicleXml.cs" />
+    <Compile Include="Vehicles\LayoutDescriptorVehicleXml.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KwyttoUtilityWE\KwyttoUtilityWE.csproj">

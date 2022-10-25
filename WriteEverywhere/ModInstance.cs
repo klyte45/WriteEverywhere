@@ -1,11 +1,13 @@
 ﻿extern alias UUI;
 using ColossalFramework;
 using ColossalFramework.UI;
+using ICities;
 using Kwytto.Interfaces;
 using Kwytto.Utils;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Reflection;
 using UnityEngine;
 using WriteEverywhere.Localization;
@@ -42,7 +44,7 @@ namespace WriteEverywhere
         private IUUIButtonContainerPlaceholder[] cachedUUI;
         public override IUUIButtonContainerPlaceholder[] UUIButtons => cachedUUI ?? (cachedUUI = new IUUIButtonContainerPlaceholder[]
         {
-            new UUIToolButtonContainerPlaceholder(
+            SceneUtils.IsAssetEditor?null:  new UUIToolButtonContainerPlaceholder(
                 buttonName :  $"{SimpleName} - {Str.WTS_PICK_A_SEGMENT}",
                 iconPath : "SegmentPickerIcon",
                 tooltip : $"WE: {Str.WTS_PICK_A_SEGMENT}",
@@ -60,7 +62,7 @@ namespace WriteEverywhere
              iconPath: "VehicleEditorIcon",
              windowGetter: ()=>WTSVehicleLiteUI.Instance
              ),
-        });
+        }.Where(x => x != null).ToArray());
 
         public override void Group9SettingsUI(UIHelper group9)
         {
@@ -79,6 +81,31 @@ namespace WriteEverywhere
 
             });
         }
+        protected override bool IsValidLoadMode(LoadMode mode)
+        {
+            switch (mode)
+            {
+                case LoadMode.NewGame:
+                case LoadMode.LoadGame:
+                case LoadMode.NewAsset:
+                case LoadMode.LoadAsset:
+                case LoadMode.NewScenarioFromGame:
+                case LoadMode.NewScenarioFromMap:
+                case LoadMode.LoadScenario:
+                case LoadMode.NewGameFromScenario:
+                case LoadMode.UpdateScenarioFromGame:
+                case LoadMode.UpdateScenarioFromMap:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+        protected override bool IsValidLoadMode(ILoading loading) => loading?.currentMode == AppMode.Game || loading?.currentMode == AppMode.AssetEditor;
 
+        public override string[] AssetExtraDirectoryNames { get; } = new string[] {
+            WEMainController.EXTRA_SPRITES_FILES_FOLDER_ASSETS,
+            WEMainController.LAYOUT_FILES_FOLDER_ASSETS
+        };
+        public override string[] AssetExtraFileNames { get; } = new string[] { };
     }
 }

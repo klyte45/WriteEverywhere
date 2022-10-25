@@ -1,5 +1,6 @@
 ﻿using Kwytto.LiteUI;
 using Kwytto.UI;
+using Kwytto.Utils;
 using System;
 using System.Linq;
 using UnityEngine;
@@ -12,7 +13,7 @@ namespace WriteEverywhere.UI
 {
     internal class GeneralWritingEditorIlluminationTab : IGUITab<TextToWriteOnXml>
     {
-        public Texture TabIcon { get; } = GUIKwyttoCommons.GetByNameFromDefaultAtlas("SubBarPropsCommonLights");
+        public Texture TabIcon { get; } = KResourceLoader.LoadTextureKwytto(Kwytto.UI.CommonsSpriteNames.K45_Lamp);
 
         private readonly string[] m_materialTypes = EnumI18nExtensions.GetAllValuesI18n<MaterialType>();
         private readonly string[] m_blinkTypes = EnumI18nExtensions.GetAllValuesI18n<BlinkType>();

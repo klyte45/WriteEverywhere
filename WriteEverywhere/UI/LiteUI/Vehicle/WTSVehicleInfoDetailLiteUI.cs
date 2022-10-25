@@ -9,7 +9,6 @@ using Kwytto.UI;
 using Kwytto.Utils;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -174,7 +173,17 @@ namespace WriteEverywhere.UI
                     }
                     break;
                 case FooterBarStatus.AskingToImport:
-                    m_vehicleLib.DrawImportView((x, _) => WTSVehicleTextsSingleton.SetCityDescriptor(m_currentInfo, x));
+                    m_vehicleLib.DrawImportView((x, _) =>
+                    {
+                        if (SceneUtils.IsAssetEditor)
+                        {
+                            WTSVehicleTextsSingleton.SetAssetDescriptor(CurrentEditingInfo, x);
+                        }
+                        else
+                        {
+                            WTSVehicleTextsSingleton.SetCityDescriptor(CurrentEditingInfo, x);
+                        }
+                    });
                     break;
             }
 
@@ -184,7 +193,7 @@ namespace WriteEverywhere.UI
         {
             using (new GUILayout.VerticalScope())
             {
-                var isEditable = m_currentSource == ConfigurationSource.CITY || m_currentSource == ConfigurationSource.SKIN;
+                var isEditable = (SceneUtils.IsAssetEditor ? m_currentSource == ConfigurationSource.ASSET : m_currentSource == ConfigurationSource.CITY) || m_currentSource == ConfigurationSource.SKIN;
                 using (new GUILayout.HorizontalScope(GUILayout.Height(70)))
                 {
                     using (new GUILayout.VerticalScope(GUILayout.ExpandWidth(true)))
@@ -204,18 +213,35 @@ namespace WriteEverywhere.UI
                             {
                                 bool waitingGrab = ModInstance.Controller.VehicleTextsSingleton.WaitingGrab;
                                 GUI.tooltip = "";
-                                GUILayout.FlexibleSpace();
-                                GUIKwyttoCommons.SquareTextureButton(waitingGrab ? m_grabModeWaiting : m_grabModel, waitingGrab ? Str.we_vehicleEditor_waitingGrabVehicle : Str.we_vehicleEditor_pickOrSpawnAVehicle, GrabUnit);
-                                GUILayout.FlexibleSpace();
-                                GUIKwyttoCommons.SquareTextureButton(m_goToFile, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_OPENGLOBALSFOLDER, GoToGlobalFolder);
+                                if (!SceneUtils.IsAssetEditor)
+                                {
+                                    GUILayout.FlexibleSpace();
+                                    GUIKwyttoCommons.SquareTextureButton(waitingGrab ? m_grabModeWaiting : m_grabModel, waitingGrab ? Str.we_vehicleEditor_waitingGrabVehicle : Str.we_vehicleEditor_pickOrSpawnAVehicle, GrabUnit);
+                                    GUILayout.FlexibleSpace();
+                                    GUIKwyttoCommons.SquareTextureButton(m_goToFile, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_OPENGLOBALSFOLDER, GoToGlobalFolder);
+                                }
                                 GUIKwyttoCommons.SquareTextureButton(m_reloadFiles, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_RELOADDESCRIPTORS, ReloadFiles);
                                 GUILayout.FlexibleSpace();
                                 GUIKwyttoCommons.SquareTextureButton(m_createNew, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_NEWINCITY, CreateNew, !isEditable);
-                                GUIKwyttoCommons.SquareTextureButton(m_deleteFromCity, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_DELETEFROMCITY, DeleteFromCity, m_currentSource == ConfigurationSource.CITY);
-                                GUIKwyttoCommons.SquareTextureButton(m_cloneToCity, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_COPYTOCITY, CloneToCity, m_currentSource == ConfigurationSource.ASSET || m_currentSource == ConfigurationSource.GLOBAL);
+                                if (!SceneUtils.IsAssetEditor)
+                                {
+                                    GUIKwyttoCommons.SquareTextureButton(m_deleteFromCity, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_DELETEFROMCITY, DeleteFromCity, m_currentSource == ConfigurationSource.CITY);
+                                    GUIKwyttoCommons.SquareTextureButton(m_cloneToCity, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_COPYTOCITY, CloneToCity, m_currentSource == ConfigurationSource.ASSET || m_currentSource == ConfigurationSource.GLOBAL);
+                                }
+                                else
+                                {
+                                    GUIKwyttoCommons.SquareTextureButton(m_deleteFromCity, Str.we_assetEditor_deleteFromAsset, DeleteFromAsset, m_currentSource == ConfigurationSource.ASSET);
+                                }
                                 GUILayout.FlexibleSpace();
-                                GUIKwyttoCommons.SquareTextureButton(m_exportGlobal, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_EXPORTASGLOBAL, ExportGlobal, m_currentSource == ConfigurationSource.CITY);
-                                GUIKwyttoCommons.SquareTextureButton(m_exportAsset, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_EXPORTTOASSETFOLDER, ExportAsset, m_currentSource == ConfigurationSource.CITY && m_currentInfo.name.EndsWith("_Data"));
+                                if (SceneUtils.IsAssetEditor)
+                                {
+                                    GUIKwyttoCommons.SquareTextureButton(m_save, Str.we_assetEditor_saveDefaultSkin, ExportAsset, m_currentSource == ConfigurationSource.ASSET);
+                                }
+                                else
+                                {
+                                    GUIKwyttoCommons.SquareTextureButton(m_exportGlobal, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_EXPORTASGLOBAL, ExportGlobal, m_currentSource == ConfigurationSource.CITY);
+                                    GUIKwyttoCommons.SquareTextureButton(m_exportAsset, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_EXPORTTOASSETFOLDER, ExportAsset, m_currentSource == ConfigurationSource.CITY && m_currentInfo.name.EndsWith("_Data"));
+                                }
                                 GUIKwyttoCommons.SquareTextureButton(m_save, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_SAVESKIN, ExportSkin, m_currentSource == ConfigurationSource.SKIN);
                                 GUILayout.FlexibleSpace();
                                 GUIKwyttoCommons.SquareTextureButton(m_copy, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_COPYTOCLIPBOARD, CopyToClipboard, m_currentSource != ConfigurationSource.NONE);
@@ -326,7 +352,12 @@ namespace WriteEverywhere.UI
         #region Top buttons
         private void ExportLayout() => m_vehicleLib.GoToExport();
         private void ImportLayout() => m_vehicleLib.GoToImport();
-        private void ExportAsset() => ExportTo(Path.Combine(Path.GetDirectoryName(PackageManager.FindAssetByName(m_currentInfo.name)?.package?.packagePath), $"{WEMainController.m_defaultFileNameVehiclesXml}.xml"));
+        private void ExportAsset() => ExportTo(AssetLayoutFileName());
+
+        private string AssetLayoutFileName()
+        {
+            return Path.Combine(WTSVehicleTextsSingleton.GetDirectoryForAssetOwn(m_currentInfo), $"{WEMainController.m_defaultFileNameVehiclesXml}.xml");
+        }
 
         private void ExportGlobal() => ExportTo(Path.Combine(WEMainController.DefaultVehiclesConfigurationFolder, $"{WEMainController.m_defaultFileNameVehiclesXml}_{PackageManager.FindAssetByName(m_currentParentInfo.name)?.package.packageMainAsset ?? m_currentParentInfo.name}.xml"));
         private void ExportSkin() => ModInstance.Controller.ConnectorVS.ApplySkin(m_currentInfo, m_currentSkin, XmlUtils.DefaultXmlSerialize(m_currentLayout));
@@ -335,27 +366,11 @@ namespace WriteEverywhere.UI
         {
             if (!(m_currentInfo is null))
             {
-                var assetId = m_currentInfo.name.Split('.')[0] + ".";
-                var descriptorsToExport = new List<LayoutDescriptorVehicleXml>();
-                foreach (var asset in VehiclesIndexes.instance.PrefabsData
-                .Where((x) => x.Value.PrefabName.StartsWith(assetId) || x.Value.PrefabName == m_currentInfo.name)
-                .Select(x => x.Value.Info))
+                KFileUtils.EnsureFolderCreation(Directory.GetParent(output).FullName);
+                WTSVehicleTextsSingleton.GetTargetDescriptor(m_currentInfo, -1, out _, out ILayoutDescriptorVehicleXml target, 0);
+                if (target is LayoutDescriptorVehicleXml layout)
                 {
-                    WTSVehicleTextsSingleton.GetTargetDescriptor(asset as VehicleInfo, -1, out _, out ILayoutDescriptorVehicleXml target, 0);
-                    if (target is LayoutDescriptorVehicleXml layout)
-                    {
-                        layout.VehicleAssetName = asset.name;
-                        descriptorsToExport.Add(layout);
-                    }
-                }
-                if (descriptorsToExport.Count > 0)
-                {
-                    var exportableLayouts = new ExportableLayoutDescriptorVehicleXml
-                    {
-                        Descriptors = descriptorsToExport.ToArray()
-                    };
-                    File.WriteAllText(output, XmlUtils.DefaultXmlSerialize(exportableLayouts));
-
+                    File.WriteAllText(output, XmlUtils.DefaultXmlSerialize(layout));
                     KwyttoDialog.ShowModal(new KwyttoDialog.BindProperties
                     {
                         title = Str.WTS_VEHICLE_EXPORTLAYOUT,
@@ -380,16 +395,17 @@ namespace WriteEverywhere.UI
                             }
                         }
                     });
-
                     ModInstance.Controller?.VehicleTextsSingleton?.LoadAllVehiclesConfigurations();
                 }
+                m_currentInfo = null;
             }
         }
         private void PasteFromClipboard()
         {
             if (m_currentSkin.IsNullOrWhiteSpace())
             {
-                WTSVehicleTextsSingleton.SetCityDescriptor(m_currentInfo, XmlUtils.DefaultXmlDeserialize<LayoutDescriptorVehicleXml>(m_clipboard));
+                if (SceneUtils.IsAssetEditor) WTSVehicleTextsSingleton.SetAssetDescriptor(m_currentInfo, XmlUtils.DefaultXmlDeserialize<LayoutDescriptorVehicleXml>(m_clipboard));
+                else WTSVehicleTextsSingleton.SetCityDescriptor(m_currentInfo, XmlUtils.DefaultXmlDeserialize<LayoutDescriptorVehicleXml>(m_clipboard));
             }
             else
             {
@@ -407,12 +423,25 @@ namespace WriteEverywhere.UI
         }
         private void CreateNew()
         {
-            WTSVehicleTextsSingleton.SetCityDescriptor(m_currentInfo, new LayoutDescriptorVehicleXml());
+            if (SceneUtils.IsAssetEditor)
+            {
+                WTSVehicleTextsSingleton.SetAssetDescriptor(m_currentInfo, new LayoutDescriptorVehicleXml());
+            }
+            else
+            {
+                WTSVehicleTextsSingleton.SetCityDescriptor(m_currentInfo, new LayoutDescriptorVehicleXml());
+            }
             OnChangeInfo(m_currentInfo, m_currentParentInfo);
         }
         private void DeleteFromCity()
         {
             WTSVehicleTextsSingleton.SetCityDescriptor(m_currentInfo, null);
+            OnChangeInfo(m_currentInfo, m_currentParentInfo);
+        }
+        private void DeleteFromAsset()
+        {
+            File.Delete(AssetLayoutFileName());
+            WTSVehicleTextsSingleton.SetAssetDescriptor(m_currentInfo, null);
             OnChangeInfo(m_currentInfo, m_currentParentInfo);
         }
 

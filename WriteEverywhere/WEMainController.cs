@@ -76,6 +76,7 @@ namespace WriteEverywhere
         #region Sprites atlases
         public const string EXTRA_SPRITES_FILES_FOLDER = "Sprites";
         public const string EXTRA_SPRITES_FILES_FOLDER_ASSETS = "K45WTS_Sprites";
+        public const string LAYOUT_FILES_FOLDER_ASSETS = "K45WE_Layouts";
         public static string ExtraSpritesFolder { get; } = FOLDER_PATH + Path.DirectorySeparatorChar + EXTRA_SPRITES_FILES_FOLDER;
         internal WTSAtlasesLibrary AtlasesLibrary { get; private set; }
         #endregion

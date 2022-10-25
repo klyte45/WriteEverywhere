@@ -1138,7 +1138,26 @@ Search by C# date formatting for more info.</value>
   <data name="WTS_PARAMVARS_DESC__VariableType_Environment" xml:space="preserve">
     <value>City environment related variables, related to time, temperature and more.</value>
   </data>
-  <data name="we_Enum__ColoringSource_ContrastDistrict" xml:space="preserve">    <value>Contrast from District Color (Custom Data only)</value>  </data>
-  <data name="we_Enum__ColoringSource_District" xml:space="preserve">    <value>District Color (Custom Data only)</value>  </data>
-
+  <data name="we_Enum__ColoringSource_ContrastDistrict" xml:space="preserve">
+    <value>Contrast from District Color (Custom Data only)</value>
+  </data>
+  <data name="we_Enum__ColoringSource_District" xml:space="preserve">
+    <value>District Color (Custom Data only)</value>
+  </data>
+  <data name="we_assetEditor_currentAssetIsNotBuilding" xml:space="preserve">
+    <value>&lt;color=yellow&gt;Current editing asset is not a building!&lt;/color&gt;</value>
+  </data>
+  <data name="we_assetEditor_deleteFromAsset" xml:space="preserve">
+    <value>Delete layout from asset</value>
+  </data>
+  <data name="we_assetEditor_dontForgetSaveAlert" xml:space="preserve">
+    <value>&lt;color=yellow&gt;Don't forget saving your layout before exit editor!&lt;/color&gt;</value>
+  </data>
+  <data name="we_assetEditor_saveDefaultSkin" xml:space="preserve">
+    <value>Save asset default layout</value>
+  </data>
+  <data name="we_errorLoadingVehicleLayout_msgSingle" xml:space="preserve">
+    <value>Error loading the item for a vehicle in the following scope: {0}
+Check the data shown below to get information.</value>
+  </data>
 </root>

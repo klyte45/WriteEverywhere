@@ -70,6 +70,42 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a &lt;color=yellow&gt;Current editing asset is not a building!&lt;/color&gt;.
+        /// </summary>
+        public static string we_assetEditor_currentAssetIsNotBuilding {
+            get {
+                return ResourceManager.GetString("we_assetEditor_currentAssetIsNotBuilding", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Delete layout from asset.
+        /// </summary>
+        public static string we_assetEditor_deleteFromAsset {
+            get {
+                return ResourceManager.GetString("we_assetEditor_deleteFromAsset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a &lt;color=yellow&gt;Don&apos;t forget saving your layout before exit editor!&lt;/color&gt;.
+        /// </summary>
+        public static string we_assetEditor_dontForgetSaveAlert {
+            get {
+                return ResourceManager.GetString("we_assetEditor_dontForgetSaveAlert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Save asset default layout.
+        /// </summary>
+        public static string we_assetEditor_saveDefaultSkin {
+            get {
+                return ResourceManager.GetString("we_assetEditor_saveDefaultSkin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a This building is not a transport station..
         /// </summary>
         public static string we_buildingEditor_buildingIsNotTransportStation {
@@ -671,6 +707,16 @@ namespace WriteEverywhere.Localization {
         public static string we_errorLoadingVehicleLayout_msg {
             get {
                 return ResourceManager.GetString("we_errorLoadingVehicleLayout_msg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Error loading the item for a vehicle in the following scope: {0}
+        ///Check the data shown below to get information..
+        /// </summary>
+        public static string we_errorLoadingVehicleLayout_msgSingle {
+            get {
+                return ResourceManager.GetString("we_errorLoadingVehicleLayout_msgSingle", resourceCulture);
             }
         }
         

@@ -49,7 +49,7 @@ namespace WriteEverywhere.Sprites
         public const string PROTOCOL_IMAGE_ASSET = "assetImage://";
         public const string PROTOCOL_FOLDER = "folder://";
         public const string PROTOCOL_FOLDER_ASSET = "assetFolder://";
-
+        private const string INTERNAL_ATLAS_NAME = @"\/INTERNAL\/";
 
         private Dictionary<string, Dictionary<string, WEImageInfo>> LocalAtlases { get; } = new Dictionary<string, Dictionary<string, WEImageInfo>>();
         private Dictionary<ulong, Dictionary<string, WEImageInfo>> AssetAtlases { get; } = new Dictionary<ulong, Dictionary<string, WEImageInfo>>();
@@ -70,11 +70,16 @@ namespace WriteEverywhere.Sprites
         public string[] GetSpritesFromLocalAtlas(string atlasName) => LocalAtlases.TryGetValue(atlasName ?? string.Empty, out Dictionary<string, WEImageInfo> atlas) ? atlas.Keys.ToArray() : null;
         public string[] GetSpritesFromAssetAtlas(ulong workshopId) => AssetAtlases.TryGetValue(workshopId, out Dictionary<string, WEImageInfo> atlas) ? atlas.Keys.ToArray() : null;
         public bool HasAtlas(ulong workshopId) => AssetAtlases.TryGetValue(workshopId, out _);
+
+        internal BasicRenderInformation GetFromLocalAtlases(WEImages image)
+        {
+            return GetFromLocalAtlases(INTERNAL_ATLAS_NAME, image.ToString());
+        }
         public BasicRenderInformation GetFromLocalAtlases(string atlasName, string spriteName, bool fallbackOnInvalid = false)
         {
             if (spriteName.IsNullOrWhiteSpace())
             {
-                return fallbackOnInvalid ? GetFromLocalAtlases(null, "FrameParamsInvalidImage") : null;
+                return fallbackOnInvalid ? GetFromLocalAtlases(WEImages.FrameParamsInvalidImage) : null;
             }
 
             if (LocalAtlasesCache.TryGetValue(atlasName ?? string.Empty, out Dictionary<string, BasicRenderInformation> resultDicCache) && resultDicCache.TryGetValue(spriteName ?? "", out BasicRenderInformation cachedInfo))
@@ -83,7 +88,7 @@ namespace WriteEverywhere.Sprites
             }
             if (!LocalAtlases.TryGetValue(atlasName ?? string.Empty, out Dictionary<string, WEImageInfo> atlas) || !atlas.ContainsKey(spriteName))
             {
-                return fallbackOnInvalid ? GetFromLocalAtlases(null, "FrameParamsInvalidImage") : null;
+                return fallbackOnInvalid ? GetFromLocalAtlases(WEImages.FrameParamsInvalidImage) : null;
             }
             if (resultDicCache == null)
             {
@@ -97,11 +102,11 @@ namespace WriteEverywhere.Sprites
             return null;
         }
         public BasicRenderInformation GetSlideFromLocal(string atlasName, Func<int, int> idxFunc, bool fallbackOnInvalid = false) => !LocalAtlases.TryGetValue(atlasName ?? string.Empty, out Dictionary<string, WEImageInfo> atlas)
-                ? fallbackOnInvalid ? GetFromLocalAtlases(null, "FrameParamsInvalidFolder") : null
-                : GetFromLocalAtlases(atlasName ?? string.Empty, atlas.Keys.ElementAt(idxFunc(atlas.Count - 1) + 1), fallbackOnInvalid);
+                ? fallbackOnInvalid ? GetFromLocalAtlases(WEImages.FrameParamsInvalidFolder) : null
+                : SceneUtils.IsAssetEditor ? ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(WEImages.FrameBorder) : GetFromLocalAtlases(atlasName ?? string.Empty, atlas.Keys.ElementAt(idxFunc(atlas.Count - 1) + 1), fallbackOnInvalid);
         public BasicRenderInformation GetSlideFromAsset(ulong assetId, Func<int, int> idxFunc, bool fallbackOnInvalid = false) => !AssetAtlases.TryGetValue(assetId, out Dictionary<string, WEImageInfo> atlas)
-                ? fallbackOnInvalid ? GetFromLocalAtlases(null, "FrameParamsInvalidFolder") : null
-                : GetFromAssetAtlases(assetId, atlas.Keys.ElementAt(idxFunc(atlas.Count - 1) + 1), fallbackOnInvalid);
+                ? fallbackOnInvalid ? GetFromLocalAtlases(WEImages.FrameParamsInvalidFolder) : null
+                : SceneUtils.IsAssetEditor ? ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(WEImages.FrameBorder) : GetFromAssetAtlases(assetId, atlas.Keys.ElementAt(idxFunc(atlas.Count - 1) + 1), fallbackOnInvalid);
 
         public BasicRenderInformation GetFromAssetAtlases(ulong assetId, string spriteName, bool fallbackOnInvalid = false)
         {
@@ -115,7 +120,7 @@ namespace WriteEverywhere.Sprites
             }
             if (!AssetAtlases.TryGetValue(assetId, out Dictionary<string, WEImageInfo> atlas) || !atlas.ContainsKey(spriteName))
             {
-                return fallbackOnInvalid ? GetFromLocalAtlases(null, "FrameParamsInvalidImageAsset") : null;
+                return fallbackOnInvalid ? GetFromLocalAtlases(WEImages.FrameParamsInvalidImageAsset) : null;
             }
             if (resultDicCache == null)
             {
@@ -173,7 +178,7 @@ namespace WriteEverywhere.Sprites
                 bool isRoot = dir == WEMainController.ExtraSpritesFolder;
                 var spritesToAdd = new List<WEImageInfo>();
                 WTSAtlasLoadingUtils.LoadAllImagesFromFolderRef(dir, ref spritesToAdd, ref errors, false);
-                if (isRoot || spritesToAdd.Count > 0)
+                if (isRoot || (!SceneUtils.IsAssetEditor && spritesToAdd.Count > 0))
                 {
                     var atlasName = isRoot ? string.Empty : Path.GetFileNameWithoutExtension(dir);
                     LocalAtlases[atlasName] = new Dictionary<string, WEImageInfo>();
@@ -186,6 +191,11 @@ namespace WriteEverywhere.Sprites
                         LocalAtlases[atlasName][entry.Name] = entry;
                     }
                 }
+            }
+            LocalAtlases[INTERNAL_ATLAS_NAME] = new Dictionary<string, WEImageInfo>();
+            foreach (var img in Enum.GetValues(typeof(WEImages)).Cast<WEImages>())
+            {
+                LocalAtlases[INTERNAL_ATLAS_NAME][img.ToString()] = new WEImageInfo(null) { Texture = KResourceLoader.LoadTextureMod(img.ToString()) };
             }
             LocalAtlasesCache.Clear();
             if (errors.Count > 0)

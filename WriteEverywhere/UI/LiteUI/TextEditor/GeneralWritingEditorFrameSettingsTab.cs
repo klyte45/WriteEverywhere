@@ -1,4 +1,5 @@
 ﻿using Kwytto.LiteUI;
+using Kwytto.Utils;
 using System;
 using System.Linq;
 using UnityEngine;
@@ -29,7 +30,7 @@ namespace WriteEverywhere.UI
             contrastOptions = contrastValues.Select(x => x.ValueToI18n()).ToArray();
         }
 
-        public override Texture TabIcon { get; } = GUIKwyttoCommons.GetByNameFromDefaultAtlas("ToolbarIconProps");
+        public override Texture TabIcon { get; } = KResourceLoader.LoadTextureKwytto(Kwytto.UI.CommonsSpriteNames.K45_Wireframe);
 
         protected override void DrawListing(Vector2 tabAreaSize, TextToWriteOnXml item, bool isEditable)
         {

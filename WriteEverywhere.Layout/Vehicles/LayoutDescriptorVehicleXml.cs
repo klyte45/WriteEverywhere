@@ -32,7 +32,7 @@ namespace WriteEverywhere.Layout
         {
             get
             {
-                if (m_cachedInfo is null && VehicleAssetName != null && (m_cachedInfo = VehiclesIndexes.instance.PrefabsData.Values.Where(x => x.PrefabName == VehicleAssetName).FirstOrDefault().Info as VehicleInfo) is null)
+                if (m_cachedInfo is null && VehicleAssetName != null && (m_cachedInfo = VehiclesIndexes.instance.PrefabsData.Values.Where(x => x.PrefabName == VehicleAssetName).FirstOrDefault()?.Info as VehicleInfo) is null)
                 {
                     VehicleAssetName = null;
                 }

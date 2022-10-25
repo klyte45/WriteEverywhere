@@ -61,12 +61,12 @@ namespace WriteEverywhere.Xml
                 ImageFolder:
                     return !(tpw is null)
                         ? tpw.GetSpriteFromCycle(textDescriptor, instance.TargetAssetParameter, refId, secIdx, tercIdx)
-                        : ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(null, "FrameParamsNotSet");
+                        : ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(WEImages.FrameParamsNotSet);
                 case TextContent.ParameterizedSpriteSingle:
                 ImageSingle:
                     return !(tpw is null)
                         ? tpw.GetSpriteFromParameter(instance.TargetAssetParameter)
-                        : ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(null, "FrameParamsNotSet");
+                        : ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(WEImages.FrameParamsNotSet);
                 case TextContent.Any:
                 case TextContent.TextParameterSequence:
                     if (!(tpw is null))
@@ -106,22 +106,19 @@ namespace WriteEverywhere.Xml
             }
             else
             {
-                return ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(null, "FrameParamsImageRequired");
+                return ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(WEImages.FrameParamsImageRequired);
             }
 
         }
 
         internal static BasicRenderInformation GetTargetText(this TextParameterWrapper wrapper, WriteOnBuildingXml propGroupDescriptor, BaseWriteOnXml descriptorBuilding, TextToWriteOnXml textDescriptor, DynamicSpriteFont targetFont, ushort refId, int secId, int tercId, out IEnumerable<BasicRenderInformation> multipleOutput)
         {
-            if (wrapper.ParamType != ParameterType.VARIABLE)
-            {
-                multipleOutput = null;
-                return targetFont?.DrawString(ModInstance.Controller, wrapper.ToString(), default, FontServer.instance.ScaleEffective);
-            }
-            else
-            {
-                return wrapper.VariableValue.GetTargetText(propGroupDescriptor, descriptorBuilding, textDescriptor, targetFont, refId, secId, tercId, out multipleOutput);
-            }
+            multipleOutput = null;
+            return wrapper.ParamType != ParameterType.VARIABLE
+                ? (targetFont?.DrawString(ModInstance.Controller, wrapper.ToString(), default, FontServer.instance.ScaleEffective))
+                : SceneUtils.IsAssetEditor
+                    ? targetFont.DrawString(ModInstance.Controller, wrapper.VariableValue.m_originalCommand, default, FontServer.instance.ScaleEffective)
+                    : wrapper.VariableValue.GetTargetText(propGroupDescriptor, descriptorBuilding, textDescriptor, targetFont, refId, secId, tercId, out multipleOutput);
         }
 
         public static string GetOriginalVariableParam(this TextParameterWrapper wrapper) => wrapper.ParamType != ParameterType.VARIABLE ? null : wrapper.OriginalCommand;
@@ -135,7 +132,7 @@ namespace WriteEverywhere.Xml
             }
             if (wrapper.ParamType != ParameterType.FOLDER)
             {
-                return ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(null, "FrameParamsFolderRequired");
+                return ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(WEImages.FrameParamsFolderRequired);
             }
             if (textDescriptor.AnimationSettings.m_itemCycleFramesDuration < 1)
             {
@@ -159,7 +156,7 @@ namespace WriteEverywhere.Xml
             }
             else
             {
-                return ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(null, "FrameParamsFolderRequired");
+                return ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(WEImages.FrameParamsFolderRequired);
             }
 
         }

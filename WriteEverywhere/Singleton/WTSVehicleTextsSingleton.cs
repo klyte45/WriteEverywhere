@@ -7,6 +7,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Xml.Serialization;
 using UnityEngine;
 using WriteEverywhere.Data;
@@ -26,6 +27,7 @@ namespace WriteEverywhere.Singleton
         public SimpleXmlDictionary<string, LayoutDescriptorVehicleXml> CityDescriptors => Data.CityDescriptors;
         public SimpleXmlDictionary<string, LayoutDescriptorVehicleXml> GlobalDescriptors => Data.GlobalDescriptors;
         public SimpleXmlDictionary<string, LayoutDescriptorVehicleXml> AssetsDescriptors => Data.AssetsDescriptors;
+        public static string GetDirectoryForAssetOwn(PrefabInfo info) => KFileUtils.GetRootFolderForK45(info) is string str ? Path.Combine(Path.Combine(str, WEMainController.LAYOUT_FILES_FOLDER_ASSETS), PrefabUtils.GetAssetFromPrefab(info).name.Split('.').Last()) : null;
 
         #region Initialize
         public void Awake()
@@ -38,10 +40,8 @@ namespace WriteEverywhere.Singleton
         #endregion
 
 
-        public void AfterRenderExtraStuff(VehicleAI thiz, ushort vehicleID, ref Vehicle vehicleData, RenderManager.CameraInfo cameraInfo, InstanceID id, Vector3 position, Quaternion rotation, Vector4 tyrePosition, Vector4 lightState, Vector3 scale, Vector3 swayPosition, bool underground, bool overground)
+        public void AfterRenderExtraStuff(VehicleAI thiz, ushort vehicleID, ref Vehicle vehicleData, RenderManager.CameraInfo cameraInfo, ref Vector3 position, ref Quaternion rotation, ref Vector3 scale, ref Vector3 swayPosition)
         {
-
-
             if (thiz.m_info == null || thiz.m_info.m_vehicleAI == null || thiz.m_info.m_subMeshes == null)
             {
                 return;
@@ -56,16 +56,21 @@ namespace WriteEverywhere.Singleton
                 MaterialPropertyBlock materialBlock = VehicleManager.instance.m_materialBlock;
                 materialBlock.Clear();
 
-                RenderDescriptor(ref vehicleData, cameraInfo, vehicleID, position, ref vehicleMatrix, ref layoutDescriptor);
+                RenderDescriptor(ref vehicleData, cameraInfo, vehicleID, position, thiz.m_info, ref vehicleMatrix, ref layoutDescriptor);
             }
             else if (WTSVehicleLiteUI.Instance.Visible)
             {
-                UpdateCameraFocus(ref vehicleData, vehicleID, position);
+                UpdateCameraFocus(ref vehicleData, vehicleID, position, thiz.m_info);
             }
         }
 
         internal static void GetTargetDescriptor(VehicleInfo vehicle, int vehicleId, out ConfigurationSource source, out ILayoutDescriptorVehicleXml target, ushort buildingId, string skin = null)
         {
+            if (SceneUtils.IsAssetEditor && vehicle != null)
+            {
+                vehicle = WTSVehicleLiteUI.Instance.CurrentTrailerList?.FirstOrDefault(x => x.name.EndsWith(vehicle.name));
+            }
+
             if (vehicle == null)
             {
                 source = ConfigurationSource.NONE;
@@ -130,6 +135,22 @@ namespace WriteEverywhere.Singleton
             }
             WTSVehicleData.Instance.CleanCache();
         }
+        internal static void SetAssetDescriptor(VehicleInfo info, LayoutDescriptorVehicleXml desc)
+        {
+            if (desc is null)
+            {
+                if (WTSVehicleData.Instance.AssetsDescriptors.ContainsKey(info.name))
+                {
+                    WTSVehicleData.Instance.AssetsDescriptors.Remove(info.name);
+                }
+            }
+            else
+            {
+                desc.VehicleAssetName = info.name;
+                WTSVehicleData.Instance.AssetsDescriptors[info.name] = desc;
+            }
+            WTSVehicleData.Instance.CleanCache();
+        }
 
         private ref Vehicle[] buffer => ref VehicleManager.instance.m_vehicles.m_buffer;
 
@@ -168,7 +189,7 @@ namespace WriteEverywhere.Singleton
 
         public bool WaitingGrab => currentGrabCoroutine != null;
 
-        private void RenderDescriptor(ref Vehicle vehicle, RenderManager.CameraInfo cameraInfo, ushort vehicleId, Vector3 position, ref Matrix4x4 vehicleMatrix, ref LayoutDescriptorVehicleXml targetDescriptor)
+        private void RenderDescriptor(ref Vehicle vehicle, RenderManager.CameraInfo cameraInfo, ushort vehicleId, Vector3 position, VehicleInfo info, ref Matrix4x4 vehicleMatrix, ref LayoutDescriptorVehicleXml targetDescriptor)
         {
             ushort currentSelectedInstanceId = CalculateCurrentSelection(ref vehicle, vehicleId);
             for (int j = 0; j < targetDescriptor.TextDescriptors.Length; j++)
@@ -181,7 +202,7 @@ namespace WriteEverywhere.Singleton
                         flags ^= Vehicle.Flags.Reversed;
                     }
                     var parentColor = vehicle.Info.m_vehicleAI.GetColor(vehicleId, ref vehicle, InfoManager.InfoMode.None);
-                    bool currentTextSelected = !hasFixedCamera && WTSVehicleLiteUI.Instance.Visible && currentSelectedInstanceId == vehicleId && j == WTSVehicleLiteUI.Instance.CurrentTextSel;
+                    bool currentTextSelected = !hasFixedCamera && WTSVehicleLiteUI.Instance.Visible && (SceneUtils.IsAssetEditor ? WTSVehicleLiteUI.Instance.CurrentEditingInfo?.name.EndsWith(info.name) ?? false : currentSelectedInstanceId == vehicleId) && j == WTSVehicleLiteUI.Instance.CurrentTextSel;
                     var textPos = WETextRenderer.RenderTextMesh(null,
                           vehicleId,
                           0,
@@ -207,23 +228,23 @@ namespace WriteEverywhere.Singleton
                     }
                 }
             }
-            CheckFocus(ref vehicle, vehicleId, position, currentSelectedInstanceId);
+            CheckFocus(vehicleId, position, currentSelectedInstanceId, info);
         }
 
 
-        private void UpdateCameraFocus(ref Vehicle vehicle, ushort vehicleId, Vector3 position)
+        private void UpdateCameraFocus(ref Vehicle vehicle, ushort vehicleId, Vector3 position, VehicleInfo info)
         {
             ushort currentSelectedInstanceId = CalculateCurrentSelection(ref vehicle, vehicleId);
-            CheckFocus(ref vehicle, vehicleId, position, currentSelectedInstanceId);
+            CheckFocus(vehicleId, position, currentSelectedInstanceId, info);
         }
 
-        private void CheckFocus(ref Vehicle vehicle, ushort vehicleId, Vector3 position, ushort currentSelectedInstanceId)
+        private void CheckFocus(ushort vehicleId, Vector3 position, ushort currentSelectedInstanceId, VehicleInfo info)
         {
-            if (currentSelectedInstanceId == vehicleId && WTSVehicleLiteUI.Instance.Visible && (WTSVehicleLiteUI.Instance.CurrentTextSel < 0 || !hasFixedCamera))
+            if ((SceneUtils.IsAssetEditor ? WTSVehicleLiteUI.Instance.CurrentEditingInfo?.name.EndsWith(info.name) ?? false : currentSelectedInstanceId == vehicleId) && WTSVehicleLiteUI.Instance.Visible && (WTSVehicleLiteUI.Instance.CurrentTextSel < 0 || !hasFixedCamera))
             {
                 ToolsModifierControl.cameraController.m_targetPosition.x = position.x;
                 ToolsModifierControl.cameraController.m_targetPosition.z = position.z;
-                targetHeight = position.y + vehicle.Info.m_mesh.bounds.center.y;
+                targetHeight = position.y + info.m_mesh.bounds.center.y;
                 lastFrameOverriden = SimulationManager.instance.m_currentTickIndex;
                 hasFixedCamera = true;
                 ToolsModifierControl.cameraController.SetTarget(default, default, false);
@@ -256,7 +277,7 @@ namespace WriteEverywhere.Singleton
             var errorList = new List<string>();
             Data.GlobalDescriptors.Clear();
             Data.AssetsDescriptors.Clear();
-            KFileUtils.ScanPrefabsFolders<VehicleInfo>(DefaultFilename, LoadDescriptorsFromXmlAsset);
+            KFileUtils.ForEachLoadedPrefab<VehicleInfo>(LoadDescriptorsFromXmlAsset);
             LogUtils.DoLog($"DefaultVehiclesConfigurationFolder = {WEMainController.DefaultVehiclesConfigurationFolder}");
             foreach (string filename in Directory.GetFiles(WEMainController.DefaultVehiclesConfigurationFolder, "*.xml"))
             {
@@ -296,53 +317,63 @@ namespace WriteEverywhere.Singleton
             LogUtils.DoLog("LOADING VEHICLE CONFIG END -----------------------------");
         }
 
-        private void LoadDescriptorsFromXmlCommon(FileStream stream, VehicleInfo info) => LoadDescriptorsFromXml(stream, info, ref Data.GlobalDescriptors);
-        private void LoadDescriptorsFromXmlAsset(FileStream stream, VehicleInfo info) => LoadDescriptorsFromXml(stream, info, ref Data.AssetsDescriptors);
-        private void LoadDescriptorsFromXml(FileStream stream, VehicleInfo info, ref SimpleXmlDictionary<string, LayoutDescriptorVehicleXml> referenceDic)
+        private void LoadDescriptorsFromXmlCommon(FileStream stream, VehicleInfo info) => LoadSingleDescriptorFromXml(stream, info, ref Data.GlobalDescriptors);
+        private void LoadDescriptorsFromXmlAsset(VehicleInfo info)
         {
-            var serializer = new XmlSerializer(typeof(ExportableLayoutDescriptorVehicleXml));
+            if (GetDirectoryForAssetOwn(info) is string str)
+            {
+                var filePath = Path.Combine(str, DefaultFilename);
+                if (File.Exists(filePath))
+                {
+                    using (FileStream stream = File.OpenRead(filePath))
+                    {
+                        LoadSingleDescriptorFromXml(stream, info, ref Data.AssetsDescriptors);
+                    }
+                }
+            }
+        }
+
+        private void LoadSingleDescriptorFromXml(FileStream stream, VehicleInfo info, ref SimpleXmlDictionary<string, LayoutDescriptorVehicleXml> referenceDic)
+        {
+            var serializer = new XmlSerializer(typeof(LayoutDescriptorVehicleXml));
 
             LogUtils.DoLog($"trying deserialize: {info}");
-            if (serializer.Deserialize(stream) is ExportableLayoutDescriptorVehicleXml configs && !(configs.Descriptors is null))
+            if (serializer.Deserialize(stream) is LayoutDescriptorVehicleXml config)
             {
-                for (int i = 0; i < configs.Descriptors.Length; i++)
+                if (info != null)
                 {
-                    LayoutDescriptorVehicleXml config = configs.Descriptors[i];
-                    if (info != null)
+                    string[] propEffName = info.name.Split(".".ToCharArray(), 2);
+                    string[] xmlEffName = config.VehicleAssetName.Split(".".ToCharArray(), 2);
+                    if (propEffName.Length == 2 && xmlEffName.Length == 2 && xmlEffName[1] == propEffName[1])
                     {
-                        string[] propEffName = info.name.Split(".".ToCharArray(), 2);
-                        string[] xmlEffName = config.VehicleAssetName.Split(".".ToCharArray(), 2);
-                        if (propEffName.Length == 2 && xmlEffName.Length == 2 && xmlEffName[1] == propEffName[1])
-                        {
-                            config.VehicleAssetName = info.name;
-                        }
+                        config.VehicleAssetName = info.name;
                     }
-                    else if (config.VehicleAssetName == null)
+                }
+                else if (config.VehicleAssetName == null)
+                {
+                    throw new Exception("Vehicle name not set at file!!!!");
+                }
+                if (!config.IsValid())
+                {
+                    if (ModInstance.DebugMode)
                     {
-                        throw new Exception("Vehicle name not set at file!!!!");
-                    }
-                    if (!config.IsValid())
-                    {
-                        if (ModInstance.DebugMode)
+                        stream.Position = 0;
+                        using (var sr = new StreamReader(stream))
                         {
-                            stream.Position = 0;
-                            using (var sr = new StreamReader(stream))
+                            KwyttoDialog.ShowModal(new KwyttoDialog.BindProperties
                             {
-                                KwyttoDialog.ShowModal(new KwyttoDialog.BindProperties
-                                {
-                                    title = KStr.comm_errorTitle,
-                                    message = string.Format(Str.we_errorLoadingVehicleLayout_msg, info is null ? "global" : $"asset \"{info}\"", i + 1, configs.Descriptors.Length),
-                                    scrollText = sr.ReadToEnd(),
-                                    buttons = KwyttoDialog.basicOkButtonBar
-                                });
-                            }
+                                title = KStr.comm_errorTitle,
+                                message = string.Format(Str.we_errorLoadingVehicleLayout_msgSingle, info is null ? "global" : $"asset \"{info}\""),
+                                scrollText = sr.ReadToEnd(),
+                                buttons = KwyttoDialog.basicOkButtonBar
+                            });
                         }
+                    }
 
-                    }
-                    else
-                    {
-                        referenceDic[config.VehicleAssetName] = config;
-                    }
+                }
+                else
+                {
+                    referenceDic[config.VehicleAssetName] = config;
                 }
             }
             else
@@ -350,6 +381,7 @@ namespace WriteEverywhere.Singleton
                 throw new Exception("The file wasn't recognized as a valid descriptor!");
             }
         }
+
         #endregion
         private static float targetHeight;
         private uint lastFrameOverriden;

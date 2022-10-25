@@ -72,13 +72,13 @@ namespace WriteEverywhere.Variables
                 ImageFolder:
                     multipleOutput = propDescriptor.GetParameter(paramIdx) is TextParameterWrapper tpw2
                         ? (new[] { tpw2.GetSpriteFromCycle(textDescriptor, propDescriptor.TargetAssetParameter, segmentId, 0, 0) })
-                        : (IEnumerable<BasicRenderInformation>)(new[] { ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(null, "FrameParamsNotSet") });
+                        : (IEnumerable<BasicRenderInformation>)(new[] { ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(WEImages.FrameParamsNotSet) });
                     return null;
                 case TextContent.ParameterizedSpriteSingle:
                 ImageSingle:
                     multipleOutput = new[] {propDescriptor.GetParameter(paramIdx)  is TextParameterWrapper tpw3
                                 ? tpw3.GetSpriteFromParameter(propDescriptor.TargetAssetParameter)
-                                : ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(null, "FrameParamsNotSet") };
+                                : ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(WEImages.FrameParamsNotSet) };
                     return null;
                 case TextContent.Any:
                 case TextContent.TextParameterSequence:
@@ -137,13 +137,13 @@ namespace WriteEverywhere.Variables
                 ImageFolder:
                     multipleOutput = buildingParam.GetParameter(paramIdx) is TextParameterWrapper tpw2
                         ? (new[] { tpw2.GetSpriteFromCycle(textDescriptor, buildingDescriptor.TargetAssetParameter, buildingId, 0, 0) })
-                        : (IEnumerable<BasicRenderInformation>)(new[] { ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(null, "FrameParamsNotSet") });
+                        : (IEnumerable<BasicRenderInformation>)(new[] { ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(WEImages.FrameParamsNotSet) });
                     return null;
                 case TextContent.ParameterizedSpriteSingle:
                 ImageSingle:
                     multipleOutput = new[] {buildingParam.GetParameter(paramIdx)  is TextParameterWrapper tpw3
                                 ? tpw3.GetSpriteFromParameter(buildingDescriptor.TargetAssetParameter)
-                                : ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(null, "FrameParamsNotSet") };
+                                : ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(WEImages.FrameParamsNotSet) };
                     return null;
                 case TextContent.Any:
                 case TextContent.TextParameterSequence:
