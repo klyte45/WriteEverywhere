@@ -266,7 +266,7 @@ namespace WriteEverywhere
 
 
 
-        public static Material ___OUTSIDE_MAT { get => WETextRenderer.m_outsideMaterial; set => WETextRenderer.m_outsideMaterial = value; }
+        public static Material ___OUTSIDE_MAT { get => WETextRenderer.OutsideMaterial; set => WETextRenderer.OutsideMaterial = value; }
         public static Vector2[] __cachedUvFrame;
         public static Vector2[] __cachedUvGlass;
         public static Material m_rotorMaterial;
@@ -283,7 +283,7 @@ namespace WriteEverywhere
                     ModInstance.Controller.defaultTextShader = WEAssetLibrary.instance.GetShaders().TryGetValue("klyte/wts/wtsshader", out var x) ? x : null;
                     ReloadFontsFromPath();
                     ModInstance.Controller.AtlasesLibrary.LoadImagesFromLocalFolders();
-                    WETextRenderer.m_outsideMaterial = null;
+                    WETextRenderer.OutsideMaterial = null;
                 }
             }
         }

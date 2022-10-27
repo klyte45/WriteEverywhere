@@ -1172,4 +1172,10 @@ Check the data shown below to get information.</value>
   <data name="we_assetEditor_currentAssetIsNotVehicle" xml:space="preserve">
     <value>&lt;color=yellow&gt;Current asset is not a vehicle&lt;/color&gt;</value>
   </data>
+  <data name="we_generalTextEditor_previewTypeImageFrame" xml:space="preserve">    <value>Image frame</value>  </data>
+  <data name="we_generalTextEditor_assetEditorExibitionText" xml:space="preserve">    <value>Content to show in Asset Editor</value>  </data>
+  <data name="we_generalTextEditor_assetEditorPreviewSetText" xml:space="preserve">    <value>Text to show in Asset Editor</value>  </data>
+  <data name="we_generalTextEditor_previewTypeSetText" xml:space="preserve">    <value>Custom text</value>  </data>
+  <data name="we_generalTextEditor_previewTypeVariablePath" xml:space="preserve">    <value>WE variable path</value>  </data>
+
 </root>

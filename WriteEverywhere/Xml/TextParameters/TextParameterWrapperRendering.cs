@@ -114,11 +114,28 @@ namespace WriteEverywhere.Xml
         internal static BasicRenderInformation GetTargetText(this TextParameterWrapper wrapper, WriteOnBuildingXml propGroupDescriptor, BaseWriteOnXml descriptorBuilding, TextToWriteOnXml textDescriptor, DynamicSpriteFont targetFont, ushort refId, int secId, int tercId, out IEnumerable<BasicRenderInformation> multipleOutput)
         {
             multipleOutput = null;
-            return wrapper.ParamType != ParameterType.VARIABLE
-                ? (targetFont?.DrawString(ModInstance.Controller, wrapper.ToString(), default, FontServer.instance.ScaleEffective))
-                : SceneUtils.IsAssetEditor
-                    ? targetFont.DrawString(ModInstance.Controller, wrapper.VariableValue.m_originalCommand, default, FontServer.instance.ScaleEffective)
-                    : wrapper.VariableValue.GetTargetText(propGroupDescriptor, descriptorBuilding, textDescriptor, targetFont, refId, secId, tercId, out multipleOutput);
+            if (wrapper.ParamType != ParameterType.VARIABLE)
+            {
+                return (targetFont?.DrawString(ModInstance.Controller, wrapper.ToString(), default, FontServer.instance.ScaleEffective));
+            }
+            else
+            {
+                if (SceneUtils.IsAssetEditor)
+                {
+                    switch (textDescriptor.assetEditorPreviewContentType)
+                    {
+                        case TextContent.ParameterizedText:
+                            return targetFont.DrawString(ModInstance.Controller, textDescriptor.AssetEditorPreviewText.TrimToNull() ?? wrapper.VariableValue.m_originalCommand, default, FontServer.instance.ScaleEffective);
+                        case TextContent.ParameterizedSpriteSingle:
+                            return ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(WEImages.FrameBorder);
+                    }
+                    return targetFont.DrawString(ModInstance.Controller, wrapper.VariableValue.m_originalCommand, default, FontServer.instance.ScaleEffective);
+                }
+                else
+                {
+                    return wrapper.VariableValue.GetTargetText(propGroupDescriptor, descriptorBuilding, textDescriptor, targetFont, refId, secId, tercId, out multipleOutput);
+                }
+            }
         }
 
         public static string GetOriginalVariableParam(this TextParameterWrapper wrapper) => wrapper.ParamType != ParameterType.VARIABLE ? null : wrapper.OriginalCommand;

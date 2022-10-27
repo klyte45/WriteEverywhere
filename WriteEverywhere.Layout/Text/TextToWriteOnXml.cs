@@ -16,7 +16,6 @@ namespace WriteEverywhere.Layout
             set => ParameterSequence = TextParameterSequence.FromXml(value);
         }
 
-
         public override string GetValueAsUri() => Value.ToString();
 
         public override int GetParamIdx() => Value?.GetParamIdx ?? -1;
@@ -36,5 +35,12 @@ namespace WriteEverywhere.Layout
 
         [XmlIgnore]
         private TextParameterWrapper parameterValue;
+
+        [XmlAttribute("AssetEditorPreviewContentType")]
+        public TextContent assetEditorPreviewContentType = TextContent.None;
+
+        [XmlAttribute("AssetEditorPreviewText")]
+        public string AssetEditorPreviewText { get; set; }
+
     }
 }

@@ -775,6 +775,24 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Content to show in Asset Editor.
+        /// </summary>
+        public static string we_generalTextEditor_assetEditorExibitionText {
+            get {
+                return ResourceManager.GetString("we_generalTextEditor_assetEditorExibitionText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Text to show in Asset Editor.
+        /// </summary>
+        public static string we_generalTextEditor_assetEditorPreviewSetText {
+            get {
+                return ResourceManager.GetString("we_generalTextEditor_assetEditorPreviewSetText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Use front face color in the back face.
         /// </summary>
         public static string we_generalTextEditor_backfaceFontColorIsSameAsFrontFace {
@@ -926,6 +944,33 @@ namespace WriteEverywhere.Localization {
         public static string we_generalTextEditor_labelForParamListing {
             get {
                 return ResourceManager.GetString("we_generalTextEditor_labelForParamListing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Image frame.
+        /// </summary>
+        public static string we_generalTextEditor_previewTypeImageFrame {
+            get {
+                return ResourceManager.GetString("we_generalTextEditor_previewTypeImageFrame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Custom text.
+        /// </summary>
+        public static string we_generalTextEditor_previewTypeSetText {
+            get {
+                return ResourceManager.GetString("we_generalTextEditor_previewTypeSetText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a WE variable path.
+        /// </summary>
+        public static string we_generalTextEditor_previewTypeVariablePath {
+            get {
+                return ResourceManager.GetString("we_generalTextEditor_previewTypeVariablePath", resourceCulture);
             }
         }
         

@@ -17,6 +17,12 @@ namespace WriteEverywhere.UI
 
         private static readonly TextContent[] m_contents = new[] { TextContent.ParameterizedText, TextContent.ParameterizedSpriteSingle, TextContent.ParameterizedSpriteFolder, TextContent.TextParameterSequence };
         private static readonly string[] m_optionsContent = m_contents.Select(x => x.ValueToI18n()).ToArray();
+        private static readonly TextContent[] m_contentsExibition = new[] { TextContent.None, TextContent.ParameterizedText, TextContent.ParameterizedSpriteSingle };
+        private static readonly string[] m_optionsContentExibition = new[] {
+            Str.we_generalTextEditor_previewTypeVariablePath,
+            Str.we_generalTextEditor_previewTypeSetText,
+            Str.we_generalTextEditor_previewTypeImageFrame
+        };
 
         private readonly GUIRootWindowBase m_root;
         private readonly Func<PrefabInfo> infoGetter;
@@ -45,6 +51,14 @@ namespace WriteEverywhere.UI
                     if (param?.IsParameter ?? false)
                     {
                         GUIKwyttoCommons.TextWithLabel(tabAreaSize.x, Str.we_generalTextEditor_labelForParamListing, item.ParameterDisplayName, (x) => item.ParameterDisplayName = x, isEditable);
+                    }
+                    if (SceneUtils.IsAssetEditor && item.textContent == TextContent.ParameterizedText)
+                    {
+                        GUIKwyttoCommons.AddComboBox(tabAreaSize.x, Str.we_generalTextEditor_assetEditorExibitionText, ref item.assetEditorPreviewContentType, m_optionsContentExibition, m_contentsExibition, m_root, isEditable);
+                        if (item.assetEditorPreviewContentType == TextContent.ParameterizedText)
+                        {
+                            GUIKwyttoCommons.TextWithLabel(tabAreaSize.x, Str.we_generalTextEditor_assetEditorPreviewSetText, item.AssetEditorPreviewText ?? "", (x) => item.AssetEditorPreviewText = x);
+                        }
                     }
                     break;
                 case TextContent.TextParameterSequence:

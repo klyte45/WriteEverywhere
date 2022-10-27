@@ -149,9 +149,9 @@ namespace WriteEverywhere.Rendering
             return containerMatrix;
         }
 
-        internal static ref Vector2[] cachedUvGlass => ref WEMainController.__cachedUvGlass;
-        internal static ref Material m_rotorMaterial => ref WEMainController.m_rotorMaterial;
-        internal static ref Material m_outsideMaterial => ref WEMainController.m_outsideMaterial;
+        internal static ref Vector2[] CachedUvGlass => ref WEMainController.__cachedUvGlass;
+        internal static ref Material RotorMaterial => ref WEMainController.m_rotorMaterial;
+        internal static ref Material OutsideMaterial => ref WEMainController.m_outsideMaterial;
 
         private static void DrawTextFrame(TextToWriteOnXml textDescriptor, MaterialPropertyBlock materialPropertyBlock, PlacingSettings placingSettings, ref Vector3 baseScale, Color color, PrefabInfo srcInfo, ref Matrix4x4 containerMatrix, ref int defaultCallsCounter)
         {
@@ -159,21 +159,21 @@ namespace WriteEverywhere.Rendering
 
 
             var instance2 = Singleton<VehicleManager>.instance;
-            if (m_rotorMaterial == null)
+            if (RotorMaterial == null)
             {
-                m_rotorMaterial = new Material(Shader.Find("Custom/Vehicles/Vehicle/Rotors"))
+                RotorMaterial = new Material(Shader.Find("Custom/Vehicles/Vehicle/Rotors"))
                 {
                     mainTexture = Texture2D.whiteTexture
                 };
                 var targetTexture = new Texture2D(1, 1);
                 targetTexture.SetPixels(targetTexture.GetPixels().Select(x => new Color(.5f, .5f, 0.7f, 1)).ToArray());
                 targetTexture.Apply();
-                m_rotorMaterial.SetTexture("_XYSMap", targetTexture);
+                RotorMaterial.SetTexture("_XYSMap", targetTexture);
                 var targetTextureACI = new Texture2D(1, 1);
             }
-            if (m_outsideMaterial == null)
+            if (OutsideMaterial == null)
             {
-                m_outsideMaterial = new Material(ModInstance.Controller.defaultFrameShader);
+                OutsideMaterial = new Material(ModInstance.Controller.defaultFrameShader);
             }
 
             if (frameConfig.meshOuterContainer is null)
@@ -191,7 +191,7 @@ namespace WriteEverywhere.Rendering
                 {
                     vertices = glassVerts,
                     triangles = WEDisplayContainerMeshUtils.m_trianglesGlass,
-                    uv = cachedUvGlass,
+                    uv = CachedUvGlass,
                     colors = glassVerts.Select(x => new Color(1 - frameConfig.GlassTransparency, 0, 0, 0)).ToArray(),
                 };
                 WTSUtils.SolveTangents(frameConfig.meshGlass);
@@ -226,12 +226,12 @@ namespace WriteEverywhere.Rendering
             materialPropertyBlock.SetTexture(instance2.ID_XYSMap, frameConfig.cachedGlassXYS);
             materialPropertyBlock.SetTexture(instance2.ID_MainTex, frameConfig.cachedGlassMain);
             defaultCallsCounter++;
-            Graphics.DrawMesh(frameConfig.meshGlass, containerMatrix, m_rotorMaterial, srcInfo.m_prefabDataIndex, null, 0, materialPropertyBlock);
+            Graphics.DrawMesh(frameConfig.meshGlass, containerMatrix, RotorMaterial, srcInfo.m_prefabDataIndex, null, 0, materialPropertyBlock);
 
             materialPropertyBlock.Clear();
             materialPropertyBlock.SetColor(SHADER_PROP_COLOR, color);
             defaultCallsCounter++;
-            Graphics.DrawMesh(frameConfig.meshOuterContainer, containerMatrix, m_outsideMaterial, srcInfo.m_prefabDataIndex, null, 0, materialPropertyBlock);
+            Graphics.DrawMesh(frameConfig.meshOuterContainer, containerMatrix, OutsideMaterial, srcInfo.m_prefabDataIndex, null, 0, materialPropertyBlock);
         }
         private class TextRenderDescriptor
         {
