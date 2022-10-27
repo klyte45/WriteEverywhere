@@ -285,13 +285,13 @@ namespace WriteEverywhere.Singleton
                 Data.BuildingCachedPositionsData[buildingID] = new PropLayoutCachedBuildingData[parentDescriptor.PropInstances.Length];
             }
             ref PropLayoutCachedBuildingData item = ref Data.BuildingCachedPositionsData[buildingID][idx];
-            if (SimulationManager.instance.m_currentTickIndex % 10 == 0 && (item.m_buildingPositionWhenGenerated != position || (BuildingLiteUI.Instance.Visible && BuildingLiteUI.Instance.CurrentInfo == info)))
+            if (SimulationManager.instance.m_currentTickIndex % 10 == 0 && (item.m_buildingPositionWhenGenerated != position || item.m_buildingRotationWhenGenerated != angleBuilding || (BuildingLiteUI.Instance.Visible && (SceneUtils.IsAssetEditor || BuildingLiteUI.Instance.CurrentInfo == info))))
             {
                 var isFromPositionChanged = item.m_buildingPositionWhenGenerated != position;
                 item.m_buildingPositionWhenGenerated = position;
                 if (SceneUtils.IsAssetEditor)
                 {
-                    item.m_cachedMatrix = refMatrix * Matrix4x4.TRS(position, Quaternion.Euler(0, angleBuilding, 0), Vector3.one);
+                    item.m_cachedMatrix = refMatrix;
                 }
                 else
                 {
@@ -312,6 +312,7 @@ namespace WriteEverywhere.Singleton
                         item.m_cachedMatrix = refMatrix;
                     }
                 }
+                item.m_buildingRotationWhenGenerated = angleBuilding;
                 item.m_cachedPosition = item.m_cachedMatrix.MultiplyPoint(targetDescriptor.PropPosition);
                 item.m_cachedOriginalPosition = targetDescriptor.PropPosition;
                 item.m_cachedRotation = targetDescriptor.PropRotation;

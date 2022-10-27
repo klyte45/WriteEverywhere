@@ -8,6 +8,7 @@ namespace WriteEverywhere.Data
         public uint m_linesUpdateFrame;
 
         public Vector3 m_buildingPositionWhenGenerated;
+        public float m_buildingRotationWhenGenerated;
 
         public Vector3 m_cachedPosition;
         public Vector3 m_cachedRotation;

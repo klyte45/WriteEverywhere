@@ -43,14 +43,15 @@ namespace WriteEverywhere.Overrides
             }
             if (info.m_subBuildings != null)
             {
-                for (ushort s = 1; s <= info.m_subBuildings.Length; s++)
+                for (ushort s = 0; s < info.m_subBuildings.Length; s++)
                 {
-                    BuildingInfo.SubInfo subBuilding = info.m_subBuildings[s - 1];
+                    ushort idx = (ushort)(info.m_subBuildings.Length - s);
+                    BuildingInfo.SubInfo subBuilding = info.m_subBuildings[s];
                     for (int i = 0; i < targetDescriptor.PropInstances.Length; i++)
                     {
-                        if (targetDescriptor.PropInstances[i].SubBuildingPivotReference == s)
+                        if (targetDescriptor.PropInstances[i].SubBuildingPivotReference == idx)
                         {
-                            singleton.RenderDescriptor(cameraInfo, s, subBuilding.m_position, subBuilding.m_angle, info, 0, 0, defaultAssetEditorReference, -1, ref targetDescriptor, i);
+                            singleton.RenderDescriptor(cameraInfo, idx, subBuilding.m_position, (subBuilding.m_angle - 90) * Mathf.Deg2Rad, info, 0, 0, defaultAssetEditorReference * Matrix4x4.Translate(subBuilding.m_position) * Matrix4x4.TRS(Vector3.zero, Quaternion.Euler(0, -subBuilding.m_angle, 0), Vector3.one), -1, ref targetDescriptor, i);
                         }
                     }
                 }
