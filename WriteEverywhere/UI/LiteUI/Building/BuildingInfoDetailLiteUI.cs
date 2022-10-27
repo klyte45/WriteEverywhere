@@ -2,14 +2,12 @@
 
 using ColossalFramework;
 using ColossalFramework.Globalization;
-using ColossalFramework.Packaging;
 using ColossalFramework.UI;
 using HarmonyLib;
 using Kwytto.LiteUI;
 using Kwytto.Localization;
 using Kwytto.UI;
 using Kwytto.Utils;
-using WriteEverywhere.Font;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -17,12 +15,12 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using UnityEngine;
+using WriteEverywhere.Layout;
 using WriteEverywhere.Libraries;
 using WriteEverywhere.Localization;
 using WriteEverywhere.Singleton;
 using WriteEverywhere.Utils;
 using WriteEverywhere.Xml;
-using WriteEverywhere.Layout;
 
 namespace WriteEverywhere.UI
 {
@@ -49,6 +47,7 @@ namespace WriteEverywhere.UI
         private readonly Texture2D m_paste;
         private readonly Texture2D m_importLib;
         private readonly Texture2D m_exportLib;
+        private readonly Texture2D m_save;
         private readonly GUIColorPicker m_colorPicker;
         private readonly GUIRootWindowBase m_root;
 
@@ -97,6 +96,7 @@ namespace WriteEverywhere.UI
             m_paste = KResourceLoader.LoadTextureKwytto(CommonsSpriteNames.K45_Paste);
             m_importLib = KResourceLoader.LoadTextureKwytto(CommonsSpriteNames.K45_Import);
             m_exportLib = KResourceLoader.LoadTextureKwytto(CommonsSpriteNames.K45_Export);
+            m_save = KResourceLoader.LoadTextureKwytto(CommonsSpriteNames.K45_Save);
 
             m_colorPicker = colorPicker;
             m_root = colorPicker.GetComponentInParent<GUIRootWindowBase>();
@@ -184,7 +184,7 @@ namespace WriteEverywhere.UI
         {
             using (new GUILayout.VerticalScope())
             {
-                var isEditable = m_currentSource == ConfigurationSource.CITY || m_currentSource == ConfigurationSource.SKIN;
+                var isEditable = SceneUtils.IsAssetEditor ? m_currentSource == ConfigurationSource.ASSET : m_currentSource == ConfigurationSource.CITY || m_currentSource == ConfigurationSource.SKIN;
                 using (new GUILayout.HorizontalScope(GUILayout.Height(80 * GUIWindow.ResolutionMultiplier)))
                 {
                     using (new GUILayout.VerticalScope(GUILayout.ExpandWidth(true)))
@@ -204,15 +204,33 @@ namespace WriteEverywhere.UI
                             {
                                 GUI.tooltip = "";
                                 GUILayout.FlexibleSpace();
-                                GUIKwyttoCommons.SquareTextureButton(m_goToFile, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_OPENGLOBALSFOLDER, GoToGlobalFolder);
+                                if (!SceneUtils.IsAssetEditor)
+                                {
+                                    GUIKwyttoCommons.SquareTextureButton(m_goToFile, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_OPENGLOBALSFOLDER, GoToGlobalFolder);
+                                }
                                 GUIKwyttoCommons.SquareTextureButton(m_reloadFiles, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_RELOADDESCRIPTORS, ReloadFiles);
                                 GUILayout.FlexibleSpace();
-                                GUIKwyttoCommons.SquareTextureButton(m_createNew, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_NEWINCITY, CreateNew, !isEditable);
-                                GUIKwyttoCommons.SquareTextureButton(m_deleteFromCity, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_DELETEFROMCITY, DeleteFromCity, m_currentSource == ConfigurationSource.CITY);
-                                GUIKwyttoCommons.SquareTextureButton(m_cloneToCity, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_COPYTOCITY, CloneToCity, m_currentSource == ConfigurationSource.ASSET || m_currentSource == ConfigurationSource.GLOBAL);
+                                if (!SceneUtils.IsAssetEditor)
+                                {
+                                    GUIKwyttoCommons.SquareTextureButton(m_createNew, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_NEWINCITY, CreateNew, !isEditable);
+                                    GUIKwyttoCommons.SquareTextureButton(m_deleteFromCity, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_DELETEFROMCITY, DeleteFromCity, m_currentSource == ConfigurationSource.CITY);
+                                    GUIKwyttoCommons.SquareTextureButton(m_cloneToCity, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_COPYTOCITY, CloneToCity, m_currentSource == ConfigurationSource.ASSET || m_currentSource == ConfigurationSource.GLOBAL);
+                                }
+                                else
+                                {
+                                    GUIKwyttoCommons.SquareTextureButton(m_createNew, Str.we_assetEditor_createLayoutAsset, CreateNew, !isEditable);
+                                    GUIKwyttoCommons.SquareTextureButton(m_deleteFromCity, Str.we_assetEditor_deleteFromAsset, DeleteFromCity, m_currentSource == ConfigurationSource.ASSET);
+                                }
                                 GUILayout.FlexibleSpace();
-                                GUIKwyttoCommons.SquareTextureButton(m_exportGlobal, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_EXPORTASGLOBAL, ExportGlobal, m_currentSource == ConfigurationSource.CITY);
-                                GUIKwyttoCommons.SquareTextureButton(m_exportAsset, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_EXPORTTOASSETFOLDER, ExportAsset, m_currentSource == ConfigurationSource.CITY && CurrentEditingInfo.name.EndsWith("_Data"));
+                                if (!SceneUtils.IsAssetEditor)
+                                {
+                                    GUIKwyttoCommons.SquareTextureButton(m_exportGlobal, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_EXPORTASGLOBAL, ExportGlobal, m_currentSource == ConfigurationSource.CITY);
+                                    GUIKwyttoCommons.SquareTextureButton(m_exportAsset, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_EXPORTTOASSETFOLDER, ExportAsset, m_currentSource == ConfigurationSource.CITY && CurrentEditingInfo.name.EndsWith("_Data"));
+                                }
+                                else
+                                {
+                                    GUIKwyttoCommons.SquareTextureButton(m_save, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_EXPORTTOASSETFOLDER, ExportAsset, m_currentSource == ConfigurationSource.ASSET);
+                                }
                                 GUILayout.FlexibleSpace();
                                 GUIKwyttoCommons.SquareTextureButton(m_copy, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_COPYTOCLIPBOARD, CopyToClipboard, m_currentSource != ConfigurationSource.NONE);
                                 GUIKwyttoCommons.SquareTextureButton(m_paste, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_PASTEFROMCLIPBOARD, PasteFromClipboard, isEditable && !(m_clipboard is null));
@@ -277,12 +295,15 @@ namespace WriteEverywhere.UI
         {
             WTSBuildingPropsSingleton.GetTargetDescriptor(CurrentEditingInfo.name, out m_currentSource, out var currentLayout);
             CurrentEditingLayout = currentLayout;
-            var cachedItemList = currentLayout?.PropInstances.Select((x, i) => Tuple.New(i, x)).Where(x => x.Second.SubBuildingPivotReference == m_currentSubBuilding).Select((x) => new KeyValuePair<int, string>(x.First, x.Second.SaveName)).ToList();
-            m_cachedItemListIdx = cachedItemList.Select(x => x.Key).ToArray();
-            m_cachedItemListLabels = cachedItemList.Select(x => x.Value).ToArray();
-            OnTabChanged(-1);
-            m_tabsContainer.Reset();
-            xmlLibList.ResetStatus();
+            if (CurrentEditingLayout != null)
+            {
+                var cachedItemList = currentLayout?.PropInstances.Select((x, i) => Tuple.New(i, x)).Where(x => x.Second.SubBuildingPivotReference == m_currentSubBuilding).Select((x) => new KeyValuePair<int, string>(x.First, x.Second.SaveName)).ToList();
+                m_cachedItemListIdx = cachedItemList.Select(x => x.Key).ToArray();
+                m_cachedItemListLabels = cachedItemList.Select(x => x.Value).ToArray();
+                OnTabChanged(-1);
+                m_tabsContainer.Reset();
+                xmlLibList.ResetStatus();
+            }
         }
 
         private void OnTabChanged(int tabIdx)
@@ -313,28 +334,24 @@ namespace WriteEverywhere.UI
         }
         private void ExportLayout() => xmlLibList.GoToExport();
         private void ImportLayout() => xmlLibList.GoToImport();
-        private void ExportAsset() => ExportTo(Path.Combine(Path.GetDirectoryName(PackageManager.FindAssetByName(CurrentEditingInfo.name)?.package?.packagePath), $"{WEMainController.m_defaultFileNameBuildingsXml}.xml"));
-
-        private void ExportGlobal() => ExportTo(Path.Combine(WEMainController.DefaultBuildingsConfigurationFolder, $"{WEMainController.m_defaultFileNameBuildingsXml}_{CurrentEditingInfo.name}.xml"));
+        private void ExportAsset() => ExportTo(Path.Combine(WEMainController.GetDirectoryForAssetOwn(CurrentEditingInfo), $"{WEMainController.m_defaultFileNameBuildingsXml}.xml"));
+        private void ExportGlobal() => ExportTo(Path.Combine(WEMainController.DefaultBuildingsConfigurationFolder, $"{WEMainController.m_defaultFileNameBuildingsXml}_{CurrentEditingInfo.name.AsPathSafe()}.xml"));
 
         private void ExportTo(string output)
         {
-            if (!(CurrentEditingInfo is null))
+            if (CurrentEditingLayout is WriteOnBuildingXml layout)
             {
-                var assetId = CurrentEditingInfo.name.Split('.')[0] + ".";
-                WTSBuildingPropsSingleton.GetTargetDescriptor(CurrentEditingInfo.name, out _, out var target);
-                if (target is WriteOnBuildingXml layout)
-                {
-                    layout.BuildingInfoName = CurrentEditingInfo.name;
-                    File.WriteAllText(output, XmlUtils.DefaultXmlSerialize(layout));
+                KFileUtils.EnsureFolderCreation(Directory.GetParent(output).FullName);
+                layout.BuildingInfoName = CurrentEditingInfo.name;
+                File.WriteAllText(output, XmlUtils.DefaultXmlSerialize(layout));
 
-                    KwyttoDialog.ShowModal(new KwyttoDialog.BindProperties
+                KwyttoDialog.ShowModal(new KwyttoDialog.BindProperties
+                {
+                    title = Str.WTS_VEHICLE_EXPORTLAYOUT,
+                    message = Str.WTS_VEHICLE_EXPORTLAYOUT_SUCCESSSAVEDATA,
+                    scrollText = $"<color=#FFFF00>{output}</color>",
+                    buttons = new[]
                     {
-                        title = Str.WTS_VEHICLE_EXPORTLAYOUT,
-                        message = Str.WTS_VEHICLE_EXPORTLAYOUT_SUCCESSSAVEDATA,
-                        scrollText = $"<color=#FFFF00>{output}</color>",
-                        buttons = new[]
-                        {
                             KwyttoDialog.SpaceBtn,
                             new KwyttoDialog.ButtonDefinition
                             {
@@ -351,15 +368,15 @@ namespace WriteEverywhere.UI
                                 style= KwyttoDialog.ButtonStyle.White
                             }
                         }
-                    });
+                });
 
-                    ModInstance.Controller?.BuildingPropsSingleton?.LoadAllBuildingConfigurations();
-                }
+                ModInstance.Controller?.BuildingPropsSingleton?.LoadAllBuildingConfigurations();
             }
         }
         private void PasteFromClipboard()
         {
-            WTSBuildingPropsSingleton.SetCityDescriptor(CurrentEditingInfo, XmlUtils.DefaultXmlDeserialize<WriteOnBuildingXml>(m_clipboard));
+            if (SceneUtils.IsAssetEditor) WTSBuildingPropsSingleton.SetAssetDescriptor(CurrentEditingInfo, XmlUtils.DefaultXmlDeserialize<WriteOnBuildingXml>(m_clipboard));
+            else WTSBuildingPropsSingleton.SetCityDescriptor(CurrentEditingInfo, XmlUtils.DefaultXmlDeserialize<WriteOnBuildingXml>(m_clipboard));
 
             OnChangeInfo(CurrentEditingInfo, m_currentSubBuilding);
         }
@@ -372,7 +389,8 @@ namespace WriteEverywhere.UI
         }
         private void CreateNew()
         {
-            WTSBuildingPropsSingleton.SetCityDescriptor(CurrentEditingInfo, new WriteOnBuildingXml());
+            if (SceneUtils.IsAssetEditor) WTSBuildingPropsSingleton.SetAssetDescriptor(CurrentEditingInfo, new WriteOnBuildingXml());
+            else WTSBuildingPropsSingleton.SetCityDescriptor(CurrentEditingInfo, new WriteOnBuildingXml());
             OnChangeInfo(CurrentEditingInfo, m_currentSubBuilding);
         }
         private void DeleteFromCity()
@@ -450,7 +468,8 @@ namespace WriteEverywhere.UI
 
         private void SaveAndReload()
         {
-            WTSBuildingPropsSingleton.SetCityDescriptor(CurrentEditingInfo, CurrentEditingLayout);
+            if (SceneUtils.IsAssetEditor) WTSBuildingPropsSingleton.SetAssetDescriptor(CurrentEditingInfo, CurrentEditingLayout);
+            else WTSBuildingPropsSingleton.SetCityDescriptor(CurrentEditingInfo, CurrentEditingLayout);
             var oldListSel = m_tabsContainer.ListSel;
             OnChangeInfo(CurrentEditingInfo, m_currentSubBuilding);
             m_tabsContainer.ListSel = oldListSel;

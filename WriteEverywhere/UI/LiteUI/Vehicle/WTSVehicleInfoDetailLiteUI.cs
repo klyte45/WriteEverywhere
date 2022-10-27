@@ -1,7 +1,6 @@
 ﻿
 using ColossalFramework;
 using ColossalFramework.Globalization;
-using ColossalFramework.Packaging;
 using ColossalFramework.UI;
 using Kwytto.LiteUI;
 using Kwytto.Localization;
@@ -356,10 +355,10 @@ namespace WriteEverywhere.UI
 
         private string AssetLayoutFileName()
         {
-            return Path.Combine(WTSVehicleTextsSingleton.GetDirectoryForAssetOwn(m_currentInfo), $"{WEMainController.m_defaultFileNameVehiclesXml}.xml");
+            return Path.Combine(WEMainController.GetDirectoryForAssetOwn(m_currentInfo), $"{WEMainController.m_defaultFileNameVehiclesXml}.xml");
         }
 
-        private void ExportGlobal() => ExportTo(Path.Combine(WEMainController.DefaultVehiclesConfigurationFolder, $"{WEMainController.m_defaultFileNameVehiclesXml}_{PackageManager.FindAssetByName(m_currentParentInfo.name)?.package.packageMainAsset ?? m_currentParentInfo.name}.xml"));
+        private void ExportGlobal() => ExportTo(Path.Combine(WEMainController.DefaultVehiclesConfigurationFolder, $"{WEMainController.m_defaultFileNameVehiclesXml}_{CurrentEditingInfo.name.AsPathSafe()}.xml"));
         private void ExportSkin() => ModInstance.Controller.ConnectorVS.ApplySkin(m_currentInfo, m_currentSkin, XmlUtils.DefaultXmlSerialize(m_currentLayout));
 
         private void ExportTo(string output)
@@ -444,10 +443,14 @@ namespace WriteEverywhere.UI
             WTSVehicleTextsSingleton.SetAssetDescriptor(m_currentInfo, null);
             OnChangeInfo(m_currentInfo, m_currentParentInfo);
         }
-
         private void ReloadFiles()
         {
-            ModInstance.Controller?.VehicleTextsSingleton?.LoadAllVehiclesConfigurations();
+            ModInstance.Controller.StartCoroutine(ReloadFiles_Coroutine());
+        }
+
+        private IEnumerator ReloadFiles_Coroutine()
+        {
+            yield return ModInstance.Controller?.VehicleTextsSingleton?.LoadAllVehiclesConfigurations();
             OnChangeInfo(m_currentInfo, m_currentParentInfo);
         }
         private void GoToGlobalFolder() => ColossalFramework.Utils.OpenInFileBrowser(WEMainController.DefaultVehiclesConfigurationFolder);

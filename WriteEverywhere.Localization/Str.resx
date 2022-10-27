@@ -1160,4 +1160,16 @@ Search by C# date formatting for more info.</value>
     <value>Error loading the item for a vehicle in the following scope: {0}
 Check the data shown below to get information.</value>
   </data>
+  <data name="we_assetEditor_createLayoutAsset" xml:space="preserve">
+    <value>Create new Layout in asset scope</value>
+  </data>
+  <data name="we_buildingEditor_theLayotsAreBeingLoaded" xml:space="preserve">
+    <value>&lt;color=yellow&gt;The building layouts are being loaded...&lt;/color&gt;</value>
+  </data>
+  <data name="we_vehicleEditor_theLayotsAreBeingLoaded" xml:space="preserve">
+    <value>&lt;color=yellow&gt;The vehicles layots are being loaded...&lt;/color&gt;</value>
+  </data>
+  <data name="we_assetEditor_currentAssetIsNotVehicle" xml:space="preserve">
+    <value>&lt;color=yellow&gt;Current asset is not a vehicle&lt;/color&gt;</value>
+  </data>
 </root>

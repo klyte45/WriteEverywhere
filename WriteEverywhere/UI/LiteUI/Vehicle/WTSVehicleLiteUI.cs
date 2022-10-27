@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using WriteEverywhere.Data;
-using WriteEverywhere.Layout;
 using WriteEverywhere.Localization;
 using WriteEverywhere.Tools;
 using WriteEverywhere.Utils;
@@ -159,20 +158,22 @@ namespace WriteEverywhere.UI
 
         protected override void DrawWindow(Vector2 size)
         {
+            if (!ModInstance.Controller.VehicleTextsSingleton.IsReady)
+            {
+                GUILayout.Label(Str.we_vehicleEditor_theLayotsAreBeingLoaded);
+                return;
+            }
             if (SceneUtils.IsAssetEditor)
             {
                 if (!(ToolsModifierControl.toolController.m_editPrefabInfo is VehicleInfo currentSelection))
                 {
-                    GUILayout.Label(Str.we_assetEditor_currentAssetIsNotBuilding);
+                    GUILayout.Label(Str.we_assetEditor_currentAssetIsNotVehicle);
                     return;
                 }
                 if (CurrentInfo is null || !CurrentInfo.name.EndsWith(currentSelection.name))
                 {
                     var assetPack = PrefabUtils.GetAssetFromPrefab(currentSelection);
-                    var descriptorsToExport = new List<LayoutDescriptorVehicleXml>();
-                    CurrentInfo = VehiclesIndexes.instance.PrefabsData
-                    .Where((x) => PrefabUtils.GetAssetFromPrefab(x.Value.Info) == assetPack)
-                    .Select(x => x.Value.Info as VehicleInfo).First(x => x?.name.EndsWith(currentSelection.name) ?? false);
+                    CurrentInfo = VehiclesIndexes.instance.PrefabsData[assetPack.fullName].Info as VehicleInfo;
                 }
             }
             var area = new Rect(5 * GUIWindow.ResolutionMultiplier, 0, size.x - 10 * GUIWindow.ResolutionMultiplier, size.y);

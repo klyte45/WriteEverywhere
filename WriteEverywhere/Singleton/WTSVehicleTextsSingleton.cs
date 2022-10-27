@@ -27,7 +27,6 @@ namespace WriteEverywhere.Singleton
         public SimpleXmlDictionary<string, LayoutDescriptorVehicleXml> CityDescriptors => Data.CityDescriptors;
         public SimpleXmlDictionary<string, LayoutDescriptorVehicleXml> GlobalDescriptors => Data.GlobalDescriptors;
         public SimpleXmlDictionary<string, LayoutDescriptorVehicleXml> AssetsDescriptors => Data.AssetsDescriptors;
-        public static string GetDirectoryForAssetOwn(PrefabInfo info) => KFileUtils.GetRootFolderForK45(info) is string str ? Path.Combine(Path.Combine(str, WEMainController.LAYOUT_FILES_FOLDER_ASSETS), PrefabUtils.GetAssetFromPrefab(info).name.Split('.').Last()) : null;
 
         #region Initialize
         public void Awake()
@@ -270,15 +269,37 @@ namespace WriteEverywhere.Singleton
         #region IO 
 
         private static string DefaultFilename { get; } = $"{WEMainController.m_defaultFileNameVehiclesXml}.xml";
+        public bool IsReady => LoadingCoroutineLocal is null && LoadingCoroutineAssets is null;
 
-        public void LoadAllVehiclesConfigurations()
+        private Coroutine LoadingCoroutineAssets;
+        private Coroutine LoadingCoroutineLocal;
+
+        public Coroutine LoadAllVehiclesConfigurations() => IsReady ? StartCoroutine(LoadAllVehiclesConfigurations_Coroutine()) : null;
+
+        public IEnumerator LoadAllVehiclesConfigurations_Coroutine()
         {
             LogUtils.DoLog("LOADING VEHICLE CONFIG START -----------------------------");
-            var errorList = new List<string>();
+            LoadingCoroutineAssets = StartCoroutine(ReloadVehicleAssets_Coroutine());
+            if (!SceneUtils.IsAssetEditor)
+            {
+                LoadingCoroutineLocal = StartCoroutine(ReloadVehicleShared_coroutine());
+            }
+            else
+            {
+                Data.GlobalDescriptors.Clear();
+                Data.CityDescriptors.Clear();
+            }
+            yield return new WaitUntil(() => IsReady);
+            Data.CleanCache();
+            LogUtils.DoLog("LOADING VEHICLE CONFIG END -----------------------------");
+        }
+
+        private IEnumerator ReloadVehicleShared_coroutine()
+        {
             Data.GlobalDescriptors.Clear();
-            Data.AssetsDescriptors.Clear();
-            KFileUtils.ForEachLoadedPrefab<VehicleInfo>(LoadDescriptorsFromXmlAsset);
+            var errorList = new List<string>();
             LogUtils.DoLog($"DefaultVehiclesConfigurationFolder = {WEMainController.DefaultVehiclesConfigurationFolder}");
+            int counter = 0;
             foreach (string filename in Directory.GetFiles(WEMainController.DefaultVehiclesConfigurationFolder, "*.xml"))
             {
                 try
@@ -289,7 +310,7 @@ namespace WriteEverywhere.Singleton
                     }
                     using (FileStream stream = File.OpenRead(filename))
                     {
-                        LoadDescriptorsFromXmlCommon(stream, null);
+                        LoadDescriptorsFromXmlCommon(stream);
                     }
                 }
                 catch (Exception e)
@@ -297,8 +318,14 @@ namespace WriteEverywhere.Singleton
                     LogUtils.DoWarnLog($"Error Loading file \"{filename}\" ({e.GetType()}): {e.Message}\n{e}");
                     errorList.Add($"Error Loading file \"{filename}\" ({e.GetType()}): {e.Message}");
                 }
+                if (counter++ > 10)
+                {
+                    yield return 0;
+                    counter = 0;
+                }
             }
 
+            LoadingCoroutineLocal = null;
             if (errorList.Count > 0)
             {
                 KwyttoDialog.ShowModal(new KwyttoDialog.BindProperties
@@ -307,20 +334,31 @@ namespace WriteEverywhere.Singleton
                     scrollText = string.Join("\r\n", errorList.ToArray()),
                     buttons = KwyttoDialog.basicOkButtonBar,
                     showClose = true
-
                 });
-
             }
-
-            Data.CleanCache();
-
-            LogUtils.DoLog("LOADING VEHICLE CONFIG END -----------------------------");
         }
 
-        private void LoadDescriptorsFromXmlCommon(FileStream stream, VehicleInfo info) => LoadSingleDescriptorFromXml(stream, info, ref Data.GlobalDescriptors);
+        private IEnumerator ReloadVehicleAssets_Coroutine()
+        {
+            yield return 0;
+            Data.AssetsDescriptors.Clear();
+            var counter = 0;
+            foreach (var asset in VehiclesIndexes.instance.PrefabsData.Where(x => x.Value.PackageName.TrimToNull() != null))
+            {
+                LoadDescriptorsFromXmlAsset(asset.Value.Info as VehicleInfo);
+                if (counter++ > 10)
+                {
+                    yield return 0;
+                    counter = 0;
+                }
+            }
+            LoadingCoroutineAssets = null;
+        }
+
+        private void LoadDescriptorsFromXmlCommon(FileStream stream) => LoadSingleDescriptorFromXml(stream, null, ref Data.GlobalDescriptors);
         private void LoadDescriptorsFromXmlAsset(VehicleInfo info)
         {
-            if (GetDirectoryForAssetOwn(info) is string str)
+            if (WEMainController.GetDirectoryForAssetOwn(info) is string str)
             {
                 var filePath = Path.Combine(str, DefaultFilename);
                 if (File.Exists(filePath))
@@ -342,12 +380,7 @@ namespace WriteEverywhere.Singleton
             {
                 if (info != null)
                 {
-                    string[] propEffName = info.name.Split(".".ToCharArray(), 2);
-                    string[] xmlEffName = config.VehicleAssetName.Split(".".ToCharArray(), 2);
-                    if (propEffName.Length == 2 && xmlEffName.Length == 2 && xmlEffName[1] == propEffName[1])
-                    {
-                        config.VehicleAssetName = info.name;
-                    }
+                    config.VehicleAssetName = info.name;
                 }
                 else if (config.VehicleAssetName == null)
                 {

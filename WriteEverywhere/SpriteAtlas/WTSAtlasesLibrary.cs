@@ -30,9 +30,8 @@ namespace WriteEverywhere.Sprites
 
         protected void Awake()
         {
-            KFileUtils.ScanPrefabsFoldersDirectory<VehicleInfo>(WEMainController.EXTRA_SPRITES_FILES_FOLDER_ASSETS, LoadImagesFromPrefab);
-            KFileUtils.ScanPrefabsFoldersDirectory<BuildingInfo>(WEMainController.EXTRA_SPRITES_FILES_FOLDER_ASSETS, LoadImagesFromPrefab);
-            KFileUtils.ScanPrefabsFoldersDirectory<PropInfo>(WEMainController.EXTRA_SPRITES_FILES_FOLDER_ASSETS, LoadImagesFromPrefab);
+            KFileUtils.ScanPrefabsFoldersDirectory(VehiclesIndexes.instance, WEMainController.EXTRA_SPRITES_FILES_FOLDER_ASSETS, LoadImagesFromPrefab);
+            KFileUtils.ScanPrefabsFoldersDirectory(VehiclesIndexes.instance, WEMainController.EXTRA_SPRITES_FILES_FOLDER_ASSETS, LoadImagesFromPrefab);
 
             ResetTransportAtlas();
             TransportManager.instance.eventLineColorChanged += (x) => PurgeLine(new WTSLine(x, false));

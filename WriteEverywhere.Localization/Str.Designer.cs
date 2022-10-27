@@ -70,11 +70,29 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Create new Layout in asset scope.
+        /// </summary>
+        public static string we_assetEditor_createLayoutAsset {
+            get {
+                return ResourceManager.GetString("we_assetEditor_createLayoutAsset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a &lt;color=yellow&gt;Current editing asset is not a building!&lt;/color&gt;.
         /// </summary>
         public static string we_assetEditor_currentAssetIsNotBuilding {
             get {
                 return ResourceManager.GetString("we_assetEditor_currentAssetIsNotBuilding", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a &lt;color=yellow&gt;Current asset is not a vehicle&lt;/color&gt;.
+        /// </summary>
+        public static string we_assetEditor_currentAssetIsNotVehicle {
+            get {
+                return ResourceManager.GetString("we_assetEditor_currentAssetIsNotVehicle", resourceCulture);
             }
         }
         
@@ -255,6 +273,15 @@ namespace WriteEverywhere.Localization {
         public static string we_buildingEditor_subBuildingNumTitle {
             get {
                 return ResourceManager.GetString("we_buildingEditor_subBuildingNumTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a &lt;color=yellow&gt;The building layouts are being loaded...&lt;/color&gt;.
+        /// </summary>
+        public static string we_buildingEditor_theLayotsAreBeingLoaded {
+            get {
+                return ResourceManager.GetString("we_buildingEditor_theLayotsAreBeingLoaded", resourceCulture);
             }
         }
         
@@ -1291,6 +1318,15 @@ namespace WriteEverywhere.Localization {
         public static string we_vehicleEditor_pickOrSpawnAVehicle {
             get {
                 return ResourceManager.GetString("we_vehicleEditor_pickOrSpawnAVehicle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a &lt;color=yellow&gt;The vehicles layots are being loaded...&lt;/color&gt;.
+        /// </summary>
+        public static string we_vehicleEditor_theLayotsAreBeingLoaded {
+            get {
+                return ResourceManager.GetString("we_vehicleEditor_theLayotsAreBeingLoaded", resourceCulture);
             }
         }
         

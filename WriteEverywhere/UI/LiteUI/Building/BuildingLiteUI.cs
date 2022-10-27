@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using WriteEverywhere.Data;
+using WriteEverywhere.Layout;
 using WriteEverywhere.Localization;
 using WriteEverywhere.Singleton;
 using WriteEverywhere.Tools;
@@ -45,11 +46,14 @@ namespace WriteEverywhere.UI
             m_colorPicker = GameObjectUtils.CreateElement<GUIColorPicker>(transform).Init();
             m_colorPicker.Visible = false;
             m_detailUI = new BuildingInfoDetailLiteUI(m_colorPicker);
-            m_paramsUI = new BuildingParamsTab(() => CurrentGrabbedId, (x) => m_detailUI.CurrentGrabbedId = x, () => m_currentInfoList.Select(x =>
+            if (!SceneUtils.IsAssetEditor)
+            {
+                m_paramsUI = new BuildingParamsTab(() => CurrentGrabbedId, (x) => m_detailUI.CurrentGrabbedId = x, () => m_currentInfoList.Select(x =>
             {
                 WTSBuildingPropsSingleton.GetTargetDescriptor(x.name, out _, out var desc);
                 return desc;
             }), () => m_currentInfo);
+            }
         }
         protected override void OnOpacityChanged(float newVal)
         {
@@ -153,18 +157,23 @@ namespace WriteEverywhere.UI
 
         protected override void DrawWindow(Vector2 size)
         {
+            if (!ModInstance.Controller.BuildingPropsSingleton.IsReady)
+            {
+                GUILayout.Label(Str.we_buildingEditor_theLayotsAreBeingLoaded);
+                return;
+            }
             if (SceneUtils.IsAssetEditor)
             {
-                var currentSelection = ToolsModifierControl.toolController.m_editPrefabInfo as BuildingInfo;
-                if (CurrentInfo != currentSelection)
-                {
-                    CurrentInfo = currentSelection;
-                    m_editorTypeSel = 0;
-                }
-                if (currentSelection is null)
+                if (!(ToolsModifierControl.toolController.m_editPrefabInfo is BuildingInfo currentSelection))
                 {
                     GUILayout.Label(Str.we_assetEditor_currentAssetIsNotBuilding);
                     return;
+                }
+                if (CurrentInfo is null || !CurrentInfo.name.EndsWith(currentSelection.name))
+                {
+                    var assetPack = PrefabUtils.GetAssetFromPrefab(currentSelection);
+                    CurrentInfo = BuildingIndexes.instance.PrefabsData[assetPack.fullName].Info as BuildingInfo;
+                    m_editorTypeSel = 0;
                 }
             }
             var area = new Rect(5 * GUIWindow.ResolutionMultiplier, 0, size.x - 10 * GUIWindow.ResolutionMultiplier, size.y);

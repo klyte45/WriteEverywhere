@@ -83,66 +83,7 @@ namespace WriteEverywhere.Singleton
                 LogUtils.DoErrorLog($"INFINITELOOP! {id} {parentId} ");
             }
         }
-        #endregion
-
-        public bool CalculateGroupData(ushort buildingID, int layer, ref int vertexCount, ref int triangleCount, ref int objectCount, ref RenderGroup.VertexArrays vertexArrays)
-        {
-            // LogUtils.DoLog("Building: CalculateGroupData {0}", buildingID);
-            if (!Data.BuildingCachedPositionsData.ContainsKey(buildingID))
-            {
-                return false;
-            }
-            bool result = false;
-            ref Building building = ref BuildingManager.instance.m_buildings.m_buffer[buildingID];
-            GetTargetDescriptor(building.Info.name, out _, out WriteOnBuildingXml targetDescriptor);
-            for (int i = 0; i < targetDescriptor.PropInstances.Length && i < Data.BuildingCachedPositionsData[buildingID].Length; i++)
-            {
-                var descriptor = targetDescriptor.PropInstances[i];
-                var targetProp = descriptor.SimpleProp;
-                if (!(targetProp is null))
-                {
-                    var item = Data.BuildingCachedPositionsData[buildingID][i];
-                    for (int j = 0; j <= item.m_cachedArrayRepeatTimes; j++)
-                    {
-                        if (PropInstance.CalculateGroupData(targetProp, layer, ref vertexCount, ref triangleCount, ref objectCount, ref vertexArrays))
-                        {
-                            result = true;
-                        }
-                    }
-                }
-            }
-            return result;
-        }
-        public bool PopulateGroupData(ushort buildingID, int layer, ref int vertexIndex, ref int triangleIndex, Vector3 groupPosition, RenderGroup.MeshData data, ref Vector3 min, ref Vector3 max, ref float maxRenderDistance, ref float maxInstanceDistance)
-        {
-            if (!Data.BuildingCachedPositionsData.ContainsKey(buildingID))
-            {
-                return false;
-            }
-            bool result = false;
-            ref Building building = ref BuildingManager.instance.m_buildings.m_buffer[buildingID];
-            float buildingAngle = building.m_angle * Mathf.Rad2Deg;
-            GetTargetDescriptor(building.Info.name, out _, out WriteOnBuildingXml targetDescriptor);
-            for (int i = 0; i < targetDescriptor.PropInstances.Length && i < Data.BuildingCachedPositionsData[buildingID].Length; i++)
-            {
-                var descriptor = targetDescriptor.PropInstances[i];
-                var targetProp = descriptor.SimpleProp;
-                if (targetProp != null)
-                {
-                    var item = Data.BuildingCachedPositionsData[buildingID][i];
-                    var targetPosition = item.m_cachedPosition;
-                    for (int j = 0; j <= item.m_cachedArrayRepeatTimes; j++)
-                    {
-                        if (j > 0)
-                        {
-                            targetPosition = item.m_cachedMatrix.MultiplyPoint(item.m_cachedOriginalPosition + (j * item.m_cachedArrayItemPace));
-                        }
-                        WEDynamicTextRenderingRules.PropInstancePopulateGroupData(targetProp, layer, new InstanceID { Building = buildingID }, targetPosition, item.m_cachedScale, item.m_cachedRotation + new Vector3(0, buildingAngle), ref vertexIndex, ref triangleIndex, groupPosition, data, ref min, ref max, ref maxRenderDistance, ref maxInstanceDistance);
-                    }
-                }
-            }
-            return result;
-        }
+        #endregion      
 
         public void AfterRenderInstanceImpl(RenderManager.CameraInfo cameraInfo, ushort sourceBuildingId, int layerMask, ref RenderManager.Instance renderInstance)
         {
@@ -159,45 +100,8 @@ namespace WriteEverywhere.Singleton
 
 
             string refName = GetReferenceModelName(ref data);
-            if (BuildingLiteUI.Instance.Visible && BuildingLiteUI.Instance.CurrentEditingInfo?.name == refName)
-            {
-                if (!m_buildingStopsDescriptor.ContainsKey(refName))
-                {
-                    StartCoroutine(DoMapStopPoints(refName, data.Info, 1f));//TODO: Thresold salvo em algum lugar
-                }
-                if (!(m_buildingStopsDescriptor[refName] is null) && subBuildingIdx == 0)
-                {
-                    float angle = SimulationManager.instance.m_currentTickIndex;
-                    var lowestPoint = Mathf.Min(m_buildingStopsDescriptor[refName].Select(x => x.platformLine.Position(0.5f).y).ToArray());
-                    for (int i = 0; i < m_buildingStopsDescriptor[refName].Length; i++)
-                    {
-                        var color = m_colorOrder[i % m_colorOrder.Length];
-                        var position = m_buildingStopsDescriptor[refName][i].platformLine.Position(0.5f);
-                        var circleSize = m_buildingStopsDescriptor[refName][i].width * .333333333f;
-                        m_onOverlayRenderQueue.Add(new DrawInformation
-                        {
-                            position = renderInstance.m_dataMatrix1.MultiplyPoint(position),
-                            circleSize = circleSize,
-                            color = m_colorOrder[i % m_colorOrder.Length],
-                            layer = data.Info.m_prefabDataLayer,
-                            text = $"P{i + 1}"
-                        });
+            var targetDescriptor = PrepareTargetDescriptor(ref renderInstance.m_dataMatrix1, subBuildingIdx, data.Info, refName);
 
-
-                        var bri = FontServer.instance[WEMainController.DEFAULT_FONT_KEY].DrawString(ModInstance.Controller, string.Format(position.y < 0 ? "[{0}]" : "{0}", i + 1), default, FontServer.instance.ScaleEffective);
-                        if (bri != null)
-                        {
-                            overlayBlock.Clear();
-                            overlayBlock.SetColor(WETextRenderer.SHADER_PROP_BACK_COLOR, color);
-                            overlayBlock.SetColor(WETextRenderer.SHADER_PROP_COLOR, color);
-                            overlayBlock.SetVector(WETextRenderer.SHADER_PROP_SURF_PROPERTIES, new Vector4(1, 0, .3F));
-                            WETextRenderer.RenderBri(bri, ref BuildingManager.instance.m_drawCallData.m_batchedCalls, renderInstance.m_dataMatrix1 * Matrix4x4.TRS(position + new Vector3(0, position.y < 0 ? data.Info.m_mesh.bounds.max.y + 5 - lowestPoint : 3, 0), Quaternion.Euler(new Vector3(0, angle, 0)), new Vector3(.05f * circleSize, .05f * circleSize, .05f * circleSize))
-                                , data.Info.m_prefabDataLayer, overlayBlock);
-                        }
-                    }
-                }
-            }
-            GetTargetDescriptor(refName, out _, out WriteOnBuildingXml targetDescriptor);
             if (subBuildingIdx == 0)
             {
                 UpdateLinesBuilding(parentBuildingId, refName, targetDescriptor, ref data, ref renderInstance.m_dataMatrix1);
@@ -212,9 +116,53 @@ namespace WriteEverywhere.Singleton
             {
                 if (targetDescriptor.PropInstances[i].SubBuildingPivotReference == subBuildingIdx)
                 {
-                    RenderDescriptor(cameraInfo, parentBuildingId, ref data, layerMask, ref renderInstance, ref targetDescriptor, i);
+                    RenderDescriptor(cameraInfo, parentBuildingId, data.m_position, data.m_angle, data.Info, (int)data.m_flags, (int)data.m_flags2, renderInstance.m_dataMatrix1, layerMask, ref targetDescriptor, i);
                 }
             }
+        }
+
+        internal WriteOnBuildingXml PrepareTargetDescriptor(ref Matrix4x4 refMatrix, ushort subBuildingIdx, BuildingInfo info, string refName)
+        {
+            if (BuildingLiteUI.Instance.Visible && refName != null && (SceneUtils.IsAssetEditor || BuildingLiteUI.Instance.CurrentEditingInfo?.name == refName))
+            {
+                if (!m_buildingStopsDescriptor.ContainsKey(refName))
+                {
+                    StartCoroutine(DoMapStopPoints(refName, info, 1f));//TODO: Thresold salvo em algum lugar
+                }
+                if (!(m_buildingStopsDescriptor[refName] is null) && subBuildingIdx == 0)
+                {
+                    float angle = SimulationManager.instance.m_currentTickIndex;
+                    var lowestPoint = Mathf.Min(m_buildingStopsDescriptor[refName].Select(x => x.platformLine.Position(0.5f).y).ToArray());
+                    for (int i = 0; i < m_buildingStopsDescriptor[refName].Length; i++)
+                    {
+                        var color = m_colorOrder[i % m_colorOrder.Length];
+                        var position = m_buildingStopsDescriptor[refName][i].platformLine.Position(0.5f);
+                        var circleSize = m_buildingStopsDescriptor[refName][i].width * .333333333f;
+                        m_onOverlayRenderQueue.Add(new DrawInformation
+                        {
+                            position = refMatrix.MultiplyPoint(position),
+                            circleSize = circleSize,
+                            color = m_colorOrder[i % m_colorOrder.Length],
+                            layer = info.m_prefabDataLayer,
+                            text = $"P{i + 1}"
+                        });
+
+
+                        var bri = FontServer.instance[WEMainController.DEFAULT_FONT_KEY].DrawString(ModInstance.Controller, string.Format(position.y < 0 ? "[{0}]" : "{0}", i + 1), default, FontServer.instance.ScaleEffective);
+                        if (bri != null)
+                        {
+                            overlayBlock.Clear();
+                            overlayBlock.SetColor(WETextRenderer.SHADER_PROP_BACK_COLOR, color);
+                            overlayBlock.SetColor(WETextRenderer.SHADER_PROP_COLOR, color);
+                            overlayBlock.SetVector(WETextRenderer.SHADER_PROP_SURF_PROPERTIES, new Vector4(1, 0, .3F));
+                            WETextRenderer.RenderBri(bri, ref BuildingManager.instance.m_drawCallData.m_batchedCalls, refMatrix * Matrix4x4.TRS(position + new Vector3(0, position.y < 0 ? info.m_mesh.bounds.max.y + 5 - lowestPoint : 3, 0), Quaternion.Euler(new Vector3(0, angle, 0)), new Vector3(.05f * circleSize, .05f * circleSize, .05f * circleSize))
+                                , info.m_prefabDataLayer, overlayBlock);
+                        }
+                    }
+                }
+            }
+            GetTargetDescriptor(refName, out _, out WriteOnBuildingXml targetDescriptor);
+            return targetDescriptor;
         }
 
         private IEnumerator DoMapStopPoints(string refName, BuildingInfo info, float thresold)
@@ -314,7 +262,15 @@ namespace WriteEverywhere.Singleton
             Color.Lerp( Color.white,                                  Color.black,0.75f)
         };
 
-        private void RenderDescriptor(RenderManager.CameraInfo cameraInfo, ushort buildingID, ref Building data, int layerMask, ref RenderManager.Instance renderInstance, ref WriteOnBuildingXml parentDescriptor, int idx)
+        internal void RenderDescriptor(RenderManager.CameraInfo cameraInfo, ushort buildingID,
+            Vector3 position,
+            float angleBuilding,
+            BuildingInfo info,
+            int flags1,
+            int flags2,
+            Matrix4x4 refMatrix,
+            int layerMask,
+            ref WriteOnBuildingXml parentDescriptor, int idx)
         {
             var targetDescriptor = parentDescriptor.PropInstances[idx];
             if (targetDescriptor?.SimpleProp is null)
@@ -329,25 +285,32 @@ namespace WriteEverywhere.Singleton
                 Data.BuildingCachedPositionsData[buildingID] = new PropLayoutCachedBuildingData[parentDescriptor.PropInstances.Length];
             }
             ref PropLayoutCachedBuildingData item = ref Data.BuildingCachedPositionsData[buildingID][idx];
-            if (SimulationManager.instance.m_currentTickIndex % 10 == 0 && (item.m_buildingPositionWhenGenerated != data.m_position || (BuildingLiteUI.Instance.Visible && BuildingLiteUI.Instance.CurrentInfo == data.Info)))
+            if (SimulationManager.instance.m_currentTickIndex % 10 == 0 && (item.m_buildingPositionWhenGenerated != position || (BuildingLiteUI.Instance.Visible && BuildingLiteUI.Instance.CurrentInfo == info)))
             {
-                var isFromPositionChanged = item.m_buildingPositionWhenGenerated != data.m_position;
-                item.m_buildingPositionWhenGenerated = data.m_position;
-                if (targetDescriptor.SubBuildingPivotReference >= 0 && targetDescriptor.SubBuildingPivotReference < data.Info.m_subBuildings.Length)
+                var isFromPositionChanged = item.m_buildingPositionWhenGenerated != position;
+                item.m_buildingPositionWhenGenerated = position;
+                if (SceneUtils.IsAssetEditor)
                 {
-                    BuildingManager inst = BuildingManager.instance;
-                    uint targetBuildingId = buildingID;
-                    for (int i = 0; i <= targetDescriptor.SubBuildingPivotReference; i++)
-                    {
-                        targetBuildingId = inst.m_buildings.m_buffer[targetBuildingId].m_subBuilding;
-                    }
-                    item.m_cachedMatrix = RenderManager.instance.RequireInstance(targetBuildingId, 1u, out uint num)
-                        ? RenderManager.instance.m_instances[num].m_dataMatrix1
-                        : renderInstance.m_dataMatrix1;
+                    item.m_cachedMatrix = refMatrix * Matrix4x4.TRS(position, Quaternion.Euler(0, angleBuilding, 0), Vector3.one);
                 }
                 else
                 {
-                    item.m_cachedMatrix = renderInstance.m_dataMatrix1;
+                    if (targetDescriptor.SubBuildingPivotReference >= 0 && targetDescriptor.SubBuildingPivotReference < info.m_subBuildings.Length)
+                    {
+                        BuildingManager inst = BuildingManager.instance;
+                        uint targetBuildingId = buildingID;
+                        for (int i = 0; i <= targetDescriptor.SubBuildingPivotReference; i++)
+                        {
+                            targetBuildingId = inst.m_buildings.m_buffer[targetBuildingId].m_subBuilding;
+                        }
+                        item.m_cachedMatrix = RenderManager.instance.RequireInstance(targetBuildingId, 1u, out uint num)
+                            ? RenderManager.instance.m_instances[num].m_dataMatrix1
+                            : refMatrix;
+                    }
+                    else
+                    {
+                        item.m_cachedMatrix = refMatrix;
+                    }
                 }
                 item.m_cachedPosition = item.m_cachedMatrix.MultiplyPoint(targetDescriptor.PropPosition);
                 item.m_cachedOriginalPosition = targetDescriptor.PropPosition;
@@ -368,19 +331,21 @@ namespace WriteEverywhere.Singleton
                 {
                     targetPostion = item.m_cachedMatrix.MultiplyPoint(targetDescriptor.PropPosition + (i * (Vector3)targetDescriptor.ArrayRepeat));
                 }
-                RenderSign(parentDescriptor, ref data, cameraInfo, buildingID, idx, targetPostion, item.m_cachedRotation, layerMask, targetDescriptor, targetProp, i, ref hasFixedCamera);
+                RenderSign(parentDescriptor, angleBuilding, info, flags1, flags2, cameraInfo, buildingID, idx, targetPostion, item.m_cachedRotation, layerMask, targetDescriptor, targetProp, i, ref hasFixedCamera);
             }
         }
+
         private static float targetHeight;
         private uint lastFrameOverriden;
-        private void RenderSign(WriteOnBuildingXml parentDescriptor, ref Building data, RenderManager.CameraInfo cameraInfo, ushort buildingId, int boardIdx, Vector3 position, Vector3 rotation, int layerMask, WriteOnBuildingPropXml targetDescriptor, PropInfo cachedProp, int arrayIdx, ref bool hasFixedCamera)
+        private void RenderSign(WriteOnBuildingXml parentDescriptor, float angleBuilding, BuildingInfo info, int flags1, int flags2, RenderManager.CameraInfo cameraInfo,
+            ushort buildingId, int boardIdx, Vector3 position, Vector3 rotation, int layerMask, WriteOnBuildingPropXml targetDescriptor, PropInfo cachedProp, int arrayIdx, ref bool hasFixedCamera)
         {
             var propname = targetDescriptor.m_simplePropName;
             if (propname is null)
             {
                 return;
             }
-            Color parentColor = WEDynamicTextRenderingRules.RenderPropMesh(cachedProp, cameraInfo, buildingId, boardIdx, 0, layerMask, data.m_angle, position, Vector4.zero, rotation, targetDescriptor.PropScale, targetDescriptor, out Matrix4x4 propMatrix, out bool rendered, new InstanceID { Building = buildingId });
+            Color parentColor = WEDynamicTextRenderingRules.RenderPropMesh(cachedProp, cameraInfo, buildingId, boardIdx, 0, layerMask, angleBuilding, position, Vector4.zero, rotation, targetDescriptor.PropScale, targetDescriptor, out Matrix4x4 propMatrix, out bool rendered, new InstanceID { Building = buildingId });
 
             if (rendered)
             {
@@ -392,12 +357,12 @@ namespace WriteEverywhere.Singleton
                             && BuildingLiteUI.Instance.Visible
                             && BuildingLiteUI.LockSelection
                             && BuildingLiteUI.Instance.IsOnTextEditor
-                            && BuildingLiteUI.Instance.CurrentGrabbedId == buildingId
+                            && (SceneUtils.IsAssetEditor || BuildingLiteUI.Instance.CurrentGrabbedId == buildingId)
                             && BuildingUIBasicTab.CurrentFocusInstance == arrayIdx
                             && BuildingLiteUI.Instance.CurrentTextSel == j
                             && BuildingLiteUI.Instance.CurrentPropSel == boardIdx
                             && !ModInstance.Controller.BuildingToolInstance.enabled;
-                        var textPos = WETextRenderer.RenderTextMesh(parentDescriptor, buildingId, boardIdx, 0, ref parentColor, targetDescriptor, targetDescriptor.TextDescriptors[j], ref propMatrix, data.Info, (int)data.m_flags, (int)data.m_flags2, currentTextSelected && BuildingLiteUI.Instance.IsOnTextDimensionsView, ref BuildingManager.instance.m_drawCallData.m_batchedCalls);
+                        var textPos = WETextRenderer.RenderTextMesh(parentDescriptor, buildingId, boardIdx, 0, ref parentColor, targetDescriptor, targetDescriptor.TextDescriptors[j], ref propMatrix, info, flags1, flags2, currentTextSelected && BuildingLiteUI.Instance.IsOnTextDimensionsView, ref BuildingManager.instance.m_drawCallData.m_batchedCalls);
 
                         if (currentTextSelected && textPos != default)
                         {
@@ -413,7 +378,7 @@ namespace WriteEverywhere.Singleton
                 if (BuildingLiteUI.LockSelection &&
                     (!BuildingLiteUI.Instance.IsOnTextEditor || !hasFixedCamera || BuildingLiteUI.Instance.CurrentTextSel < 0)
                     && BuildingLiteUI.Instance.Visible
-                    && (BuildingLiteUI.Instance.CurrentGrabbedId == buildingId)
+                    && (SceneUtils.IsAssetEditor || BuildingLiteUI.Instance.CurrentGrabbedId == buildingId)
                     && BuildingUIBasicTab.CurrentFocusInstance == arrayIdx
                     && BuildingLiteUI.Instance.CurrentPropSel == boardIdx
                     && !ModInstance.Controller.BuildingToolInstance.enabled)
@@ -720,15 +685,37 @@ namespace WriteEverywhere.Singleton
 
 
         private static string DefaultFilename { get; } = $"{WEMainController.m_defaultFileNameBuildingsXml}.xml";
+        public bool IsReady => LoadingCoroutineLocal is null && LoadingCoroutineAssets is null;
 
-        public void LoadAllBuildingConfigurations()
+        private Coroutine LoadingCoroutineAssets;
+        private Coroutine LoadingCoroutineLocal;
+
+        public Coroutine LoadAllBuildingConfigurations() => IsReady ? StartCoroutine(LoadAllBuildingConfigurations_Coroutine()) : null;
+
+        public IEnumerator LoadAllBuildingConfigurations_Coroutine()
         {
             LogUtils.DoLog("LOADING BUILDING CONFIG START -----------------------------");
-            KFileUtils.ScanPrefabsFolders<BuildingInfo>(DefaultFilename, LoadDescriptorsFromXmlAsset);
-            var errorList = new List<string>();
+            LoadingCoroutineAssets = StartCoroutine(ReloadBuildingAssets_Coroutine());
+            if (!SceneUtils.IsAssetEditor)
+            {
+                LoadingCoroutineLocal = StartCoroutine(ReloadBuildingShared_coroutine());
+            }
+            else
+            {
+                Data.GlobalDescriptors.Clear();
+                Data.CityDescriptors.Clear();
+            }
+            yield return new WaitUntil(() => IsReady);
+            Data.CleanCache();
+            LogUtils.DoLog("LOADING BUILDING CONFIG END -----------------------------");
+        }
+
+        private IEnumerator ReloadBuildingShared_coroutine()
+        {
             Data.GlobalDescriptors.Clear();
-            Data.AssetsDescriptors.Clear();
+            var errorList = new List<string>();
             LogUtils.DoLog($"DefaultBuildingsConfigurationFolder = {WEMainController.DefaultBuildingsConfigurationFolder}");
+            int counter = 0;
             foreach (string filename in Directory.GetFiles(WEMainController.DefaultBuildingsConfigurationFolder, "*.xml"))
             {
                 try
@@ -739,7 +726,7 @@ namespace WriteEverywhere.Singleton
                     }
                     using (FileStream stream = File.OpenRead(filename))
                     {
-                        LoadDescriptorsFromXmlCommon(stream, null);
+                        LoadDescriptorsFromXmlCommon(stream);
                     }
                 }
                 catch (Exception e)
@@ -747,28 +734,60 @@ namespace WriteEverywhere.Singleton
                     LogUtils.DoWarnLog($"Error Loading file \"{filename}\" ({e.GetType()}): {e.Message}\n{e}");
                     errorList.Add($"Error Loading file \"{filename}\" ({e.GetType()}): {e.Message}");
                 }
+                if (counter++ > 10)
+                {
+                    yield return 0;
+                    counter = 0;
+                }
             }
 
+            LoadingCoroutineLocal = null;
             if (errorList.Count > 0)
             {
                 KwyttoDialog.ShowModal(new KwyttoDialog.BindProperties
                 {
-                    title = "WTS - Errors loading Files",
+                    title = "WTS - Errors loading vehicle Files",
                     scrollText = string.Join("\r\n", errorList.ToArray()),
                     buttons = KwyttoDialog.basicOkButtonBar,
                     showClose = true
-
                 });
-
             }
-
-            Data.CleanCache();
-
-            LogUtils.DoLog("LOADING BUILDING CONFIG END -----------------------------");
         }
 
-        private void LoadDescriptorsFromXmlCommon(FileStream stream, BuildingInfo info) => LoadDescriptorsFromXml(stream, info, ref Data.GlobalDescriptors);
-        private void LoadDescriptorsFromXmlAsset(FileStream stream, BuildingInfo info) => LoadDescriptorsFromXml(stream, info, ref Data.AssetsDescriptors);
+        private IEnumerator ReloadBuildingAssets_Coroutine()
+        {
+            yield return 0;
+            Data.AssetsDescriptors.Clear();
+            var counter = 0;
+            foreach (var asset in BuildingIndexes.instance.PrefabsData.Where(x => x.Value.PackageName.TrimToNull() != null))
+            {
+                LoadDescriptorsFromXmlAsset(asset.Value.Info as BuildingInfo);
+                if (counter++ > 10)
+                {
+                    yield return 0;
+                    counter = 0;
+                }
+            }
+            LoadingCoroutineAssets = null;
+        }
+
+
+
+        private void LoadDescriptorsFromXmlCommon(FileStream stream) => LoadDescriptorsFromXml(stream, null, ref Data.GlobalDescriptors);
+        private void LoadDescriptorsFromXmlAsset(BuildingInfo info)
+        {
+            if (WEMainController.GetDirectoryForAssetOwn(info) is string str)
+            {
+                var filePath = Path.Combine(str, DefaultFilename);
+                if (File.Exists(filePath))
+                {
+                    using (FileStream stream = File.OpenRead(filePath))
+                    {
+                        LoadDescriptorsFromXml(stream, info, ref Data.AssetsDescriptors);
+                    }
+                }
+            }
+        }
         private void LoadDescriptorsFromXml(FileStream stream, BuildingInfo info, ref SimpleXmlDictionary<string, WriteOnBuildingXml> referenceDic)
         {
             var serializer = new XmlSerializer(typeof(WriteOnBuildingXml));
@@ -779,12 +798,7 @@ namespace WriteEverywhere.Singleton
             {
                 if (info != null)
                 {
-                    string[] propEffName = info.name.Split(".".ToCharArray(), 2);
-                    string[] xmlEffName = config.BuildingInfoName.Split(".".ToCharArray(), 2);
-                    if (propEffName.Length == 2 && xmlEffName.Length == 2 && xmlEffName[1] == propEffName[1])
-                    {
-                        config.BuildingInfoName = info.name;
-                    }
+                    config.BuildingInfoName = info.name;
                 }
                 else if (config.BuildingInfoName == null)
                 {
@@ -808,6 +822,22 @@ namespace WriteEverywhere.Singleton
                 ModInstance.Controller.BuildingPropsSingleton.StartCoroutine(ModInstance.Controller.BuildingPropsSingleton.DoMapStopPoints(building, PrefabCollection<BuildingInfo>.FindLoaded(building), target?.StopMappingThresold ?? 1f));
             }
             return instance.m_buildingStopsDescriptor[building];
+        }
+        internal static void SetAssetDescriptor(BuildingInfo info, WriteOnBuildingXml desc)
+        {
+            if (desc is null)
+            {
+                if (WTSBuildingData.Instance.AssetsDescriptors.ContainsKey(info.name))
+                {
+                    WTSBuildingData.Instance.AssetsDescriptors.Remove(info.name);
+                }
+            }
+            else
+            {
+                desc.BuildingInfoName = info.name;
+                WTSBuildingData.Instance.AssetsDescriptors[info.name] = desc;
+            }
+            WTSBuildingData.Instance.CleanCache();
         }
         internal static void SetCityDescriptor(BuildingInfo info, WriteOnBuildingXml desc)
         {

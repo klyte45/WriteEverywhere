@@ -34,7 +34,7 @@ namespace WriteEverywhere.UI
 
         private static readonly PivotPosition[] pivotOptionsValues = Enum.GetValues(typeof(PivotPosition)).Cast<PivotPosition>().ToArray();
         private static readonly string[] pivotOptions = pivotOptionsValues.Select(x => x.ValueToI18n()).ToArray();
-        public static int CurrentFocusInstance { get => m_currentFocusInstance; private set => m_currentFocusInstance = value; }
+        public static int CurrentFocusInstance { get; private set; }
 
         private enum State
         {
@@ -69,9 +69,6 @@ namespace WriteEverywhere.UI
 
         public Texture TabIcon { get; } = KResourceLoader.LoadTextureKwytto(CommonsSpriteNames.K45_Settings);
 
-        private GUIRootWindowBase baseContainer;
-        private static int m_currentFocusInstance;
-
         public BuildingUIBasicTab(Action<WriteOnBuildingPropXml, bool> onImport, Action onDelete, GUIRootWindowBase baseContainer)
         {
             m_deleteItem = KResourceLoader.LoadTextureKwytto(CommonsSpriteNames.K45_Delete);
@@ -83,7 +80,6 @@ namespace WriteEverywhere.UI
             m_onDelete = onDelete;
 
             m_layoutFilter = new GUIFilterItemsScreen<State>(Str.WTS_BUILDINGEDITOR_MODELLAYOUTSELECT, ModInstance.Controller, OnFilterLayouts, OnModelSet, GoTo, State.Normal, State.GetLayout);
-            this.baseContainer = baseContainer;
         }
 
         #region Layout Selection
@@ -156,11 +152,11 @@ namespace WriteEverywhere.UI
             if (item.ArrayRepeatTimes > 1)
             {
                 GUIKwyttoCommons.AddVector3Field(areaRect.x, item.ArrayRepeat, Str.we_buildingEditor_repeatLayoutDirection, "ArrayDir", canEdit);
-                GUIKwyttoCommons.AddIntField(areaRect.x, Str.we_buildingEditor_currentFocusInstance, m_currentFocusInstance, (x) => m_currentFocusInstance = x.Value, true, 0, item.ArrayRepeatTimes - 1);
+                GUIKwyttoCommons.AddIntField(areaRect.x, Str.we_buildingEditor_currentFocusInstance, CurrentFocusInstance, (x) => CurrentFocusInstance = x.Value, true, 0, item.ArrayRepeatTimes - 1);
             }
             else
             {
-                m_currentFocusInstance = 0;
+                CurrentFocusInstance = 0;
             }
 
             GUILayout.Space(12);

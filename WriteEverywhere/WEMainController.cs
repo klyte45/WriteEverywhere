@@ -69,7 +69,7 @@ namespace WriteEverywhere
 
         #region Prop extra files
         public const string DEFAULT_GAME_PROP_LAYOUT_FOLDER = "PropsDefaultLayouts";
-        public const string m_defaultFileNamePropsXml = "WTS_DefaultPropsConfig";
+        public const string m_defaultFileNamePropsXml = "WE_DefaultPropsConfig";
         public static string DefaultPropsLayoutConfigurationFolder { get; } = FOLDER_PATH + Path.DirectorySeparatorChar + DEFAULT_GAME_PROP_LAYOUT_FOLDER;
         #endregion
 
@@ -101,12 +101,13 @@ namespace WriteEverywhere
 
         #region Buildings
         public const string DEFAULT_GAME_BUILDINGS_CONFIG_FOLDER = "BuildingsDefaultPlacing";
-        public const string m_defaultFileNameBuildingsXml = "WTS_DefaultBuildingsConfig";
+        public const string m_defaultFileNameBuildingsXml = "WE_DefaultBuildingsConfig";
         public static string DefaultBuildingsConfigurationFolder { get; } = FOLDER_PATH + Path.DirectorySeparatorChar + DEFAULT_GAME_BUILDINGS_CONFIG_FOLDER;
 
         internal WTSBuildingPropsSingleton BuildingPropsSingleton { get; private set; }
         #endregion
 
+        public static string GetDirectoryForAssetOwn(PrefabInfo info) => KFileUtils.GetRootFolderForK45(info) is string str ? Path.Combine(Path.Combine(str, WEMainController.LAYOUT_FILES_FOLDER_ASSETS), info.name.Split('.').Last().AsPathSafe()) : null;
         public CommandLevelSingleton CommandLevelSingleton => CommandLevelSingleton.Instance;
 
         public void Awake()
