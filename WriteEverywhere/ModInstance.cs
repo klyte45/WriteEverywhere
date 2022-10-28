@@ -44,15 +44,22 @@ namespace WriteEverywhere
         private IUUIButtonContainerPlaceholder[] cachedUUI;
         public override IUUIButtonContainerPlaceholder[] UUIButtons => cachedUUI ?? (cachedUUI = new IUUIButtonContainerPlaceholder[]
         {
-            SceneUtils.IsAssetEditor?null:  new UUIToolButtonContainerPlaceholder(
+            SceneUtils.IsAssetEditor
+            ? new UUIWindowButtonContainerPlaceholder(
+                buttonName :  $"{SimpleName} - {Str.we_assetEditor_toggleFlags}",
+                tooltip : $"{SimpleName} - {Str.we_assetEditor_toggleFlags}",
+             iconPath: "FlagsIcon",
+             windowGetter: ()=>AssetEditorFlagsToggleLiteUI.Instance
+             ) as IUUIButtonContainerPlaceholder
+            :  new UUIToolButtonContainerPlaceholder(
                 buttonName :  $"{SimpleName} - {Str.WTS_PICK_A_SEGMENT}",
                 iconPath : "SegmentPickerIcon",
-                tooltip : $"WE: {Str.WTS_PICK_A_SEGMENT}",
+                tooltip : $"{SimpleName} - {Str.WTS_PICK_A_SEGMENT}",
                 toolGetter : ()=> ToolsModifierControl.toolController.GetComponent<SegmentEditorPickerTool>()
             ),
             new UUIWindowButtonContainerPlaceholder(
                 buttonName :  $"{SimpleName} - {Str.we_buildingEditor_windowTitle}",
-                tooltip : $"WE:  {Str.we_buildingEditor_windowTitle}",
+                tooltip : $"{SimpleName} - {Str.we_buildingEditor_windowTitle}",
              iconPath: "BuildingEditorIcon",
              windowGetter: ()=>BuildingLiteUI.Instance
              ),

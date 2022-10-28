@@ -11,22 +11,22 @@ using WriteEverywhere.Xml;
 
 namespace WriteEverywhere.UI
 {
-    internal class GeneralWritingEditorIlluminationTab : IGUITab<TextToWriteOnXml>
+    internal class GeneralWritingEditorIlluminationTab<F1, F2> : IGUITab<TextToWriteOnXml> where F1 : Enum, IConvertible where F2 : Enum
     {
         public Texture TabIcon { get; } = KResourceLoader.LoadTextureKwytto(Kwytto.UI.CommonsSpriteNames.K45_Lamp);
 
         private readonly string[] m_materialTypes = EnumI18nExtensions.GetAllValuesI18n<MaterialType>();
         private readonly string[] m_blinkTypes = EnumI18nExtensions.GetAllValuesI18n<BlinkType>();
-        private readonly Vehicle.Flags[] m_flagsToSelect1
-            = Enum.GetValues(typeof(Vehicle.Flags))
-            .Cast<Vehicle.Flags>()
-            .Where(x => Enum.GetName(typeof(Vehicle.Flags), x) != null)
+        private readonly F1[] m_flagsToSelect1
+            = Enum.GetValues(typeof(F1))
+            .Cast<F1>()
+            .Where(x => Enum.GetName(typeof(F1), x) != null)
             .OrderBy(x => x.ToString())
             .ToArray();
-        private readonly Vehicle.Flags2[] m_flagsToSelect2
-            = Enum.GetValues(typeof(Vehicle.Flags))
-            .Cast<Vehicle.Flags2>()
-            .Where(x => Enum.GetName(typeof(Vehicle.Flags2), x) != null)
+        private readonly F2[] m_flagsToSelect2
+            = Enum.GetValues(typeof(F2))
+            .Cast<F2>()
+            .Where(x => Enum.GetName(typeof(F2), x) != null)
             .OrderBy(x => x.ToString())
             .ToArray();
         private readonly GUIRootWindowBase m_root;
@@ -98,45 +98,45 @@ namespace WriteEverywhere.UI
 
             return false;
         }
-        private void ToggleFlag(TextToWriteOnXml item, Vehicle.Flags flag)
+        private void ToggleFlag(TextToWriteOnXml item, F1 flag)
         {
             if (IsRequired(item, flag))
             {
-                item.IlluminationConfig.m_requiredFlags &= ~(int)flag;
-                item.IlluminationConfig.m_forbiddenFlags |= (int)flag;
+                item.IlluminationConfig.m_requiredFlags &= ~(int)flag.ToUInt64();
+                item.IlluminationConfig.m_forbiddenFlags |= (int)flag.ToUInt64();
             }
             else if (IsForbid(item, flag))
             {
-                item.IlluminationConfig.m_forbiddenFlags &= ~(int)flag;
+                item.IlluminationConfig.m_forbiddenFlags &= ~(int)flag.ToUInt64();
             }
             else
             {
-                item.IlluminationConfig.m_requiredFlags |= (int)flag;
+                item.IlluminationConfig.m_requiredFlags |= (int)flag.ToUInt64();
             }
         }
 
-        private static bool IsForbid(TextToWriteOnXml item, Vehicle.Flags flag) => (item.IlluminationConfig.m_forbiddenFlags & (int)flag) > 0;
-        private static bool IsRequired(TextToWriteOnXml item, Vehicle.Flags flag) => (item.IlluminationConfig.m_requiredFlags & (int)flag) > 0;
+        private static bool IsForbid(TextToWriteOnXml item, F1 flag) => (item.IlluminationConfig.m_forbiddenFlags & (int)flag.ToUInt64()) > 0;
+        private static bool IsRequired(TextToWriteOnXml item, F1 flag) => (item.IlluminationConfig.m_requiredFlags & (int)flag.ToUInt64()) > 0;
 
-        private void ToggleFlag(TextToWriteOnXml item, Vehicle.Flags2 flag)
+        private void ToggleFlag(TextToWriteOnXml item, F2 flag)
         {
             if (IsRequired(item, flag))
             {
-                item.IlluminationConfig.m_requiredFlags2 &= ~(int)flag;
-                item.IlluminationConfig.m_forbiddenFlags2 |= (int)flag;
+                item.IlluminationConfig.m_requiredFlags2 &= ~(int)flag.ToUInt64();
+                item.IlluminationConfig.m_forbiddenFlags2 |= (int)flag.ToUInt64();
             }
             else if (IsForbid(item, flag))
             {
-                item.IlluminationConfig.m_forbiddenFlags2 &= ~(int)flag;
+                item.IlluminationConfig.m_forbiddenFlags2 &= ~(int)flag.ToUInt64();
             }
             else
             {
-                item.IlluminationConfig.m_requiredFlags2 |= (int)flag;
+                item.IlluminationConfig.m_requiredFlags2 |= (int)flag.ToUInt64();
             }
         }
 
-        private static bool IsForbid(TextToWriteOnXml item, Vehicle.Flags2 flag) => (item.IlluminationConfig.m_forbiddenFlags2 & (int)flag) > 0;
-        private static bool IsRequired(TextToWriteOnXml item, Vehicle.Flags2 flag) => (item.IlluminationConfig.m_requiredFlags2 & (int)flag) > 0;
+        private static bool IsForbid(TextToWriteOnXml item, F2 flag) => (item.IlluminationConfig.m_forbiddenFlags2 & (int)flag.ToUInt64()) > 0;
+        private static bool IsRequired(TextToWriteOnXml item, F2 flag) => (item.IlluminationConfig.m_requiredFlags2 & (int)flag.ToUInt64()) > 0;
 
         public void Reset() { }
     }

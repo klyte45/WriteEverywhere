@@ -133,6 +133,15 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Toggle flags.
+        /// </summary>
+        public static string we_assetEditor_toggleFlags {
+            get {
+                return ResourceManager.GetString("we_assetEditor_toggleFlags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a This building is not a transport station..
         /// </summary>
         public static string we_buildingEditor_buildingIsNotTransportStation {

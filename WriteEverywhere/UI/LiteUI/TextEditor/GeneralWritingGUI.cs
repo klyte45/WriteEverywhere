@@ -21,7 +21,7 @@ using static Kwytto.Utils.XmlUtils;
 namespace WriteEverywhere.UI
 {
     internal delegate ref T RefGetter<T>();
-    internal class GeneralWritingGUI
+    internal class GeneralWritingGUI<F1, F2> where F1 : Enum, IConvertible where F2 : Enum
     {
         private enum State
         {
@@ -70,7 +70,6 @@ namespace WriteEverywhere.UI
             m_colorPicker = colorPicker;
             this.getInfo = infoGetter;
             m_fontFilter = new GUIFilterItemsScreen<State>(Str.WTS_OVERRIDE_FONT, ModInstance.Controller, OnFilterParam, OnSelectFont, GoTo, State.Normal, State.GeneralFontPicker, acceptsNull: true);
-            var uicomp = WTSOnNetLiteUI.Instance.GetComponent<UIComponent>();
             GeneralWritingEditorPositionsSizesTab positionTab;
             var tabs = new IGUITab<TextToWriteOnXml>[]{
                     new GeneralWritingEditorGeneralTab(()=>getDescriptorArray()),
@@ -78,7 +77,7 @@ namespace WriteEverywhere.UI
                     new GeneralWritingEditorForegroundTab(m_colorPicker,targetRenderingClass),
                     new GeneralWritingEditorBgMeshSettingsTab(m_colorPicker,infoGetter, targetRenderingClass),
                     new GeneralWritingEditorFrameSettingsTab(m_colorPicker,infoGetter, m_targetRenderingClass),
-                    new GeneralWritingEditorIlluminationTab(m_colorPicker),
+                    new GeneralWritingEditorIlluminationTab<F1,F2>(m_colorPicker),
                     new GeneralWritingEditorContentTab(m_colorPicker,infoGetter,targetRenderingClass)
                     };
             m_tabsContainer = new GUIBasicListingTabsContainer<TextToWriteOnXml>(

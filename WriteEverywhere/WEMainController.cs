@@ -135,9 +135,16 @@ namespace WriteEverywhere
         {
             base.StartActions();
 
-            GameObjectUtils.CreateElement<WTSOnNetLiteUI>(UIView.GetAView().gameObject.transform, "WTSOnNetLiteUI");
             GameObjectUtils.CreateElement<WTSVehicleLiteUI>(UIView.GetAView().gameObject.transform, "WTSVehicleLiteUI");
             GameObjectUtils.CreateElement<BuildingLiteUI>(UIView.GetAView().gameObject.transform, "BuildingLiteUI");
+            if (SceneUtils.IsAssetEditor)
+            {
+                GameObjectUtils.CreateElement<AssetEditorFlagsToggleLiteUI>(UIView.GetAView().gameObject.transform, "AssetEditorFlagsToggleLiteUI");
+            }
+            else
+            {
+                GameObjectUtils.CreateElement<WTSOnNetLiteUI>(UIView.GetAView().gameObject.transform, "WTSOnNetLiteUI");
+            }
             highlightMaterial = new Material(defaultHighlightShader);
             AtlasesLibrary = gameObject.AddComponent<WTSAtlasesLibrary>();
 

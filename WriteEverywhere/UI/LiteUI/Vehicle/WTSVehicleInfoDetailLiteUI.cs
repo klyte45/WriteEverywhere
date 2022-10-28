@@ -109,7 +109,7 @@ namespace WriteEverywhere.UI
                     new GeneralWritingEditorForegroundTab(m_colorPicker,TextRenderingClass.Vehicle),
                     new GeneralWritingEditorBgMeshSettingsTab(m_colorPicker, ()=> m_currentInfo,TextRenderingClass.Vehicle),
                     new GeneralWritingEditorFrameSettingsTab(m_colorPicker,()=>m_currentInfo,TextRenderingClass.Vehicle),
-                    new GeneralWritingEditorIlluminationTab(m_colorPicker),
+                    new GeneralWritingEditorIlluminationTab<Vehicle.Flags,Vehicle.Flags2>(m_colorPicker),
                     new GeneralWritingEditorContentTab(m_colorPicker, ()=> m_currentInfo, TextRenderingClass.Vehicle)
                     };
             m_tabsContainer = new GUIBasicListingTabsContainer<TextToWriteOnXml>(

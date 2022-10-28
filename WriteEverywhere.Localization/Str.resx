@@ -1190,6 +1190,9 @@ Check the data shown below to get information.</value>
   <data name="we_assetEditor_reloadAssetImages" xml:space="preserve">
     <value>Reload images from asset</value>
   </data>
+  <data name="we_assetEditor_toggleFlags" xml:space="preserve">
+    <value>Toggle flags</value>
+  </data>
   <data name="we_generalTextEditor_goToAssetSpritesFolder" xml:space="preserve">
     <value>Go to WS asset images folder</value>
   </data>

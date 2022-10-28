@@ -50,7 +50,7 @@ namespace WriteEverywhere.Singleton
 
             if (targetDescriptor is LayoutDescriptorVehicleXml layoutDescriptor)
             {
-                Vehicle.Flags flags = VehicleManager.instance.m_vehicles.m_buffer[vehicleID].m_flags;
+                Vehicle.Flags flags = SceneUtils.IsAssetEditor ? (Vehicle.Flags)AssetEditorFlagsToggleLiteUI.Instance.CurrentFlags1 : VehicleManager.instance.m_vehicles.m_buffer[vehicleID].m_flags;
                 Matrix4x4 vehicleMatrix = thiz.m_info.m_vehicleAI.CalculateBodyMatrix(flags, ref position, ref rotation, ref scale, ref swayPosition);
                 MaterialPropertyBlock materialBlock = VehicleManager.instance.m_materialBlock;
                 materialBlock.Clear();
@@ -195,7 +195,7 @@ namespace WriteEverywhere.Singleton
             {
                 if (targetDescriptor.TextDescriptors[j] is TextToWriteOnXml descriptor && cameraInfo.CheckRenderDistance(position, WETextRenderer.RENDER_DISTANCE_FACTOR * descriptor.TextLineHeight * (descriptor.IlluminationConfig?.IlluminationType == MaterialType.OPAQUE ? 1 : 2)))
                 {
-                    var flags = vehicle.m_flags;
+                    var flags = SceneUtils.IsAssetEditor ? (Vehicle.Flags)AssetEditorFlagsToggleLiteUI.Instance.CurrentFlags1 : vehicle.m_flags;
                     if ((flags & Vehicle.Flags.Inverted) != 0)
                     {
                         flags ^= Vehicle.Flags.Reversed;
@@ -212,7 +212,7 @@ namespace WriteEverywhere.Singleton
                           ref vehicleMatrix,
                           vehicle.Info,
                           (int)flags,
-                          (int)vehicle.m_flags2,
+                          SceneUtils.IsAssetEditor ? AssetEditorFlagsToggleLiteUI.Instance.CurrentFlags2 : (int)vehicle.m_flags2,
                           currentTextSelected && WTSVehicleLiteUI.Instance.IsOnTextDimensionsView,
                           ref VehicleManager.instance.m_drawCallData.m_batchedCalls
                           );

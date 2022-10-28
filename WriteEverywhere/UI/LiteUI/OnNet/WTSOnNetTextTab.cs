@@ -8,7 +8,7 @@ using WriteEverywhere.Xml;
 
 namespace WriteEverywhere.UI
 {
-    internal class WTSOnNetTextTab : GeneralWritingGUI, IGUITab<OnNetInstanceCacheContainerXml>
+    internal class WTSOnNetTextTab : GeneralWritingGUI<NetSegment.Flags, NetSegment.Flags2>, IGUITab<OnNetInstanceCacheContainerXml>
     {
         public WTSOnNetTextTab(GUIColorPicker colorPicker, Func<PrefabInfo> infoGetter, RefGetter<TextToWriteOnXml[]> getDescriptorArray, RefGetter<string> getFont, Func<bool> isAnyPropScreenLoaded)
             : base(colorPicker, TextRenderingClass.PlaceOnNet, infoGetter, getDescriptorArray, getFont)

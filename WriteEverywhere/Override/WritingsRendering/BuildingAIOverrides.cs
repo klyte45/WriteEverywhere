@@ -38,7 +38,7 @@ namespace WriteEverywhere.Overrides
             {
                 if (targetDescriptor.PropInstances[i].SubBuildingPivotReference == 0)
                 {
-                    singleton.RenderDescriptor(cameraInfo, 0, default, 0, info, 0, 0, defaultAssetEditorReference, -1, ref targetDescriptor, i);
+                    singleton.RenderDescriptor(cameraInfo, 0, default, 0, info, AssetEditorFlagsToggleLiteUI.Instance.CurrentFlags1, AssetEditorFlagsToggleLiteUI.Instance.CurrentFlags2, defaultAssetEditorReference, -1, ref targetDescriptor, i);
                 }
             }
             if (info.m_subBuildings != null)
@@ -51,7 +51,7 @@ namespace WriteEverywhere.Overrides
                     {
                         if (targetDescriptor.PropInstances[i].SubBuildingPivotReference == idx)
                         {
-                            singleton.RenderDescriptor(cameraInfo, idx, subBuilding.m_position, (subBuilding.m_angle - 90) * Mathf.Deg2Rad, info, 0, 0, defaultAssetEditorReference * Matrix4x4.Translate(subBuilding.m_position) * Matrix4x4.TRS(Vector3.zero, Quaternion.Euler(0, -subBuilding.m_angle, 0), Vector3.one), -1, ref targetDescriptor, i);
+                            singleton.RenderDescriptor(cameraInfo, idx, subBuilding.m_position, (subBuilding.m_angle - 90) * Mathf.Deg2Rad, info, AssetEditorFlagsToggleLiteUI.Instance.CurrentFlags1, AssetEditorFlagsToggleLiteUI.Instance.CurrentFlags2, defaultAssetEditorReference * Matrix4x4.Translate(subBuilding.m_position) * Matrix4x4.TRS(Vector3.zero, Quaternion.Euler(0, -subBuilding.m_angle, 0), Vector3.one), -1, ref targetDescriptor, i);
                         }
                     }
                 }

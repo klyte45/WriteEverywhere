@@ -8,7 +8,7 @@ using WriteEverywhere.Xml;
 
 namespace WriteEverywhere.UI
 {
-    internal class BuildingUITextTab : GeneralWritingGUI, IGUITab<WriteOnBuildingPropXml>
+    internal class BuildingUITextTab : GeneralWritingGUI<Building.Flags, Building.Flags2>, IGUITab<WriteOnBuildingPropXml>
     {
         public BuildingUITextTab(GUIColorPicker colorPicker, Func<PrefabInfo> infoGetter, RefGetter<TextToWriteOnXml[]> getDescriptorArray, RefGetter<string> getFont)
             : base(colorPicker, TextRenderingClass.Buildings, infoGetter, getDescriptorArray, getFont)
