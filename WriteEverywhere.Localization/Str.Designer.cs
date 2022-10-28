@@ -341,6 +341,15 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a City settings.
+        /// </summary>
+        public static string we_citySettings_title {
+            get {
+                return ResourceManager.GetString("we_citySettings_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Blink 250ms.
         /// </summary>
         public static string we_Enum__BlinkType_Blink_025_025 {

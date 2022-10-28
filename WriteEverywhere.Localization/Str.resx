@@ -1199,4 +1199,7 @@ Check the data shown below to get information.</value>
   <data name="we_general_errorsLoadingImagesFromAssetSpriteFolderHeader" xml:space="preserve">
     <value>Some errors occurred when trying to load the images from asset: &lt;color=yellow&gt;{0}&lt;/color&gt;</value>
   </data>
+  <data name="we_citySettings_title" xml:space="preserve">
+    <value>City settings</value>
+  </data>
 </root>

@@ -144,6 +144,7 @@ namespace WriteEverywhere
             else
             {
                 GameObjectUtils.CreateElement<WTSOnNetLiteUI>(UIView.GetAView().gameObject.transform, "WTSOnNetLiteUI");
+                GameObjectUtils.CreateElement<WECitySettingsGUI>(UIView.GetAView().gameObject.transform, "WECitySettingsGUI");
             }
             highlightMaterial = new Material(defaultHighlightShader);
             AtlasesLibrary = gameObject.AddComponent<WTSAtlasesLibrary>();

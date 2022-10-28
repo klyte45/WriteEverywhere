@@ -56,7 +56,14 @@ namespace WriteEverywhere
                 iconPath : "SegmentPickerIcon",
                 tooltip : $"{SimpleName} - {Str.WTS_PICK_A_SEGMENT}",
                 toolGetter : ()=> ToolsModifierControl.toolController.GetComponent<SegmentEditorPickerTool>()
-            ),
+            ),SceneUtils.IsAssetEditor
+            ? null
+            : new UUIWindowButtonContainerPlaceholder(
+                buttonName :  $"{SimpleName} - {Str.we_citySettings_title}",
+                tooltip : $"{SimpleName} - {Str.we_citySettings_title}",
+             iconPath: "CitySettingIcon",
+             windowGetter: ()=>WECitySettingsGUI.Instance
+             ),
             new UUIWindowButtonContainerPlaceholder(
                 buttonName :  $"{SimpleName} - {Str.we_buildingEditor_windowTitle}",
                 tooltip : $"{SimpleName} - {Str.we_buildingEditor_windowTitle}",
