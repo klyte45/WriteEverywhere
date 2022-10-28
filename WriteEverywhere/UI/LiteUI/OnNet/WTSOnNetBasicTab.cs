@@ -158,7 +158,7 @@ namespace WriteEverywhere.UI
                 }
             };
 
-            m_layoutFilter.DrawButton(areaRect.x, PropIndexes.GetListName(item.SimpleProp));
+            m_layoutFilter.DrawButton(areaRect.x, PropIndexes.GetListName(item.SimpleProp), true);
 
             using (new GUILayout.HorizontalScope())
             {
@@ -239,8 +239,6 @@ namespace WriteEverywhere.UI
                 }
 
             };
-
-            GUILayout.FlexibleSpace();
             xmlLibItem.Draw(RedButton, m_onDelete, () => m_lastItem, xmlLibItem.FooterDraw);
         }
 

@@ -6,7 +6,7 @@ using System.Xml.Serialization;
 namespace WriteEverywhere.Xml
 {
     [XmlRoot("textDescriptor")]
-    public abstract class BaseTextToWriteOnXml : IParameterizableVariable, ILibable
+    public abstract class BaseTextToWriteOnXml : FlaggedSettings, IParameterizableVariable, ILibable
     {
         #region Line dimensions
         [XmlElement("WriteLineMaxDimensions")]

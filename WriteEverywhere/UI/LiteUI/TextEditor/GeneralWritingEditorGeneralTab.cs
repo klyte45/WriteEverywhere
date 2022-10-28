@@ -1,7 +1,6 @@
 ﻿using Kwytto.LiteUI;
 using Kwytto.UI;
 using Kwytto.Utils;
-using System;
 using UnityEngine;
 using WriteEverywhere.Layout;
 using WriteEverywhere.Libraries;
@@ -11,10 +10,8 @@ namespace WriteEverywhere.UI
 {
     internal class GeneralWritingEditorGeneralTab : IGUITab<TextToWriteOnXml>
     {
-        private readonly Func<TextToWriteOnXml[]> listGetter;
-        public GeneralWritingEditorGeneralTab(Func<TextToWriteOnXml[]> listGetter)
+        public GeneralWritingEditorGeneralTab()
         {
-            this.listGetter = listGetter;
             m_deleteItem = KResourceLoader.LoadTextureKwytto(CommonsSpriteNames.K45_Delete);
             m_copy = KResourceLoader.LoadTextureKwytto(CommonsSpriteNames.K45_Copy);
             m_paste = KResourceLoader.LoadTextureKwytto(CommonsSpriteNames.K45_Paste);

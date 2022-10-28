@@ -104,7 +104,8 @@ namespace WriteEverywhere.UI
             var root = colorPicker.GetComponentInParent<GUIRootWindowBase>();
             GeneralWritingEditorPositionsSizesTab positionTab;
             var tabs = new IGUITab<TextToWriteOnXml>[]{
-                    new GeneralWritingEditorGeneralTab(()=> m_currentLayout.TextDescriptors),
+                    new GeneralWritingEditorGeneralTab(),
+                    new GeneralFlaggedTab<TextToWriteOnXml, Vehicle.Flags,Vehicle.Flags2>(),
                     positionTab = new GeneralWritingEditorPositionsSizesTab(root),
                     new GeneralWritingEditorForegroundTab(m_colorPicker,TextRenderingClass.Vehicle),
                     new GeneralWritingEditorBgMeshSettingsTab(m_colorPicker, ()=> m_currentInfo,TextRenderingClass.Vehicle),
@@ -278,7 +279,7 @@ namespace WriteEverywhere.UI
                 }
                 if (isEditable)
                 {
-                    m_fontFilter.DrawButton(size.x, m_currentLayout?.FontName);
+                    m_fontFilter.DrawButton(size.x, m_currentLayout?.FontName, isEditable);
                 }
                 else if (m_currentSource != ConfigurationSource.NONE)
                 {

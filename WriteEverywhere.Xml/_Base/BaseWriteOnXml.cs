@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace WriteEverywhere.Xml
 {
-    public abstract class BaseWriteOnXml
+    public abstract class BaseWriteOnXml : FlaggedSettings
     {
         private Vector3Xml m_propPosition = new Vector3Xml();
         private Vector3Xml m_propRotation = new Vector3Xml();

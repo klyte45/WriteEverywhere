@@ -66,7 +66,33 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="**\*.cs" />
+    <Compile Include="Enums\ColoringMode.cs" />
+    <Compile Include="Enums\ColoringSource.cs" />
+    <Compile Include="Enums\ConfigurationSource.cs" />
+    <Compile Include="Enums\DestinationReference.cs" />
+    <Compile Include="Enums\FontClass.cs" />
+    <Compile Include="Enums\MaterialType.cs" />
+    <Compile Include="Enums\ParameterType.cs" />
+    <Compile Include="Enums\RoadQualifierExtractionMode.cs" />
+    <Compile Include="Enums\TextContent.cs" />
+    <Compile Include="Enums\TextRenderingClass.cs" />
+    <Compile Include="Enums\YCloneType.cs" />
+    <Compile Include="IParameterizableVariable.cs" />
+    <Compile Include="ITextParameterWrapper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TextParameterSequenceSlideXml.cs" />
+    <Compile Include="TextParameterSequenceXml.cs" />
+    <Compile Include="_Base\BaseWriteOnXml.cs" />
+    <Compile Include="_Base\LibableWriteOnXml.cs" />
+    <Compile Include="_Base\TextToWriteOnXml.cs" />
+    <Compile Include="_Base\Text\AnimationSettings.cs" />
+    <Compile Include="_Base\Text\BlinkType.cs" />
+    <Compile Include="_Base\Text\ColoringSettings.cs" />
+    <Compile Include="_Base\Text\FrameMesh.cs" />
+    <Compile Include="_Base\Text\IlluminationSettings.cs" />
+    <Compile Include="_Base\Text\PlacingSettings.cs" />
+    <Compile Include="_Base\Text\SubItemSettings.cs" />
+    <Compile Include="_Base\FlaggedSettings.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KwyttoUtilityWE\KwyttoUtilityWE.csproj">

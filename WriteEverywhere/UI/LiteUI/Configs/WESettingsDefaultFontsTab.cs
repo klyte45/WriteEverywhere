@@ -95,7 +95,7 @@ namespace WriteEverywhere.UI
                     GUILayout.Label(Str.we_settings_defaultFontDescription);
                     foreach (var tuple in m_fontFilters)
                     {
-                        tuple.Second.DrawButton(tabAreaSize.x, GetFrom(tuple.First));
+                        tuple.Second.DrawButton(tabAreaSize.x, GetFrom(tuple.First), true);
                     }
                 }
             }

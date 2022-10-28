@@ -199,7 +199,7 @@ namespace WriteEverywhere.UI
             }
             else
             {
-                m_modelFilter.DrawButton(size.x, m_currentInfo?.GetUncheckedLocalizedTitle());
+                m_modelFilter.DrawButton(size.x, m_currentInfo?.GetUncheckedLocalizedTitle(), true);
             }
             if (CurrentInfo)
             {

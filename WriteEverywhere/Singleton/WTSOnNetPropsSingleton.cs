@@ -68,7 +68,7 @@ namespace WriteEverywhere.Singleton
                         CreateSegmentRenderInstance(ref data, targetDescriptor, segmentInverted, segPos);
                     }
                 }
-                RenderSign(cameraInfo, segmentId, i, ref targetDescriptor, targetDescriptor.SimpleCachedProp);
+                RenderSign(cameraInfo, segmentId, i, ref targetDescriptor, targetDescriptor.SimpleCachedProp, ref data);
             }
 
         }
@@ -163,7 +163,7 @@ namespace WriteEverywhere.Singleton
         }
 
 
-        private void RenderSign(RenderManager.CameraInfo cameraInfo, ushort segmentId, int boardIdx, ref OnNetInstanceCacheContainerXml targetDescriptor, PropInfo cachedProp)
+        private void RenderSign(RenderManager.CameraInfo cameraInfo, ushort segmentId, int boardIdx, ref OnNetInstanceCacheContainerXml targetDescriptor, PropInfo cachedProp, ref NetSegment data)
         {
             if (targetDescriptor.m_cachedPositions is null || targetDescriptor.m_cachedRotations is null)
             {

@@ -89,14 +89,7 @@ namespace WriteEverywhere.UI
 
             GUIKwyttoCommons.AddSlider(tabAreaSize.x, Str.WTS_TEXT_DEPTH, ref item.IlluminationConfig.m_illuminationDepth, -1000, 1000, isEditable);
 
-            if (isEditable)
-            {
-                m_fontFilter.DrawButton(tabAreaSize.x, item.m_overrideFont);
-            }
-            else if (isEditable)
-            {
-                m_fontFilter.DrawButtonDisabled(tabAreaSize.x, item.m_overrideFont);
-            }
+            m_fontFilter.DrawButton(tabAreaSize.x, item.m_overrideFont, isEditable);
             if (item.m_overrideFont is null)
             {
                 if (GUIKwyttoCommons.AddComboBox(tabAreaSize.x, Str.WTS_CLASS_FONT, (int)item.m_fontClass, m_fontClasses, out var newVal1, m_root, isEditable))

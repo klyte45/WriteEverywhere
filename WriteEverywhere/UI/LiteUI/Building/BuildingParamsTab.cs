@@ -132,7 +132,7 @@ namespace WriteEverywhere.UI
                 if ((m_cachedParamsUsed?.Count ?? 0) > 0)
                 {
                     var currIdx = m_buildingIdxGetter();
-                    m_instanceFilter.DrawButton(size.x, string.Format(Str.we_buildingEditor_currentBuildingBeingEdited, BuildingManager.instance.GetBuildingName(currIdx, default), currIdx));
+                    m_instanceFilter.DrawButton(size.x, string.Format(Str.we_buildingEditor_currentBuildingBeingEdited, BuildingManager.instance.GetBuildingName(currIdx, default), currIdx), isEditable);
                     if (currIdx > 0)
                     {
 

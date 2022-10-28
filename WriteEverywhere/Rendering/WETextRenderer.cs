@@ -29,6 +29,10 @@ namespace WriteEverywhere.Rendering
 
         internal static Vector3 RenderTextMesh(WriteOnBuildingXml propGroup, ushort refID, int boardIdx, int secIdx, ref Color parentColor, BaseWriteOnXml baseWrite, TextToWriteOnXml textDescriptor, ref Matrix4x4 propMatrix, PrefabInfo srcInfo, int instanceFlags, int instanceFlags2, bool currentEditingSizeLine, ref int defaultCallsCounter)
         {
+            if (!textDescriptor.TestFlags(instanceFlags, instanceFlags2))
+            {
+                return default;
+            }
             BasicRenderInformation bri = WETextMeshProcess.GetTextMesh(propGroup, textDescriptor, refID, boardIdx, secIdx, baseWrite);
             if (bri?.m_mesh is null || bri?.m_generatedMaterial is null)
             {
@@ -346,12 +350,10 @@ namespace WriteEverywhere.Rendering
                     surfProperties.z = MathUtils.SmoothStep(num + 0.01f, num - 0.01f, Singleton<RenderManager>.instance.lightSystem.DayLightIntensity) * textDescriptor.IlluminationConfig.m_illuminationStrength;
                     break;
                 case MaterialType.FLAGS:
-                    surfProperties.z
-                        = ((instanceFlags & textDescriptor.IlluminationConfig.m_requiredFlags) == textDescriptor.IlluminationConfig.m_requiredFlags)
-                        && ((instanceFlags & textDescriptor.IlluminationConfig.m_forbiddenFlags) == 0)
-                        && ((instanceFlags2 & textDescriptor.IlluminationConfig.m_requiredFlags2) == textDescriptor.IlluminationConfig.m_requiredFlags2)
-                        && ((instanceFlags2 & textDescriptor.IlluminationConfig.m_forbiddenFlags2) == 0)
-                        ? textDescriptor.IlluminationConfig.m_illuminationStrength : 0;
+                    surfProperties.z =
+                        textDescriptor.TestFlags(instanceFlags, instanceFlags2)
+                        ? textDescriptor.IlluminationConfig.m_illuminationStrength
+                        : 0;
                     break;
                 case MaterialType.BRIGHT:
                     surfProperties.z = textDescriptor.IlluminationConfig.m_illuminationStrength;

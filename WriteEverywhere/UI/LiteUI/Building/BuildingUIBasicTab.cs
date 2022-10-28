@@ -145,7 +145,7 @@ namespace WriteEverywhere.UI
                 }
             };
 
-            m_layoutFilter.DrawButton(areaRect.x, PropIndexes.GetListName(item.SimpleProp));
+            m_layoutFilter.DrawButton(areaRect.x, PropIndexes.GetListName(item.SimpleProp), canEdit);
             GUILayout.Space(12);
 
             GUIKwyttoCommons.AddIntField(areaRect.x, Str.we_buildingEditor_repeatLayoutTimes, item.ArrayRepeatTimes, (x) => item.ArrayRepeatTimes = (int)x, canEdit, 1);

@@ -72,7 +72,8 @@ namespace WriteEverywhere.UI
             m_fontFilter = new GUIFilterItemsScreen<State>(Str.WTS_OVERRIDE_FONT, ModInstance.Controller, OnFilterParam, OnSelectFont, GoTo, State.Normal, State.GeneralFontPicker, acceptsNull: true);
             GeneralWritingEditorPositionsSizesTab positionTab;
             var tabs = new IGUITab<TextToWriteOnXml>[]{
-                    new GeneralWritingEditorGeneralTab(()=>getDescriptorArray()),
+                    new GeneralWritingEditorGeneralTab(),
+                    new GeneralFlaggedTab<TextToWriteOnXml, F1, F2>(),
                      positionTab = new GeneralWritingEditorPositionsSizesTab(colorPicker.GetComponentInParent<GUIRootWindowBase>()),
                     new GeneralWritingEditorForegroundTab(m_colorPicker,targetRenderingClass),
                     new GeneralWritingEditorBgMeshSettingsTab(m_colorPicker,infoGetter, targetRenderingClass),

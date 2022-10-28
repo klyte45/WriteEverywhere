@@ -273,7 +273,7 @@ namespace WriteEverywhere.Singleton
             ref WriteOnBuildingXml parentDescriptor, int idx)
         {
             var targetDescriptor = parentDescriptor.PropInstances[idx];
-            if (targetDescriptor?.SimpleProp is null)
+            if (targetDescriptor?.SimpleProp is null || !targetDescriptor.TestFlags(flags1, flags2))
             {
                 return;
             }
@@ -289,29 +289,7 @@ namespace WriteEverywhere.Singleton
             {
                 var isFromPositionChanged = item.m_buildingPositionWhenGenerated != position;
                 item.m_buildingPositionWhenGenerated = position;
-                if (SceneUtils.IsAssetEditor)
-                {
-                    item.m_cachedMatrix = refMatrix;
-                }
-                else
-                {
-                    if (targetDescriptor.SubBuildingPivotReference >= 0 && targetDescriptor.SubBuildingPivotReference < info.m_subBuildings.Length)
-                    {
-                        BuildingManager inst = BuildingManager.instance;
-                        uint targetBuildingId = buildingID;
-                        for (int i = 0; i <= targetDescriptor.SubBuildingPivotReference; i++)
-                        {
-                            targetBuildingId = inst.m_buildings.m_buffer[targetBuildingId].m_subBuilding;
-                        }
-                        item.m_cachedMatrix = RenderManager.instance.RequireInstance(targetBuildingId, 1u, out uint num)
-                            ? RenderManager.instance.m_instances[num].m_dataMatrix1
-                            : refMatrix;
-                    }
-                    else
-                    {
-                        item.m_cachedMatrix = refMatrix;
-                    }
-                }
+                item.m_cachedMatrix = refMatrix;
                 item.m_buildingRotationWhenGenerated = angleBuilding;
                 item.m_cachedPosition = item.m_cachedMatrix.MultiplyPoint(targetDescriptor.PropPosition);
                 item.m_cachedOriginalPosition = targetDescriptor.PropPosition;

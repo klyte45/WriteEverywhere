@@ -4,7 +4,7 @@ using System.Xml.Serialization;
 
 namespace WriteEverywhere.Xml
 {
-    public class IlluminationSettings
+    public class IlluminationSettings : FlaggedSettings
     {
         [XmlAttribute("type")]
         public MaterialType IlluminationType { get; set; } = MaterialType.OPAQUE;
@@ -18,16 +18,6 @@ namespace WriteEverywhere.Xml
         public BlinkType BlinkType { get; set; } = BlinkType.None;
         [XmlElement("customBlinkParams")]
         public Vector4Xml CustomBlink { get; set; } = new Vector4Xml();
-        [XmlAttribute("requiredFlags")]
-        public int m_requiredFlags;
-        [XmlAttribute("forbiddenFlags")]
-        public int m_forbiddenFlags;
-        [XmlAttribute("requiredFlags2")]
-        public int m_requiredFlags2;
-        [XmlAttribute("forbiddenFlags2")]
-        public int m_forbiddenFlags2;
-
-
     }
 
 }

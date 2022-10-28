@@ -13,7 +13,7 @@ namespace WriteEverywhere.Rendering
 
     public static class WETextMeshProcess
     {
-        internal static BasicRenderInformation GetTextMesh(WriteOnBuildingXml buildingXml, TextToWriteOnXml textDescriptor, ushort refID, int boardIdx, int secIdx, BaseWriteOnXml instance)
+        internal static BasicRenderInformation GetTextMesh(WriteOnBuildingXml buildingXml, TextToWriteOnXml textDescriptor, ushort refID, int boardIdx, int secIdx,  BaseWriteOnXml instance)
         {
             if (instance is LayoutDescriptorVehicleXml vehicleDescriptor)
             {

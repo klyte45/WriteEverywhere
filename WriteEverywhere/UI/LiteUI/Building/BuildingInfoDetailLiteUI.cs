@@ -107,6 +107,7 @@ namespace WriteEverywhere.UI
             var root = colorPicker.GetComponentInParent<GUIRootWindowBase>();
             var tabs = new IGUITab<WriteOnBuildingPropXml>[] {
                 new BuildingUIBasicTab(OnImportSingle, OnDelete, root),
+                new GeneralFlaggedTab<WriteOnBuildingPropXml, Building.Flags, Building.Flags2>(),
                 new BuildingUIPublicTransportTab(()=>CurrentEditingInfo),
                 m_textEditorTab =  new BuildingUITextTab(m_colorPicker, () => CurrentEditingLayout.PropInstances[PropSel].SimpleProp, () =>
                 {
@@ -267,7 +268,7 @@ namespace WriteEverywhere.UI
                 }
                 if (isEditable)
                 {
-                    m_fontFilter.DrawButton(size.x, CurrentEditingLayout?.FontName);
+                    m_fontFilter.DrawButton(size.x, CurrentEditingLayout?.FontName, isEditable);
                 }
                 else if (m_currentSource != ConfigurationSource.NONE)
                 {

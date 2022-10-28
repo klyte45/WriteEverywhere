@@ -194,7 +194,7 @@ namespace WriteEverywhere.UI
         {
             if (!SceneUtils.IsAssetEditor)
             {
-                m_modelFilter.DrawButton(size.x, m_currentInfo?.GetUncheckedLocalizedTitle());
+                m_modelFilter.DrawButton(size.x, m_currentInfo?.GetUncheckedLocalizedTitle(), true);
             }
             var headerArea0 = new Rect(0, 25 * ResolutionMultiplier, size.x, 25 * ResolutionMultiplier);
             var headerArea1 = new Rect(0, 50 * ResolutionMultiplier, size.x, 45 * ResolutionMultiplier);
