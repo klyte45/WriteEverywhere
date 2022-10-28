@@ -8,6 +8,7 @@ using Kwytto.UI;
 using System;
 using System.Collections;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using UnityEngine;
 using WriteEverywhere.Layout;
@@ -36,7 +37,7 @@ namespace WriteEverywhere.UI
 
 
         private string[] m_cachedItemList;
-        private readonly GUIXmlLib<WTSLibTextList, ILibableAsContainer<TextToWriteOnXml>> m_textGroupLib = new GUIXmlLib<WTSLibTextList, ILibableAsContainer<TextToWriteOnXml>>()
+        private readonly GUIXmlFolderLib<ILibableAsContainer<TextToWriteOnXml>> m_textGroupLib = new GUITextEntryListLib
         {
             NameAskingI18n = Str.WTS_EXPORTDATA_NAMEASKING,
             NameAskingOverwriteI18n = Str.WTS_EXPORTDATA_NAMEASKING_OVERWRITE,

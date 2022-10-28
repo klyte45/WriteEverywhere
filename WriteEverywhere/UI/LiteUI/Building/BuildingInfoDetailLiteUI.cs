@@ -60,7 +60,7 @@ namespace WriteEverywhere.UI
         private string[] m_cachedItemListLabels;
         private float m_offsetYContent;
 
-        private readonly GUIXmlLib<WTSLibOnBuildingPropLayoutList, ExportableBoardInstanceOnBuildingListXml> xmlLibList = new GUIXmlLib<WTSLibOnBuildingPropLayoutList, ExportableBoardInstanceOnBuildingListXml>()
+        private readonly GUIXmlFolderLib<ListWriteOnBuildingPropXml> xmlLibList = new GUIBuildingPropListLib
         {
             DeleteQuestionI18n = Str.WTS_SEGMENT_CLEARDATA_AYS,
             ImportI18n = Str.WTS_SEGMENT_IMPORTDATA,
@@ -449,7 +449,7 @@ namespace WriteEverywhere.UI
                 CurrentEditingLayout.PropInstances[effectiveIdx] = newVal;
             }
         }
-        private ExportableBoardInstanceOnBuildingListXml OnGetExportableList() => new ExportableBoardInstanceOnBuildingListXml
+        private ListWriteOnBuildingPropXml OnGetExportableList() => new ListWriteOnBuildingPropXml
         {
             Instances = CurrentEditingLayout.PropInstances.Where(x => x.SubBuildingPivotReference == m_currentSubBuilding).Select((x) => XmlUtils.CloneViaXml(x)).ToArray(),
         };

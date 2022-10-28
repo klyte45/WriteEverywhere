@@ -27,7 +27,7 @@ namespace WriteEverywhere.UI
         private string m_clipboard;
         private FooterBarStatus CurrentLibState => m_textItemLib.Status;
 
-        private readonly GUIXmlLib<WTSLibTextItem, TextToWriteOnXml> m_textItemLib = new GUIXmlLib<WTSLibTextItem, TextToWriteOnXml>()
+        private readonly GUIXmlFolderLib<TextToWriteOnXml> m_textItemLib = new GUITextEntryLib
         {
             NameAskingI18n = Str.WTS_EXPORTDATA_NAMEASKING,
             NameAskingOverwriteI18n = Str.WTS_EXPORTDATA_NAMEASKING_OVERWRITE,

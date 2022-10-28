@@ -2,6 +2,7 @@
 using Kwytto.UI;
 using Kwytto.Utils;
 using System;
+using System.IO;
 using System.Linq;
 using UnityEngine;
 using WriteEverywhere.Data;
@@ -9,7 +10,6 @@ using WriteEverywhere.Layout;
 using WriteEverywhere.Libraries;
 using WriteEverywhere.Localization;
 using WriteEverywhere.Tools;
-using WriteEverywhere.Xml;
 
 namespace WriteEverywhere.UI
 {
@@ -93,7 +93,7 @@ namespace WriteEverywhere.UI
 
         private ushort currentSegmentId;
         private GUIColorPicker m_colorPicker;
-        private readonly GUIXmlLib<WTSLibOnNetPropLayoutList, ExportableBoardInstanceOnNetListXml> xmlLibList = new GUIXmlLib<WTSLibOnNetPropLayoutList, ExportableBoardInstanceOnNetListXml>()
+        private readonly GUIXmlFolderLib<ExportableBoardInstanceOnNetListXml> xmlLibList = new GUIOnNetPropListLib
         {
             DeleteQuestionI18n = Str.WTS_SEGMENT_CLEARDATA_AYS,
             ImportI18n = Str.WTS_SEGMENT_IMPORTDATA,
@@ -249,10 +249,10 @@ namespace WriteEverywhere.UI
             ReloadSegment();
         }
 
-        private void OnImportSingle(OnNetInstanceCacheContainerXml data, bool _)
+        private void OnImportSingle(WriteOnNetXml data, bool _)
         {
             data.SaveName = CurrentEditingInstance.BoardsData[m_tabsContainer.ListSel].SaveName;
-            CurrentEditingInstance.BoardsData[m_tabsContainer.ListSel] = data;
+            CurrentEditingInstance.BoardsData[m_tabsContainer.ListSel] = XmlUtils.TransformViaXml<WriteOnNetXml, OnNetInstanceCacheContainerXml>(data);
             var oldSel = m_tabsContainer.ListSel;
             ReloadSegment();
             m_tabsContainer.ListSel = oldSel;

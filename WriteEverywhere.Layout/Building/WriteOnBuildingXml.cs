@@ -54,8 +54,8 @@ namespace WriteEverywhere.Layout
             .GroupBy(x => x.First.GetParamIdx()).ToDictionary(x => x.Key, x => x.Select(y => Tuple.New(y.First, y.Second)).ToList());
 
     }
-
-    public class ExportableBoardInstanceOnBuildingListXml : ILibable
+    [XmlRoot("PropList")]
+    public class ListWriteOnBuildingPropXml : ILibable
     {
         public WriteOnBuildingPropXml[] Instances { get; set; }
         [XmlAttribute("saveName")]

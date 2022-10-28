@@ -58,7 +58,7 @@ namespace WriteEverywhere.UI
         private string m_clipboard;
         private string[] m_cachedItemList;
         private float m_offsetYContent;
-        private readonly GUIXmlLib<WTSLibVehicleLayout, LayoutDescriptorVehicleXml> m_vehicleLib = new GUIXmlLib<WTSLibVehicleLayout, LayoutDescriptorVehicleXml>()
+        private readonly GUIXmlFolderLib<LayoutDescriptorVehicleXml> m_vehicleLib = new GUIVehicleLayoutLib
         {
             DeleteQuestionI18n = Str.WTS_PROPEDIT_CONFIGDELETE_MESSAGE,
             NameAskingI18n = Str.WTS_EXPORTDATA_NAMEASKING,

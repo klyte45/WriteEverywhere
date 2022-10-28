@@ -4,6 +4,7 @@ using Kwytto.UI;
 using Kwytto.Utils;
 using System;
 using System.Collections;
+using System.IO;
 using System.Linq;
 using UnityEngine;
 using WriteEverywhere.Layout;
@@ -50,7 +51,8 @@ namespace WriteEverywhere.UI
         private readonly Action<WriteOnBuildingPropXml, bool> m_onImport;
         private readonly Action m_onDelete;
         private readonly GUIFilterItemsScreen<State> m_layoutFilter;
-        private readonly GUIXmlLib<WTSLibOnBuildingPropLayout, WriteOnBuildingPropXml> xmlLibItem = new GUIXmlLib<WTSLibOnBuildingPropLayout, WriteOnBuildingPropXml>()
+
+        private readonly GUIXmlFolderLib<WriteOnBuildingPropXml> xmlLibItem = new GUIBuildingPropLib
         {
             DeleteQuestionI18n = Str.WTS_PROPEDIT_CONFIGDELETE_MESSAGE,
             ImportI18n = Str.WTS_SEGMENT_IMPORTDATA,

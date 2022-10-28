@@ -1,7 +1,7 @@
 <size=16>
 <size=30><color=yellow>Welcome to Write Everywhere!</color></size>
 
-This is the first version of this mod and bla bla bla....
+This is the first version of this mod and brings most of main stuff of old Write The Signs mod but fixed, and also have new features, like listed below:
 
 <size=25>Features (the new ones are in yellow)</size>
 - Allow adding texts to:
@@ -10,7 +10,7 @@ This is the first version of this mod and bla bla bla....
 --- Networks in general: The main difference for the other two is that is not replicate to all instances of same asset. The props you add will only be used in that segment. Each segment can have a unlimited set of props with a unlimited set of text entries.
 
 - Texts can have a custom font (that can be inherited from default fonts, or use an specific in text or vehicle/prop/building texts group).
-- Any font TTF can be used. Just drop them in the mod folder. Button to there is under Mod Options button.
+- Any font TTF can be used. Just drop them in the mod folder. Button to there is under Mod Options button or ingame at Wrench icon button in UUI.
 - Texts entries can be used to draw sprites too. Just drop them in the mod folder of it. Can use subfolders there also to organize or create slideshows. Button to the folder is under Mod Options button.
 - Layouts can be exported to workshop items. They will be copied along the asset to staging folder automatically and a special Workshop tag indicating this mod will be added to it.
 - Texts entries can have some special properties:
@@ -19,6 +19,7 @@ This is the first version of this mod and bla bla bla....
 --- <color=yellow>The font size is based in the height from the baseline to the cap line of the font. It's highlighted when editing the font sizes in tab</color>
 --- <color=yellow>Depth: how light will behave in the borders of the text/image - useful for sticker or board thickness effect</color>
 --- <color=yellow>Text value can be also a sequence of values. You can set the duration of each frame and get a value to it</color>
+--- <color=yellow>The text may be rendered or not based on instance flags (Vehicles and Building related texts)</color>
 
 - Texts content can be also, beyond custom text or image:
 --- A city savegame status (for now, just City Name and Population are available)
@@ -27,24 +28,25 @@ This is the first version of this mod and bla bla bla....
 --- A segment property (name, direction, current number at position...)
 --- A parameterized text (for buildings and segments - useful for buildings specially if you want to have a custom value in each instance)
 --- Any value can be UPPERCAPITALIZED or fully lowercaptalized, also can be added a prefix and/or suffix to the main text
+--- <color=yellow>Other mods can provide additional text types entries, like Custom Data Mod or Transport Lines Manager (v15 or above)</color>
 
 The goal is that any level of configuration (text, group of texts, prop with texts, etc...) can be exported to a local library to be reused if necessary somewhere else, without needing to configure everything again.
 
+- The integrations with Transport Lines Manager v14 or below and Custom Data Mod v1 are working, as well the Vehicle Skins integration must be OK.
+- Now this mod works in Asset Editor mode! It will bring some agility to asset creation process - all folders with data are copied to staging folder automatically.
+
 <size=25>Some known issues</size>
 
-- Buildings that don't have a main building (like some parks) won't render the added props
-- The integrations with TLM and Addr. aren't working yet. VS integration must be OK.
+- Buildings that don't have a main building (like some parks) won't render the added props.
 - Locales aren't available yet because the English strings needs to be reviewed before it - possibly have a lot of garbage from WTS around here...
 - Some labels may not make sense to actual feature (needs mapping which ones)
 - Fallbacks from integrations weren't fully reviewed yet and may be inconsistent (specially the ones related to TLM)
-- The XML formats may change yet, so don't get suprised if all you work vanish or be partially lost in the future...
-- The vehicles texts only works for non-citizen ones for now
+- The XML formats may change yet, but very unlikely once this part was fully reviewed
+- Some base-game vanilla vehicles aren't rendering WE stuff, like the vanilla Sedan and Hatch as example
 
 <size=25>Backward compatibility with WTS</size>
-- NONE for buildings and segments, once the prop text concepts were simplified here.
-- For vehicles, the font scaling and the content would need to be redone, but the text positions might be preserved if porting from there.
+- Any old layout would not work in WE, will needed to be redone. In counterpart, it's very faster to do it than it was before.
 - The road nodes feature WAS REMOVED. It may get back as a node prop feature in next builds.
-- The abreviations WERE REMOVED from this mod. It may be implemented in Addresses mod instead.
+- The abreviations WERE REMOVED from this mod. It may be implemented in Custom Data Mod instead.
 - The savegame files locations are not shared between WE and WTS, so one won't replace another's file.
-
 </size>

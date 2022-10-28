@@ -21,6 +21,7 @@ namespace WriteEverywhere
     public class WEMainController : BaseController<ModInstance, WEMainController>
     {
         public static string FOLDER_PATH => ModInstance.ModSettingsRootFolder;
+        public static string LIBRARYFOLDERS_ROOT => Path.Combine(FOLDER_PATH, "Libraries");
 
         #region Events
         public event Action EventFontsReloadedFromFolder;

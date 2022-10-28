@@ -4,6 +4,7 @@ using Kwytto.UI;
 using Kwytto.Utils;
 using System;
 using System.Collections;
+using System.IO;
 using System.Linq;
 using UnityEngine;
 using WriteEverywhere.Layout;
@@ -46,10 +47,10 @@ namespace WriteEverywhere.UI
         private readonly Wrapper<string[]> m_searchResultLayouts = new Wrapper<string[]>();
         private OnNetInstanceCacheContainerXml m_lastItem;
         private State m_currentState = State.Normal;
-        private readonly Action<OnNetInstanceCacheContainerXml, bool> m_onImportFromLib;
+        private readonly Action<WriteOnNetXml, bool> m_onImportFromLib;
         private readonly Action m_onDelete;
         private readonly GUIFilterItemsScreen<State> m_layoutFilter;
-        private readonly GUIXmlLib<WTSLibOnNetPropLayout, WriteOnNetXml, OnNetInstanceCacheContainerXml> xmlLibItem = new GUIXmlLib<WTSLibOnNetPropLayout, WriteOnNetXml, OnNetInstanceCacheContainerXml>()
+        private readonly GUIXmlFolderLib<WriteOnNetXml> xmlLibItem = new GUIOnNetPropLib
         {
             DeleteQuestionI18n = Str.WTS_PROPEDIT_CONFIGDELETE_MESSAGE,
             ImportI18n = Str.WTS_SEGMENT_IMPORTDATA,
@@ -90,7 +91,7 @@ namespace WriteEverywhere.UI
         private GUIRootWindowBase baseContainer;
         private static int? lockSelectionInstanceNum;
 
-        public WTSOnNetBasicTab(Action<OnNetInstanceCacheContainerXml, bool> onImportFromLib, Action onDelete, GUIRootWindowBase baseContainer)
+        public WTSOnNetBasicTab(Action<WriteOnNetXml, bool> onImportFromLib, Action onDelete, GUIRootWindowBase baseContainer)
         {
             m_onImportFromLib = onImportFromLib;
             m_onDelete = onDelete;
