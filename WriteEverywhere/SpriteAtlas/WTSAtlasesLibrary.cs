@@ -30,14 +30,34 @@ namespace WriteEverywhere.Sprites
 
         protected void Awake()
         {
-            KFileUtils.ScanPrefabsFoldersDirectory(VehiclesIndexes.instance, WEMainController.EXTRA_SPRITES_FILES_FOLDER_ASSETS, LoadImagesFromPrefab);
-            KFileUtils.ScanPrefabsFoldersDirectory(VehiclesIndexes.instance, WEMainController.EXTRA_SPRITES_FILES_FOLDER_ASSETS, LoadImagesFromPrefab);
+            ReloadAssetImages();
 
             ResetTransportAtlas();
             TransportManager.instance.eventLineColorChanged += (x) => PurgeLine(new WTSLine(x, false));
             TransportManager.instance.eventLineNameChanged += (x) => PurgeLine(new WTSLine(x, false));
 
             LoadImagesFromLocalFolders();
+        }
+
+        public void ReloadAssetImages()
+        {
+            foreach (var asset in
+                VehiclesIndexes.instance.PrefabsData
+                .Concat(BuildingIndexes.instance.PrefabsData)
+                .Where(x => x.Value.PackageName.TrimToNull() != null)
+                .Select(x => Tuple.New(x, KFileUtils.GetRootFolderForK45(x.Value.Info)))
+                .GroupBy(x => x.Second)
+                .Select(x => x.First())
+                )
+            {
+                if (asset.Second is string str)
+                {
+                    var filePath = Path.Combine(str, WEMainController.EXTRA_SPRITES_FILES_FOLDER_ASSETS);
+                    LogUtils.DoLog($"Trying load path: {filePath}");
+                    if (Directory.Exists(filePath))
+                        CreateAtlasEntry(AssetAtlases, AssetEntryNameFromData(asset.First.Value), filePath, asset.First.Value.Info);
+                }
+            }
         }
 
         protected void Start() => ModInstance.Controller.EventFontsReloadedFromFolder += ResetTransportAtlas;
@@ -51,24 +71,24 @@ namespace WriteEverywhere.Sprites
         private const string INTERNAL_ATLAS_NAME = @"\/INTERNAL\/";
 
         private Dictionary<string, Dictionary<string, WEImageInfo>> LocalAtlases { get; } = new Dictionary<string, Dictionary<string, WEImageInfo>>();
-        private Dictionary<ulong, Dictionary<string, WEImageInfo>> AssetAtlases { get; } = new Dictionary<ulong, Dictionary<string, WEImageInfo>>();
+        private Dictionary<string, Dictionary<string, WEImageInfo>> AssetAtlases { get; } = new Dictionary<string, Dictionary<string, WEImageInfo>>();
         private Dictionary<string, Dictionary<string, BasicRenderInformation>> LocalAtlasesCache { get; } = new Dictionary<string, Dictionary<string, BasicRenderInformation>>();
-        private Dictionary<ulong, Dictionary<string, BasicRenderInformation>> AssetAtlasesCache { get; } = new Dictionary<ulong, Dictionary<string, BasicRenderInformation>>();
+        private Dictionary<string, Dictionary<string, BasicRenderInformation>> AssetAtlasesCache { get; } = new Dictionary<string, Dictionary<string, BasicRenderInformation>>();
 
 
         #region Getters
 
         public void GetSpriteLib(string atlasName, out Dictionary<string, WEImageInfo> result)
         {
-            if (!LocalAtlases.TryGetValue(atlasName ?? string.Empty, out result) && ulong.TryParse(atlasName ?? string.Empty, out ulong workshopId))
+            if (!LocalAtlases.TryGetValue(atlasName ?? string.Empty, out result))
             {
-                AssetAtlases.TryGetValue(workshopId, out result);
+                AssetAtlases.TryGetValue(atlasName ?? string.Empty, out result);
             }
         }
 
         public string[] GetSpritesFromLocalAtlas(string atlasName) => LocalAtlases.TryGetValue(atlasName ?? string.Empty, out Dictionary<string, WEImageInfo> atlas) ? atlas.Keys.ToArray() : null;
-        public string[] GetSpritesFromAssetAtlas(ulong workshopId) => AssetAtlases.TryGetValue(workshopId, out Dictionary<string, WEImageInfo> atlas) ? atlas.Keys.ToArray() : null;
-        public bool HasAtlas(ulong workshopId) => AssetAtlases.TryGetValue(workshopId, out _);
+        public string[] GetSpritesFromAssetAtlas(string packageName) => AssetAtlases.TryGetValue(packageName, out Dictionary<string, WEImageInfo> atlas) ? atlas.Keys.ToArray() : null;
+        public bool HasAssetAtlas(IIndexedPrefabData prefabData) => AssetAtlases.ContainsKey(AssetEntryNameFromData(prefabData));
 
         internal BasicRenderInformation GetFromLocalAtlases(WEImages image)
         {
@@ -103,12 +123,16 @@ namespace WriteEverywhere.Sprites
         public BasicRenderInformation GetSlideFromLocal(string atlasName, Func<int, int> idxFunc, bool fallbackOnInvalid = false) => !LocalAtlases.TryGetValue(atlasName ?? string.Empty, out Dictionary<string, WEImageInfo> atlas)
                 ? fallbackOnInvalid ? GetFromLocalAtlases(WEImages.FrameParamsInvalidFolder) : null
                 : SceneUtils.IsAssetEditor ? ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(WEImages.FrameBorder) : GetFromLocalAtlases(atlasName ?? string.Empty, atlas.Keys.ElementAt(idxFunc(atlas.Count - 1) + 1), fallbackOnInvalid);
-        public BasicRenderInformation GetSlideFromAsset(ulong assetId, Func<int, int> idxFunc, bool fallbackOnInvalid = false) => !AssetAtlases.TryGetValue(assetId, out Dictionary<string, WEImageInfo> atlas)
+        public BasicRenderInformation GetSlideFromAsset(IIndexedPrefabData prefabData, Func<int, int> idxFunc, bool fallbackOnInvalid = false)
+            => !AssetAtlases.TryGetValue(AssetEntryNameFromData(prefabData), out Dictionary<string, WEImageInfo> atlas)
                 ? fallbackOnInvalid ? GetFromLocalAtlases(WEImages.FrameParamsInvalidFolder) : null
-                : SceneUtils.IsAssetEditor ? ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(WEImages.FrameBorder) : GetFromAssetAtlases(assetId, atlas.Keys.ElementAt(idxFunc(atlas.Count - 1) + 1), fallbackOnInvalid);
+                : SceneUtils.IsAssetEditor
+                    ? ModInstance.Controller.AtlasesLibrary.GetFromLocalAtlases(WEImages.FrameBorder)
+                    : GetFromAssetAtlases(prefabData, atlas.Keys.ElementAt(idxFunc(atlas.Count - 1) + 1), fallbackOnInvalid);
 
-        public BasicRenderInformation GetFromAssetAtlases(ulong assetId, string spriteName, bool fallbackOnInvalid = false)
+        public BasicRenderInformation GetFromAssetAtlases(IIndexedPrefabData prefabData, string spriteName, bool fallbackOnInvalid = false)
         {
+            var assetId = AssetEntryNameFromData(prefabData);
             if (spriteName.IsNullOrWhiteSpace() || !AssetAtlases.ContainsKey(assetId))
             {
                 return null;
@@ -158,7 +182,8 @@ namespace WriteEverywhere.Sprites
               ? atlas.Keys.Where((x, i) => x.ToLower().Contains(searchName.ToLower())).OrderBy(x => x).ToArray()
               : (new string[0]);
 
-        internal string[] FindByInAssetSimple(ulong assetId, string searchName, out Dictionary<string, WEImageInfo> atlas) => AssetAtlases.TryGetValue(assetId, out atlas)
+        internal string[] FindByInAssetSimple(IIndexedPrefabData prefabData, string searchName, out Dictionary<string, WEImageInfo> atlas)
+            => AssetAtlases.TryGetValue(AssetEntryNameFromData(prefabData), out atlas)
                 ? atlas.Keys.Where((x, i) => x.ToLower().Contains(searchName.ToLower())).OrderBy(x => x).ToArray()
                 : (new string[0]);
         internal string[] FindByInLocalFolders(string searchName) => LocalAtlases.Keys.Select(x => x == string.Empty ? "<ROOT>" : x).Where(x => x.ToLower().Contains(searchName.ToLower())).OrderBy(x => x).ToArray();
@@ -225,26 +250,30 @@ namespace WriteEverywhere.Sprites
             PixelsPerMeter = 100
         };
 
-        private void LoadImagesFromPrefab(ulong workshopId, string directoryPath, PrefabInfo info)
-        {
-            if (workshopId > 0 && workshopId != ~0UL && !AssetAtlases.ContainsKey(workshopId))
-            {
-                CreateAtlasEntry(AssetAtlases, workshopId, directoryPath, false);
-            }
 
+        private static string AssetEntryNameFromData(IIndexedPrefabData vi)
+        {
+            return vi.WorkshopId != ~0ul ? vi.WorkshopId.ToString() : vi.PackageName;
         }
 
-        private UITextureAtlas CreateAtlasEntry<T>(Dictionary<T, Dictionary<string, WEImageInfo>> atlasDic, T atlasName, string path, bool addPrefix)
+        private void CreateAtlasEntry<T>(Dictionary<T, Dictionary<string, WEImageInfo>> atlasDic, T atlasName, string path, PrefabInfo info)
         {
-            UITextureAtlas targetAtlas = ScriptableObject.CreateInstance<UITextureAtlas>();
-            targetAtlas.material = new Material(ModInstance.Controller.defaultTextShader);
-            WTSAtlasLoadingUtils.LoadAllImagesFromFolder(path, out List<WEImageInfo> spritesToAdd, out List<string> errors, addPrefix);
+            WTSAtlasLoadingUtils.LoadAllImagesFromFolder(path, out List<WEImageInfo> spritesToAdd, out List<string> errors, false);
             foreach (string error in errors)
             {
                 LogUtils.DoErrorLog($"ERROR LOADING IMAGE: {error}");
             }
+            if (errors.Count > 0)
+            {
+                KwyttoDialog.ShowModal(new KwyttoDialog.BindProperties
+                {
+                    message = string.Format(Str.we_general_errorsLoadingImagesFromAssetSpriteFolderHeader, $"{info.GetUncheckedLocalizedTitle()} ({info.name})"),
+                    scrollText = "\t-" + string.Join("\n\t-", errors.ToArray()),
+                    buttons = KwyttoDialog.basicOkButtonBar
+                });
+            }
+
             atlasDic[atlasName] = spritesToAdd.ToDictionary(x => x.Name, x => x);
-            return targetAtlas;
         }
         #endregion
 

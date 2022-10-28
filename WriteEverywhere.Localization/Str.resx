@@ -1172,10 +1172,28 @@ Check the data shown below to get information.</value>
   <data name="we_assetEditor_currentAssetIsNotVehicle" xml:space="preserve">
     <value>&lt;color=yellow&gt;Current asset is not a vehicle&lt;/color&gt;</value>
   </data>
-  <data name="we_generalTextEditor_previewTypeImageFrame" xml:space="preserve">    <value>Image frame</value>  </data>
-  <data name="we_generalTextEditor_assetEditorExibitionText" xml:space="preserve">    <value>Content to show in Asset Editor</value>  </data>
-  <data name="we_generalTextEditor_assetEditorPreviewSetText" xml:space="preserve">    <value>Text to show in Asset Editor</value>  </data>
-  <data name="we_generalTextEditor_previewTypeSetText" xml:space="preserve">    <value>Custom text</value>  </data>
-  <data name="we_generalTextEditor_previewTypeVariablePath" xml:space="preserve">    <value>WE variable path</value>  </data>
-
+  <data name="we_generalTextEditor_previewTypeImageFrame" xml:space="preserve">
+    <value>Image frame</value>
+  </data>
+  <data name="we_generalTextEditor_assetEditorExibitionText" xml:space="preserve">
+    <value>Content to show in Asset Editor</value>
+  </data>
+  <data name="we_generalTextEditor_assetEditorPreviewSetText" xml:space="preserve">
+    <value>Text to show in Asset Editor</value>
+  </data>
+  <data name="we_generalTextEditor_previewTypeSetText" xml:space="preserve">
+    <value>Custom text</value>
+  </data>
+  <data name="we_generalTextEditor_previewTypeVariablePath" xml:space="preserve">
+    <value>WE variable path</value>
+  </data>
+  <data name="we_assetEditor_reloadAssetImages" xml:space="preserve">
+    <value>Reload images from asset</value>
+  </data>
+  <data name="we_generalTextEditor_goToAssetSpritesFolder" xml:space="preserve">
+    <value>Go to WS asset images folder</value>
+  </data>
+  <data name="we_general_errorsLoadingImagesFromAssetSpriteFolderHeader" xml:space="preserve">
+    <value>Some errors occurred when trying to load the images from asset: &lt;color=yellow&gt;{0}&lt;/color&gt;</value>
+  </data>
 </root>

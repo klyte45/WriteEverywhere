@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using WriteEverywhere.Data;
-using WriteEverywhere.Layout;
 using WriteEverywhere.Localization;
 using WriteEverywhere.Singleton;
 using WriteEverywhere.Tools;
@@ -45,7 +44,7 @@ namespace WriteEverywhere.UI
             }
             m_colorPicker = GameObjectUtils.CreateElement<GUIColorPicker>(transform).Init();
             m_colorPicker.Visible = false;
-            m_detailUI = new BuildingInfoDetailLiteUI(m_colorPicker);
+            m_detailUI = new BuildingInfoDetailLiteUI(m_colorPicker, () => CurrentInfo = null);
             if (!SceneUtils.IsAssetEditor)
             {
                 m_paramsUI = new BuildingParamsTab(() => CurrentGrabbedId, (x) => m_detailUI.CurrentGrabbedId = x, () => m_currentInfoList.Select(x =>

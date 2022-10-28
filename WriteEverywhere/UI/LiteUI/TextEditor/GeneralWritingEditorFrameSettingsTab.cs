@@ -20,7 +20,7 @@ namespace WriteEverywhere.UI
         private readonly GUIRootWindowBase m_root;
 
         protected override TextRenderingClass RenderingClass { get; }
-        public GeneralWritingEditorFrameSettingsTab(GUIColorPicker picker, Func<PrefabInfo> infoGetter, TextRenderingClass renderingClass)
+        public GeneralWritingEditorFrameSettingsTab(GUIColorPicker picker, Func<PrefabInfo> infoGetter, TextRenderingClass renderingClass) : base()
         {
             m_picker = picker;
             m_root = picker.GetComponentInParent<GUIRootWindowBase>();
@@ -112,5 +112,6 @@ namespace WriteEverywhere.UI
         {
             item.BackgroundMeshSettings.SetBgImage(paramValue);
         }
+        protected override PrefabInfo GetCurrentInfo() => m_infoGetter();
     }
 }

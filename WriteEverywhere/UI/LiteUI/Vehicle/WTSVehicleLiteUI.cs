@@ -34,7 +34,7 @@ namespace WriteEverywhere.UI
             }
             m_colorPicker = GameObjectUtils.CreateElement<GUIColorPicker>(transform).Init();
             m_colorPicker.Visible = false;
-            m_detailUI = new WTSVehicleInfoDetailLiteUI(m_colorPicker);
+            m_detailUI = new WTSVehicleInfoDetailLiteUI(m_colorPicker, () => CurrentInfo = null);
         }
         protected override void OnOpacityChanged(float newVal)
         {

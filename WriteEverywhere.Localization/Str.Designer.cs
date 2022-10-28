@@ -115,6 +115,15 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Reload images from asset.
+        /// </summary>
+        public static string we_assetEditor_reloadAssetImages {
+            get {
+                return ResourceManager.GetString("we_assetEditor_reloadAssetImages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Save asset default layout.
         /// </summary>
         public static string we_assetEditor_saveDefaultSkin {
@@ -748,6 +757,15 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Some errors occurred when trying to load the images from asset: &lt;color=yellow&gt;{0}&lt;/color&gt;.
+        /// </summary>
+        public static string we_general_errorsLoadingImagesFromAssetSpriteFolderHeader {
+            get {
+                return ResourceManager.GetString("we_general_errorsLoadingImagesFromAssetSpriteFolderHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Export whole list to library.
         /// </summary>
         public static string we_generalLib_exportFullList {
@@ -898,6 +916,15 @@ namespace WriteEverywhere.Localization {
         public static string we_generalTextEditor_frameSettings {
             get {
                 return ResourceManager.GetString("we_generalTextEditor_frameSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Go to WS asset images folder.
+        /// </summary>
+        public static string we_generalTextEditor_goToAssetSpritesFolder {
+            get {
+                return ResourceManager.GetString("we_generalTextEditor_goToAssetSpritesFolder", resourceCulture);
             }
         }
         

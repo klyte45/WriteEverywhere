@@ -80,8 +80,8 @@ namespace WriteEverywhere.UI
         public BuildingInfo CurrentEditingInfo { get; private set; }
         public bool IsOnTextDimensionsView => m_textEditorTab.IsOnTextDimensionsView;
         public bool IsOnTextEditor => m_textEditorTabIdx == m_tabsContainer.CurrentTabIdx;
-
-        public BuildingInfoDetailLiteUI(GUIColorPicker colorPicker)
+        private Action m_resetSelection;
+        public BuildingInfoDetailLiteUI(GUIColorPicker colorPicker, Action resetSelection)
         {
             var viewAtlas = UIView.GetAView().defaultAtlas;
 
@@ -126,6 +126,7 @@ namespace WriteEverywhere.UI
             };
             m_tabsContainer = new GUIBasicListingTabsContainer<WriteOnBuildingPropXml>(tabs, OnAdd, GetSideList, GetSelectedItem, OnSetCurrentItem, AddExtraButtonsList);
             m_textEditorTabIdx = Array.IndexOf(tabs, m_textEditorTab);
+            m_resetSelection = resetSelection;
         }
 
         public void DoDraw(Rect area, int subbuildingIdx, BuildingInfo parentBuilding)
@@ -371,6 +372,7 @@ namespace WriteEverywhere.UI
                 });
 
                 ModInstance.Controller?.BuildingPropsSingleton?.LoadAllBuildingConfigurations();
+                m_resetSelection();
             }
         }
         private void PasteFromClipboard()

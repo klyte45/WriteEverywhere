@@ -74,8 +74,9 @@ namespace WriteEverywhere.UI
         public bool IsOnTextDimensionsView => m_tabsContainer.CurrentTabIdx == m_sizeEditorTabIdx;
         public string CurrentSkin => m_availableSkinsOptions is null || m_availableSkinsOptions.Length == 0 || m_currentSkin == m_availableSkinsOptions[0] ? null : m_currentSkin;
         private readonly int m_sizeEditorTabIdx;
+        private Action m_resetSelection;
 
-        public WTSVehicleInfoDetailLiteUI(GUIColorPicker colorPicker)
+        public WTSVehicleInfoDetailLiteUI(GUIColorPicker colorPicker, Action resetSelection)
         {
             var viewAtlas = UIView.GetAView().defaultAtlas;
 
@@ -93,7 +94,7 @@ namespace WriteEverywhere.UI
             m_importLib = KResourceLoader.LoadTextureKwytto(CommonsSpriteNames.K45_Import);
             m_exportLib = KResourceLoader.LoadTextureKwytto(CommonsSpriteNames.K45_Export);
             m_save = KResourceLoader.LoadTextureKwytto(CommonsSpriteNames.K45_Save);
-
+            m_resetSelection = resetSelection;
             m_colorPicker = colorPicker;
             m_root = colorPicker.GetComponentInParent<GUIRootWindowBase>();
 
@@ -204,7 +205,7 @@ namespace WriteEverywhere.UI
                         GUILayout.Label(m_currentSource.ValueToI18n(), skinNoWrap);
                         GUILayout.FlexibleSpace();
                     }
-                    using (new GUILayout.VerticalScope(GUILayout.MaxWidth(300 * GUIWindow.ResolutionMultiplier)))
+                    using (new GUILayout.VerticalScope(GUILayout.MaxWidth(400 * GUIWindow.ResolutionMultiplier)))
                     {
                         using (new GUILayout.HorizontalScope())
                         {
@@ -397,6 +398,8 @@ namespace WriteEverywhere.UI
                     ModInstance.Controller?.VehicleTextsSingleton?.LoadAllVehiclesConfigurations();
                 }
                 m_currentInfo = null;
+                m_currentParentInfo = null;
+                m_resetSelection();
             }
         }
         private void PasteFromClipboard()

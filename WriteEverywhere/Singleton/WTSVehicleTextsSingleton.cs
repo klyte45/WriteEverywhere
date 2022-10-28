@@ -151,7 +151,7 @@ namespace WriteEverywhere.Singleton
             WTSVehicleData.Instance.CleanCache();
         }
 
-        private ref Vehicle[] buffer => ref VehicleManager.instance.m_vehicles.m_buffer;
+        private ref Vehicle[] Buffer => ref VehicleManager.instance.m_vehicles.m_buffer;
 
         private bool hasFixedCamera = false;
 
@@ -168,10 +168,10 @@ namespace WriteEverywhere.Singleton
         private IEnumerator TryGrabCoroutine(VehicleInfo info, Action<ushort> callback)
         {
             yield return null;
-            for (int i = 0; i < buffer.Length; i++)
+            for (int i = 0; i < Buffer.Length; i++)
             {
 
-                if (info == buffer[i].Info && (buffer[i].m_flags & (Vehicle.Flags.Created | Vehicle.Flags.Spawned)) == (Vehicle.Flags.Created | Vehicle.Flags.Spawned))
+                if (info == Buffer[i].Info && (Buffer[i].m_flags & (Vehicle.Flags.Created | Vehicle.Flags.Spawned)) == (Vehicle.Flags.Created | Vehicle.Flags.Spawned))
                 {
                     callback((ushort)i);
                     currentGrabCoroutine = null;

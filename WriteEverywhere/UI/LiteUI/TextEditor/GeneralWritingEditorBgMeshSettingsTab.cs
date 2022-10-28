@@ -21,7 +21,7 @@ namespace WriteEverywhere.UI
         private readonly ColoringSource[] contrastValues;
         private readonly TextRenderingClass srcClass;
 
-        public GeneralWritingEditorBgMeshSettingsTab(GUIColorPicker picker, Func<PrefabInfo> infoGetter, TextRenderingClass srcClass)
+        public GeneralWritingEditorBgMeshSettingsTab(GUIColorPicker picker, Func<PrefabInfo> infoGetter, TextRenderingClass srcClass) : base()
         {
             m_picker = picker;
             m_infoGetter = infoGetter;
@@ -84,5 +84,7 @@ namespace WriteEverywhere.UI
         {
             item.BackgroundMeshSettings.SetBgImage(paramValue);
         }
+
+        protected override PrefabInfo GetCurrentInfo() => m_infoGetter();
     }
 }

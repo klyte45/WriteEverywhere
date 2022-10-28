@@ -12,6 +12,7 @@ namespace WriteEverywhere.UI
 {
     public class WTSOnNetParamsTab : WTSBaseParamsTab<OnNetInstanceCacheContainerXml>
     {
+        public WTSOnNetParamsTab() : base() { }
         private uint lastTickDraw;
         private Dictionary<int, List<Tuple<IParameterizableVariable, string>>> m_cachedParamsUsed;
 
@@ -85,6 +86,6 @@ namespace WriteEverywhere.UI
             }
         }
 
-
+        protected override PrefabInfo GetCurrentInfo() => null;
     }
 }

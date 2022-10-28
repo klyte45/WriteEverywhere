@@ -45,7 +45,7 @@ namespace WriteEverywhere.Utils
                     }
                     else
                     {
-                        errors.Add($"{Path.GetFileName(imgFile)}: {Str.WTS_CUSTOMSPRITE_IMAGETOOLARGE} (max: 400x400)");
+                        errors.Add($"{Path.GetFileName(imgFile)}: {Str.WTS_CUSTOMSPRITE_IMAGETOOLARGE} (max: {MAX_SIZE_IMAGE_IMPORT}x{MAX_SIZE_IMAGE_IMPORT})");
                     }
                 }
                 else

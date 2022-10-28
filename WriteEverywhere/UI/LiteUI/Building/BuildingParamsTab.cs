@@ -32,7 +32,7 @@ namespace WriteEverywhere.UI
             GettingInstance
         }
 
-        public BuildingParamsTab(Func<ushort> buildingIdxGetter, Action<ushort> buildingIdxSetter, Func<IEnumerable<WriteOnBuildingXml>> buildingLayoutGetter, Func<BuildingInfo> buildingInfoGetter)
+        public BuildingParamsTab(Func<ushort> buildingIdxGetter, Action<ushort> buildingIdxSetter, Func<IEnumerable<WriteOnBuildingXml>> buildingLayoutGetter, Func<BuildingInfo> buildingInfoGetter) : base()
         {
             m_buildingIdxGetter = buildingIdxGetter;
             m_buildingLayoutGetter = buildingLayoutGetter;
@@ -199,6 +199,6 @@ namespace WriteEverywhere.UI
             }
         }
 
-
+        protected override PrefabInfo GetCurrentInfo() => m_buildingInfoGetter();
     }
 }

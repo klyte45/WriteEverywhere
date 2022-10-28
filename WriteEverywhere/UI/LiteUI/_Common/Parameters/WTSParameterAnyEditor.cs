@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Kwytto.Utils;
+using System;
+using UnityEngine;
 using WriteEverywhere.Localization;
 using WriteEverywhere.Plugins;
 using WriteEverywhere.Xml;
@@ -10,7 +12,11 @@ namespace WriteEverywhere.UI
         private readonly string[] v_protocolsImg = new[] { Str.WTS_IMAGESRC_ASSET, Str.WTS_IMAGESRC_LOCAL, Str.WTS_PARAMTYPE_PLAINTEXT, Str.WTS_PARAMTYPE_VARIABLE };
         public bool IsText { get; } = true;
         public int HoverIdx => m_hoverIdx;
-
+        public Func<IIndexedPrefabData> m_prefabIndexGetter;
+        public WTSParameterAnyEditor(Func<IIndexedPrefabData> prefabIndexGetter)
+        {
+            m_prefabIndexGetter = prefabIndexGetter;
+        }
         public float DrawTop(WTSBaseParamsTab<T> tab, Vector2 areaRect)
         {
             bool dirtyInput;
@@ -58,7 +64,7 @@ namespace WriteEverywhere.UI
             else WTSParameterImageEditor<T>.ImageDrawRightPanel(tab, areaRect);
         }
 
-        public string[] OnFilterParam(TextRenderingClass renderingClass, WTSBaseParamsTab<T> tab) => (tab.IsTextVariable) ? WTSParameterVariableEditor<T>.VariableOnFilterParam(renderingClass, tab) : WTSParameterImageEditor<T>.ImageOnFilterParam(tab);
+        public string[] OnFilterParam(TextRenderingClass renderingClass, WTSBaseParamsTab<T> tab) => (tab.IsTextVariable) ? WTSParameterVariableEditor<T>.VariableOnFilterParam(renderingClass, tab) : WTSParameterImageEditor<T>.ImageOnFilterParam(tab, m_prefabIndexGetter);
         public void OnSelectItem(TextRenderingClass renderingClass, WTSBaseParamsTab<T> tab, int selectLayout)
         {
             if (tab.IsTextVariable) WTSParameterVariableEditor<T>.VariableOnSelectItem(renderingClass, tab, selectLayout, ref m_hoverIdx, this);

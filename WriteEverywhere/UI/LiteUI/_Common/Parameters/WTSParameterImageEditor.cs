@@ -1,4 +1,5 @@
 ﻿using Kwytto.LiteUI;
+using Kwytto.Utils;
 using System;
 using System.Linq;
 using UnityEngine;
@@ -13,6 +14,12 @@ namespace WriteEverywhere.UI
         private readonly string[] v_protocolsImg = new[] { Str.WTS_IMAGESRC_ASSET, Str.WTS_IMAGESRC_LOCAL };
 
         public int HoverIdx => 0;
+        private Func<IIndexedPrefabData> m_prefabIndexGetter;
+
+        public WTSParameterImageEditor(Func<IIndexedPrefabData> prefabIndexGetter)
+        {
+            m_prefabIndexGetter = prefabIndexGetter;
+        }
         public float DrawTop(WTSBaseParamsTab<T> tab, Vector2 areaRect)
         {
             bool dirtyInput;
@@ -136,7 +143,7 @@ namespace WriteEverywhere.UI
             }
         }
 
-        public static string[] ImageOnFilterParam(WTSBaseParamsTab<T> tab)
+        public static string[] ImageOnFilterParam(WTSBaseParamsTab<T> tab, Func<IIndexedPrefabData> prefabIndexGetter)
         {
             switch (tab.CurrentState)
             {
@@ -148,18 +155,18 @@ namespace WriteEverywhere.UI
                     }
                     return tab.IsLocal
                         ? ModInstance.Controller.AtlasesLibrary.FindByInLocalSimple(tab.SelectedFolder == "<ROOT>" ? null : tab.SelectedFolder, tab.SearchText, out tab.currentFolderAtlas)
-                        : ModInstance.Controller.AtlasesLibrary.FindByInAssetSimple(ulong.TryParse(tab.SearchPropName.Split('.')[0] ?? "", out ulong wId) ? wId : 0u, tab.SearchText, out tab.currentFolderAtlas);
+                        : ModInstance.Controller.AtlasesLibrary.FindByInAssetSimple(prefabIndexGetter(), tab.SearchText, out tab.currentFolderAtlas);
                 case WTSBaseParamsTab<T>.State.GettingFolder:
                     return tab.IsLocal
                         ? ModInstance.Controller.AtlasesLibrary.FindByInLocalFolders(tab.SearchText)
-                        : ModInstance.Controller.AtlasesLibrary.HasAtlas(ulong.TryParse(tab.SearchPropName?.Split('.')[0] ?? "", out ulong wId2) ? wId2 : 0) ? new string[] { "<ROOT>" } : new string[0];
+                        : ModInstance.Controller.AtlasesLibrary.HasAssetAtlas(prefabIndexGetter()) ? new string[] { "<ROOT>" } : new string[0];
             }
             return null;
         }
 
         public void DrawLeftPanel(TextRenderingClass renderingClass, WTSBaseParamsTab<T> tab, Vector2 areaRect) => ImageDrawLeftPanel(tab, areaRect, this);
         public void DrawRightPanel(WTSBaseParamsTab<T> tab, Vector2 areaRect) => ImageDrawRightPanel(tab, areaRect);
-        public string[] OnFilterParam(TextRenderingClass renderingClass, WTSBaseParamsTab<T> tab) => ImageOnFilterParam(tab);
+        public string[] OnFilterParam(TextRenderingClass renderingClass, WTSBaseParamsTab<T> tab) => ImageOnFilterParam(tab, m_prefabIndexGetter);
         public void OnSelectItem(TextRenderingClass renderingClass, WTSBaseParamsTab<T> tab, int selectLayout) => ImageOnSelectItem(tab, selectLayout, this);
 
         public void OnHoverVar(TextRenderingClass renderingClass, WTSBaseParamsTab<T> wTSBaseParamsTab, int autoSelectVal, BaseCommandLevel commandLevel)

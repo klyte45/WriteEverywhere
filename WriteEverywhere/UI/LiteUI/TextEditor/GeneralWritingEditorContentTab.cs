@@ -2,6 +2,7 @@
 using Kwytto.UI;
 using Kwytto.Utils;
 using System;
+using System.IO;
 using System.Linq;
 using UnityEngine;
 using WriteEverywhere.Layout;
@@ -27,8 +28,9 @@ namespace WriteEverywhere.UI
         private readonly GUIRootWindowBase m_root;
         private readonly Func<PrefabInfo> infoGetter;
         private readonly TextRenderingClass m_targetRenderingClass;
+        private readonly Texture2D m_reload = KResourceLoader.LoadTextureKwytto(CommonsSpriteNames.K45_Reload);
 
-        public GeneralWritingEditorContentTab(GUIColorPicker colorPicker, Func<PrefabInfo> infoGetter, TextRenderingClass targetRenderingClass)
+        public GeneralWritingEditorContentTab(GUIColorPicker colorPicker, Func<PrefabInfo> infoGetter, TextRenderingClass targetRenderingClass) : base()
         {
             m_root = colorPicker.GetComponentInParent<GUIRootWindowBase>();
             this.infoGetter = infoGetter;
@@ -43,9 +45,9 @@ namespace WriteEverywhere.UI
             switch (item.textContent)
             {
 
-                case TextContent.ParameterizedText:
                 case TextContent.ParameterizedSpriteFolder:
                 case TextContent.ParameterizedSpriteSingle:
+                case TextContent.ParameterizedText:
                     var param = item.Value;
                     GUIKwyttoCommons.AddButtonSelector(tabAreaSize.x, Str.WTS_CONTENT_TEXTVALUE, param is null ? GUIKwyttoCommons.v_null : param.IsEmpty ? GUIKwyttoCommons.v_empty : param.ToString(), () => OnGoToPicker(currentItem, -1), isEditable);
                     if (param?.IsParameter ?? false)
@@ -58,6 +60,21 @@ namespace WriteEverywhere.UI
                         if (item.assetEditorPreviewContentType == TextContent.ParameterizedText)
                         {
                             GUIKwyttoCommons.TextWithLabel(tabAreaSize.x, Str.we_generalTextEditor_assetEditorPreviewSetText, item.AssetEditorPreviewText ?? "", (x) => item.AssetEditorPreviewText = x);
+                        }
+                    }
+                    if (item.textContent != TextContent.ParameterizedText && SceneUtils.IsAssetEditor && infoGetter().m_isCustomContent)
+                    {
+                        GUILayout.Space(4);
+                        using (new GUILayout.HorizontalScope())
+                        {
+                            GUILayout.FlexibleSpace();
+                            if (GUILayout.Button(Str.we_generalTextEditor_goToAssetSpritesFolder, GUILayout.Height(30)))
+                            {
+                                var path = Path.Combine(KFileUtils.GetRootFolderForK45(infoGetter()), WEMainController.EXTRA_SPRITES_FILES_FOLDER_ASSETS);
+                                KFileUtils.EnsureFolderCreation(path);
+                                ColossalFramework.Utils.OpenInFileBrowser(path);
+                            }
+                            GUIKwyttoCommons.SquareTextureButton(m_reload, Str.we_assetEditor_reloadAssetImages, () => ModInstance.Controller.AtlasesLibrary.ReloadAssetImages());
                         }
                     }
                     break;
@@ -179,5 +196,6 @@ namespace WriteEverywhere.UI
                 tps.SetTextAt(currentEditingParam, paramValue, m_targetRenderingClass);
             }
         }
+        protected override PrefabInfo GetCurrentInfo() => infoGetter();
     }
 }

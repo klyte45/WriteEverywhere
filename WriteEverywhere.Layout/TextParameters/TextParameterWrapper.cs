@@ -1,4 +1,5 @@
 ﻿using ColossalFramework;
+using Kwytto.Utils;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using WriteEverywhere.Plugins;
@@ -47,7 +48,7 @@ namespace WriteEverywhere.Layout
         private bool isLocal;
         private bool m_isDirtyImage = true;
         private PrefabInfo cachedPrefab;
-        private ulong cachedPrefabId;
+        private IIndexedPrefabData cachedPrefabId;
         private string textOrSpriteValue;
 
         public TextParameterWrapper()
@@ -195,7 +196,7 @@ namespace WriteEverywhere.Layout
                     return TextOrSpriteValue;
             }
         }
-        public ulong GetCachedPrefab(PrefabInfo prefab)
+        public IIndexedPrefabData GetCachedPrefab(PrefabInfo prefab)
         {
             UpdatePrefabInfo(prefab);
             return cachedPrefabId;
@@ -204,8 +205,17 @@ namespace WriteEverywhere.Layout
         {
             if (cachedPrefab != prefab)
             {
-                ulong.TryParse((prefab?.name ?? "").Split('.')[0], out cachedPrefabId);
-                cachedPrefab = prefab;
+                switch (prefab)
+                {
+                    case VehicleInfo x:
+                        VehiclesIndexes.instance.PrefabsData.TryGetValue(prefab.name, out cachedPrefabId);
+                        cachedPrefab = x;
+                        break;
+                    case BuildingInfo x:
+                        BuildingIndexes.instance.PrefabsData.TryGetValue(prefab.name, out cachedPrefabId);
+                        cachedPrefab = x;
+                        break;
+                }
             }
         }
 

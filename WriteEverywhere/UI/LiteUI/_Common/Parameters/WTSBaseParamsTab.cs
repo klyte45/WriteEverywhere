@@ -40,9 +40,16 @@ namespace WriteEverywhere.UI
         internal readonly string Any = Color.blue.ToRGB();
 
         internal readonly WTSParameterVariableEditor<T> TextVarEditor = new WTSParameterVariableEditor<T>();
-        internal readonly WTSParameterImageEditor<T> ImageVarEditor = new WTSParameterImageEditor<T>();
-        internal readonly WTSParameterFolderEditor<T> FolderVarEditor = new WTSParameterFolderEditor<T>();
-        internal readonly WTSParameterAnyEditor<T> AnyVarEditor = new WTSParameterAnyEditor<T>();
+        internal readonly WTSParameterImageEditor<T> ImageVarEditor;
+        internal readonly WTSParameterFolderEditor<T> FolderVarEditor;
+        internal readonly WTSParameterAnyEditor<T> AnyVarEditor;
+
+        protected WTSBaseParamsTab()
+        {
+            ImageVarEditor = new WTSParameterImageEditor<T>(GetCurrentAssetPrefabData);
+            FolderVarEditor = new WTSParameterFolderEditor<T>(GetCurrentAssetPrefabData);
+            AnyVarEditor = new WTSParameterAnyEditor<T>(GetCurrentAssetPrefabData);
+        }
 
         #region Basic Behavior
         internal bool ShowTabsOnTop() => CurrentState == State.List;
@@ -86,7 +93,19 @@ namespace WriteEverywhere.UI
         private void DrawVariablePicker(T item, Vector2 areaRect) => DrawSelectorView(item, areaRect, TextVarEditor, IsVariable);
         private void DrawAnyPicker(T item, Vector2 areaRect) => DrawSelectorView(item, areaRect, AnyVarEditor, IsVariable || !IsTextVariable);
 
-        #endregion
+        protected IIndexedPrefabData GetCurrentAssetPrefabData()
+        {
+            switch (GetCurrentInfo())
+            {
+                case BuildingInfo b:
+                    return BuildingIndexes.instance.PrefabsData.Where(x => (b.name.Contains('.') && x.Key == b.name) || x.Key.EndsWith(b.name)).FirstOrDefault().Value;
+                case VehicleInfo v:
+                    return VehiclesIndexes.instance.PrefabsData.Where(x => (v.name.Contains('.') && x.Key == v.name) || x.Key.EndsWith(v.name)).FirstOrDefault().Value;
+                default:
+                    return null;
+            }
+        }
+        #endregion 
 
         #region Param editor commons
 
@@ -312,6 +331,7 @@ namespace WriteEverywhere.UI
         protected abstract string GetAssetName(T item);
         protected abstract void SetTextParameter(T item, int currentEditingParam, string paramValue);
         protected abstract void DrawListing(Vector2 areaRect, T item, bool isEditable);
+        protected abstract PrefabInfo GetCurrentInfo();
         #endregion
 
     }
