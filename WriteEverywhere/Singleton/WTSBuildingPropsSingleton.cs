@@ -123,7 +123,7 @@ namespace WriteEverywhere.Singleton
 
         internal WriteOnBuildingXml PrepareTargetDescriptor(ref Matrix4x4 refMatrix, ushort subBuildingIdx, BuildingInfo info, string refName)
         {
-            if (BuildingLiteUI.Instance.Visible && refName != null && (SceneUtils.IsAssetEditor || BuildingLiteUI.Instance.CurrentEditingInfo?.name == refName))
+            if (BuildingLiteUI.Instance.Visible && refName != null && (SceneUtils.IsAssetEditor || BuildingLiteUI.Instance.CurrentInfo?.name == refName))
             {
                 if (!m_buildingStopsDescriptor.ContainsKey(refName))
                 {

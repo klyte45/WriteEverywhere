@@ -29,7 +29,7 @@ namespace WriteEverywhere.Overrides
                 return;
             }
             var singleton = ModInstance.Controller.BuildingPropsSingleton;
-            var targetDescriptor = singleton.PrepareTargetDescriptor(ref defaultAssetEditorReference, 0, info, BuildingLiteUI.Instance.CurrentEditingInfo?.name);
+            var targetDescriptor = singleton.PrepareTargetDescriptor(ref defaultAssetEditorReference, 0, info, BuildingLiteUI.Instance.CurrentInfo?.name);
             if (targetDescriptor == null)
             {
                 return;

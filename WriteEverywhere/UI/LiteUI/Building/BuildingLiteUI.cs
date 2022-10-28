@@ -161,19 +161,10 @@ namespace WriteEverywhere.UI
                 GUILayout.Label(Str.we_buildingEditor_theLayotsAreBeingLoaded);
                 return;
             }
-            if (SceneUtils.IsAssetEditor)
+            if (SceneUtils.IsAssetEditor && !ReloadAsset())
             {
-                if (!(ToolsModifierControl.toolController.m_editPrefabInfo is BuildingInfo currentSelection))
-                {
-                    GUILayout.Label(Str.we_assetEditor_currentAssetIsNotBuilding);
-                    return;
-                }
-                if (CurrentInfo is null || !CurrentInfo.name.EndsWith(currentSelection.name))
-                {
-                    var assetPack = PrefabUtils.GetAssetFromPrefab(currentSelection);
-                    CurrentInfo = BuildingIndexes.instance.PrefabsData[assetPack.fullName].Info as BuildingInfo;
-                    m_editorTypeSel = 0;
-                }
+                GUILayout.Label(Str.we_assetEditor_currentAssetIsNotBuilding);
+                return;
             }
             var area = new Rect(5 * GUIWindow.ResolutionMultiplier, 0, size.x - 10 * GUIWindow.ResolutionMultiplier, size.y);
             using (new GUILayout.AreaScope(area))
@@ -188,6 +179,21 @@ namespace WriteEverywhere.UI
                         break;
                 }
             }
+        }
+
+        internal bool ReloadAsset()
+        {
+            if (!(ToolsModifierControl.toolController.m_editPrefabInfo is BuildingInfo currentSelection))
+            {
+                return false;
+            }
+            if (CurrentInfo is null || !CurrentInfo.name.EndsWith(currentSelection.name))
+            {
+                var assetPack = PrefabUtils.GetAssetFromPrefab(currentSelection);
+                CurrentInfo = BuildingIndexes.instance.PrefabsData[assetPack.fullName].Info as BuildingInfo;
+                m_editorTypeSel = 0;
+            }
+            return true;
         }
 
         protected void DrawNormal(Vector2 size)

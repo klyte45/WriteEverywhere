@@ -163,18 +163,10 @@ namespace WriteEverywhere.UI
                 GUILayout.Label(Str.we_vehicleEditor_theLayotsAreBeingLoaded);
                 return;
             }
-            if (SceneUtils.IsAssetEditor)
+            if (SceneUtils.IsAssetEditor && !ReloadAsset())
             {
-                if (!(ToolsModifierControl.toolController.m_editPrefabInfo is VehicleInfo currentSelection))
-                {
-                    GUILayout.Label(Str.we_assetEditor_currentAssetIsNotVehicle);
-                    return;
-                }
-                if (CurrentInfo is null || !CurrentInfo.name.EndsWith(currentSelection.name))
-                {
-                    var assetPack = PrefabUtils.GetAssetFromPrefab(currentSelection);
-                    CurrentInfo = VehiclesIndexes.instance.PrefabsData[assetPack.fullName].Info as VehicleInfo;
-                }
+                GUILayout.Label(Str.we_assetEditor_currentAssetIsNotVehicle);
+                return;
             }
             var area = new Rect(5 * GUIWindow.ResolutionMultiplier, 0, size.x - 10 * GUIWindow.ResolutionMultiplier, size.y);
             using (new GUILayout.AreaScope(area))
@@ -189,6 +181,20 @@ namespace WriteEverywhere.UI
                         break;
                 }
             }
+        }
+
+        public bool ReloadAsset()
+        {
+            if (!(ToolsModifierControl.toolController.m_editPrefabInfo is VehicleInfo currentSelection))
+            {
+                return false;
+            }
+            if (CurrentInfo is null || !CurrentInfo.name.EndsWith(currentSelection.name))
+            {
+                var assetPack = PrefabUtils.GetAssetFromPrefab(currentSelection);
+                CurrentInfo = VehiclesIndexes.instance.PrefabsData[assetPack.fullName].Info as VehicleInfo;
+            }
+            return true;
         }
 
         protected void DrawNormal(Vector2 size)
