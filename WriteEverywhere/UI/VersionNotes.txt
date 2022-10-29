@@ -34,6 +34,7 @@ The goal is that any level of configuration (text, group of texts, prop with tex
 
 - The integrations with Transport Lines Manager v14 or below and Custom Data Mod v1 are working, as well the Vehicle Skins integration must be OK.
 - Now this mod works in Asset Editor mode! It will bring some agility to asset creation process - all folders with data are copied to staging folder automatically.
+- Now the library files are shareable, once each entry in the library is a separated file.
 
 <size=25>Some known issues</size>
 
