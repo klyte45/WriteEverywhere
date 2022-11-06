@@ -214,21 +214,25 @@ namespace WriteEverywhere
                 segmentsCooldown--;
                 foreach (var node in nodeChangeBuffer)
                 {
-                    StartCoroutine(EventNodeChanged?.Invoke(node));
+                    if (EventNodeChanged != null)
+                        StartCoroutine(EventNodeChanged(node));
                     WTSBuildingData.Instance.CacheData.PurgeStopCache(node);
                 }
                 foreach (var segment in segmentChangeBuffer)
                 {
                     WTSOnNetData.Instance.OnSegmentChanged(segment);
-                    StartCoroutine(EventSegmentChanged?.Invoke(segment));
+                    if (EventSegmentChanged != null)
+                        StartCoroutine(EventSegmentChanged(segment));
                 }
                 foreach (var segment in segmentReleaseBuffer)
                 {
-                    StartCoroutine(EventSegmentReleased?.Invoke(segment));
+                    if (EventSegmentReleased != null)
+                        StartCoroutine(EventSegmentReleased(segment));
                 }
                 foreach (var segment in segmentNameChangeBuffer)
                 {
-                    StartCoroutine(EventSegmentNameChanged?.Invoke(segment));
+                    if (EventSegmentNameChanged != null)
+                        StartCoroutine(EventSegmentNameChanged(segment));
                 }
                 nodeChangeBuffer.Clear();
                 segmentChangeBuffer.Clear();
