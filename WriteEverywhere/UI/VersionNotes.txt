@@ -28,11 +28,11 @@ This is the first version of this mod and brings most of main stuff of old Write
 --- A segment property (name, direction, current number at position...)
 --- A parameterized text (for buildings and segments - useful for buildings specially if you want to have a custom value in each instance)
 --- Any value can be UPPERCAPITALIZED or fully lowercaptalized, also can be added a prefix and/or suffix to the main text
---- <color=yellow>Other mods can provide additional text types entries, like Custom Data Mod or Transport Lines Manager (v15 or above)</color>
+--- <color=yellow>Other mods can provide additional text types entries, like Custom Data Mod or Improved Transport Manager</color>
 
 The goal is that any level of configuration (text, group of texts, prop with texts, etc...) can be exported to a local library to be reused if necessary somewhere else, without needing to configure everything again.
 
-- The integrations with Transport Lines Manager v14 or below and Custom Data Mod v1 are working, as well the Vehicle Skins integration must be OK.
+- The integrations with Transport Lines Manager v14.4, Improved Transport Manager and Custom Data Mod are working, as well the Vehicle Skins integration must be OK.
 - Now this mod works in Asset Editor mode! It will bring some agility to asset creation process - all folders with data are copied to staging folder automatically.
 - Now the library files are shareable, once each entry in the library is a separated file.
 
