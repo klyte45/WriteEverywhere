@@ -110,8 +110,6 @@ namespace WriteEverywhere.Variables
                             );
                         return varWrapper.TryFormat(result.AsFormattable());
                     }
-                case VariableVehicleSubType.OwnNumber:
-                    return WTSCacheSingleton.instance.GetVehicle(vehicleId).Identifier;
                 case VariableVehicleSubType.LineIdentifier:
                     ref Vehicle[] buffer = ref VehicleManager.instance.m_vehicles.m_buffer;
                     var targetVehicleId = buffer[vehicleId].GetFirstVehicle(vehicleId);

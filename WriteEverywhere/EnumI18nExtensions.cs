@@ -66,7 +66,6 @@ namespace WriteEverywhere
                     switch (tp)
                     {
                         case VariableVehicleSubType.None: return Str.WTS_PARAMVARS_DESC__VariableVehicleSubType_None;
-                        case VariableVehicleSubType.OwnNumber: return Str.WTS_PARAMVARS_DESC__VariableVehicleSubType_OwnNumber;
                         case VariableVehicleSubType.LineIdentifier: return Str.WTS_PARAMVARS_DESC__VariableVehicleSubType_LineIdentifier;
                         case VariableVehicleSubType.NextStopLine: return Str.WTS_PARAMVARS_DESC__VariableVehicleSubType_NextStopLine;
                         case VariableVehicleSubType.PrevStopLine: return Str.WTS_PARAMVARS_DESC__VariableVehicleSubType_PrevStopLine;

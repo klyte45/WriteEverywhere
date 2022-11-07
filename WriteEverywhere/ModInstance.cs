@@ -14,7 +14,7 @@ using WriteEverywhere.Localization;
 using WriteEverywhere.Tools;
 using WriteEverywhere.UI;
 
-[assembly: AssemblyVersion("0.1.0.1")]
+[assembly: AssemblyVersion("0.1.0.*")]
 namespace WriteEverywhere
 {
     public class ModInstance : BasicIUserMod<ModInstance, WEMainController>

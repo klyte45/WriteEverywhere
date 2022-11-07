@@ -27,7 +27,6 @@ namespace K45_WE2TLM
             }
             TLMFacade.Instance.EventLineSymbolParameterChanged += () =>
             {
-                WEFacade.AtlasesLibrary.PurgeAllLines();
                 WTSCacheSingleton.ClearCacheLineId();
             };
             TLMFacade.Instance.EventAutoNameParameterChanged += WEFacade.OnAutoNameParameterChanged;
@@ -41,7 +40,6 @@ namespace K45_WE2TLM
             {
                 WEFacade.BuildingPropsSingleton.ResetLines();
                 WTSCacheSingleton.ClearCacheLineName(new WTSLine(lineId, true));
-                WEFacade.AtlasesLibrary.PurgeLine(new WTSLine(lineId, true));
             };
         }
 
@@ -61,7 +59,6 @@ namespace K45_WE2TLM
         public override ushort GetStopBuildingInternal(ushort stopId, WTSLine lineObj) => TLMFacade.GetStationBuilding(stopId, lineObj.lineId, lineObj.regional);
         public override string GetLineSortString(WTSLine lineObj) => TLMFacade.GetLineSortString(lineObj.lineId, lineObj.regional);
 
-        public override string GetVehicleIdentifier(ushort vehicleId) => TLMFacade.Instance.GetVehicleIdentifier(vehicleId);
         public override WTSLine GetVehicleLine(ushort vehicleId) => new WTSLine(TLMFacade.Instance.GetVehicleLine(vehicleId, out bool regional), regional);
         public override string GetLineIdString(WTSLine lineObj) => TLMFacade.GetLineStringId(lineObj.lineId, lineObj.regional);
 

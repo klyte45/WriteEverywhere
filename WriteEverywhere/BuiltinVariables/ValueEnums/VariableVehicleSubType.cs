@@ -6,7 +6,6 @@ namespace WriteEverywhere.Variables
     public enum VariableVehicleSubType
     {
         None,
-        OwnNumber,
         LineIdentifier,
         NextStopLine,
         PrevStopLine,
@@ -23,7 +22,6 @@ namespace WriteEverywhere.Variables
             {
                 case VariableVehicleSubType.LineFullName:
                 case VariableVehicleSubType.LineIdentifier:
-                case VariableVehicleSubType.OwnNumber:
                 case VariableVehicleSubType.LastStopLine:
                 case VariableVehicleSubType.NextStopLine:
                 case VariableVehicleSubType.PrevStopLine:

@@ -1,9 +1,7 @@
 using ColossalFramework;
-using ColossalFramework.Threading;
 using ColossalFramework.UI;
 using Kwytto.LiteUI;
 using Kwytto.Localization;
-using Kwytto.UI;
 using Kwytto.Utils;
 using System;
 using System.Collections;
@@ -11,15 +9,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
-using WriteEverywhere.Data;
-using WriteEverywhere.Font;
 using WriteEverywhere.Font.Utility;
 using WriteEverywhere.Layout;
 using WriteEverywhere.Localization;
 using WriteEverywhere.Plugins.Ext;
-using WriteEverywhere.Rendering;
-using WriteEverywhere.Singleton;
-using WriteEverywhere.TransportLines;
 using WriteEverywhere.Utils;
 using static ColossalFramework.UI.UITextureAtlas;
 
@@ -31,11 +24,6 @@ namespace WriteEverywhere.Sprites
         protected void Awake()
         {
             ReloadAssetImages();
-
-            ResetTransportAtlas();
-            TransportManager.instance.eventLineColorChanged += (x) => PurgeLine(new WTSLine(x, false));
-            TransportManager.instance.eventLineNameChanged += (x) => PurgeLine(new WTSLine(x, false));
-
             LoadImagesFromLocalFolders();
         }
 
@@ -59,9 +47,6 @@ namespace WriteEverywhere.Sprites
                 }
             }
         }
-
-        protected void Start() => ModInstance.Controller.EventFontsReloadedFromFolder += ResetTransportAtlas;
-
         #region Imported atlas
 
         public const string PROTOCOL_IMAGE = "image://";
@@ -277,232 +262,6 @@ namespace WriteEverywhere.Sprites
         }
         #endregion
 
-        #endregion
-
-        #region Transport lines
-        private Dictionary<string, WEImageInfo> m_transportLineAtlas = new Dictionary<string, WEImageInfo>();
-        private Dictionary<int, BasicRenderInformation> TransportLineCache { get; } = new Dictionary<int, BasicRenderInformation>();
-        private Dictionary<int, BasicRenderInformation> RegionalTransportLineCache { get; } = new Dictionary<int, BasicRenderInformation>();
-
-        private void ResetTransportAtlas()
-        {
-            m_transportLineAtlas.Clear();
-        }
-        public void PurgeLine(WTSLine line)
-        {
-            string id = $"{line.ToExternalRefId()}";
-            if (m_transportLineAtlas.ContainsKey(id))
-            {
-                m_transportLineAtlas.Remove(id);
-            }
-            (line.regional ? RegionalTransportLineCache : TransportLineCache).Remove(line.lineId);
-        }
-        public void PurgeAllLines()
-        {
-            TransportLineCache.Clear();
-            RegionalTransportLineCache.Clear();
-            ResetTransportAtlas();
-        }
-        public CommonsSpriteNames LineIconTest
-        {
-            get => m_lineIconTest; set
-            {
-                m_lineIconTest = value;
-                PurgeLine(new WTSLine(0, false));
-            }
-        }
-        private CommonsSpriteNames m_lineIconTest = CommonsSpriteNames.K45_HexagonIcon;
-        internal List<BasicRenderInformation> DrawLineFormats(IEnumerable<WTSLine> ids)
-        {
-            var bris = new List<BasicRenderInformation>();
-            if (ids.Count() == 0)
-            {
-                return bris;
-            }
-
-            foreach (var id in ids.OrderBy(x =>
-             x.lineId < 0 ? x.lineId.ToString("D6") : ModInstance.Controller.ConnectorTLM.GetLineSortString(x)
-            ))
-            {
-                if ((id.regional ? RegionalTransportLineCache : TransportLineCache).TryGetValue(id.lineId, out BasicRenderInformation bri))
-                {
-                    if (bri != null)
-                    {
-                        bris.Add(bri);
-                    }
-                }
-                else
-                {
-                    (id.regional ? RegionalTransportLineCache : TransportLineCache)[id.lineId] = null;
-                    StartCoroutine(WriteTransportLineTextureCoroutine(id));
-                }
-            }
-            return bris;
-
-        }
-        private IEnumerator WriteTransportLineTextureCoroutine(WTSLine line)
-        {
-            string id = $"{line.ToExternalRefId()}";
-            if (m_transportLineAtlas[id] == null)
-            {
-                yield return 0;
-                while (!CheckTransportLineCoroutineCanContinue())
-                {
-                    yield return null;
-                }
-                LineLogoParameter lineParams = line.ZeroLine ? new LineLogoParameter(LineIconTest.ToString(), (Color)ColorExtensions.FromRGB(0x5e35b1), "K")
-                : line.lineId < 0 ? new LineLogoParameter(((CommonsSpriteNames)((-line.lineId % (Enum.GetValues(typeof(CommonsSpriteNames)).Length - 1)) + 1)).ToString(), WEDynamicTextRenderingRules.m_spectreSteps[(-line.lineId) % WEDynamicTextRenderingRules.m_spectreSteps.Length], $"{-line.lineId}")
-                : ModInstance.Controller.ConnectorTLM.GetLineLogoParameters(line);
-                if (lineParams == null || lineParams.color == Color.clear)
-                {
-                    yield break;
-                }
-                var drawingCoroutine = CoroutineWithData.From(this, RenderSpriteLine(
-                    FontServer.instance[WTSEtcData.Instance.FontSettings.PublicTransportLineSymbolFont] ??
-                    FontServer.instance[WEMainController.DEFAULT_FONT_KEY], LocalAtlases[string.Empty], lineParams.fileName, lineParams.color, lineParams.text));
-                yield return drawingCoroutine.Coroutine;
-                while (!CheckTransportLineCoroutineCanContinue())
-                {
-                    yield return null;
-                }
-
-                StopAllCoroutines();
-                TransportLineCache.Clear();
-                RegionalTransportLineCache.Clear();
-                yield break;
-            }
-            yield return 0;
-            var info = m_transportLineAtlas[id];
-            var bri = WERenderingHelper.GenerateBri(info.Texture, info.Borders, info.PixelsPerMeter);
-            yield return 0;
-            RegisterMeshSingle(line.lineId, bri, line.regional ? RegionalTransportLineCache : TransportLineCache);
-            yield break;
-        }
-        private static bool CheckTransportLineCoroutineCanContinue()
-        {
-            if (m_lastCoroutineStepTL != SimulationManager.instance.m_currentTickIndex)
-            {
-                m_lastCoroutineStepTL = SimulationManager.instance.m_currentTickIndex;
-                m_coroutineCounterTL = 0;
-            }
-            if (m_coroutineCounterTL >= 1)
-            {
-                return false;
-            }
-            m_coroutineCounterTL++;
-            return true;
-        }
-        private static uint m_lastCoroutineStepTL = 0;
-        private static uint m_coroutineCounterTL = 0;
-        public static IEnumerator<Texture2D> RenderSpriteLine(DynamicSpriteFont font, Dictionary<string, WEImageInfo> atlas, string spriteName, Color bgColor, string text, float textScale = 1)
-        {
-            if (font is null)
-            {
-                font = FontServer.instance[WEMainController.DEFAULT_FONT_KEY];
-            }
-
-            WEImageInfo spriteInfo = atlas[spriteName];
-            if (spriteInfo == null)
-            {
-                CODebugBase<InternalLogChannel>.Warn(InternalLogChannel.UI, "Missing sprite " + spriteName);
-                yield break;
-            }
-            else
-            {
-                while (!CheckTransportLineCoroutineCanContinue())
-                {
-                    yield return null;
-                }
-
-                int height = spriteInfo.Texture.height;
-                int width = spriteInfo.Texture.width;
-                var formTexture = new Texture2D(width, height);
-                formTexture.SetPixels(spriteInfo.Texture.GetPixels());
-                TextureScaler.scale(formTexture, width * 2, height * 2);
-                Texture2D texText = font.DrawTextToTexture(text, 1);
-
-                Color[] formTexturePixels = formTexture.GetPixels();
-                int borderWidth = 8;
-                height *= 2;
-                width *= 2;
-
-
-                int targetWidth = width + borderWidth;
-                int targetHeight = height + borderWidth;
-                TextureScaler.scale(formTexture, targetWidth, targetHeight);
-                Color contrastColor = bgColor.ContrastColor();
-                Color[] targetColorArray = formTexture.GetPixels().Select(x => new Color(contrastColor.r, contrastColor.g, contrastColor.b, x.a)).ToArray();
-                Destroy(formTexture);
-                var targetBorder = new RectOffset(spriteInfo.OffsetBorders.left * 2, spriteInfo.OffsetBorders.right * 2, spriteInfo.OffsetBorders.top * 2, spriteInfo.OffsetBorders.bottom * 2);
-
-                float textBoundHeight = Mathf.Min(height * .66f, (height * .85f) - targetBorder.vertical);
-                float textBoundWidth = ((width * .9f) - targetBorder.horizontal);
-
-                var textAreaSize = new Vector4(
-                    (1f - (textBoundWidth / width)) * (targetBorder.horizontal == 0 ? 0.5f : 1f * targetBorder.left / targetBorder.horizontal) * width,
-                    height * (1f - (textBoundHeight / height)) * (targetBorder.vertical == 0 ? 0.5f : 1f * targetBorder.bottom / targetBorder.vertical),
-                    textBoundWidth,
-                    textBoundHeight);
-
-
-                float proportionTexText = texText.width / texText.height;
-                float proportionTextBound = textBoundWidth / textBoundHeight;
-                float widthReducer = Mathf.Min(proportionTextBound / proportionTexText, 1);
-                float heightReducer = Mathf.Min(widthReducer * 3, 1);
-                float scaleTextTex = Mathf.Min(textAreaSize.z / (texText.width * widthReducer), textAreaSize.w / (texText.height * heightReducer));
-                TextureScaler.scale(texText, Mathf.FloorToInt(texText.width * widthReducer * scaleTextTex), Mathf.FloorToInt(texText.height * heightReducer * scaleTextTex));
-
-                Color[] textColors = texText.GetPixels();
-                int textWidth = texText.width;
-                int textHeight = texText.height;
-                Destroy(texText);
-
-
-                Task<Tuple<Color[], int, int>> task = ThreadHelper.taskDistributor.Dispatch(() =>
-                {
-                    TextureRenderUtils.MergeColorArrays(targetColorArray, targetWidth, formTexturePixels.Select(x => new Color(bgColor.r, bgColor.g, bgColor.b, x.a)).ToArray(), borderWidth / 2, borderWidth / 2, width, height);
-                    Color[] textOutlineArray = textColors.Select(x => new Color(bgColor.r, bgColor.g, bgColor.b, x.a)).ToArray();
-                    int topMerge = Mathf.RoundToInt((textAreaSize.y + ((textBoundHeight - textHeight) / 2)));
-                    int leftMerge = Mathf.RoundToInt((textAreaSize.x + ((textBoundWidth - textWidth) / 2)));
-
-                    for (int i = 0; i <= borderWidth / 2; i++)
-                    {
-                        for (int j = 0; j <= borderWidth / 2; j++)
-                        {
-                            TextureRenderUtils.MergeColorArrays(targetColorArray, targetWidth, textOutlineArray, leftMerge + i + (borderWidth / 4), topMerge + j + (borderWidth / 4), textWidth, textHeight);
-                        }
-                    }
-                    TextureRenderUtils.MergeColorArrays(colorOr: targetColorArray,
-                                                        widthOr: targetWidth,
-                                                        colors: textColors.Select(x => new Color(contrastColor.r, contrastColor.g, contrastColor.b, x.a)).ToArray(),
-                                                        startX: leftMerge + (borderWidth / 2),
-                                                        startY: topMerge + (borderWidth / 2),
-                                                        sizeX: textWidth,
-                                                        sizeY: textHeight);
-                    return Tuple.New(targetColorArray, targetWidth, targetHeight);
-                });
-                while (!task.hasEnded || m_coroutineCounterTL > 1)
-                {
-                    if (task.hasEnded)
-                    {
-                        m_coroutineCounterTL++;
-                    }
-
-                    yield return null;
-                    if (m_lastCoroutineStepTL != SimulationManager.instance.m_currentTickIndex)
-                    {
-                        m_lastCoroutineStepTL = SimulationManager.instance.m_currentTickIndex;
-                        m_coroutineCounterTL = 0;
-                    }
-                }
-                m_coroutineCounterTL++;
-
-                var targetTexture = new Texture2D(task.result.Second, task.result.Third, TextureFormat.RGBA32, false);
-                targetTexture.SetPixels(task.result.First);
-                targetTexture.Apply();
-                yield return targetTexture;
-            }
-        }
         #endregion
 
         #region Geometry

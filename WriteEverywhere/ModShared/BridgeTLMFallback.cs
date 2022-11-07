@@ -192,8 +192,6 @@ namespace WriteEverywhere.ModShared
                 return (((int)tl.Info.m_class.m_subService << 16) + tl.m_lineNumber).ToString("D8");
             }
         }
-
-        public override string GetVehicleIdentifier(ushort vehicleId) => vehicleId.ToString("D5");
         public override string GetLineIdString(WTSLine lineObj) => lineObj.regional ? lineObj.lineId.ToString() : TransportManager.instance.m_lines.m_buffer[lineObj.lineId].m_lineNumber.ToString();
         public override void MapLineDestinations(WTSLine lineObj, ref StopInformation[] cache)
         {

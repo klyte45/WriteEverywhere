@@ -16,7 +16,6 @@ namespace WriteEverywhere.Singleton
     {
 
         private readonly NonSequentialList<SegmentItemCache> m_cacheSegments = new NonSequentialList<SegmentItemCache>();
-        private readonly NonSequentialList<VehicleItemCache> m_cacheVehicles = new NonSequentialList<VehicleItemCache>();
         private readonly NonSequentialList<CityTransportLineItemCache> m_cacheTransportLines = new NonSequentialList<CityTransportLineItemCache>();
         private readonly NonSequentialList<IntercityTransportLineItemCache> m_cacheIntercityTransportLines = new NonSequentialList<IntercityTransportLineItemCache>();
         private readonly NonSequentialList<DistrictItemCache> m_cacheDistricts = new NonSequentialList<DistrictItemCache>();
@@ -29,7 +28,6 @@ namespace WriteEverywhere.Singleton
             coroutineFlagsToErase |= cacheFlags;
             yield return 0;
             var objectsToIterate = m_cacheSegments.Values.Cast<IItemCache>()
-                .Concat(m_cacheVehicles.Values.Cast<IItemCache>())
                 .Concat(m_cacheTransportLines.Values.Cast<IItemCache>())
                 .Concat(m_cacheIntercityTransportLines.Values.Cast<IItemCache>())
                 .Concat(m_cacheDistricts.Values.Cast<IItemCache>())
@@ -100,13 +98,6 @@ namespace WriteEverywhere.Singleton
             }
         }
 
-        public static void ClearCacheVehicleNumber(ushort vehicleID)
-        {
-            if (instance.m_cacheVehicles.TryGetValue(vehicleID, out VehicleItemCache cache))
-            {
-                cache.PurgeCache(CacheErasingFlags.VehicleParameters, new InstanceID { Vehicle = vehicleID });
-            }
-        }
 
         public static void ClearCacheSegmentSeed() => DoClearCacheCoroutineStart(CacheErasingFlags.SegmentNameParam | CacheErasingFlags.SegmentSize);
 
@@ -160,7 +151,6 @@ namespace WriteEverywhere.Singleton
         }
 
         public SegmentItemCache GetSegment(ushort id) => SafeGetter(m_cacheSegments, id);
-        public VehicleItemCache GetVehicle(ushort id) => SafeGetter(m_cacheVehicles, id);
         public ITransportLineItemCache GetATransportLine(WTSLine id) => id.regional ? GetIntercityTransportLine(id.lineId) : (ITransportLineItemCache)GetCityTransportLine(id.lineId);
         public CityTransportLineItemCache GetCityTransportLine(ushort id) => SafeGetter(m_cacheTransportLines, id);
         public IntercityTransportLineItemCache GetIntercityTransportLine(ushort id) => SafeGetter(m_cacheIntercityTransportLines, id);

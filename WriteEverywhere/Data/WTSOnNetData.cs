@@ -54,10 +54,11 @@ namespace WriteEverywhere.Data
 
 
 
-        public override void LoadDefaults(ISerializableData serializableData)
+        public override WTSOnNetData LoadDefaults(ISerializableData serializableData)
         {
             base.LoadDefaults(serializableData);
             m_boardsContainers = new WriteOnNetGroupXml[NetManager.MAX_SEGMENT_COUNT];
+            return null;
         }
 
         [XmlAttribute("defaultFont")]

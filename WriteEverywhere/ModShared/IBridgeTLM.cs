@@ -15,7 +15,6 @@ namespace WriteEverywhere.ModShared
         public abstract ushort GetStopBuildingInternal(ushort stopId, WTSLine lineObj);
         public abstract string GetStopName(ushort stopId, WTSLine lineObj);
         public abstract string GetLineSortString(WTSLine lineObj);
-        public abstract string GetVehicleIdentifier(ushort vehicleId);
         public abstract string GetLineIdString(WTSLine lineObj);
         public abstract void MapLineDestinations(WTSLine lineObj, ref StopInformation[] cacheToUpdate);
         public abstract WTSLine GetVehicleLine(ushort vehicleId);
