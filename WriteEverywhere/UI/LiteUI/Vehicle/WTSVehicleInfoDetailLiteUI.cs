@@ -217,46 +217,46 @@ namespace WriteEverywhere.UI
                                 if (!SceneUtils.IsAssetEditor)
                                 {
                                     GUILayout.FlexibleSpace();
-                                    GUIKwyttoCommons.SquareTextureButton(waitingGrab ? m_grabModeWaiting : m_grabModel, waitingGrab ? Str.we_vehicleEditor_waitingGrabVehicle : Str.we_vehicleEditor_pickOrSpawnAVehicle, GrabUnit);
+                                    GUIKwyttoCommons.SquareTextureButton2(waitingGrab ? m_grabModeWaiting : m_grabModel, waitingGrab ? Str.we_vehicleEditor_waitingGrabVehicle : Str.we_vehicleEditor_pickOrSpawnAVehicle, GrabUnit);
                                     GUILayout.FlexibleSpace();
-                                    GUIKwyttoCommons.SquareTextureButton(m_goToFile, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_OPENGLOBALSFOLDER, GoToGlobalFolder);
+                                    GUIKwyttoCommons.SquareTextureButton2(m_goToFile, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_OPENGLOBALSFOLDER, GoToGlobalFolder);
                                 }
-                                GUIKwyttoCommons.SquareTextureButton(m_reloadFiles, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_RELOADDESCRIPTORS, ReloadFiles);
+                                GUIKwyttoCommons.SquareTextureButton2(m_reloadFiles, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_RELOADDESCRIPTORS, ReloadFiles);
                                 GUILayout.FlexibleSpace();
-                                GUIKwyttoCommons.SquareTextureButton(m_createNew, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_NEWINCITY, CreateNew, !isEditable);
+                                GUIKwyttoCommons.SquareTextureButton2(m_createNew, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_NEWINCITY, CreateNew, !isEditable);
                                 if (!SceneUtils.IsAssetEditor)
                                 {
-                                    GUIKwyttoCommons.SquareTextureButton(m_deleteFromCity, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_DELETEFROMCITY, DeleteFromCity, m_currentSource == ConfigurationSource.CITY);
-                                    GUIKwyttoCommons.SquareTextureButton(m_cloneToCity, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_COPYTOCITY, CloneToCity, m_currentSource == ConfigurationSource.ASSET || m_currentSource == ConfigurationSource.GLOBAL);
+                                    GUIKwyttoCommons.SquareTextureButton2(m_deleteFromCity, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_DELETEFROMCITY, DeleteFromCity, m_currentSource == ConfigurationSource.CITY);
+                                    GUIKwyttoCommons.SquareTextureButton2(m_cloneToCity, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_COPYTOCITY, CloneToCity, m_currentSource == ConfigurationSource.ASSET || m_currentSource == ConfigurationSource.GLOBAL);
                                 }
                                 else
                                 {
-                                    GUIKwyttoCommons.SquareTextureButton(m_deleteFromCity, Str.we_assetEditor_deleteFromAsset, DeleteFromAsset, m_currentSource == ConfigurationSource.ASSET);
+                                    GUIKwyttoCommons.SquareTextureButton2(m_deleteFromCity, Str.we_assetEditor_deleteFromAsset, DeleteFromAsset, m_currentSource == ConfigurationSource.ASSET);
                                 }
                                 GUILayout.FlexibleSpace();
                                 if (SceneUtils.IsAssetEditor)
                                 {
-                                    GUIKwyttoCommons.SquareTextureButton(m_save, Str.we_assetEditor_saveDefaultSkin, ExportAsset, m_currentSource == ConfigurationSource.ASSET);
+                                    GUIKwyttoCommons.SquareTextureButton2(m_save, Str.we_assetEditor_saveDefaultSkin, ExportAsset, m_currentSource == ConfigurationSource.ASSET);
                                 }
                                 else
                                 {
-                                    GUIKwyttoCommons.SquareTextureButton(m_exportGlobal, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_EXPORTASGLOBAL, ExportGlobal, m_currentSource == ConfigurationSource.CITY);
-                                    GUIKwyttoCommons.SquareTextureButton(m_exportAsset, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_EXPORTTOASSETFOLDER, ExportAsset, m_currentSource == ConfigurationSource.CITY && m_currentInfo.name.EndsWith("_Data"));
+                                    GUIKwyttoCommons.SquareTextureButton2(m_exportGlobal, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_EXPORTASGLOBAL, ExportGlobal, m_currentSource == ConfigurationSource.CITY);
+                                    GUIKwyttoCommons.SquareTextureButton2(m_exportAsset, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_EXPORTTOASSETFOLDER, ExportAsset, m_currentSource == ConfigurationSource.CITY && m_currentInfo.name.EndsWith("_Data"));
                                 }
-                                GUIKwyttoCommons.SquareTextureButton(m_save, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_SAVESKIN, ExportSkin, m_currentSource == ConfigurationSource.SKIN);
+                                GUIKwyttoCommons.SquareTextureButton2(m_save, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_SAVESKIN, ExportSkin, m_currentSource == ConfigurationSource.SKIN);
                                 GUILayout.FlexibleSpace();
-                                GUIKwyttoCommons.SquareTextureButton(m_copy, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_COPYTOCLIPBOARD, CopyToClipboard, m_currentSource != ConfigurationSource.NONE);
-                                GUIKwyttoCommons.SquareTextureButton(m_paste, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_PASTEFROMCLIPBOARD, PasteFromClipboard, isEditable && !(m_clipboard is null));
+                                GUIKwyttoCommons.SquareTextureButton2(m_copy, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_COPYTOCLIPBOARD, CopyToClipboard, m_currentSource != ConfigurationSource.NONE);
+                                GUIKwyttoCommons.SquareTextureButton2(m_paste, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_PASTEFROMCLIPBOARD, PasteFromClipboard, isEditable && !(m_clipboard is null));
                                 if (isEditable)
                                 {
                                     GUILayout.FlexibleSpace();
-                                    GUIKwyttoCommons.SquareTextureButton(m_importLib, Str.WTS_IMPORTLAYOUT_LIB, ImportLayout);
-                                    GUIKwyttoCommons.SquareTextureButton(m_exportLib, Str.WTS_EXPORTLAYOUT_LIB, ExportLayout);
+                                    GUIKwyttoCommons.SquareTextureButton2(m_importLib, Str.WTS_IMPORTLAYOUT_LIB, ImportLayout);
+                                    GUIKwyttoCommons.SquareTextureButton2(m_exportLib, Str.WTS_EXPORTLAYOUT_LIB, ExportLayout);
                                 }
                                 else if (m_currentSource != ConfigurationSource.NONE)
                                 {
                                     GUILayout.FlexibleSpace();
-                                    GUIKwyttoCommons.SquareTextureButton(m_exportLib, Str.WTS_EXPORTLAYOUT_LIB, ExportLayout);
+                                    GUIKwyttoCommons.SquareTextureButton2(m_exportLib, Str.WTS_EXPORTLAYOUT_LIB, ExportLayout);
                                 }
                             }
                             else

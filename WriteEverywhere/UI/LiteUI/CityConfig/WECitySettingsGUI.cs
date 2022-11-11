@@ -30,7 +30,7 @@ namespace WriteEverywhere.UI
 
         protected override void DrawWindow(Vector2 size)
         {
-            m_tabsContainer.DrawListTabs(new Rect(default, size), 200);
+            m_tabsContainer.DrawListTabs2(new Rect(default, size), 200);
         }
         protected override void OnWindowOpened()
         {

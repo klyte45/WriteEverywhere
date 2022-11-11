@@ -172,13 +172,13 @@ namespace WriteEverywhere.UI
                 {
                     GUI.tooltip = "";
                     GUILayout.FlexibleSpace();
-                    GUIKwyttoCommons.SquareTextureButton(m_deleteItem, Str.WTS_DELETETEXTITEM, m_onDelete, canEdit);
+                    GUIKwyttoCommons.SquareTextureButton2(m_deleteItem, Str.WTS_DELETETEXTITEM, m_onDelete, canEdit);
                     GUILayout.FlexibleSpace();
-                    GUIKwyttoCommons.SquareTextureButton(m_copy, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_COPYTOCLIPBOARD, () => CopyToClipboard(item));
-                    GUIKwyttoCommons.SquareTextureButton(m_paste, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_PASTEFROMCLIPBOARD, () => m_onImport(XmlUtils.DefaultXmlDeserialize<WriteOnBuildingPropXml>(m_clipboard), false), canEdit && !(m_clipboard is null));
+                    GUIKwyttoCommons.SquareTextureButton2(m_copy, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_COPYTOCLIPBOARD, () => CopyToClipboard(item));
+                    GUIKwyttoCommons.SquareTextureButton2(m_paste, Str.WTS_BUILDINGEDITOR_BUTTONROWACTION_PASTEFROMCLIPBOARD, () => m_onImport(XmlUtils.DefaultXmlDeserialize<WriteOnBuildingPropXml>(m_clipboard), false), canEdit && !(m_clipboard is null));
                     GUILayout.FlexibleSpace();
-                    GUIKwyttoCommons.SquareTextureButton(m_importLib, Str.WTS_IMPORTLAYOUT_LIB, xmlLibItem.GoToImport, canEdit); ;
-                    GUIKwyttoCommons.SquareTextureButton(m_exportLib, Str.WTS_EXPORTLAYOUT_LIB, xmlLibItem.GoToExport);
+                    GUIKwyttoCommons.SquareTextureButton2(m_importLib, Str.WTS_IMPORTLAYOUT_LIB, xmlLibItem.GoToImport, canEdit); ;
+                    GUIKwyttoCommons.SquareTextureButton2(m_exportLib, Str.WTS_EXPORTLAYOUT_LIB, xmlLibItem.GoToExport);
                 }
                 else
                 {

@@ -74,7 +74,7 @@ namespace WriteEverywhere.UI
                                 KFileUtils.EnsureFolderCreation(path);
                                 ColossalFramework.Utils.OpenInFileBrowser(path);
                             }
-                            GUIKwyttoCommons.SquareTextureButton(m_reload, Str.we_assetEditor_reloadAssetImages, () => ModInstance.Controller.AtlasesLibrary.ReloadAssetImages());
+                            GUIKwyttoCommons.SquareTextureButton2(m_reload, Str.we_assetEditor_reloadAssetImages, () => ModInstance.Controller.AtlasesLibrary.ReloadAssetImages());
                         }
                     }
                     break;
