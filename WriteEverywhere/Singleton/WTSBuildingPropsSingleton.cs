@@ -380,6 +380,7 @@ namespace WriteEverywhere.Singleton
         }
         private void UpdateLinesBuilding(ushort buildingID, string refName, WriteOnBuildingXml propDescriptor, ref Building data, ref Matrix4x4 refMatrix)
         {
+            if (refName is null) return;
             if ((data.Info.m_buildingAI is TransportStationAI || data.Info.m_buildingAI is OutsideConnectionAI) && (m_platformToLine[buildingID] == null || (m_buildingLastUpdateLines[buildingID] != m_lastUpdateLines && m_platformToLine[buildingID].Length > 0)))
             {
                 if (!m_buildingStopsDescriptor.ContainsKey(refName))

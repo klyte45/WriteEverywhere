@@ -159,6 +159,7 @@ namespace WriteEverywhere.Singleton
         public BuildingItemCache GetBuilding(ushort id) => SafeGetter(m_cacheBuildings, id);
         public FormattableString AsFormattable(string s)
         {
+            s = s ?? "";
             if (!m_cacheStringsFormattable.ContainsKey(s))
             {
                 m_cacheStringsFormattable[s] = new FormattableString(s);
