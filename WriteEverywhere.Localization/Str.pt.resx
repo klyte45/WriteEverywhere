@@ -118,156 +118,156 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="root_modDescription" xml:space="preserve">
-    <value>Allow to write text in-game to simulate stuff like boards or signs.</value>
+    <value>Permite escrever texto em jogo para simular coisas como letreiros ou placas.</value>
   </data>
   <data name="we_PivotPosition__Left" xml:space="preserve">
-    <value>Left side</value>
+    <value>Lado esquerdo</value>
   </data>
   <data name="we_PivotPosition__Right" xml:space="preserve">
-    <value>Right side</value>
+    <value>Lado direito</value>
   </data>
   <data name="we_PivotPosition__Center" xml:space="preserve">
-    <value>Center (looking front)</value>
+    <value>Centro (olhando para frente)</value>
   </data>
   <data name="we_PivotPosition__LeftInvert" xml:space="preserve">
-    <value>Left side (inverse traffic)</value>
+    <value>Lado esquerdo (tráfego inverso)</value>
   </data>
   <data name="we_PivotPosition__RightInvert" xml:space="preserve">
-    <value>Right side (inverse traffic)</value>
+    <value>Lado direito (tráfego inverso)</value>
   </data>
   <data name="we_PivotPosition__CenterInvert" xml:space="preserve">
-    <value>Center (looking behind)</value>
+    <value>Centro (olhando para trás)</value>
   </data>
   <data name="we_PivotPosition__CenterLookingLeft" xml:space="preserve">
-    <value>Center (looking left)</value>
+    <value>Centro (olhando para esquerda)</value>
   </data>
   <data name="we_PivotPosition__CenterLookingRight" xml:space="preserve">
-    <value>Center (looking right)</value>
+    <value>Centro (olhando para a direita)</value>
   </data>
   <data name="we_roadEditor_pivotPosition" xml:space="preserve">
-    <value>Pivot Position</value>
+    <value>Alterar Posição</value>
   </data>
   <data name="we_roadEditor_lockCameraAtInstance" xml:space="preserve">
-    <value>Lock camera at instance # (starting at 0)</value>
+    <value>Bloquear câmera na instância # (começando no 0)</value>
   </data>
   <data name="we_Enum__UIHorizontalAlignment_Center" xml:space="preserve">
-    <value>Center</value>
+    <value>Centro</value>
   </data>
   <data name="we_Enum__UIHorizontalAlignment_Right" xml:space="preserve">
-    <value>Right</value>
+    <value>Direita</value>
   </data>
   <data name="we_Enum__UIHorizontalAlignment_Left" xml:space="preserve">
-    <value>Left</value>
+    <value>Esquerda</value>
   </data>
   <data name="we_Enum__FontClass_Regular" xml:space="preserve">
-    <value>Regular</value>
+    <value>Normal</value>
   </data>
   <data name="we_Enum__FontClass_PublicTransport" xml:space="preserve">
-    <value>Public Transport</value>
+    <value>Transporte Público</value>
   </data>
   <data name="we_Enum__FontClass_ElectronicBoards" xml:space="preserve">
-    <value>Electronic Boards</value>
+    <value>Quadros Eletrônicos</value>
   </data>
   <data name="we_Enum__FontClass_Stencil" xml:space="preserve">
-    <value>Stencil</value>
+    <value>Estêncil</value>
   </data>
   <data name="we_Enum__FontClass_HighwayShields" xml:space="preserve">
-    <value>Highway Shields</value>
+    <value>Placas Rodoviárias</value>
   </data>
   <data name="we_Enum__BlinkType_Custom" xml:space="preserve">
-    <value>Custom</value>
+    <value>Personalizado</value>
   </data>
   <data name="we_Enum__MaterialType_OPAQUE" xml:space="preserve">
-    <value>Opaque</value>
+    <value>Opaco</value>
   </data>
   <data name="we_Enum__MaterialType_DAYNIGHT" xml:space="preserve">
-    <value>Day/Night illumination</value>
+    <value>Iluminação do dia/noite</value>
   </data>
   <data name="we_Enum__MaterialType_FLAGS" xml:space="preserve">
-    <value>By flags</value>
+    <value>Por bandeiras</value>
   </data>
   <data name="we_Enum__MaterialType_BRIGHT" xml:space="preserve">
-    <value>Always bright</value>
+    <value>Sempre brilhante</value>
   </data>
   <data name="we_Enum__BlinkType_None" xml:space="preserve">
-    <value>None</value>
+    <value>Nenhum</value>
   </data>
   <data name="we_Enum__BlinkType_Blink_050_050" xml:space="preserve">
-    <value>Blink 500ms</value>
+    <value>Piscar 500ms</value>
   </data>
   <data name="we_Enum__BlinkType_MildFade_0125_0125" xml:space="preserve">
-    <value>Mild fade</value>
+    <value>Desvanecer suave</value>
   </data>
   <data name="we_Enum__BlinkType_MediumFade_500_500" xml:space="preserve">
-    <value>Medium fade</value>
+    <value>Desvanecer médio</value>
   </data>
   <data name="we_Enum__BlinkType_StrongBlaze_0125_0125" xml:space="preserve">
-    <value>Strong blaze (neon)</value>
+    <value>Brilho forte (neon)</value>
   </data>
   <data name="we_Enum__BlinkType_StrongFade_250_250" xml:space="preserve">
-    <value>Strong fade</value>
+    <value>Desvanecer forte</value>
   </data>
   <data name="we_Enum__BlinkType_Blink_025_025" xml:space="preserve">
-    <value>Blink 250ms</value>
+    <value>Piscar 250ms</value>
   </data>
   <data name="we_roadEditor_windowTitle" xml:space="preserve">
-    <value>On Net Editor</value>
+    <value>Editor Na Via</value>
   </data>
   <data name="we_settings_windowTitle" xml:space="preserve">
-    <value>Settings</value>
+    <value>Configurações</value>
   </data>
   <data name="we_settings_folders" xml:space="preserve">
-    <value>Custom file folders</value>
+    <value>Pastas de arquivos personalizadas</value>
   </data>
   <data name="we_settings_reloadFonts" xml:space="preserve">
-    <value>Reload fonts</value>
+    <value>Recarregar fontes</value>
   </data>
   <data name="we_settings_quality" xml:space="preserve">
-    <value>Rendering quality</value>
+    <value>Qualidade de renderização</value>
   </data>
   <data name="we_settings_btnLabel" xml:space="preserve">
-    <value>Mod settings</value>
+    <value>Configurações do mod</value>
   </data>
   <data name="we_settings_applyUiSettings" xml:space="preserve">
-    <value>Apply UI Settings</value>
+    <value>Aplicar Configurações de Interface</value>
   </data>
   <data name="we_settings_goToFolderShort" xml:space="preserve">
-    <value>Go To</value>
+    <value>Ir Para</value>
   </data>
   <data name="we_settings_ui" xml:space="preserve">
-    <value>UI</value>
+    <value>Interface</value>
   </data>
   <data name="we_settings_uiScale" xml:space="preserve">
-    <value>UI general scale</value>
+    <value>Escala geral da interface</value>
   </data>
   <data name="we_generalLib_exportFullList" xml:space="preserve">
-    <value>Export whole list to library</value>
+    <value>Exportar toda a lista para a biblioteca</value>
   </data>
   <data name="we_generalLib_importAdditive" xml:space="preserve">
-    <value>Import adding all items into current list</value>
+    <value>Importar adicionando todos os itens na lista atual</value>
   </data>
   <data name="we_generalLib_importFullList" xml:space="preserve">
-    <value>Import whole list from library</value>
+    <value>Importar toda a lista da biblioteca</value>
   </data>
   <data name="we_roadEditor_importAdding" xml:space="preserve">
-    <value>Import items into list</value>
+    <value>Importar itens na lista</value>
   </data>
   <data name="we_roadEditor_importReplacing" xml:space="preserve">
-    <value>Replace items from lib</value>
+    <value>Substituir itens da biblioteca</value>
   </data>
   <data name="we_generalTextEditor_useBackground" xml:space="preserve">
-    <value>Create background</value>
+    <value>Criar plano de fundo</value>
   </data>
   <data name="we_generalTextEditor_usePrefabColor" xml:space="preserve">
-    <value>Use prefab color</value>
+    <value>Usar cor pré-definida</value>
   </data>
   <data name="we_roadEditor_verticalAlignmentBoxText" xml:space="preserve">
-    <value>Vertical alignment relative to base line
-(0 = below with baseline; 1 = top with capital line)</value>
+    <value>Alinhamento vertical em relação à linha de base
+(0 = abaixo com linha de base; 1 = superior com letras maiúsculas)</value>
   </data>
   <data name="we_roadEditor_verticalAlignmentLineText" xml:space="preserve">
-    <value>Vertical alignment relative to the line when resizing
-(0 = below with baseline; 1 = top with capital line)</value>
+    <value>Alinhamento vertical em relação à linha ao redimensionar
+(0 = abaixo com linha de base; 1 = superior com letras maiúsculas)</value>
   </data>
   <data name="we_generalTextEditor_backfaceFontColorIsSameAsFrontFace" xml:space="preserve">
     <value>Use front face color in the back face</value>
@@ -358,13 +358,13 @@ Try force spawning anywhere, like setting the model to a transport line.</value>
     <value>The default fonts will be used when none is selected in a layout, when relative to Building, Vehicle or Placing on network modes; or can be selected as font class for the other fields below.</value>
   </data>
   <data name="we_settings_defaultFonts" xml:space="preserve">
-    <value>Default fonts</value>
+    <value>Fontes padrão</value>
   </data>
   <data name="we_settings_defaultFontsAvailableOnlyWhenCityLoaded" xml:space="preserve">
     <value>Default fonts settings are available only when a city is loaded</value>
   </data>
   <data name="we_buildingEditor_windowTitle" xml:space="preserve">
-    <value>Building editor</value>
+    <value>Editor de construção</value>
   </data>
   <data name="we_buildingEditor_subBuildingNumTitle" xml:space="preserve">
     <value>SubBuilding #{0}</value>
@@ -376,7 +376,7 @@ Try force spawning anywhere, like setting the model to a transport line.</value>
     <value>Pick A Building</value>
   </data>
   <data name="we_buildingEditor_selectBuilding" xml:space="preserve">
-    <value>Select building</value>
+    <value>Selecionar edifício</value>
   </data>
   <data name="we_textEditor_needPropSelectedWarning" xml:space="preserve">
     <value>Select a prop before editing texts!</value>
