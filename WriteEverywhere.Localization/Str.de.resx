@@ -211,28 +211,28 @@
     <value>Blinkend 250ms</value>
   </data>
   <data name="we_roadEditor_windowTitle" xml:space="preserve">
-    <value>On Net Editor</value>
+    <value>Im Netzwerk-Editor</value>
   </data>
   <data name="we_settings_windowTitle" xml:space="preserve">
-    <value>Settings</value>
+    <value>Einstellungen</value>
   </data>
   <data name="we_settings_folders" xml:space="preserve">
-    <value>Custom file folders</value>
+    <value>Eigene Dateien-Ordner</value>
   </data>
   <data name="we_settings_reloadFonts" xml:space="preserve">
-    <value>Reload fonts</value>
+    <value>Schriftarten neu laden</value>
   </data>
   <data name="we_settings_quality" xml:space="preserve">
-    <value>Rendering quality</value>
+    <value>Rendering-Qualität</value>
   </data>
   <data name="we_settings_btnLabel" xml:space="preserve">
-    <value>Mod settings</value>
+    <value>Mod-Einstellungen</value>
   </data>
   <data name="we_settings_applyUiSettings" xml:space="preserve">
-    <value>Apply UI Settings</value>
+    <value>UI-Einstellungen anwenden</value>
   </data>
   <data name="we_settings_goToFolderShort" xml:space="preserve">
-    <value>Go To</value>
+    <value>Gehe zu</value>
   </data>
   <data name="we_settings_ui" xml:space="preserve">
     <value>UI</value>
