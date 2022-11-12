@@ -121,10 +121,10 @@
     <value>Allow to write text in-game to simulate stuff like boards or signs.</value>
   </data>
   <data name="we_PivotPosition__Left" xml:space="preserve">
-    <value>Left side</value>
+    <value>Côté gauche</value>
   </data>
   <data name="we_PivotPosition__Right" xml:space="preserve">
-    <value>Right side</value>
+    <value>Côté droit</value>
   </data>
   <data name="we_PivotPosition__Center" xml:space="preserve">
     <value>Center (looking front)</value>
@@ -151,13 +151,13 @@
     <value>Lock camera at instance # (starting at 0)</value>
   </data>
   <data name="we_Enum__UIHorizontalAlignment_Center" xml:space="preserve">
-    <value>Center</value>
+    <value>Centré</value>
   </data>
   <data name="we_Enum__UIHorizontalAlignment_Right" xml:space="preserve">
-    <value>Right</value>
+    <value>À droite</value>
   </data>
   <data name="we_Enum__UIHorizontalAlignment_Left" xml:space="preserve">
-    <value>Left</value>
+    <value>À gauche</value>
   </data>
   <data name="we_Enum__FontClass_Regular" xml:space="preserve">
     <value>Regular</value>
@@ -166,13 +166,13 @@
     <value>Public Transport</value>
   </data>
   <data name="we_Enum__FontClass_ElectronicBoards" xml:space="preserve">
-    <value>Electronic Boards</value>
+    <value>Girouette</value>
   </data>
   <data name="we_Enum__FontClass_Stencil" xml:space="preserve">
     <value>Stencil</value>
   </data>
   <data name="we_Enum__FontClass_HighwayShields" xml:space="preserve">
-    <value>Highway Shields</value>
+    <value>Symbole d'autoroute</value>
   </data>
   <data name="we_Enum__BlinkType_Custom" xml:space="preserve">
     <value>Custom</value>
@@ -181,7 +181,7 @@
     <value>Opaque</value>
   </data>
   <data name="we_Enum__MaterialType_DAYNIGHT" xml:space="preserve">
-    <value>Day/Night illumination</value>
+    <value>Éclairage jour/nuit</value>
   </data>
   <data name="we_Enum__MaterialType_FLAGS" xml:space="preserve">
     <value>By flags</value>
@@ -190,7 +190,7 @@
     <value>Always bright</value>
   </data>
   <data name="we_Enum__BlinkType_None" xml:space="preserve">
-    <value>None</value>
+    <value>Aucun</value>
   </data>
   <data name="we_Enum__BlinkType_Blink_050_050" xml:space="preserve">
     <value>Blink 500ms</value>
@@ -214,49 +214,49 @@
     <value>On Net Editor</value>
   </data>
   <data name="we_settings_windowTitle" xml:space="preserve">
-    <value>Settings</value>
+    <value>Paramètres</value>
   </data>
   <data name="we_settings_folders" xml:space="preserve">
-    <value>Custom file folders</value>
+    <value>Dossiers de fichiers personnalisés</value>
   </data>
   <data name="we_settings_reloadFonts" xml:space="preserve">
-    <value>Reload fonts</value>
+    <value>Recharger les polices</value>
   </data>
   <data name="we_settings_quality" xml:space="preserve">
-    <value>Rendering quality</value>
+    <value>Qualité de rendu</value>
   </data>
   <data name="we_settings_btnLabel" xml:space="preserve">
-    <value>Mod settings</value>
+    <value>Paramètres du mod</value>
   </data>
   <data name="we_settings_applyUiSettings" xml:space="preserve">
-    <value>Apply UI Settings</value>
+    <value>Appliquer les paramètres d'interface</value>
   </data>
   <data name="we_settings_goToFolderShort" xml:space="preserve">
-    <value>Go To</value>
+    <value>Aller à</value>
   </data>
   <data name="we_settings_ui" xml:space="preserve">
-    <value>UI</value>
+    <value>Interface utilisateur</value>
   </data>
   <data name="we_settings_uiScale" xml:space="preserve">
-    <value>UI general scale</value>
+    <value>Échelle de l'interface</value>
   </data>
   <data name="we_generalLib_exportFullList" xml:space="preserve">
-    <value>Export whole list to library</value>
+    <value>Exporter toute la liste vers la bibliothèque</value>
   </data>
   <data name="we_generalLib_importAdditive" xml:space="preserve">
-    <value>Import adding all items into current list</value>
+    <value>Importer tous les éléments dans la liste actuelle</value>
   </data>
   <data name="we_generalLib_importFullList" xml:space="preserve">
-    <value>Import whole list from library</value>
+    <value>Importer toute la liste depuis la bibliothèque</value>
   </data>
   <data name="we_roadEditor_importAdding" xml:space="preserve">
-    <value>Import items into list</value>
+    <value>Importer des éléments dans la liste</value>
   </data>
   <data name="we_roadEditor_importReplacing" xml:space="preserve">
-    <value>Replace items from lib</value>
+    <value>Remplacer les éléments de la bibliothèque</value>
   </data>
   <data name="we_generalTextEditor_useBackground" xml:space="preserve">
-    <value>Create background</value>
+    <value>Créer un arrière-plan</value>
   </data>
   <data name="we_generalTextEditor_usePrefabColor" xml:space="preserve">
     <value>Use prefab color</value>
