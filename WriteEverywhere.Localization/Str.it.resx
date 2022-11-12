@@ -262,12 +262,12 @@
     <value>Usa colore prefabbricato</value>
   </data>
   <data name="we_roadEditor_verticalAlignmentBoxText" xml:space="preserve">
-    <value>Vertical alignment relative to base line
-(0 = below with baseline; 1 = top with capital line)</value>
+    <value>Allineamento verticale rispetto a linea di riferimento
+(0 = sotto linea di riferimento; 1 = sopra linea di riferimento)</value>
   </data>
   <data name="we_roadEditor_verticalAlignmentLineText" xml:space="preserve">
-    <value>Vertical alignment relative to the line when resizing
-(0 = below with baseline; 1 = top with capital line)</value>
+    <value>Allineamento verticale rispetto alla linea durante il ridimensionamento
+(0 = sotto linea di riferimento; 1 = sopra linea di riferimento)</value>
   </data>
   <data name="we_generalTextEditor_backfaceFontColorIsSameAsFrontFace" xml:space="preserve">
     <value>Use front face color in the back face</value>
