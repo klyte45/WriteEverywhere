@@ -118,156 +118,156 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="root_modDescription" xml:space="preserve">
-    <value>Allow to write text in-game to simulate stuff like boards or signs.</value>
+    <value>標識や看板などをシミュレートするために、ゲーム内で直接テキストが記述出来ます。</value>
   </data>
   <data name="we_PivotPosition__Left" xml:space="preserve">
-    <value>Left side</value>
+    <value>左側</value>
   </data>
   <data name="we_PivotPosition__Right" xml:space="preserve">
-    <value>Right side</value>
+    <value>右側</value>
   </data>
   <data name="we_PivotPosition__Center" xml:space="preserve">
-    <value>Center (looking front)</value>
+    <value>中央 (正面から見て)</value>
   </data>
   <data name="we_PivotPosition__LeftInvert" xml:space="preserve">
-    <value>Left side (inverse traffic)</value>
+    <value>左側 (逆の通行)</value>
   </data>
   <data name="we_PivotPosition__RightInvert" xml:space="preserve">
-    <value>Right side (inverse traffic)</value>
+    <value>右側 (逆の通行)</value>
   </data>
   <data name="we_PivotPosition__CenterInvert" xml:space="preserve">
-    <value>Center (looking behind)</value>
+    <value>中央 (後方から見て)</value>
   </data>
   <data name="we_PivotPosition__CenterLookingLeft" xml:space="preserve">
-    <value>Center (looking left)</value>
+    <value>中央 (左から見て)</value>
   </data>
   <data name="we_PivotPosition__CenterLookingRight" xml:space="preserve">
-    <value>Center (looking right)</value>
+    <value>中央 (右から見て)</value>
   </data>
   <data name="we_roadEditor_pivotPosition" xml:space="preserve">
-    <value>Pivot Position</value>
+    <value>ピボットの位置</value>
   </data>
   <data name="we_roadEditor_lockCameraAtInstance" xml:space="preserve">
-    <value>Lock camera at instance # (starting at 0)</value>
+    <value>カメラをインスタンス # (0から始まる) にロック</value>
   </data>
   <data name="we_Enum__UIHorizontalAlignment_Center" xml:space="preserve">
-    <value>Center</value>
+    <value>中央</value>
   </data>
   <data name="we_Enum__UIHorizontalAlignment_Right" xml:space="preserve">
-    <value>Right</value>
+    <value>右</value>
   </data>
   <data name="we_Enum__UIHorizontalAlignment_Left" xml:space="preserve">
-    <value>Left</value>
+    <value>左</value>
   </data>
   <data name="we_Enum__FontClass_Regular" xml:space="preserve">
-    <value>Regular</value>
+    <value>標準</value>
   </data>
   <data name="we_Enum__FontClass_PublicTransport" xml:space="preserve">
-    <value>Public Transport</value>
+    <value>公共交通</value>
   </data>
   <data name="we_Enum__FontClass_ElectronicBoards" xml:space="preserve">
-    <value>Electronic Boards</value>
+    <value>電子ボード</value>
   </data>
   <data name="we_Enum__FontClass_Stencil" xml:space="preserve">
-    <value>Stencil</value>
+    <value>ステンシル</value>
   </data>
   <data name="we_Enum__FontClass_HighwayShields" xml:space="preserve">
-    <value>Highway Shields</value>
+    <value>高速道路のシールド (標識)</value>
   </data>
   <data name="we_Enum__BlinkType_Custom" xml:space="preserve">
-    <value>Custom</value>
+    <value>カスタム</value>
   </data>
   <data name="we_Enum__MaterialType_OPAQUE" xml:space="preserve">
-    <value>Opaque</value>
+    <value>不透明</value>
   </data>
   <data name="we_Enum__MaterialType_DAYNIGHT" xml:space="preserve">
-    <value>Day/Night illumination</value>
+    <value>昼間/夜間の照明</value>
   </data>
   <data name="we_Enum__MaterialType_FLAGS" xml:space="preserve">
-    <value>By flags</value>
+    <value>フラグ順</value>
   </data>
   <data name="we_Enum__MaterialType_BRIGHT" xml:space="preserve">
-    <value>Always bright</value>
+    <value>常に点灯</value>
   </data>
   <data name="we_Enum__BlinkType_None" xml:space="preserve">
-    <value>None</value>
+    <value>無し</value>
   </data>
   <data name="we_Enum__BlinkType_Blink_050_050" xml:space="preserve">
-    <value>Blink 500ms</value>
+    <value>500msの点滅</value>
   </data>
   <data name="we_Enum__BlinkType_MildFade_0125_0125" xml:space="preserve">
-    <value>Mild fade</value>
+    <value>軽度のフェード</value>
   </data>
   <data name="we_Enum__BlinkType_MediumFade_500_500" xml:space="preserve">
-    <value>Medium fade</value>
+    <value>中程度のフェード</value>
   </data>
   <data name="we_Enum__BlinkType_StrongBlaze_0125_0125" xml:space="preserve">
-    <value>Strong blaze (neon)</value>
+    <value>強い炎(ネオン)</value>
   </data>
   <data name="we_Enum__BlinkType_StrongFade_250_250" xml:space="preserve">
-    <value>Strong fade</value>
+    <value>強力なフェード</value>
   </data>
   <data name="we_Enum__BlinkType_Blink_025_025" xml:space="preserve">
-    <value>Blink 250ms</value>
+    <value>250msの点滅</value>
   </data>
   <data name="we_roadEditor_windowTitle" xml:space="preserve">
-    <value>On Net Editor</value>
+    <value>ネットエディタ上</value>
   </data>
   <data name="we_settings_windowTitle" xml:space="preserve">
-    <value>Settings</value>
+    <value>設定</value>
   </data>
   <data name="we_settings_folders" xml:space="preserve">
-    <value>Custom file folders</value>
+    <value>カスタムファイルのフォルダ</value>
   </data>
   <data name="we_settings_reloadFonts" xml:space="preserve">
-    <value>Reload fonts</value>
+    <value>フォントをリロード</value>
   </data>
   <data name="we_settings_quality" xml:space="preserve">
-    <value>Rendering quality</value>
+    <value>レンダリングの品質</value>
   </data>
   <data name="we_settings_btnLabel" xml:space="preserve">
-    <value>Mod settings</value>
+    <value>MODの設定</value>
   </data>
   <data name="we_settings_applyUiSettings" xml:space="preserve">
-    <value>Apply UI Settings</value>
+    <value>UI の設定を適用</value>
   </data>
   <data name="we_settings_goToFolderShort" xml:space="preserve">
-    <value>Go To</value>
+    <value>移動</value>
   </data>
   <data name="we_settings_ui" xml:space="preserve">
     <value>UI</value>
   </data>
   <data name="we_settings_uiScale" xml:space="preserve">
-    <value>UI general scale</value>
+    <value>UI全般のスケール</value>
   </data>
   <data name="we_generalLib_exportFullList" xml:space="preserve">
-    <value>Export whole list to library</value>
+    <value>リスト全体をライブラリにエクスポート</value>
   </data>
   <data name="we_generalLib_importAdditive" xml:space="preserve">
-    <value>Import adding all items into current list</value>
+    <value>全てのアイテムを現在のリストに追加してインポート</value>
   </data>
   <data name="we_generalLib_importFullList" xml:space="preserve">
-    <value>Import whole list from library</value>
+    <value>リスト全体をライブラリにインポート</value>
   </data>
   <data name="we_roadEditor_importAdding" xml:space="preserve">
-    <value>Import items into list</value>
+    <value>リストにアイテムをインポート</value>
   </data>
   <data name="we_roadEditor_importReplacing" xml:space="preserve">
-    <value>Replace items from lib</value>
+    <value>ライブラリからアイテムを置き換え</value>
   </data>
   <data name="we_generalTextEditor_useBackground" xml:space="preserve">
-    <value>Create background</value>
+    <value>背景を作成</value>
   </data>
   <data name="we_generalTextEditor_usePrefabColor" xml:space="preserve">
-    <value>Use prefab color</value>
+    <value>プレハブの色を使用</value>
   </data>
   <data name="we_roadEditor_verticalAlignmentBoxText" xml:space="preserve">
-    <value>Vertical alignment relative to base line
-(0 = below with baseline; 1 = top with capital line)</value>
+    <value>ベースラインに対する垂直方向の配置
+(0 = ベースラインより下で、1 = 大文字のラインより上)</value>
   </data>
   <data name="we_roadEditor_verticalAlignmentLineText" xml:space="preserve">
-    <value>Vertical alignment relative to the line when resizing
-(0 = below with baseline; 1 = top with capital line)</value>
+    <value>サイズ変更時のラインに対する垂直方向の配置
+(0 = ベースラインより下で、1 = 大文字のラインより上)</value>
   </data>
   <data name="we_generalTextEditor_backfaceFontColorIsSameAsFrontFace" xml:space="preserve">
     <value>Use front face color in the back face</value>
@@ -425,157 +425,157 @@ The platforms are highlighted and numbered in the game. The underground platform
     <value>Platform name (click to toggle)</value>
   </data>
   <data name="we_buildingEditor_platformNamePlaceholder" xml:space="preserve">
-    <value>Platform #{0}</value>
+    <value>プラットフォーム #{0}</value>
   </data>
   <data name="we_buildingEditor_thisStationHasNoStops" xml:space="preserve">
-    <value>This station has no stops.</value>
+    <value>この駅には路線設定がありません</value>
   </data>
   <data name="we_buildingEditor_transportStationSettings" xml:space="preserve">
-    <value>Transport station settings</value>
+    <value>公共交通の駅の設定</value>
   </data>
   <data name="we_generalTextEditor_colorSource" xml:space="preserve">
-    <value>Color source</value>
+    <value>色のソース</value>
   </data>
   <data name="we_generalTextEditor_useFixedIfMultiline" xml:space="preserve">
-    <value>Use fixed color if multiple lines are found at platforms (instead of first of them)</value>
+    <value>プラットフォームで複数の路線が見つかった場合は、固定色を使用する (最初の路線の色では無く)</value>
   </data>
   <data name="we_Enum__ColoringSource_ContrastProp" xml:space="preserve">
-    <value>Contrast from prop/vehicle color</value>
+    <value>Prop/車両の色とのコントラスト</value>
   </data>
   <data name="we_Enum__ColoringSource_Prop" xml:space="preserve">
-    <value>Prop/vehicle color</value>
+    <value>Prop/車両の色</value>
   </data>
   <data name="we_Enum__ColoringSource_ContrastPlatformLine" xml:space="preserve">
-    <value>Contrast from PT line color</value>
+    <value>PTの路線カラーとのコントラスト</value>
   </data>
   <data name="we_Enum__ColoringSource_Fixed" xml:space="preserve">
-    <value>Fixed</value>
+    <value>固定</value>
   </data>
   <data name="we_Enum__ColoringSource_PlatformLine" xml:space="preserve">
-    <value>PT line color</value>
+    <value>PTの路線カラー</value>
   </data>
   <data name="we_Enum__TextRenderingClass_Any" xml:space="preserve">
-    <value>Any kind</value>
+    <value>任意の種類</value>
   </data>
   <data name="we_Enum__TextRenderingClass_BgMesh" xml:space="preserve">
-    <value>Image for Background</value>
+    <value>背景画像</value>
   </data>
   <data name="we_Enum__TextRenderingClass_Buildings" xml:space="preserve">
-    <value>Buildings</value>
+    <value>建物</value>
   </data>
   <data name="we_Enum__TextRenderingClass_None" xml:space="preserve">
-    <value>None</value>
+    <value>無し</value>
   </data>
   <data name="we_Enum__TextRenderingClass_PlaceOnNet" xml:space="preserve">
-    <value>Place on segments</value>
+    <value>セグメント上に配置</value>
   </data>
   <data name="we_Enum__TextRenderingClass_RoadNodes" xml:space="preserve">
-    <value>Road nodes</value>
+    <value>道路のノード</value>
   </data>
   <data name="we_Enum__TextRenderingClass_Vehicle" xml:space="preserve">
-    <value>Vehicles</value>
+    <value>車両</value>
   </data>
   <data name="we_generalTextEditor_bgFrontColor" xml:space="preserve">
-    <value>Mesh front color</value>
+    <value>メッシュの前面カラー</value>
   </data>
   <data name="we_generalTextEditor_bgFrontColorForMultilineIfActive" xml:space="preserve">
-    <value>Mesh front color
-&lt;i&gt;(if fixed color on multiple lines is active for the text)&lt;/i&gt;</value>
+    <value>メッシュの前面カラー
+&lt;i&gt;(テキストに複数路線で固定色が有効な場合)&lt;/i&gt;</value>
   </data>
   <data name="we_generalTextEditor_bgRequiredForFrame" xml:space="preserve">
-    <value>To generate frame, enable the background</value>
+    <value>枠を生成する場合は、背景を有効化して下さい。</value>
   </data>
   <data name="we_generalTextEditor_depthNormalBg" xml:space="preserve">
-    <value>Background depth effect (based on Alpha)</value>
+    <value>背景深度の効果 (αチャンネルに基づく)</value>
   </data>
   <data name="we_generalTextEditor_frameSettings" xml:space="preserve">
-    <value>Generated frame settings</value>
+    <value>生成されたフレームの設定</value>
   </data>
   <data name="we_textEditor_useAlsoForBg" xml:space="preserve">
-    <value>Also illuminate the background
-&lt;i&gt;Alpha from image will be mask for illumination cookie&lt;/i&gt;</value>
+    <value>背景を点灯
+&lt;i&gt;画像のαチャンネルは、イルミネーションクッキーのマスクになります。&lt;/i&gt;</value>
   </data>
   <data name="we_settings_invalidLocaleCode" xml:space="preserve">
-    <value>Invalid locale code! The &lt;b&gt;{0}&lt;/b&gt; locale is being used instead!</value>
+    <value>ロケールコードが無効です！代わりに、 &lt;b&gt;{0}&lt;/b&gt; ロケールを使用します。</value>
   </data>
   <data name="we_settings_clockAndFormatting" xml:space="preserve">
-    <value>Clock and formatters</value>
+    <value>時計と書式設定</value>
   </data>
   <data name="we_settings_clockFormat" xml:space="preserve">
-    <value>Clock format</value>
+    <value>時計の形式</value>
   </data>
   <data name="we_settings_formatterLocaleCode" xml:space="preserve">
-    <value>General formatting locale</value>
+    <value>一般的な書式設定のロケール</value>
   </data>
   <data name="we_settings_formattingSettings" xml:space="preserve">
-    <value>General formatting</value>
+    <value>一般的な書式設定</value>
   </data>
   <data name="we_Enum__VariableEnvironmentSubType_Clock" xml:space="preserve">
-    <value>Clock as setted up in mod settings</value>
+    <value>MODの設定で時計を使用</value>
   </data>
   <data name="we_Enum__VariableEnvironmentSubType_CustomFormattedDate" xml:space="preserve">
-    <value>Date formatted as asked, works better when using the Real Time or alike mods</value>
+    <value>日付の書式を指定することで、Real Timeや同様のMODを使用した場合は適切に動作します。</value>
   </data>
   <data name="we_Enum__VariableEnvironmentSubType_Temperature" xml:space="preserve">
-    <value>Temperature, using the game settings unit</value>
+    <value>温度はゲーム設定の単位を使用</value>
   </data>
   <data name="we_Enum__ColoringSource_ContrastDistrict" xml:space="preserve">
-    <value>Contrast from District Color (Custom Data only)</value>
+    <value>地区カラーからのコントラスト (Custom Dataのみ)</value>
   </data>
   <data name="we_Enum__ColoringSource_District" xml:space="preserve">
-    <value>District Color (Custom Data only)</value>
+    <value>地区カラー (Custom Dataのみ)</value>
   </data>
   <data name="we_assetEditor_currentAssetIsNotBuilding" xml:space="preserve">
-    <value>&lt;color=yellow&gt;Current editing asset is not a building!&lt;/color&gt;</value>
+    <value>&lt;color=yellow&gt;現在の編集中のアセットは建物ではありません！&lt;/color&gt;</value>
   </data>
   <data name="we_assetEditor_deleteFromAsset" xml:space="preserve">
-    <value>Delete layout from asset</value>
+    <value>アセットからレイアウトを削除</value>
   </data>
   <data name="we_assetEditor_dontForgetSaveAlert" xml:space="preserve">
-    <value>&lt;color=yellow&gt;Don't forget saving your layout before exit editor!&lt;/color&gt;</value>
+    <value>&lt;color=yellow&gt;エディタの終了前に、レイアウトの保存を忘れないで下さい！&lt;/color&gt;</value>
   </data>
   <data name="we_assetEditor_saveDefaultSkin" xml:space="preserve">
-    <value>Save asset default layout</value>
+    <value>アセットのデフォルトレイアウトを保存</value>
   </data>
   <data name="we_errorLoadingVehicleLayout_msgSingle" xml:space="preserve">
-    <value>Error loading the item for a vehicle in the following scope: {0}
-Check the data shown below to get information.</value>
+    <value>スコープで車両のアイテムをロードする際にエラーが発生: {0}
+情報を取得するには、以下のデータを確認して下さい。</value>
   </data>
   <data name="we_assetEditor_createLayoutAsset" xml:space="preserve">
-    <value>Create new Layout in asset scope</value>
+    <value>アセットのスコープに新規レイアウトを作成</value>
   </data>
   <data name="we_buildingEditor_theLayotsAreBeingLoaded" xml:space="preserve">
-    <value>&lt;color=yellow&gt;The building layouts are being loaded...&lt;/color&gt;</value>
+    <value>&lt;color=yellow&gt;建物のレイアウトをロード中...&lt;/color&gt;</value>
   </data>
   <data name="we_vehicleEditor_theLayotsAreBeingLoaded" xml:space="preserve">
-    <value>&lt;color=yellow&gt;The vehicles layots are being loaded...&lt;/color&gt;</value>
+    <value>&lt;color=yellow&gt;車両のレイアウトをロード中...&lt;/color&gt;</value>
   </data>
   <data name="we_assetEditor_currentAssetIsNotVehicle" xml:space="preserve">
-    <value>&lt;color=yellow&gt;Current asset is not a vehicle&lt;/color&gt;</value>
+    <value>&lt;color=yellow&gt;現在のアセットは車両ではありません&lt;/color&gt;</value>
   </data>
   <data name="we_generalTextEditor_previewTypeImageFrame" xml:space="preserve">
-    <value>Image frame</value>
+    <value>画像の枠</value>
   </data>
   <data name="we_generalTextEditor_assetEditorExibitionText" xml:space="preserve">
-    <value>Content to show in Asset Editor</value>
+    <value>アセットエディタに表示するコンテンツ</value>
   </data>
   <data name="we_generalTextEditor_assetEditorPreviewSetText" xml:space="preserve">
-    <value>Text to show in Asset Editor</value>
+    <value>アセットエディタに表示するテキスト</value>
   </data>
   <data name="we_generalTextEditor_previewTypeSetText" xml:space="preserve">
-    <value>Custom text</value>
+    <value>カスタムテキスト</value>
   </data>
   <data name="we_generalTextEditor_previewTypeVariablePath" xml:space="preserve">
-    <value>WE variable path</value>
+    <value>WE変数のパス</value>
   </data>
   <data name="we_assetEditor_reloadAssetImages" xml:space="preserve">
-    <value>Reload images from asset</value>
+    <value>アセットから画像をリロード</value>
   </data>
   <data name="we_assetEditor_toggleFlags" xml:space="preserve">
-    <value>Toggle flags</value>
+    <value>フラグの切り替え</value>
   </data>
   <data name="we_generalTextEditor_goToAssetSpritesFolder" xml:space="preserve">
-    <value>Go to WS asset images folder</value>
+    <value>WSアセットのイメージフォルダに移動</value>
   </data>
   <data name="we_general_errorsLoadingImagesFromAssetSpriteFolderHeader" xml:space="preserve">
     <value>Some errors occurred when trying to load the images from asset: &lt;color=yellow&gt;{0}&lt;/color&gt;</value>
@@ -731,36 +731,36 @@ Note that very low values are recommended only with Real Time mod or alike!</val
     <value>Folder from asset</value>
   </data>
   <data name="WTS_FOLDERSRC_LOCAL" xml:space="preserve">
-    <value>Global folder</value>
+    <value>グローバルのフォルダ</value>
   </data>
   <data name="WTS_FONTFACE_SETTINGS" xml:space="preserve">
-    <value>Font face settings</value>
+    <value>フォントフェイスの設定</value>
   </data>
   <data name="WTS_FONT_FILES_PATH_TITLE" xml:space="preserve">
-    <value>Fonts folder</value>
+    <value>フォントのフォルダ</value>
   </data>
   <data name="WTS_FONT_QUALITY" xml:space="preserve">
-    <value>Font quality
-(high values may cause glitches)</value>
+    <value>フォントの品質
+(高い値は問題が発生する可能性があります)</value>
   </data>
   <data name="WTS_GENERAL_SETTINGS" xml:space="preserve">
-    <value>General settings</value>
+    <value>全般設定</value>
   </data>
   <data name="WTS_IMAGESRC_ASSET" xml:space="preserve">
-    <value>Image from asset folder</value>
+    <value>アセットフォルダからの画像</value>
   </data>
   <data name="WTS_IMAGESRC_LOCAL" xml:space="preserve">
-    <value>Image from appdata folder</value>
+    <value>appdataフォルダからの画像</value>
   </data>
   <data name="WTS_IMPORTLAYOUT_LIB" xml:space="preserve">
-    <value>Import layout from library</value>
+    <value>ライブラリからレイアウトをインポート</value>
   </data>
   <data name="WTS_INITIAL_TEXTURE_SIZE_FONT" xml:space="preserve">
-    <value>Initial texture size
-(raise it only if you get undesired "black letters" when zooming in)</value>
+    <value>初期のテクスチャサイズ
+(拡大時に「黒い文字」が表示される場合のみ上げて下さい)</value>
   </data>
   <data name="WTS_LAYOUTSKIN" xml:space="preserve">
-    <value>Skin (From Vehicle Skins)</value>
+    <value>スキン (Vehicle Skinsから)</value>
   </data>
   <data name="WTS_LINEDIMENSIONS" xml:space="preserve">
     <value>Line dimensions (meters) (width, height)</value>
