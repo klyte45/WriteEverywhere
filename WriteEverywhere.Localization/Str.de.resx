@@ -118,97 +118,97 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="root_modDescription" xml:space="preserve">
-    <value>Allow to write text in-game to simulate stuff like boards or signs.</value>
+    <value>Erlaubt das Schreiben von Text im Spiel um Dinge wie Anzeigetafeln oder Schilder zu simulieren.</value>
   </data>
   <data name="we_PivotPosition__Left" xml:space="preserve">
-    <value>Left side</value>
+    <value>Linke Seite</value>
   </data>
   <data name="we_PivotPosition__Right" xml:space="preserve">
-    <value>Right side</value>
+    <value>Rechte Seite</value>
   </data>
   <data name="we_PivotPosition__Center" xml:space="preserve">
-    <value>Center (looking front)</value>
+    <value>Mittig (nach vorne)</value>
   </data>
   <data name="we_PivotPosition__LeftInvert" xml:space="preserve">
-    <value>Left side (inverse traffic)</value>
+    <value>Linke Seite (umgekehrter Verkehr)</value>
   </data>
   <data name="we_PivotPosition__RightInvert" xml:space="preserve">
-    <value>Right side (inverse traffic)</value>
+    <value>Rechte Seite (umgekehrter Verkehr)</value>
   </data>
   <data name="we_PivotPosition__CenterInvert" xml:space="preserve">
-    <value>Center (looking behind)</value>
+    <value>Mitte (Blick zurück)</value>
   </data>
   <data name="we_PivotPosition__CenterLookingLeft" xml:space="preserve">
-    <value>Center (looking left)</value>
+    <value>Mittig (links schauend)</value>
   </data>
   <data name="we_PivotPosition__CenterLookingRight" xml:space="preserve">
-    <value>Center (looking right)</value>
+    <value>Mittig (rechts schauend)</value>
   </data>
   <data name="we_roadEditor_pivotPosition" xml:space="preserve">
-    <value>Pivot Position</value>
+    <value>Pivotposition</value>
   </data>
   <data name="we_roadEditor_lockCameraAtInstance" xml:space="preserve">
-    <value>Lock camera at instance # (starting at 0)</value>
+    <value>Kamera an Instanz # sperren (ab 0)</value>
   </data>
   <data name="we_Enum__UIHorizontalAlignment_Center" xml:space="preserve">
-    <value>Center</value>
+    <value>Zentrieren</value>
   </data>
   <data name="we_Enum__UIHorizontalAlignment_Right" xml:space="preserve">
-    <value>Right</value>
+    <value>Rechtsbündig</value>
   </data>
   <data name="we_Enum__UIHorizontalAlignment_Left" xml:space="preserve">
-    <value>Left</value>
+    <value>Linksbündig</value>
   </data>
   <data name="we_Enum__FontClass_Regular" xml:space="preserve">
-    <value>Regular</value>
+    <value>Normal</value>
   </data>
   <data name="we_Enum__FontClass_PublicTransport" xml:space="preserve">
-    <value>Public Transport</value>
+    <value>ÖPNV</value>
   </data>
   <data name="we_Enum__FontClass_ElectronicBoards" xml:space="preserve">
-    <value>Electronic Boards</value>
+    <value>Elektronische Anzeigetafeln</value>
   </data>
   <data name="we_Enum__FontClass_Stencil" xml:space="preserve">
-    <value>Stencil</value>
+    <value>Schablone</value>
   </data>
   <data name="we_Enum__FontClass_HighwayShields" xml:space="preserve">
-    <value>Highway Shields</value>
+    <value>Autobahnschilder</value>
   </data>
   <data name="we_Enum__BlinkType_Custom" xml:space="preserve">
-    <value>Custom</value>
+    <value>Benutzerdefiniert</value>
   </data>
   <data name="we_Enum__MaterialType_OPAQUE" xml:space="preserve">
-    <value>Opaque</value>
+    <value>Undurchsichtig</value>
   </data>
   <data name="we_Enum__MaterialType_DAYNIGHT" xml:space="preserve">
-    <value>Day/Night illumination</value>
+    <value>Tag-/Nacht-Beleuchtung</value>
   </data>
   <data name="we_Enum__MaterialType_FLAGS" xml:space="preserve">
-    <value>By flags</value>
+    <value>Nach Flags</value>
   </data>
   <data name="we_Enum__MaterialType_BRIGHT" xml:space="preserve">
-    <value>Always bright</value>
+    <value>Immer leuchtend</value>
   </data>
   <data name="we_Enum__BlinkType_None" xml:space="preserve">
-    <value>None</value>
+    <value>Keine</value>
   </data>
   <data name="we_Enum__BlinkType_Blink_050_050" xml:space="preserve">
-    <value>Blink 500ms</value>
+    <value>Blinkend 500ms</value>
   </data>
   <data name="we_Enum__BlinkType_MildFade_0125_0125" xml:space="preserve">
-    <value>Mild fade</value>
+    <value>Leichtes Einblenden</value>
   </data>
   <data name="we_Enum__BlinkType_MediumFade_500_500" xml:space="preserve">
-    <value>Medium fade</value>
+    <value>Mittleres Einblenden</value>
   </data>
   <data name="we_Enum__BlinkType_StrongBlaze_0125_0125" xml:space="preserve">
-    <value>Strong blaze (neon)</value>
+    <value>Starkes Leuchten (Neon)</value>
   </data>
   <data name="we_Enum__BlinkType_StrongFade_250_250" xml:space="preserve">
-    <value>Strong fade</value>
+    <value>Starkes Einblenden</value>
   </data>
   <data name="we_Enum__BlinkType_Blink_025_025" xml:space="preserve">
-    <value>Blink 250ms</value>
+    <value>Blinkend 250ms</value>
   </data>
   <data name="we_roadEditor_windowTitle" xml:space="preserve">
     <value>On Net Editor</value>
