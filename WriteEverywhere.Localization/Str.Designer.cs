@@ -1457,47 +1457,11 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Background color.
-        /// </summary>
-        public static string WTS_BG_COLOR {
-            get {
-                return ResourceManager.GetString("WTS_BG_COLOR", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Any kind.
         /// </summary>
         public static string WTS_BOARD_TEXT_TYPE_DESC__Any {
             get {
                 return ResourceManager.GetString("WTS_BOARD_TEXT_TYPE_DESC__Any", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Highway shield.
-        /// </summary>
-        public static string WTS_BOARD_TEXT_TYPE_DESC__HwShield {
-            get {
-                return ResourceManager.GetString("WTS_BOARD_TEXT_TYPE_DESC__HwShield", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a List of lines.
-        /// </summary>
-        public static string WTS_BOARD_TEXT_TYPE_DESC__LinesNameList {
-            get {
-                return ResourceManager.GetString("WTS_BOARD_TEXT_TYPE_DESC__LinesNameList", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Lines passing.
-        /// </summary>
-        public static string WTS_BOARD_TEXT_TYPE_DESC__LinesSymbols {
-            get {
-                return ResourceManager.GetString("WTS_BOARD_TEXT_TYPE_DESC__LinesSymbols", resourceCulture);
             }
         }
         
@@ -1543,15 +1507,6 @@ namespace WriteEverywhere.Localization {
         public static string WTS_BOARD_TEXT_TYPE_DESC__TextParameterSequence {
             get {
                 return ResourceManager.GetString("WTS_BOARD_TEXT_TYPE_DESC__TextParameterSequence", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Time &amp; Temperature.
-        /// </summary>
-        public static string WTS_BOARD_TEXT_TYPE_DESC__TimeTemperature {
-            get {
-                return ResourceManager.GetString("WTS_BOARD_TEXT_TYPE_DESC__TimeTemperature", resourceCulture);
             }
         }
         
@@ -1615,15 +1570,6 @@ namespace WriteEverywhere.Localization {
         public static string WTS_BOXMESH_OUTERCOLOR {
             get {
                 return ResourceManager.GetString("WTS_BOXMESH_OUTERCOLOR", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Sizes.
-        /// </summary>
-        public static string WTS_BOXMESH_SIZESGROUP_LABEL {
-            get {
-                return ResourceManager.GetString("WTS_BOXMESH_SIZESGROUP_LABEL", resourceCulture);
             }
         }
         
@@ -1784,15 +1730,6 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Create cloned text rotated 180° on Y (inverse Z distance - use for simmetric 2 face props).
-        /// </summary>
-        public static string WTS_CREATE_CLONE_180DEG {
-            get {
-                return ResourceManager.GetString("WTS_CREATE_CLONE_180DEG", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Currently using.
         /// </summary>
         public static string WTS_CURRENTLY_USING {
@@ -1852,15 +1789,6 @@ namespace WriteEverywhere.Localization {
         public static string WTS_DEFAULT_FONT_LABEL {
             get {
                 return ResourceManager.GetString("WTS_DEFAULT_FONT_LABEL", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Folder with pre-saved highway shields configuration (only active if Addresses mod is active).
-        /// </summary>
-        public static string WTS_DEFAULT_HWSHIELDS_CONFIG_PATH_TITLE {
-            get {
-                return ResourceManager.GetString("WTS_DEFAULT_HWSHIELDS_CONFIG_PATH_TITLE", resourceCulture);
             }
         }
         
@@ -1992,15 +1920,6 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Clock meshes options.
-        /// </summary>
-        public static string WTS_GENERATED_CLOCK_OPTIONS {
-            get {
-                return ResourceManager.GetString("WTS_GENERATED_CLOCK_OPTIONS", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Image from asset folder.
         /// </summary>
         public static string WTS_IMAGESRC_ASSET {
@@ -2034,15 +1953,6 @@ namespace WriteEverywhere.Localization {
         public static string WTS_INITIAL_TEXTURE_SIZE_FONT {
             get {
                 return ResourceManager.GetString("WTS_INITIAL_TEXTURE_SIZE_FONT", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Invert road side.
-        /// </summary>
-        public static string WTS_INVERT_SIGN_SIDE {
-            get {
-                return ResourceManager.GetString("WTS_INVERT_SIGN_SIDE", resourceCulture);
             }
         }
         
@@ -2107,24 +2017,6 @@ namespace WriteEverywhere.Localization {
         public static string WTS_ONNETEDITOR_POSITIONOFFSET {
             get {
                 return ResourceManager.GetString("WTS_ONNETEDITOR_POSITIONOFFSET", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Prop layout.
-        /// </summary>
-        public static string WTS_ONNETEDITOR_PROPLAYOUT {
-            get {
-                return ResourceManager.GetString("WTS_ONNETEDITOR_PROPLAYOUT", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Prop model.
-        /// </summary>
-        public static string WTS_ONNETEDITOR_PROPMODELSELECT {
-            get {
-                return ResourceManager.GetString("WTS_ONNETEDITOR_PROPMODELSELECT", resourceCulture);
             }
         }
         
@@ -2383,39 +2275,6 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Distance from zero marker of the city (in kilometers)
-        ///
-        ///Select for formatting options..
-        /// </summary>
-        public static string WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistanceFromReferenceKilometers {
-            get {
-                return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistanceFromReferenceKilometers", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Distance from zero marker of the city (in meters)
-        ///
-        ///Select for formatting options..
-        /// </summary>
-        public static string WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistanceFromReferenceMeters {
-            get {
-                return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistanceFromReferenceMeters", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Distance from zero marker of the city (in miles)
-        ///
-        ///Select for formatting options..
-        /// </summary>
-        public static string WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistanceFromReferenceMiles {
-            get {
-                return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistanceFromReferenceMiles", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a District name, or the outside connection city if at map edge. City name will be used as fallback.
         ///
         ///TIP: Outside connection names may be customized using the &lt;color=#00FF00&gt;Addresses Mod&lt;/color&gt;..
@@ -2478,42 +2337,6 @@ namespace WriteEverywhere.Localization {
         public static string WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistrictPopulation {
             get {
                 return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistrictPopulation", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Long highway code (if available).
-        /// </summary>
-        public static string WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_HwCodeLong {
-            get {
-                return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_HwCodeLong", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Short highway code (if available).
-        /// </summary>
-        public static string WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_HwCodeShort {
-            get {
-                return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_HwCodeShort", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Dettached prefix from highway (if available).
-        /// </summary>
-        public static string WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_HwDettachedPrefix {
-            get {
-                return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_HwDettachedPrefix", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Highway identifier (if available).
-        /// </summary>
-        public static string WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_HwIdentifierSuffix {
-            get {
-                return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_HwIdentifierSuffix", resourceCulture);
             }
         }
         
@@ -2613,17 +2436,6 @@ namespace WriteEverywhere.Localization {
         public static string WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_ParkOrDistrict {
             get {
                 return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_ParkOrDistrict", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Postal code.
-        ///
-        ///TIP: Can be customized by using the &lt;color=#00FF00&gt;Addresses Mod&lt;/color&gt;..
-        /// </summary>
-        public static string WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_PostalCode {
-            get {
-                return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_PostalCode", resourceCulture);
             }
         }
         
@@ -2781,15 +2593,6 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Own number.
-        /// </summary>
-        public static string WTS_PARAMVARS_DESC__VariableVehicleSubType_OwnNumber {
-            get {
-                return ResourceManager.GetString("WTS_PARAMVARS_DESC__VariableVehicleSubType_OwnNumber", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Previous stop of line.
         /// </summary>
         public static string WTS_PARAMVARS_DESC__VariableVehicleSubType_PrevStopLine {
@@ -2813,15 +2616,6 @@ namespace WriteEverywhere.Localization {
         public static string WTS_PICK_A_SEGMENT {
             get {
                 return ResourceManager.GetString("WTS_PICK_A_SEGMENT", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Pick a vehicle.
-        /// </summary>
-        public static string WTS_PICK_A_VEHICLE {
-            get {
-                return ResourceManager.GetString("WTS_PICK_A_VEHICLE", resourceCulture);
             }
         }
         
@@ -3006,15 +2800,6 @@ namespace WriteEverywhere.Localization {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Use vehicle color in outer color.
-        /// </summary>
-        public static string WTS_TEXT_CONTAINERUSEVEHICLECOLOR {
-            get {
-                return ResourceManager.GetString("WTS_TEXT_CONTAINERUSEVEHICLECOLOR", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Text content type.
         /// </summary>
         public static string WTS_TEXT_CONTENT {
@@ -3110,15 +2895,6 @@ namespace WriteEverywhere.Localization {
         public static string WTS_TEXTBACKGROUNDSIZEGENERATED {
             get {
                 return ResourceManager.GetString("WTS_TEXTBACKGROUNDSIZEGENERATED", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Use contrast color (refers to prop color).
-        /// </summary>
-        public static string WTS_USE_CONTRAST_COLOR {
-            get {
-                return ResourceManager.GetString("WTS_USE_CONTRAST_COLOR", resourceCulture);
             }
         }
         
