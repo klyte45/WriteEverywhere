@@ -1,9 +1,9 @@
-<size=16>
-<size=30><color=yellow>Welcome to Write Everywhere!</color></size>
+
+<color=yellow>Welcome to Write Everywhere!</color>
 
 This is the first version of this mod and brings most of main stuff of old Write The Signs mod but fixed, and also have new features, like listed below:
 
-<size=25>Features (the new ones are in yellow)</size>
+<color=yellow>Features (the new ones are in yellow)</color>
 - Allow adding texts to:
 --- Buildings: Add layouts by model, but you can use variables to give different values to the same text in different instances. Each sub-building can have a unlimited set of props with a unlimited set of text entries.
 --- Vehicles: Same as building, but there's only text layouts because... well, props don't apply to them =V. Each model can have a unlimited set of text entries.
@@ -36,7 +36,7 @@ The goal is that any level of configuration (text, group of texts, prop with tex
 - Now this mod works in Asset Editor mode! It will bring some agility to asset creation process - all folders with data are copied to staging folder automatically.
 - Now the library files are shareable, once each entry in the library is a separated file.
 
-<size=25>Some known issues</size>
+<color=yellow>Some known issues</color>
 
 - Buildings that don't have a main building (like some parks) won't render the added props.
 - Locales aren't available yet because the English strings needs to be reviewed before it - possibly have a lot of garbage from WTS around here...
@@ -45,9 +45,8 @@ The goal is that any level of configuration (text, group of texts, prop with tex
 - The XML formats may change yet, but very unlikely once this part was fully reviewed
 - Some base-game vanilla vehicles aren't rendering WE stuff, like the vanilla Sedan and Hatch as example
 
-<size=25>Backward compatibility with WTS</size>
+<color=yellow>Backward compatibility with WTS</color>
 - Any old layout would not work in WE, will needed to be redone. In counterpart, it's very faster to do it than it was before.
 - The road nodes feature WAS REMOVED. It may get back as a node prop feature in next builds.
 - The abreviations WERE REMOVED from this mod. It may be implemented in Custom Data Mod instead.
 - The savegame files locations are not shared between WE and WTS, so one won't replace another's file.
-</size>
