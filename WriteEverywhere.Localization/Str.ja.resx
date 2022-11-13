@@ -900,7 +900,7 @@ Steamのワークショップ用にエクスポート</value>
 書式設定のオプションを選択して下さい。</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistrictOrPark" xml:space="preserve">
-    <value>地区名やマップ外に繋がる外部接続の名前になります。もし、利用不可でセグメントがサブエリア内にある場合は、サブエリア名が使用されます。 (都市名はフォールバックとして使用)
+    <value>地区名やマップ外に繋がる外部接続の名前になります。もし、利用不可でセグメントがサブエリア内にある場合は、サブエリア名が使用されます。 (都市名は代替え用として使用)
 
 ヒント: 外部接続の名前は、 &lt;color=#00FF00&gt;Addresses Mod&lt;/color&gt; を使用してカスタマイズできます。</value>
   </data>
@@ -982,7 +982,7 @@ Steamのワークショップ用にエクスポート</value>
     <value>--無効--</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableType_Parameter" xml:space="preserve">
-    <value>セグメント内のインスタンスからローカル変数を使用して、その数値を決定します (セグメントのみ)</value>
+    <value>セグメント内のインスタンスからローカル変数を使用して、その数値を決定します。 (セグメントのみ)</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableType_SegmentTarget" xml:space="preserve">
     <value>参照先のセグメントに関する変数 (ネットワークのレイアウトのみ)</value>
@@ -1063,13 +1063,13 @@ Steamのワークショップ用にエクスポート</value>
     <value>点滅のタイプ</value>
   </data>
   <data name="WTS_TEXT_COLOR" xml:space="preserve">
-    <value>文字の色</value>
+    <value>テキストの色</value>
   </data>
   <data name="WTS_TEXT_CONTAINERFRONTBORDERTHICKNESS" xml:space="preserve">
     <value>前面境界線の太さ</value>
   </data>
   <data name="WTS_TEXT_CONTAINERGLASSCOLOR" xml:space="preserve">
-    <value>ガラスの色:</value>
+    <value>ガラスの色</value>
   </data>
   <data name="WTS_TEXT_CONTAINERGLASSSPECULARITY" xml:space="preserve">
     <value>ガラスの鏡面度</value>
