@@ -270,165 +270,165 @@
 (0 = ベースラインより下で、1 = 大文字のラインより上)</value>
   </data>
   <data name="we_generalTextEditor_backfaceFontColorIsSameAsFrontFace" xml:space="preserve">
-    <value>Use front face color in the back face</value>
+    <value>背面に前面の色を使用</value>
   </data>
   <data name="we_generalTextEditor_backgroundBackfaceColor" xml:space="preserve">
-    <value>BG backface color</value>
+    <value>BG背面の色</value>
   </data>
   <data name="we_generalTextEditor_boxInnerColor" xml:space="preserve">
-    <value>Box inner color</value>
+    <value>ボックス内側の色</value>
   </data>
   <data name="we_generalTextEditor_fontBackfaceColor" xml:space="preserve">
-    <value>Text backface color</value>
+    <value>テキスト背面の色</value>
   </data>
   <data name="we_generalTextEditor_backgroundImage" xml:space="preserve">
-    <value>Background Image</value>
+    <value>背景画像</value>
   </data>
   <data name="we_generalTextEditor_imageBordersLBRTlabel" xml:space="preserve">
-    <value>Image relative borders
-(Left, Bottom, Right, Top - 0 to 1)</value>
+    <value>画像の相対的な境界線
+(左/下/右/上で、0 ～ 1の範囲)</value>
   </data>
   <data name="we_generalTextEditor_imageDensityPixelsPerMeters" xml:space="preserve">
-    <value>Pixel density per square meter</value>
+    <value>ピクセルの密度/㎡</value>
   </data>
   <data name="we_generalTextEditor_imageSaveImageInfoBtn" xml:space="preserve">
-    <value>Save image info into file</value>
+    <value>画像情報をファイルに保存</value>
   </data>
   <data name="we_generalTextEditor_imageShowBorders" xml:space="preserve">
-    <value>Show borders</value>
+    <value>境界線を表示</value>
   </data>
   <data name="we_roadEditor_horizontalAlignmentBoxText" xml:space="preserve">
-    <value>Horizontal alignment relative to line width
-(0 = left; 1 = right)</value>
+    <value>ライン幅に対する水平方向の配置
+(0 = 左; 1 = 右)</value>
   </data>
   <data name="we_settings_uiOpacity" xml:space="preserve">
-    <value>UI Background Opacity</value>
+    <value>UI背景の不透明度</value>
   </data>
   <data name="we_errorLoadingVehicleLayout_msg" xml:space="preserve">
-    <value>Error loading the item {1}/{2} for a vehicle in the following scope: {2}
-Check the data shown below to get information.</value>
+    <value>スコープで車両のアイテム {1}/{2} をロード時にエラーが発生: {2}
+情報を取得するには、以下のデータを確認して下さい。</value>
   </data>
   <data name="we_generalTextEditor_cloneType180" xml:space="preserve">
-    <value>Clone at 180º Y type</value>
+    <value>180º Y型で複製</value>
   </data>
   <data name="we_vehicleEditor_headVehicleTitle" xml:space="preserve">
-    <value>Head</value>
+    <value>先頭</value>
   </data>
   <data name="we_vehicleEditor_pickerBtn" xml:space="preserve">
-    <value>Picker</value>
+    <value>スポイト</value>
   </data>
   <data name="we_vehicleEditor_pickOrSpawnAVehicle" xml:space="preserve">
-    <value>Grab an unit of this vehicle as viewer, if exists</value>
+    <value>車両のユニットが存在する場合は、ビューアーとして取得</value>
   </data>
   <data name="we_vehicleEditor_trailerNumTitle" xml:space="preserve">
-    <value>Trailer {0}</value>
+    <value>トレーラ {0}</value>
   </data>
   <data name="we_Enum__YCloneType_OnZ" xml:space="preserve">
-    <value>Mirrored on Z Axis</value>
+    <value>Z軸にミラーリング</value>
   </data>
   <data name="we_Enum__ConfigurationSource_ASSET" xml:space="preserve">
-    <value>Workshop</value>
+    <value>ワークショップ</value>
   </data>
   <data name="we_Enum__ConfigurationSource_CITY" xml:space="preserve">
-    <value>Savegame (City)</value>
+    <value>セーブゲーム (都市)</value>
   </data>
   <data name="we_Enum__ConfigurationSource_GLOBAL" xml:space="preserve">
-    <value>Local folder (Appdata)</value>
+    <value>ローカルフォルダ (Appdata)</value>
   </data>
   <data name="we_Enum__ConfigurationSource_NONE" xml:space="preserve">
-    <value>None (Disabled)</value>
+    <value>なし (無効化)</value>
   </data>
   <data name="we_Enum__ConfigurationSource_SKIN" xml:space="preserve">
-    <value>Skin (From Vehicle Skins)</value>
+    <value>スキン (Vehicle Skinsから)</value>
   </data>
   <data name="we_Enum__YCloneType_None" xml:space="preserve">
-    <value>No cloning</value>
+    <value>複製なし</value>
   </data>
   <data name="we_Enum__YCloneType_OnX" xml:space="preserve">
-    <value>Mirrored on X Axis</value>
+    <value>X軸にミラーリング</value>
   </data>
   <data name="we_vehicleEditor_failedPickingAVehicle" xml:space="preserve">
-    <value>There are no vehicles of this model running around this city.
-Try force spawning anywhere, like setting the model to a transport line.</value>
+    <value>都市内で、モデルの車両が走行していません。
+モデルを公共交通などで路線設定して、強制的にスポーンを試して下さい。</value>
   </data>
   <data name="we_vehicleEditor_waitingGrabVehicle" xml:space="preserve">
-    <value>Waiting seach for the vehicle...</value>
+    <value>車両の検索を待っています...</value>
   </data>
   <data name="we_settings_defaultFontDescription" xml:space="preserve">
-    <value>The default fonts will be used when none is selected in a layout, when relative to Building, Vehicle or Placing on network modes; or can be selected as font class for the other fields below.</value>
+    <value>デフォルトのフォントは建物/車両/ネットワークモードの配置で、レイアウト内で未選択だと使用されます。 または、下記の他のフィールドでは、フォントクラスとして選択出来ます。</value>
   </data>
   <data name="we_settings_defaultFonts" xml:space="preserve">
-    <value>Default fonts</value>
+    <value>デフォルトのフォント</value>
   </data>
   <data name="we_settings_defaultFontsAvailableOnlyWhenCityLoaded" xml:space="preserve">
-    <value>Default fonts settings are available only when a city is loaded</value>
+    <value>デフォルトのフォント設定は、都市がロードされた場合のみ有効です。</value>
   </data>
   <data name="we_buildingEditor_windowTitle" xml:space="preserve">
-    <value>Building editor</value>
+    <value>建物エディタ</value>
   </data>
   <data name="we_buildingEditor_subBuildingNumTitle" xml:space="preserve">
-    <value>SubBuilding #{0}</value>
+    <value>サブビルディング #{0}</value>
   </data>
   <data name="we_buildingEditor_mainBuildingTitle" xml:space="preserve">
-    <value>Main building</value>
+    <value>メインビルディング</value>
   </data>
   <data name="we_buildingEditor_pickerBtn" xml:space="preserve">
-    <value>Pick A Building</value>
+    <value>建物をスポイト</value>
   </data>
   <data name="we_buildingEditor_selectBuilding" xml:space="preserve">
-    <value>Select building</value>
+    <value>建物を選択</value>
   </data>
   <data name="we_textEditor_needPropSelectedWarning" xml:space="preserve">
-    <value>Select a prop before editing texts!</value>
+    <value>テキストの編集前に、Propを選択して下さい！</value>
   </data>
   <data name="we_buildingEditor_noParametersUsedThisInstance" xml:space="preserve">
-    <value>No parameters were used in this instance.</value>
+    <value>このインスタンスでは、パラメータを使用していません。</value>
   </data>
   <data name="we_buildingEditor_paramEditorTabText" xml:space="preserve">
-    <value>Instance parameters</value>
+    <value>インスタンスのパラメータ</value>
   </data>
   <data name="we_buildingEditor_layoutEditorTabText" xml:space="preserve">
-    <value>Props texts</value>
+    <value>Propのテキスト</value>
   </data>
   <data name="we_buildingEditor_currentBuildingBeingEdited" xml:space="preserve">
-    <value>Current Building: {0} (ID: {1})</value>
+    <value>現在の建物: {0} (ID: {1})</value>
   </data>
   <data name="we_buildingEditor_pickABuildingToEditParameters" xml:space="preserve">
-    <value>Pick a building to edit its parameters.</value>
+    <value>パラメータを編集する建物をスポイトします。</value>
   </data>
   <data name="we_generalTextEditor_labelForParamListing" xml:space="preserve">
-    <value>Label for parameter list</value>
+    <value>パラメータリストのラベル</value>
   </data>
   <data name="we_buildingEditor_currentFocusInstance" xml:space="preserve">
-    <value>Current focus instance (origin is 0)</value>
+    <value>現在のフォーカスインスタンス (原点は0)</value>
   </data>
   <data name="we_buildingEditor_repeatLayoutDirection" xml:space="preserve">
-    <value>Distance between instances</value>
+    <value>インスタンス間の距離</value>
   </data>
   <data name="we_buildingEditor_repeatLayoutTimes" xml:space="preserve">
-    <value>Instances of this prop layout</value>
+    <value>このPropレイアウトのインスタンス</value>
   </data>
   <data name="we_buildingEditor_lockCameraToEditingProp" xml:space="preserve">
-    <value>Lock camera to editing prop</value>
+    <value>Propを編集するためにカメラをロック</value>
   </data>
   <data name="we_buildingEditor_transportStation_platformSelectionInfo" xml:space="preserve">
-    <value>The platform order will define which information show in texts of this prop. The priority order will be used to determine from where to get the lines passing thru this building, following the order below. The platforms in the top will have priority over others to get information like color, as example.
-The platforms are highlighted and numbered in the game. The underground platforms are shown above the main building also showing how deep they are being the lowest platform of them showed below all others. The underground platforms are inside [brackets].</value>
+    <value>プラットフォームの順序は、このPropのテキストで表示される情報を定義します。 優先順位は次の順序に従って、この建物を通過する路線をどこから取得するかを決定するために使用されます。 例えば、色などの情報を取得する場合は、上部にあるプラットフォームが他より優先されます。
+ゲーム中ではプラットフォームはハイライトされ、番号が振られています。地下のプラットフォームはメインとなる駅施設で表示されて、最も深いプラットフォームは他より下に表示されて、どの程度の深度にあるかを表示しています。地下のプラットフォームは、[brackets] で囲まれています。</value>
   </data>
   <data name="we_buildingEditor_buildingIsNotTransportStation" xml:space="preserve">
-    <value>This building is not a transport station.</value>
+    <value>この建物は公共交通の駅ではありません。</value>
   </data>
   <data name="we_buildingEditor_changePriorityOrder" xml:space="preserve">
-    <value>Change priority order</value>
+    <value>優先順位を変更</value>
   </data>
   <data name="we_buildingEditor_platformNameClickToToggle" xml:space="preserve">
-    <value>Platform name (click to toggle)</value>
+    <value>プラットフォーム名 (クリックで切り替え)</value>
   </data>
   <data name="we_buildingEditor_platformNamePlaceholder" xml:space="preserve">
     <value>プラットフォーム #{0}</value>
   </data>
   <data name="we_buildingEditor_thisStationHasNoStops" xml:space="preserve">
-    <value>この駅には路線設定がありません</value>
+    <value>この駅には停車場所がありません</value>
   </data>
   <data name="we_buildingEditor_transportStationSettings" xml:space="preserve">
     <value>公共交通の駅の設定</value>
@@ -437,7 +437,7 @@ The platforms are highlighted and numbered in the game. The underground platform
     <value>色のソース</value>
   </data>
   <data name="we_generalTextEditor_useFixedIfMultiline" xml:space="preserve">
-    <value>プラットフォームで複数の路線が見つかった場合は、固定色を使用する (最初の路線の色では無く)</value>
+    <value>プラットフォームで複数の路線が見つかった場合は、固定色を使用する (最初の路線カラーでは無く)</value>
   </data>
   <data name="we_Enum__ColoringSource_ContrastProp" xml:space="preserve">
     <value>Prop/車両の色とのコントラスト</value>
@@ -483,17 +483,17 @@ The platforms are highlighted and numbered in the game. The underground platform
 &lt;i&gt;(テキストに複数路線で固定色が有効な場合)&lt;/i&gt;</value>
   </data>
   <data name="we_generalTextEditor_bgRequiredForFrame" xml:space="preserve">
-    <value>枠を生成する場合は、背景を有効化して下さい。</value>
+    <value>フレームを生成する場合は、背景を有効化して下さい。</value>
   </data>
   <data name="we_generalTextEditor_depthNormalBg" xml:space="preserve">
-    <value>背景深度の効果 (αチャンネルに基づく)</value>
+    <value>背景の奥行き効果 (αチャンネルに基づく)</value>
   </data>
   <data name="we_generalTextEditor_frameSettings" xml:space="preserve">
     <value>生成されたフレームの設定</value>
   </data>
   <data name="we_textEditor_useAlsoForBg" xml:space="preserve">
     <value>背景を点灯
-&lt;i&gt;画像のαチャンネルは、イルミネーションクッキーのマスクになります。&lt;/i&gt;</value>
+&lt;i&gt;画像のαチャンネルは、照明用クッキーのマスクになります。&lt;/i&gt;</value>
   </data>
   <data name="we_settings_invalidLocaleCode" xml:space="preserve">
     <value>ロケールコードが無効です！代わりに、 &lt;b&gt;{0}&lt;/b&gt; ロケールを使用します。</value>
@@ -538,7 +538,7 @@ The platforms are highlighted and numbered in the game. The underground platform
     <value>アセットのデフォルトレイアウトを保存</value>
   </data>
   <data name="we_errorLoadingVehicleLayout_msgSingle" xml:space="preserve">
-    <value>スコープで車両のアイテムをロードする際にエラーが発生: {0}
+    <value>スコープで車両のアイテムをロード時にエラーが発生: {0}
 情報を取得するには、以下のデータを確認して下さい。</value>
   </data>
   <data name="we_assetEditor_createLayoutAsset" xml:space="preserve">
@@ -554,7 +554,7 @@ The platforms are highlighted and numbered in the game. The underground platform
     <value>&lt;color=yellow&gt;現在のアセットは車両ではありません&lt;/color&gt;</value>
   </data>
   <data name="we_generalTextEditor_previewTypeImageFrame" xml:space="preserve">
-    <value>画像の枠</value>
+    <value>画像のフレーム</value>
   </data>
   <data name="we_generalTextEditor_assetEditorExibitionText" xml:space="preserve">
     <value>アセットエディタに表示するコンテンツ</value>
@@ -566,7 +566,7 @@ The platforms are highlighted and numbered in the game. The underground platform
     <value>カスタムテキスト</value>
   </data>
   <data name="we_generalTextEditor_previewTypeVariablePath" xml:space="preserve">
-    <value>WE変数のパス</value>
+    <value>WE用の変数パス</value>
   </data>
   <data name="we_assetEditor_reloadAssetImages" xml:space="preserve">
     <value>アセットから画像をリロード</value>
@@ -578,157 +578,157 @@ The platforms are highlighted and numbered in the game. The underground platform
     <value>WSアセットのイメージフォルダに移動</value>
   </data>
   <data name="we_general_errorsLoadingImagesFromAssetSpriteFolderHeader" xml:space="preserve">
-    <value>Some errors occurred when trying to load the images from asset: &lt;color=yellow&gt;{0}&lt;/color&gt;</value>
+    <value>アセットから画像のロード中に、一部でエラーが発生: &lt;color=yellow&gt;{0}&lt;/color&gt;</value>
   </data>
   <data name="we_citySettings_title" xml:space="preserve">
-    <value>City settings</value>
+    <value>都市の設定</value>
   </data>
   <data name="WTS_ACTIVERULESONLY" xml:space="preserve">
-    <value>Filter assets having at least one layout active</value>
+    <value>1つ以上のレイアウトを持つアセットをフィルター</value>
   </data>
   <data name="WTS_BACKGROUNDANDBOX_SETTINGS" xml:space="preserve">
-    <value>Background &amp; box </value>
+    <value>背景＆ボックス </value>
   </data>
   <data name="WTS_BOARD_TEXT_TYPE_DESC__Any" xml:space="preserve">
-    <value>Any kind</value>
+    <value>任意の種類</value>
   </data>
   <data name="WTS_BOARD_TEXT_TYPE_DESC__None" xml:space="preserve">
-    <value>None</value>
+    <value>無し</value>
   </data>
   <data name="WTS_BOARD_TEXT_TYPE_DESC__ParameterizedSpriteFolder" xml:space="preserve">
-    <value>Sprite slideshow from a folder</value>
+    <value>フォルダからスライドショーをスプライト化</value>
   </data>
   <data name="WTS_BOARD_TEXT_TYPE_DESC__ParameterizedSpriteSingle" xml:space="preserve">
-    <value>Parameterized sprite</value>
+    <value>パラメーター付きスプライト</value>
   </data>
   <data name="WTS_BOARD_TEXT_TYPE_DESC__ParameterizedText" xml:space="preserve">
-    <value>Parameterized Text</value>
+    <value>パラメータ付きテキスト</value>
   </data>
   <data name="WTS_BOARD_TEXT_TYPE_DESC__TextParameterSequence" xml:space="preserve">
-    <value>Text sequence</value>
+    <value>テキストの順序</value>
   </data>
   <data name="WTS_BOXMESH_BACKOFFSETFROMCENTERBOTTOM" xml:space="preserve">
-    <value>Back mesh tilt offset (from Center/Bottom)</value>
+    <value>バックメッシュの傾斜オフセット (中央/下から)</value>
   </data>
   <data name="WTS_BOXMESH_BACKSIZE" xml:space="preserve">
-    <value>Back mesh rectangle size</value>
+    <value>バックメッシュの矩形サイズ</value>
   </data>
   <data name="WTS_BOXMESH_COLORSGROUP_LABEL" xml:space="preserve">
-    <value>Colors</value>
+    <value>カラー</value>
   </data>
   <data name="WTS_BOXMESH_DEPTH_BACK" xml:space="preserve">
-    <value>Depth BG-&gt;Back mesh</value>
+    <value>奥行き BG-&gt;バックメッシュ</value>
   </data>
   <data name="WTS_BOXMESH_DEPTH_FRONT" xml:space="preserve">
-    <value>Depth BG-&gt;Front mesh</value>
+    <value>奥行き BG-&gt;フロントメッシュ</value>
   </data>
   <data name="WTS_BOXMESH_EFFECTSGROUP_LABEL" xml:space="preserve">
-    <value>Effects</value>
+    <value>エフェクト</value>
   </data>
   <data name="WTS_BOXMESH_OUTERCOLOR" xml:space="preserve">
-    <value>Box outer color</value>
+    <value>ボックス外側の色</value>
   </data>
   <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_COPYTOCITY" xml:space="preserve">
-    <value>Clone this layout to be edited in this savegame</value>
+    <value>このレイアウトを複製して、現在のセーブゲームで編集します。</value>
   </data>
   <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_COPYTOCLIPBOARD" xml:space="preserve">
-    <value>Copy to clipboard</value>
+    <value>クリップボードにコピー</value>
   </data>
   <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_DELETEFROMCITY" xml:space="preserve">
-    <value>Delete from this savegame
-(Note: appdata or asset values will be used if exists)</value>
+    <value>このセーブデータから削除
+(警告: appdataやアセットに数値が残った場合は、それらが適用されます)</value>
   </data>
   <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_EXPORTASGLOBAL" xml:space="preserve">
-    <value>Export this layout to local folder (Appdata)</value>
+    <value>このレイアウトをローカルフォルダ (Appdata) にエクスポート</value>
   </data>
   <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_EXPORTTOASSETFOLDER" xml:space="preserve">
-    <value>Export this layout to be packed
-to Steam Workshop</value>
+    <value>このレイアウトをパック化して、
+Steamのワークショップ用にエクスポート</value>
   </data>
   <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_NEWINCITY" xml:space="preserve">
-    <value>Create new layout for this savegame</value>
+    <value>このセーブゲーム用に新しいレイアウトを作成</value>
   </data>
   <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_OPENGLOBALSFOLDER" xml:space="preserve">
-    <value>Open appdata layouts folder</value>
+    <value>Appdataのレイアウトフォルダを開く</value>
   </data>
   <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_PASTEFROMCLIPBOARD" xml:space="preserve">
-    <value>Paste from clipboard</value>
+    <value>クリップボードから貼り付け</value>
   </data>
   <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_RELOADDESCRIPTORS" xml:space="preserve">
-    <value>Reload descriptors</value>
+    <value>記述子をリロード</value>
   </data>
   <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_SAVESKIN" xml:space="preserve">
-    <value>Save skin layout to disk</value>
+    <value>スキンのレイアウトを保存</value>
   </data>
   <data name="WTS_BUILDINGEDITOR_MODELLAYOUTSELECT" xml:space="preserve">
-    <value>Model/Layout selection</value>
+    <value>モデル/レイアウトの選択</value>
   </data>
   <data name="WTS_CLASS_FONT" xml:space="preserve">
-    <value>Font class</value>
+    <value>フォントクラス</value>
   </data>
   <data name="WTS_CLOCK_12H_CLOCK" xml:space="preserve">
-    <value>12h clock</value>
+    <value>12時間時計</value>
   </data>
   <data name="WTS_CLOCK_MINUTES_PRECISION" xml:space="preserve">
-    <value>Precision (in minutes)
-Note that very low values are recommended only with Real Time mod or alike!</value>
+    <value>精度 (分単位)
+注意: 非常に低い値は、Real Time MODなどでのみ推奨されます。</value>
   </data>
   <data name="WTS_CLOCK_SHOW_LEADING_ZERO" xml:space="preserve">
-    <value>Show leading zero of hours</value>
+    <value>時間の先頭にゼロを表示</value>
   </data>
   <data name="WTS_CLONE_180DEG_INVERT_TEXT_HOR_ALIGN" xml:space="preserve">
-    <value>Invert text horizontal align on clone</value>
+    <value>複製時にテキストの水平方向で反転する</value>
   </data>
   <data name="WTS_CONTENT_TEXTVALUE" xml:space="preserve">
-    <value>Parameter value</value>
+    <value>パラメータ値</value>
   </data>
   <data name="WTS_CURRENTLY_USING" xml:space="preserve">
-    <value>Currently using</value>
+    <value>現在使用中</value>
   </data>
   <data name="WTS_CURRENTSELECTION" xml:space="preserve">
-    <value>Current selection</value>
+    <value>現在選択中</value>
   </data>
   <data name="WTS_CUSTOMSPRITE_ERRORHEADER" xml:space="preserve">
-    <value>Some erros happened while trying to load custom sprites:</value>
+    <value>カスタムスプライトのロード時に、一部でエラーが発生:</value>
   </data>
   <data name="WTS_CUSTOMSPRITE_FAILEDREADIMAGE" xml:space="preserve">
-    <value>An error has occurred loading image...</value>
+    <value>画像のロード中にエラーが発生しました...</value>
   </data>
   <data name="WTS_CUSTOMSPRITE_IMAGETOOLARGE" xml:space="preserve">
-    <value>Image too large!!</value>
+    <value>画像が大きすぎます！！</value>
   </data>
   <data name="WTS_DEFAULT_BUILDINGS_CONFIG_PATH_TITLE" xml:space="preserve">
-    <value>Default configurations for buildings folder</value>
+    <value>建物フォルダのデフォルト設定</value>
   </data>
   <data name="WTS_DEFAULT_FONT_LABEL" xml:space="preserve">
-    <value>Default game font</value>
+    <value>ゲームデフォルトのフォント</value>
   </data>
   <data name="WTS_DEFAULT_PROP_LAYOUTS_PATH_TITLE" xml:space="preserve">
-    <value>Default prop layouts</value>
+    <value>デフォルトのPropレイアウト</value>
   </data>
   <data name="WTS_DEFAULT_VEHICLES_CONFIG_PATH_TITLE" xml:space="preserve">
-    <value>Global vehicles text layout files folder</value>
+    <value>グローバル車両のテキストレイアウトのファイルフォルダ</value>
   </data>
   <data name="WTS_DELETETEXTITEM" xml:space="preserve">
-    <value>Delete this text item</value>
+    <value>このテキストアイテムを削除</value>
   </data>
   <data name="WTS_EXPORTDATA_NAMEASKING" xml:space="preserve">
-    <value>Name of this rule to be saved:</value>
+    <value>保存するルールの名前:</value>
   </data>
   <data name="WTS_EXPORTDATA_NAMEASKING_OVERWRITE" xml:space="preserve">
-    <value>There's already a rule with this name. Overwrite?</value>
+    <value>この名前のルールが既にあります。上書きしますか？</value>
   </data>
   <data name="WTS_EXPORTLAYOUT_LIB" xml:space="preserve">
-    <value>Export layout to library</value>
+    <value>レイアウトをライブラリにエクスポート</value>
   </data>
   <data name="WTS_EXTRA_SPRITES_PATH_TITLE" xml:space="preserve">
-    <value>Extra sprites folder (max 400x400) to use in layouts</value>
+    <value>レイアウトで使用する、追加のスプライトフォルダ (最大400x400)</value>
   </data>
   <data name="WTS_FLAGSREQUREDFORBIDDEN" xml:space="preserve">
-    <value>Flags required/forbidden</value>
+    <value>フラグ: 必要/禁止</value>
   </data>
   <data name="WTS_FOLDERSRC_ASSET" xml:space="preserve">
-    <value>Folder from asset</value>
+    <value>アセットからフォルダへ</value>
   </data>
   <data name="WTS_FOLDERSRC_LOCAL" xml:space="preserve">
     <value>グローバルのフォルダ</value>
@@ -750,7 +750,7 @@ Note that very low values are recommended only with Real Time mod or alike!</val
     <value>アセットフォルダからの画像</value>
   </data>
   <data name="WTS_IMAGESRC_LOCAL" xml:space="preserve">
-    <value>appdataフォルダからの画像</value>
+    <value>Appdataフォルダからの画像</value>
   </data>
   <data name="WTS_IMPORTLAYOUT_LIB" xml:space="preserve">
     <value>ライブラリからレイアウトをインポート</value>
@@ -763,363 +763,363 @@ Note that very low values are recommended only with Real Time mod or alike!</val
     <value>スキン (Vehicle Skinsから)</value>
   </data>
   <data name="WTS_LINEDIMENSIONS" xml:space="preserve">
-    <value>Line dimensions (meters) (width, height)</value>
+    <value>ラインの寸法 (メートル)(幅と高さ)</value>
   </data>
   <data name="WTS_MAX_PARALLEL_WORD_PROCESSES" xml:space="preserve">
-    <value>Max words being draw in background per font</value>
+    <value>フォントごとに背景に描画される最大文字数</value>
   </data>
   <data name="WTS_ONNETEDITOR_INVALIDPARAMSETTINGS_DIFFERENTKINDSAMEPARAM" xml:space="preserve">
-    <value>&lt;color=#FF0000&gt;Wrong settings in this parameter!&lt;/color&gt;
-There are more than one text entry of different kind pointing to this parameter. Please check your layout settings.</value>
+    <value>&lt;color=#FF0000&gt;パラメータの設定が間違っています！&lt;/color&gt;
+このパラメータには異なる種類のテキストエントリが複数あります。 レイアウトの設定を確認して下さい。</value>
   </data>
   <data name="WTS_ONNETEDITOR_LOCATION_SETTINGS" xml:space="preserve">
-    <value>Positioning settings</value>
+    <value>位置の設定</value>
   </data>
   <data name="WTS_ONNETEDITOR_NAME" xml:space="preserve">
-    <value>Name</value>
+    <value>名前</value>
   </data>
   <data name="WTS_ONNETEDITOR_POSITIONOFFSET" xml:space="preserve">
-    <value>Position offset</value>
+    <value>位置のオフセット</value>
   </data>
   <data name="WTS_ONNETEDITOR_ROTATION" xml:space="preserve">
-    <value>Rotation</value>
+    <value>回転</value>
   </data>
   <data name="WTS_ONNETEDITOR_SCALE" xml:space="preserve">
-    <value>Scale</value>
+    <value>スケール</value>
   </data>
   <data name="WTS_ONNETEDITOR_SEGMENTPOSITION" xml:space="preserve">
-    <value>Segment path relative position</value>
+    <value>セグメントパスの相対位置</value>
   </data>
   <data name="WTS_ONNETEDITOR_SEGMENTPOSITION_COUNT" xml:space="preserve">
-    <value>Instances count</value>
+    <value>インスタンスの数</value>
   </data>
   <data name="WTS_ONNETEDITOR_SEGMENTPOSITION_END" xml:space="preserve">
-    <value>Last item segment offset</value>
+    <value>最後のアイテムのセグメントオフセット</value>
   </data>
   <data name="WTS_ONNETEDITOR_SEGMENTPOSITION_START" xml:space="preserve">
-    <value>First item segment offset</value>
+    <value>最初のアイテムのセグメントオフセット</value>
   </data>
   <data name="WTS_ONNETEDITOR_TARGET" xml:space="preserve">
-    <value>Target {0}</value>
+    <value>対象 {0}</value>
   </data>
   <data name="WTS_ONNETEDITOR_TEXTPARAM" xml:space="preserve">
-    <value>Parameter {0}</value>
+    <value>パラメータ {0}</value>
   </data>
   <data name="WTS_ONNETEDITOR_UNSETTARGETDESC" xml:space="preserve">
-    <value>&lt;Target is not set&gt;</value>
+    <value>&lt;対象が未設定&gt;</value>
   </data>
   <data name="WTS_OVERRIDE_FONT" xml:space="preserve">
-    <value>Text font for override</value>
+    <value>上書き用のテキストフォント</value>
   </data>
   <data name="WTS_PARAMSEQ_ACTIONS" xml:space="preserve">
-    <value>Actions</value>
+    <value>操作</value>
   </data>
   <data name="WTS_PARAMSEQ_STEPLENGTH" xml:space="preserve">
-    <value>Duration</value>
+    <value>持続時間</value>
   </data>
   <data name="WTS_PARAMTYPE_PLAINTEXT" xml:space="preserve">
-    <value>Plain text</value>
+    <value>プレーンテキスト</value>
   </data>
   <data name="WTS_PARAMTYPE_VARIABLE" xml:space="preserve">
-    <value>Game stats variable</value>
+    <value>ゲーム統計の変数</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__COMMON_DATEFORMAT" xml:space="preserve">
-    <value>Use "d" for day/date info, "M" for month info and "y" for year info. Other letters not allowed, but can use any symbol.
-Search by C# date formatting for more info.</value>
+    <value>日/日付の情報は"d"、月の情報は"M"、年の情報は "y "を使用して下さい。他の文字は使用できませんが、任意の記号を使用することは可能です。
+詳しくは、C#の日付フォーマットで検索してみて下さい。</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__COMMON_NUMBERFORMAT_FLOAT" xml:space="preserve">
-    <value>Use the decimal number formatting. Examples for the number &lt;color=#FFFF00&gt;1250.65&lt;/color&gt;:
+    <value>10進数のフォーマットを使用します。数値の例 &lt;color=#FFFF00&gt;1250.65&lt;/color&gt;:
 &lt;color=#FFFF00&gt;0&lt;/color&gt; =&gt; &lt;color=#00FF00&gt;1251&lt;/color&gt;
 &lt;color=#FFFF00&gt;0.000&lt;/color&gt; =&gt; &lt;color=#00FF00&gt;1250.650&lt;/color&gt;
 &lt;color=#FFFF00&gt;#,##0.0&lt;/color&gt; =&gt; &lt;color=#00FF00&gt;1,250.7&lt;/color&gt;
 
-Search by the C# number formatting reference for more details.</value>
+詳しくは、C#の数値フォーマットのリファレンスで検索してみて下さい。</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__COMMON_NUMBERFORMAT_INT" xml:space="preserve">
-    <value>Use the integer number formatting. Examples for the number &lt;color=#FFFF00&gt;1251&lt;/color&gt;:
+    <value>整数のフォーマットを使用します。数値の例 &lt;color=#FFFF00&gt;1251&lt;/color&gt;:
 &lt;color=#FFFF00&gt;0&lt;/color&gt; =&gt; &lt;color=#00FF00&gt;1251&lt;/color&gt;
 &lt;color=#FFFF00&gt;X&lt;/color&gt; =&gt; &lt;color=#00FF00&gt;4E3&lt;/color&gt; (Hexadecimal)
 &lt;color=#FFFF00&gt;#,##0&lt;/color&gt; =&gt; &lt;color=#00FF00&gt;1.251&lt;/color&gt;
 
-Search by the C# number formatting reference for more details.</value>
+詳しくは、C#の数値フォーマットのリファレンスで検索してみて下さい。</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__COMMON_PARAMNUM" xml:space="preserve">
-    <value>Set up the parameter that will be get the value.</value>
+    <value>値を取得するパラメータを設定します。</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__COMMON_PREFIX" xml:space="preserve">
-    <value>(OPTIONAL) Can be left in blank.
-A text to precede the variable value. Use the backslash to scape the slashes (&lt;color=#FF00FF&gt;/&lt;/color&gt;).</value>
+    <value>(オプション) 空欄でも可
+変数値の前に付けるテキスト: バックスラッシュを使用して、スラッシュ (&lt;color=#FF00FF&gt;/&lt;/color&gt;) をエスケープします。</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__COMMON_STRINGFORMAT" xml:space="preserve">
-    <value>(OPTIONAL) Can be left in blank.
-&lt;color=#FFFF00&gt;U&lt;/color&gt; Will make the text be transformed to all in uppercase
-&lt;color=#FFFF00&gt;L&lt;/color&gt; Will make the text be transformed to all in lowercase
-&lt;color=#FFFF00&gt;A&lt;/color&gt; Will apply abbreviations in the text</value>
+    <value>(オプション) 空欄でも可
+&lt;color=#FFFF00&gt;U&lt;/color&gt; は、テキストを大文字に全て変換します。
+&lt;color=#FFFF00&gt;L&lt;/color&gt; は、テキストを小文字に全て変換します。
+&lt;color=#FFFF00&gt;A&lt;/color&gt; は、テキストに略語が適用されます。</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__COMMON_SUFFIX" xml:space="preserve">
-    <value>(OPTIONAL) Can be left in blank.
-A text to succeed the variable value. Use the backslash to scape the slashes (&lt;color=#FF00FF&gt;/&lt;/color&gt;).</value>
+    <value>(オプション) 空欄でも可
+変数値を継承するテキスト: バックスラッシュを使用して、スラッシュ (&lt;color=#FF00FF&gt;/&lt;/color&gt;) をエスケープします。</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__SegmentTarget__SelectReference" xml:space="preserve">
-    <value>Type a value between 0 and 4, and select in the list to continue.
+    <value>0～4の数値を入力して、リストで選択して続行します。
 
-&amp;lt;color=#FFFF00&amp;gt;0 to 4&amp;lt;/color&amp;gt; means that the segments selected at reference tab will be used</value>
+&amp;lt;color=#FFFF00&amp;gt;0～4&amp;lt;/color&amp;gt; は、選択された参照用タブで使用することを意味します。</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableCitySubType_CityName" xml:space="preserve">
-    <value>City name.</value>
+    <value>都市名</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableCitySubType_CityPopulation" xml:space="preserve">
-    <value> City population.
+    <value> 都市の人口
 
-Select for formatting options.</value>
+書式設定のオプションを選択します。</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableCitySubType_None" xml:space="preserve">
-    <value>&lt;None?&gt;</value>
+    <value>&lt;なし&gt;</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_Direction" xml:space="preserve">
-    <value>Road direction - acronym in current language loaded in the mod. (English will be used as fallback)</value>
+    <value>道路の方向 - MODにロードされた、現在の言語では頭文字や頭字語 (英語は代替え用として使用)</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_District" xml:space="preserve">
-    <value>District name, or the outside connection city if at map edge. City name will be used as fallback.
+    <value>地区名やマップ外に繋がる外部接続の名前 (都市名は代替え用として使用)
 
-TIP: Outside connection names may be customized using the &lt;color=#00FF00&gt;Addresses Mod&lt;/color&gt;.</value>
+ヒント: 外部接続の名前は、 &lt;color=#00FF00&gt;Addresses Mod&lt;/color&gt; を使用してカスタマイズできます。</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistrictAreaKm2" xml:space="preserve">
-    <value>Current district size in square kilometers. City area size if not inside one.
+    <value>現在の地区サイズを平方キロメートルで表示します。 飛び地がある場合は市街地のサイズを指します。
 
-Select for formatting options.</value>
+書式設定のオプションを選択して下さい。</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistrictAreaM2" xml:space="preserve">
-    <value>Current district size in square meters. City area size if not inside one.
+    <value>現在の地区サイズを平方メートルで表示します。 飛び地がある場合は市街地のサイズを指します。
 
-Select for formatting options.</value>
+書式設定のオプションを選択して下さい。</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistrictAreaMi2" xml:space="preserve">
-    <value>Current district size in square miles. City area size if not inside one.
+    <value>現在の地区サイズを平方マイルで表示します。 飛び地がある場合は市街地のサイズを指します。
 
-Select for formatting options.</value>
+書式設定のオプションを選択して下さい。</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistrictOrPark" xml:space="preserve">
-    <value>District name, or the outside connection city if at map edge. If none available, the Sub-area name will be used if the segment inside one of them. City name will be used as fallback.
+    <value>地区名やマップ外に繋がる外部接続の名前になります。もし、利用不可でセグメントがサブエリア内にある場合は、サブエリア名が使用されます。 (都市名はフォールバックとして使用)
 
-TIP: Outside connection names may be customized using the &lt;color=#00FF00&gt;Addresses Mod&lt;/color&gt;.</value>
+ヒント: 外部接続の名前は、 &lt;color=#00FF00&gt;Addresses Mod&lt;/color&gt; を使用してカスタマイズできます。</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistrictPopulation" xml:space="preserve">
-    <value>District population. City population if not inside one.
+    <value>地区の人口: 地区内にない場合は都市の人口を表示します。
 
-Select for formatting options.</value>
+書式設定のオプションを選択して下さい。</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_MileageKilometers" xml:space="preserve">
-    <value>Current mileage in kilometers.
+    <value>現在の移動距離をキロメートルで表示
 
-Select for formatting options.</value>
+書式設定のオプションを選択して下さい</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_MileageMeters" xml:space="preserve">
-    <value>Current mileage in meters.
+    <value>現在の移動距離をメートルで表示
 
-Select for formatting options.</value>
+書式設定のオプションを選択して下さい</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_MileageMiles" xml:space="preserve">
-    <value>Current mileage in miles.
+    <value>現在の移動距離をマイルで表示
 
-Select for formatting options.</value>
+書式設定のオプションを選択して下さい</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_None" xml:space="preserve">
-    <value>Select the data type to be extracted from the selected segment.</value>
+    <value>選択したセグメントから、抽出するデータの種類を選択します。</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_Park" xml:space="preserve">
-    <value>Sub-area name, or empty if not in one.
+    <value>サブエリア名、もしくはサブエリアに入っていない場合は空欄です。
 
-Sub-areas are called internally as "Park" because they were introduced at Parklife DLC, then after used by the Industries, Campus and Airport DLC without changing name.</value>
+サブエリアはDLC Parklifeから導入されています。Industries/Campus/Airportsの各DLCでもそのまま使用されているため、内部的には全て「Park」と呼ばれます。</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_ParkAreaKm2" xml:space="preserve">
-    <value>Sub-area size in square kilometers. 0 if not inside one.
+    <value>サブエリアのサイズを平方キロメートルで表示します。 サブエリアの内側にない場合は、0になります。
 
-Select for formatting options.</value>
+書式設定のオプションを選択して下さい。</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_ParkAreaM2" xml:space="preserve">
-    <value>Sub-area size in square meters. 0 if not inside one.
+    <value>サブエリアのサイズを平方メートルで表示します。 サブエリアの内側にない場合は、0になります。
 
-Select for formatting options.</value>
+書式設定のオプションを選択して下さい。</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_ParkAreaMi2" xml:space="preserve">
-    <value>Sub-area size in square miles. 0 if not inside one.
+    <value>サブエリアのサイズを平方マイルで表示します。 サブエリアの内側にない場合は、0になります。
 
-Select for formatting options.</value>
+書式設定のオプションを選択して下さい。</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_ParkOrDistrict" xml:space="preserve">
-    <value>Sub-area name, then District/OutSide Connection/City name if none available.
+    <value>サブエリア名を表示して、利用不可の場合は地区/外部接続/都市名を使用します。
 
-Sub-areas are called internally as "Park" because they were introduced at Parklife DLC, then after used by the Industries, Campus and Airport DLC without changing name.
+サブエリアはDLC Parklifeから導入されています。Industries/Campus/Airportsの各DLCでもそのまま使用されているため、内部的には全て「Park」と呼ばれます。
 
-TIP: Outside connection names may be customized using the &lt;color=#00FF00&gt;Addresses Mod&lt;/color&gt;.</value>
+ヒント: 外部接続の名前は、 &lt;color=#00FF00&gt;Addresses Mod&lt;/color&gt; を使用してカスタマイズできます。</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_StreetNameComplete" xml:space="preserve">
-    <value>Segment full name.</value>
+    <value>セグメントのフルネーム</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_StreetPrefix" xml:space="preserve">
-    <value>Segment name qualifier (Avenue, Street, etc).</value>
+    <value>修飾子有りのセグメント名 (AvenueやStreetなど)</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_StreetSuffix" xml:space="preserve">
-    <value>Segment name without qualifier.</value>
+    <value>修飾子無しのセグメント名</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableType_CityData" xml:space="preserve">
-    <value>Variables about city general data</value>
+    <value>都市全般のデータに関する変数</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableType_CurrentBuilding" xml:space="preserve">
-    <value>Variables about current building (building layouts only)</value>
+    <value>現在の建物に関する変数 (建物レイアウトのみ)</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableType_CurrentSegment" xml:space="preserve">
-    <value>Variables about current segment. (on net and road nodes layouts only)</value>
+    <value>現在のセグメントに関する変数 (ネットワークとノードのレイアウトのみ)</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableType_CurrentVehicle" xml:space="preserve">
-    <value>Variables about current vehicle (vehicle layouts only)</value>
+    <value>現在の車両に関する変数 (車両レイアウトのみ)</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableType_Environment" xml:space="preserve">
-    <value>City environment related variables, related to time, temperature and more.</value>
+    <value>都市環境に関する変数 (時間や温度など)</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableType_Invalid" xml:space="preserve">
-    <value>--INVALID--</value>
+    <value>--無効--</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableType_Parameter" xml:space="preserve">
-    <value>Use an local variable of the instance at segment to determine its value (on segment only)</value>
+    <value>セグメント内のインスタンスからローカル変数を使用して、その数値を決定します (セグメントのみ)</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableType_SegmentTarget" xml:space="preserve">
-    <value>Variables about referenced segments. (on net layouts only)</value>
+    <value>参照先のセグメントに関する変数 (ネットワークのレイアウトのみ)</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableType_VehicleBuilding" xml:space="preserve">
-    <value>Variables relative to the source building where the vehicle went from</value>
+    <value>車両が出発したソースの建物に関する変数</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableVehicleSubType_LastStopLine" xml:space="preserve">
-    <value>Last stop of line (destination)</value>
+    <value>路線の終点 (目的地)</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableVehicleSubType_LineFullName" xml:space="preserve">
-    <value>Line full name</value>
+    <value>路線のフルネーム</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableVehicleSubType_LineIdentifier" xml:space="preserve">
-    <value>Line identifier</value>
+    <value>路線の識別子</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableVehicleSubType_NextStopLine" xml:space="preserve">
-    <value>Next stop of line</value>
+    <value>次の停車場所</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableVehicleSubType_None" xml:space="preserve">
-    <value>&lt;None?&gt;</value>
+    <value>&lt;なし&gt;</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableVehicleSubType_PrevStopLine" xml:space="preserve">
-    <value>Previous stop of line</value>
+    <value>前の停車場所</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VarLevelRoot" xml:space="preserve">
-    <value>Click once in an item to get information; Click twice to select.</value>
+    <value>アイテム内を1回クリックすると情報を取得して、2回クリックすると選択できます。</value>
   </data>
   <data name="WTS_PICK_A_SEGMENT" xml:space="preserve">
-    <value>Pick a segment</value>
+    <value>セグメントを選択</value>
   </data>
   <data name="WTS_POSITIONINGMODE_ISMULTIPLE" xml:space="preserve">
-    <value>Repeat multiple instances along segment</value>
+    <value>セグメントに沿って、複数のインスタンスをリピートします。</value>
   </data>
   <data name="WTS_PROPEDIT_CONFIGDELETE_MESSAGE" xml:space="preserve">
-    <value>Are you sure that you want to delete "{0}"?</value>
+    <value>"{0}" を削除してもよろしいですか？</value>
   </data>
   <data name="WTS_REFRESH_IMAGES_FOLDER" xml:space="preserve">
-    <value>Reload images</value>
+    <value>画像のリロード</value>
   </data>
   <data name="WTS_RELATIVE_POS" xml:space="preserve">
-    <value>Relative position</value>
+    <value>相対的な位置</value>
   </data>
   <data name="WTS_RELATIVE_ROT" xml:space="preserve">
-    <value>Relative rotation</value>
+    <value>相対的な回転</value>
   </data>
   <data name="WTS_RESIZE_Y_TEXT_OVERFLOW" xml:space="preserve">
-    <value>Keep aspect ratio of image/font</value>
+    <value>画像/フォントの縦横比を維持</value>
   </data>
   <data name="WTS_SEGMENTEDITOR_BUTTONROWACTION_LOCKCAMERASELECTION" xml:space="preserve">
-    <value>Lock camera in the current selected item</value>
+    <value>現在の選択アイテムでカメラをロック</value>
   </data>
   <data name="WTS_SEGMENTPLACING_TITLE" xml:space="preserve">
-    <value>On segment placing editor</value>
+    <value>エディタでセグメント上に配置</value>
   </data>
   <data name="WTS_SEGMENT_CLEARDATA" xml:space="preserve">
-    <value>Clear items</value>
+    <value>アイテムのクリア</value>
   </data>
   <data name="WTS_SEGMENT_CLEARDATA_AYS" xml:space="preserve">
-    <value>Are you sure you want to erase all items in the list?</value>
+    <value>リスト内にある全てのアイテムを消去してもよろしいですか？</value>
   </data>
   <data name="WTS_SEGMENT_EXPORTDATA" xml:space="preserve">
-    <value>Export data to library</value>
+    <value>データをライブラリにエクスポート</value>
   </data>
   <data name="WTS_SEGMENT_IMPORTDATA" xml:space="preserve">
-    <value>Import rules</value>
+    <value>ルールをインポート</value>
   </data>
   <data name="WTS_SEGMENT_REMOVEITEM" xml:space="preserve">
-    <value>Remove item</value>
+    <value>アイテムを削除</value>
   </data>
   <data name="WTS_TEXTBACKGROUNDSIZEGENERATED" xml:space="preserve">
-    <value>Background size</value>
+    <value>背景のサイズ</value>
   </data>
   <data name="WTS_TEXT_ALIGN_HOR" xml:space="preserve">
-    <value>Horizontal align</value>
+    <value>水平方向に整列</value>
   </data>
   <data name="WTS_TEXT_BLINKTYPE" xml:space="preserve">
-    <value>Blink type</value>
+    <value>点滅のタイプ</value>
   </data>
   <data name="WTS_TEXT_COLOR" xml:space="preserve">
-    <value>Text color</value>
+    <value>文字の色</value>
   </data>
   <data name="WTS_TEXT_CONTAINERFRONTBORDERTHICKNESS" xml:space="preserve">
-    <value>Front border thickness</value>
+    <value>前面境界線の太さ</value>
   </data>
   <data name="WTS_TEXT_CONTAINERGLASSCOLOR" xml:space="preserve">
-    <value>Glass color</value>
+    <value>ガラスの色:</value>
   </data>
   <data name="WTS_TEXT_CONTAINERGLASSSPECULARITY" xml:space="preserve">
-    <value>Glass specularity</value>
+    <value>ガラスの鏡面度</value>
   </data>
   <data name="WTS_TEXT_CONTAINERGLASSTRANSPARENCY" xml:space="preserve">
-    <value>Glass transparency</value>
+    <value>ガラスの透明度</value>
   </data>
   <data name="WTS_TEXT_CONTENT" xml:space="preserve">
-    <value>Text content type</value>
+    <value>テキストコンテンツのタイプ</value>
   </data>
   <data name="WTS_TEXT_CONTENTVALUE_TAB" xml:space="preserve">
-    <value>Text contents</value>
+    <value>テキストコンテンツ</value>
   </data>
   <data name="WTS_TEXT_CUSTOMBLINKPARAMS" xml:space="preserve">
-    <value>Custom blink parameters</value>
+    <value>カスタムした点滅パラメータ</value>
   </data>
   <data name="WTS_TEXT_DEPTH" xml:space="preserve">
-    <value>Depth</value>
+    <value>奥行き</value>
   </data>
   <data name="WTS_TEXT_ILLUMINATIONSTRENGTH" xml:space="preserve">
-    <value>Illumination Strength</value>
+    <value>照明の強度</value>
   </data>
   <data name="WTS_TEXT_ILLUMINATION_ATTRIBUTES" xml:space="preserve">
-    <value>Illumination attributes</value>
+    <value>照明の属性</value>
   </data>
   <data name="WTS_TEXT_MATERIALTYPE" xml:space="preserve">
-    <value>Material brightness</value>
+    <value>マテリアルの輝度</value>
   </data>
   <data name="WTS_TEXT_SIZE_ATTRIBUTES" xml:space="preserve">
-    <value>Text size attributes</value>
+    <value>テキストサイズの属性</value>
   </data>
   <data name="WTS_TEXT_TAB_TITLE" xml:space="preserve">
-    <value>Text mesh title</value>
+    <value>テキストメッシュのタイトル</value>
   </data>
   <data name="WTS_TEXT_USEFRAME" xml:space="preserve">
-    <value>Create box around background</value>
+    <value>背景の周囲にボックスを作成</value>
   </data>
   <data name="WTS_USE_GROUP_SETTING_FONT" xml:space="preserve">
-    <value>&lt;Use parent font setting&gt;</value>
+    <value>&lt;親のフォント設定を使用&gt;</value>
   </data>
   <data name="WTS_VEHICLEEDITOR_SELECTMODEL" xml:space="preserve">
-    <value>Select vehicle model</value>
+    <value>車両モデルを選択</value>
   </data>
   <data name="WTS_VEHICLEEDITOR_WINDOWTITLE" xml:space="preserve">
-    <value>Vehicle editor</value>
+    <value>車両エディタ</value>
   </data>
   <data name="WTS_VEHICLE_EXPORTLAYOUT" xml:space="preserve">
-    <value>Export vehicle layout</value>
+    <value>車両のレイアウトをエクスポート</value>
   </data>
   <data name="WTS_VEHICLE_EXPORTLAYOUT_SUCCESSSAVEDATA" xml:space="preserve">
-    <value>Vehicle layout successfully exported to:</value>
+    <value>車両レイアウトを正常にエクスポートしました:</value>
   </data>
 </root>
