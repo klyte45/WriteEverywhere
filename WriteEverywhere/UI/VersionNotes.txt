@@ -1,6 +1,8 @@
 
 <color=yellow>Welcome to Write Everywhere!</color>
 
+<color=green>Update r6 (15/NOV/22):</color> Fixed ITM integration cache erasing
+
 This is the first version of this mod and brings most of main stuff of old Write The Signs mod but fixed, and also have new features, like listed below:
 
 <color=yellow>Features (the new ones are in yellow)</color>
