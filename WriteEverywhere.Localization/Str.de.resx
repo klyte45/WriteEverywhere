@@ -235,7 +235,7 @@
     <value>Gehe zu</value>
   </data>
   <data name="we_settings_ui" xml:space="preserve">
-    <value>UI</value>
+    <value>Benutzeroberfläche</value>
   </data>
   <data name="we_settings_uiScale" xml:space="preserve">
     <value>UI general scale</value>
