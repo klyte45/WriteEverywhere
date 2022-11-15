@@ -279,80 +279,80 @@
     <value>Cor interna da caixa</value>
   </data>
   <data name="we_generalTextEditor_fontBackfaceColor" xml:space="preserve">
-    <value>Text backface color</value>
+    <value>Cor de fundo do texto</value>
   </data>
   <data name="we_generalTextEditor_backgroundImage" xml:space="preserve">
-    <value>Background Image</value>
+    <value>Imagem de Fundo</value>
   </data>
   <data name="we_generalTextEditor_imageBordersLBRTlabel" xml:space="preserve">
-    <value>Image relative borders
-(Left, Bottom, Right, Top - 0 to 1)</value>
+    <value>Bordas relativas da imagem
+(Esquerda, Inferior, Direita, Superior - 0 a 1)</value>
   </data>
   <data name="we_generalTextEditor_imageDensityPixelsPerMeters" xml:space="preserve">
-    <value>Pixel density per square meter</value>
+    <value>Densidade dos pixels por metro quadrado</value>
   </data>
   <data name="we_generalTextEditor_imageSaveImageInfoBtn" xml:space="preserve">
-    <value>Save image info into file</value>
+    <value>Guardar informação da imagem no arquivo</value>
   </data>
   <data name="we_generalTextEditor_imageShowBorders" xml:space="preserve">
-    <value>Show borders</value>
+    <value>Mostrar bordas</value>
   </data>
   <data name="we_roadEditor_horizontalAlignmentBoxText" xml:space="preserve">
-    <value>Horizontal alignment relative to line width
-(0 = left; 1 = right)</value>
+    <value>Alinhamento horizontal em relação à largura da linha
+(0 = esquerda; 1 = direita)</value>
   </data>
   <data name="we_settings_uiOpacity" xml:space="preserve">
-    <value>UI Background Opacity</value>
+    <value>Opacidade de fundo da Interface</value>
   </data>
   <data name="we_errorLoadingVehicleLayout_msg" xml:space="preserve">
-    <value>Error loading the item {1}/{2} for a vehicle in the following scope: {2}
-Check the data shown below to get information.</value>
+    <value>Erro ao carregar o item {1}/{2} para um veículo no âmbito a seguir: {2}
+Confira os dados mostrados abaixo para obter informações.</value>
   </data>
   <data name="we_generalTextEditor_cloneType180" xml:space="preserve">
-    <value>Clone at 180º Y type</value>
+    <value>Cloner a 180º em tipo Y</value>
   </data>
   <data name="we_vehicleEditor_headVehicleTitle" xml:space="preserve">
-    <value>Head</value>
+    <value>Cabeça</value>
   </data>
   <data name="we_vehicleEditor_pickerBtn" xml:space="preserve">
-    <value>Picker</value>
+    <value>Seletor</value>
   </data>
   <data name="we_vehicleEditor_pickOrSpawnAVehicle" xml:space="preserve">
-    <value>Grab an unit of this vehicle as viewer, if exists</value>
+    <value>Se existir uma unidade deste veículo, marque uma unidade para ver</value>
   </data>
   <data name="we_vehicleEditor_trailerNumTitle" xml:space="preserve">
     <value>Trailer {0}</value>
   </data>
   <data name="we_Enum__YCloneType_OnZ" xml:space="preserve">
-    <value>Mirrored on Z Axis</value>
+    <value>Espelhado no Eixo Z</value>
   </data>
   <data name="we_Enum__ConfigurationSource_ASSET" xml:space="preserve">
-    <value>Workshop</value>
+    <value>Oficina</value>
   </data>
   <data name="we_Enum__ConfigurationSource_CITY" xml:space="preserve">
-    <value>Savegame (City)</value>
+    <value>Arquivo de Salvamento (Cidade)</value>
   </data>
   <data name="we_Enum__ConfigurationSource_GLOBAL" xml:space="preserve">
-    <value>Local folder (Appdata)</value>
+    <value>Pasta local (Appdata)</value>
   </data>
   <data name="we_Enum__ConfigurationSource_NONE" xml:space="preserve">
-    <value>None (Disabled)</value>
+    <value>Nenhum (Desabilitado)</value>
   </data>
   <data name="we_Enum__ConfigurationSource_SKIN" xml:space="preserve">
-    <value>Skin (From Vehicle Skins)</value>
+    <value>Tema (Do Design do Veículo)</value>
   </data>
   <data name="we_Enum__YCloneType_None" xml:space="preserve">
-    <value>No cloning</value>
+    <value>Sem clonagem</value>
   </data>
   <data name="we_Enum__YCloneType_OnX" xml:space="preserve">
-    <value>Mirrored on X Axis</value>
+    <value>Espelhado no Eixo X</value>
   </data>
   <data name="we_vehicleEditor_failedPickingAVehicle" xml:space="preserve">
-    <value>There are no vehicles of this model running around this city.
-Try force spawning anywhere, like setting the model to a transport line.</value>
+    <value>Não há veículos deste modelo rodando ao redor desta cidade.
+Tente forçar a criação em qualquer lugar, como colocar o modelo em uma linha de transporte.</value>
   </data>
   <data name="we_vehicleEditor_waitingGrabVehicle" xml:space="preserve">
-    <value>Waiting seach for the vehicle...</value>
+    <value>Esperando a busca pelo veículo...</value>
   </data>
   <data name="we_settings_defaultFontDescription" xml:space="preserve">
     <value>The default fonts will be used when none is selected in a layout, when relative to Building, Vehicle or Placing on network modes; or can be selected as font class for the other fields below.</value>
