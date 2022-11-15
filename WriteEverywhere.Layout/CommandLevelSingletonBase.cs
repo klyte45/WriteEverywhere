@@ -21,7 +21,9 @@ namespace WriteEverywhere.Layout
             {
                 if (m_instance is null)
                 {
-                    m_instance = BasicIUserMod.Instance.OwnGO.AddComponent(ReflectionUtils.GetInterfaceImplementations(typeof(CommandLevelSingletonBase)).First()) as CommandLevelSingletonBase;
+                    var clazz = ReflectionUtils.GetInterfaceImplementations(typeof(CommandLevelSingletonBase)).First();
+                    m_instance = BasicIUserMod.Instance.OwnGO.AddComponent(clazz) as CommandLevelSingletonBase;
+                    LogUtils.DoWarnLog($"Creating command level singleton of type: {clazz} ({m_instance})");
                 }
                 return m_instance;
             }

@@ -291,7 +291,15 @@ namespace WriteEverywhere.UI
         {
             yield return 0;
             var baseArr = GetCurrentParamString().Count(x => x == '/') >= 3 ? new[] { "<color=#FFFF00><<</color>" } : new string[0];
-            yield return m_searchResult.Value = baseArr.AddRangeToArray(paramEditor.OnFilterParam(RenderingClass, this)?.Select(x => x.IsNullOrWhiteSpace() ? GUIKwyttoCommons.v_empty : x).ToArray() ?? new string[0]);
+            try
+            {
+                m_searchResult.Value = baseArr.AddRangeToArray(paramEditor.OnFilterParam(RenderingClass, this)?.Select(x => x.IsNullOrWhiteSpace() ? GUIKwyttoCommons.v_empty : x).ToArray() ?? new string[0]);
+            }
+            catch (Exception e)
+            {
+                LogUtils.DoErrorLog($"ERROR SEARCHING: {e}");
+                m_searchResult.Value = baseArr;
+            }
             if (autoselect != null)
             {
                 var autoSelectVal = Array.IndexOf(m_searchResult.Value, autoselect);

@@ -121,6 +121,13 @@ namespace WriteEverywhere.Singleton
         public static void ClearCacheVehicleNumber() => DoClearCacheCoroutineStart(CacheErasingFlags.VehicleParameters);
 
         public static void ClearCacheLineId() => DoClearCacheCoroutineStart(CacheErasingFlags.VehicleParameters | CacheErasingFlags.LineId | CacheErasingFlags.LineName);
+        public static void ClearCacheLine(ushort line)
+        {
+            if (instance.m_cacheTransportLines.TryGetValue(line, out var cache))
+            {
+                cache.PurgeCache(CacheErasingFlags.VehicleParameters | CacheErasingFlags.LineId | CacheErasingFlags.LineName, new InstanceID { TransportLine = line });
+            }
+        }
         public static void ClearCacheLineName() => DoClearCacheCoroutineStart(CacheErasingFlags.LineName);
         public static void ClearCacheLineName(WTSLine line)
         {

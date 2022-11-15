@@ -26,6 +26,11 @@ namespace K45_WE2ITM
                 WEFacade.BuildingPropsSingleton.ResetLines();
                 WTSCacheSingleton.ClearCacheLineName(new WTSLine(lineId, false));
             };
+
+            ITMFacade.Instance.EventLineAttributeChanged += (x) =>
+            {
+                WTSCacheSingleton.ClearCacheLine(x);
+            };
         }
 
         public override WTSLine GetStopLine(ushort stopId)
