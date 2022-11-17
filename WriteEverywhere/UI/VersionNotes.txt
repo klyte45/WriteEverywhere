@@ -1,7 +1,10 @@
 
 <color=yellow>Welcome to Write Everywhere!</color>
 
-<color=green>Update r6 (15/NOV/22):</color> Fixed ITM integration cache erasing
+<color=green>Update r7 (15/NOV/22):</color> Fixed ITM integration cache erasing
+<color=green>Update r8 (17/NOV/22):</color> 
+- Fixed variables not appearing in the editor
+- Fixed road picker not working
 
 This is the first version of this mod and brings most of main stuff of old Write The Signs mod but fixed, and also have new features, like listed below:
 

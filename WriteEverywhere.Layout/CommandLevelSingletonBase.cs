@@ -15,6 +15,7 @@ namespace WriteEverywhere.Layout
     public abstract class CommandLevelSingletonBase : MonoBehaviour
     {
         protected static CommandLevelSingletonBase m_instance;
+        protected static CommandLevelSingletonBase InstanceInternal => Instance;
         internal static CommandLevelSingletonBase Instance
         {
             get

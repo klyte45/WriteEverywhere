@@ -15,8 +15,7 @@ namespace WriteEverywhere.Singleton
     public class CommandLevelSingleton : CommandLevelSingletonBase
     {
         private Dictionary<Enum, RootCommandLevel> commandTree;
-
-        public static CommandLevelSingleton Instance { get; internal set; }
+        public static CommandLevelSingleton Instance => (CommandLevelSingleton)InstanceInternal;
 
         private Dictionary<Enum, RootCommandLevel> ReadCommandTree()
         {
@@ -51,7 +50,6 @@ namespace WriteEverywhere.Singleton
 
         protected override void OnAwake()
         {
-            Instance = this;
             commandTree = ReadCommandTree();
         }
 
