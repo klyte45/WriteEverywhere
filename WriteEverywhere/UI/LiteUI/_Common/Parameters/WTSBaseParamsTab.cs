@@ -132,12 +132,12 @@ namespace WriteEverywhere.UI
             var topHeight = paramEditor.DrawTop(this, areaRect);
             using (new GUILayout.HorizontalScope())
             {
-                using (var scroll = new GUILayout.ScrollViewScope(m_leftPanelScroll, false, true, GUILayout.Width(areaRect.x / 2), GUILayout.Height(areaRect.y - topHeight - 35 * GUIWindow.ResolutionMultiplier)))
+                using (var scroll = new GUILayout.ScrollViewScope(m_leftPanelScroll, false, true, GUILayout.Width(areaRect.x / 2), GUILayout.Height(areaRect.y - topHeight - 35)))
                 {
                     paramEditor.DrawLeftPanel(RenderingClass, this, areaRect);
                     m_leftPanelScroll = scroll.scrollPosition;
                 };
-                using (new GUILayout.VerticalScope(GUILayout.Width(areaRect.x / 2 - 20 * GUIWindow.ResolutionMultiplier), GUILayout.Height(areaRect.y - topHeight - 35 * GUIWindow.ResolutionMultiplier)))
+                using (new GUILayout.VerticalScope(GUILayout.Width(areaRect.x / 2 - 20), GUILayout.Height(areaRect.y - topHeight - 35)))
                 {
                     if (showRightPanel)
                     {
@@ -145,7 +145,7 @@ namespace WriteEverywhere.UI
                         GUILayout.Space(8);
                         using (var scroll = new GUILayout.ScrollViewScope(m_rightPanelScroll))
                         {
-                            paramEditor.DrawRightPanel(this, new Vector2(areaRect.x / 2 - 20 * GUIWindow.ResolutionMultiplier, areaRect.y - topHeight - 50 * GUIWindow.ResolutionMultiplier));
+                            paramEditor.DrawRightPanel(this, new Vector2(areaRect.x / 2 - 20, areaRect.y - topHeight - 50));
                             m_rightPanelScroll = scroll.scrollPosition;
                         }
                     }

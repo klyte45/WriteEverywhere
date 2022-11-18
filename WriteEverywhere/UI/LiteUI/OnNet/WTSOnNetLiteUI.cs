@@ -157,7 +157,7 @@ namespace WriteEverywhere.UI
             }
             else
             {
-                using (new GUILayout.AreaScope(new Rect(5 * GUIWindow.ResolutionMultiplier, 5 * GUIWindow.ResolutionMultiplier, size.x - 10 * GUIWindow.ResolutionMultiplier, size.y - 10 * GUIWindow.ResolutionMultiplier)))
+                using (new GUILayout.AreaScope(new Rect(5, 5, size.x - 10, size.y - 10)))
                 {
                     xmlLibList.DrawImportView(OnSelectBoardList);
                 }
@@ -191,7 +191,7 @@ namespace WriteEverywhere.UI
             {
                 return;
             }
-            var headerArea = new Rect(5 * GUIWindow.ResolutionMultiplier, 0, size.x - 10 * GUIWindow.ResolutionMultiplier, 20 * ResolutionMultiplier);
+            var headerArea = new Rect(5, 0, size.x - 10, 20);
             if (xmlLibList.Status == FooterBarStatus.Normal)
             {
                 using (new GUILayout.AreaScope(headerArea))
@@ -207,7 +207,7 @@ namespace WriteEverywhere.UI
             {
                 xmlLibList.Draw(RedButton, OnDeleteList, OnGetCurrentList);
             }
-            m_tabsContainer.DrawListTabs(new Rect(0, 20 * ResolutionMultiplier, size.x, size.y - 20 * ResolutionMultiplier));
+            m_tabsContainer.DrawListTabs(new Rect(0, 20, size.x, size.y - 20));
         }
 
         #region Tab Actions

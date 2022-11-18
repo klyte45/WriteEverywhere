@@ -127,7 +127,7 @@ namespace WriteEverywhere.UI
             {
                 case FooterBarStatus.AskingToImport:
                 case FooterBarStatus.AskingToImportAdditive:
-                    using (new GUILayout.AreaScope(new Rect(5 * GUIWindow.ResolutionMultiplier, 30 * GUIWindow.ResolutionMultiplier, area.width - 10 * GUIWindow.ResolutionMultiplier, area.height - 30 * GUIWindow.ResolutionMultiplier)))
+                    using (new GUILayout.AreaScope(new Rect(5, 30, area.width - 10, area.height - 30)))
                     {
                         m_textGroupLib.DrawImportView((x, y) =>
                         {
@@ -153,8 +153,8 @@ namespace WriteEverywhere.UI
 
         private void RegularDraw(Vector2 size, bool allowEdit)
         {
-            m_tabsContainer.DrawListTabs(new Rect(0, 20 * GUIWindow.ResolutionMultiplier, size.x, size.y - 20 * GUIWindow.ResolutionMultiplier), allowEdit, true);
-            using (new GUILayout.AreaScope(new Rect(0, 0, size.x, 20 * GUIWindow.ResolutionMultiplier)))
+            m_tabsContainer.DrawListTabs(new Rect(0, 20, size.x, size.y - 20), allowEdit, true);
+            using (new GUILayout.AreaScope(new Rect(0, 0, size.x, 20)))
             {
                 m_textGroupLib.Draw(WEUIUtils.RedButton, () =>
                 {

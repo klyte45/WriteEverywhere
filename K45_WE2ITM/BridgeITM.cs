@@ -57,7 +57,11 @@ namespace K45_WE2ITM
             => ITMFacade.Instance.GetStopName(stopId);
 
         public override WTSLine GetVehicleLine(ushort vehicleId)
-            => new WTSLine(VehicleManager.instance.m_vehicles.m_buffer[vehicleId].m_transportLine, false);
+        {
+            ref Vehicle[] buffer7 = ref VehicleManager.instance.m_vehicles.m_buffer;
+            ref Vehicle veh = ref buffer7[buffer7[vehicleId].GetFirstVehicle(vehicleId)];
+            return new WTSLine(veh.m_transportLine, false);
+        }
 
         public override void MapLineDestinations(WTSLine lineObj, ref StopInformation[] cacheToUpdate)
             => FillStops(lineObj, ITMFacade.Instance.MapAllTerminals(lineObj.lineId).Select((x) => new DestinationPoco { stopId = x }).ToList(), ref cacheToUpdate);

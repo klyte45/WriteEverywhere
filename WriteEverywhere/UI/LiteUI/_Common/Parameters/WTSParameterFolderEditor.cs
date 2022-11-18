@@ -69,7 +69,7 @@ namespace WriteEverywhere.UI
             var selectLayout = GUILayout.SelectionGrid(Array.IndexOf(tab.m_searchResult.Value, tab.SelectedValue), tab.m_searchResult.Value, 1, new GUIStyle(GUI.skin.button)
             {
                 alignment = TextAnchor.MiddleLeft
-            }, GUILayout.Width((areaRect.x / 2) - 25 * GUIWindow.ResolutionMultiplier));
+            }, GUILayout.Width((areaRect.x / 2) - 25));
             if (selectLayout >= 0)
             {
                 OnSelectItem(renderingClass, tab, selectLayout);

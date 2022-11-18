@@ -206,7 +206,7 @@ namespace WriteEverywhere.UI
                         GUILayout.Label(m_currentSource.ValueToI18n(), skinNoWrap);
                         GUILayout.FlexibleSpace();
                     }
-                    using (new GUILayout.VerticalScope(GUILayout.MaxWidth(400 * GUIWindow.ResolutionMultiplier)))
+                    using (new GUILayout.VerticalScope(GUILayout.MaxWidth(400)))
                     {
                         using (new GUILayout.HorizontalScope())
                         {

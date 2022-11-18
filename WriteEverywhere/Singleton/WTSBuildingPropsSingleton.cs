@@ -695,7 +695,6 @@ namespace WriteEverywhere.Singleton
             Data.GlobalDescriptors.Clear();
             var errorList = new List<string>();
             LogUtils.DoLog($"DefaultBuildingsConfigurationFolder = {WEMainController.DefaultBuildingsConfigurationFolder}");
-            int counter = 0;
             foreach (string filename in Directory.GetFiles(WEMainController.DefaultBuildingsConfigurationFolder, "*.xml"))
             {
                 try
@@ -714,11 +713,7 @@ namespace WriteEverywhere.Singleton
                     LogUtils.DoWarnLog($"Error Loading file \"{filename}\" ({e.GetType()}): {e.Message}\n{e}");
                     errorList.Add($"Error Loading file \"{filename}\" ({e.GetType()}): {e.Message}");
                 }
-                if (counter++ > 10)
-                {
-                    yield return 0;
-                    counter = 0;
-                }
+                yield return 0;
             }
 
             LoadingCoroutineLocal = null;
@@ -738,15 +733,10 @@ namespace WriteEverywhere.Singleton
         {
             yield return 0;
             Data.AssetsDescriptors.Clear();
-            var counter = 0;
             foreach (var asset in BuildingIndexes.instance.PrefabsData.Where(x => x.Value.PackageName.TrimToNull() != null))
             {
                 LoadDescriptorsFromXmlAsset(asset.Value.Info as BuildingInfo);
-                if (counter++ > 10)
-                {
-                    yield return 0;
-                    counter = 0;
-                }
+                yield return 0;
             }
             LoadingCoroutineAssets = null;
         }

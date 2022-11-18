@@ -168,7 +168,7 @@ namespace WriteEverywhere.UI
                 GUILayout.Label(Str.we_assetEditor_currentAssetIsNotVehicle);
                 return;
             }
-            var area = new Rect(5 * GUIWindow.ResolutionMultiplier, 0, size.x - 10 * GUIWindow.ResolutionMultiplier, size.y);
+            var area = new Rect(5, 0, size.x - 10, size.y);
             using (new GUILayout.AreaScope(area))
             {
                 switch (m_currentState)
@@ -209,13 +209,13 @@ namespace WriteEverywhere.UI
             }
             if (CurrentInfo)
             {
-                var headerArea = new Rect(0, 25 * GUIWindow.ResolutionMultiplier, size.x, 25 * GUIWindow.ResolutionMultiplier);
-                var bodyArea = new Rect(0, 50 * GUIWindow.ResolutionMultiplier, size.x, size.y - 50 * GUIWindow.ResolutionMultiplier);
+                var headerArea = new Rect(0, 25, size.x, 25);
+                var bodyArea = new Rect(0, 50, size.x, size.y - 50);
                 using (new GUILayout.AreaScope(headerArea))
                 {
                     using (var scope = new GUILayout.ScrollViewScope(m_horizontalScroll))
                     {
-                        TrailerSel = GUILayout.SelectionGrid(TrailerSel, CurrentTrailerList.Select((_, i) => i == 0 ? Str.we_vehicleEditor_headVehicleTitle : string.Format(Str.we_vehicleEditor_trailerNumTitle, i)).ToArray(), CurrentTrailerList.Count, GUILayout.MinWidth(40 * GUIWindow.ResolutionMultiplier));
+                        TrailerSel = GUILayout.SelectionGrid(TrailerSel, CurrentTrailerList.Select((_, i) => i == 0 ? Str.we_vehicleEditor_headVehicleTitle : string.Format(Str.we_vehicleEditor_trailerNumTitle, i)).ToArray(), CurrentTrailerList.Count, GUILayout.MinWidth(40));
                         m_horizontalScroll = scope.scrollPosition;
                     }
                 }
