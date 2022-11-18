@@ -276,122 +276,122 @@
     <value>BG-Rückseitenfarbe</value>
   </data>
   <data name="we_generalTextEditor_boxInnerColor" xml:space="preserve">
-    <value>Box inner color</value>
+    <value>Innenfarbe der Kästen</value>
   </data>
   <data name="we_generalTextEditor_fontBackfaceColor" xml:space="preserve">
-    <value>Text backface color</value>
+    <value>Text Hintergrundfarbe</value>
   </data>
   <data name="we_generalTextEditor_backgroundImage" xml:space="preserve">
-    <value>Background Image</value>
+    <value>Hintergrundbild</value>
   </data>
   <data name="we_generalTextEditor_imageBordersLBRTlabel" xml:space="preserve">
-    <value>Image relative borders
-(Left, Bottom, Right, Top - 0 to 1)</value>
+    <value>Relative Bildgrenzen
+(links, unten, rechts, oben - 0 bis 1)</value>
   </data>
   <data name="we_generalTextEditor_imageDensityPixelsPerMeters" xml:space="preserve">
-    <value>Pixel density per square meter</value>
+    <value>Pixeldichte pro Quadratmeter</value>
   </data>
   <data name="we_generalTextEditor_imageSaveImageInfoBtn" xml:space="preserve">
-    <value>Save image info into file</value>
+    <value>Bildinformationen in Datei speichern</value>
   </data>
   <data name="we_generalTextEditor_imageShowBorders" xml:space="preserve">
-    <value>Show borders</value>
+    <value>Rahmen anzeigen</value>
   </data>
   <data name="we_roadEditor_horizontalAlignmentBoxText" xml:space="preserve">
-    <value>Horizontal alignment relative to line width
-(0 = left; 1 = right)</value>
+    <value>Horizontale Ausrichtung relativ zur Linienbreite
+(0 = links; 1 = rechts)</value>
   </data>
   <data name="we_settings_uiOpacity" xml:space="preserve">
-    <value>UI Background Opacity</value>
+    <value>UI Hintergrundtransparenz</value>
   </data>
   <data name="we_errorLoadingVehicleLayout_msg" xml:space="preserve">
-    <value>Error loading the item {1}/{2} for a vehicle in the following scope: {2}
-Check the data shown below to get information.</value>
+    <value>Fehler beim Laden des Elementes {1}/{2} für ein Fahrzeug im folgenden Bereich: {2}
+Überprüfe die unten angezeigten Daten, um Informationen zu erhalten.</value>
   </data>
   <data name="we_generalTextEditor_cloneType180" xml:space="preserve">
-    <value>Clone at 180º Y type</value>
+    <value>Y-Typ auf 180° klonen</value>
   </data>
   <data name="we_vehicleEditor_headVehicleTitle" xml:space="preserve">
-    <value>Head</value>
+    <value>Front</value>
   </data>
   <data name="we_vehicleEditor_pickerBtn" xml:space="preserve">
-    <value>Picker</value>
+    <value>Pipette</value>
   </data>
   <data name="we_vehicleEditor_pickOrSpawnAVehicle" xml:space="preserve">
-    <value>Grab an unit of this vehicle as viewer, if exists</value>
+    <value>Greife eine Einheit dieses Fahrzeugs als Betrachter auf, falls vorhanden</value>
   </data>
   <data name="we_vehicleEditor_trailerNumTitle" xml:space="preserve">
-    <value>Trailer {0}</value>
+    <value>Anhänger {0}</value>
   </data>
   <data name="we_Enum__YCloneType_OnZ" xml:space="preserve">
-    <value>Mirrored on Z Axis</value>
+    <value>Gespiegelt auf der Z-Achse</value>
   </data>
   <data name="we_Enum__ConfigurationSource_ASSET" xml:space="preserve">
     <value>Workshop</value>
   </data>
   <data name="we_Enum__ConfigurationSource_CITY" xml:space="preserve">
-    <value>Savegame (City)</value>
+    <value>Spielstand (Stadt)</value>
   </data>
   <data name="we_Enum__ConfigurationSource_GLOBAL" xml:space="preserve">
-    <value>Local folder (Appdata)</value>
+    <value>Lokaler Ordner (Appdata)</value>
   </data>
   <data name="we_Enum__ConfigurationSource_NONE" xml:space="preserve">
-    <value>None (Disabled)</value>
+    <value>Keine (deaktiviert)</value>
   </data>
   <data name="we_Enum__ConfigurationSource_SKIN" xml:space="preserve">
-    <value>Skin (From Vehicle Skins)</value>
+    <value>Lackierung (aus Vehicle Skins)</value>
   </data>
   <data name="we_Enum__YCloneType_None" xml:space="preserve">
-    <value>No cloning</value>
+    <value>Kein Klonen</value>
   </data>
   <data name="we_Enum__YCloneType_OnX" xml:space="preserve">
-    <value>Mirrored on X Axis</value>
+    <value>Gespiegelt auf der X-Achse</value>
   </data>
   <data name="we_vehicleEditor_failedPickingAVehicle" xml:space="preserve">
-    <value>There are no vehicles of this model running around this city.
-Try force spawning anywhere, like setting the model to a transport line.</value>
+    <value>In dieser Stadt fahren keine Fahrzeuge dieses Modells.
+Versuche das Spawnen zu erzwingen, indem du das Modell für eine Transportlinie festlegst.</value>
   </data>
   <data name="we_vehicleEditor_waitingGrabVehicle" xml:space="preserve">
-    <value>Waiting seach for the vehicle...</value>
+    <value>Wartet auf das Fahrzeug...</value>
   </data>
   <data name="we_settings_defaultFontDescription" xml:space="preserve">
-    <value>The default fonts will be used when none is selected in a layout, when relative to Building, Vehicle or Placing on network modes; or can be selected as font class for the other fields below.</value>
+    <value>Die Standardschriftarten werden verwendet, wenn keine im Layout ausgewählt ist, sofern sie in Relation zu Gebäuden, Fahrzeugen oder dem Platzieren von Netzwerken stehen. Kann auch als Schriftart für die anderen Felder unten ausgewählt werden.</value>
   </data>
   <data name="we_settings_defaultFonts" xml:space="preserve">
-    <value>Default fonts</value>
+    <value>Standardschriftarten</value>
   </data>
   <data name="we_settings_defaultFontsAvailableOnlyWhenCityLoaded" xml:space="preserve">
-    <value>Default fonts settings are available only when a city is loaded</value>
+    <value>Standardschriftarten-Einstellungen sind nur verfügbar, wenn eine Stadt geladen ist</value>
   </data>
   <data name="we_buildingEditor_windowTitle" xml:space="preserve">
-    <value>Building editor</value>
+    <value>Gebäude-Editor</value>
   </data>
   <data name="we_buildingEditor_subBuildingNumTitle" xml:space="preserve">
-    <value>SubBuilding #{0}</value>
+    <value>Untergebäude #{0}</value>
   </data>
   <data name="we_buildingEditor_mainBuildingTitle" xml:space="preserve">
-    <value>Main building</value>
+    <value>Hauptgebäude</value>
   </data>
   <data name="we_buildingEditor_pickerBtn" xml:space="preserve">
-    <value>Pick A Building</value>
+    <value>Wähle ein Gebäude</value>
   </data>
   <data name="we_buildingEditor_selectBuilding" xml:space="preserve">
-    <value>Select building</value>
+    <value>Gebäude auswählen</value>
   </data>
   <data name="we_textEditor_needPropSelectedWarning" xml:space="preserve">
-    <value>Select a prop before editing texts!</value>
+    <value>Vor dem Bearbeiten von Texten eine Dekoration auswählen!</value>
   </data>
   <data name="we_buildingEditor_noParametersUsedThisInstance" xml:space="preserve">
-    <value>No parameters were used in this instance.</value>
+    <value>In dieser Instanz wurden keine Parameter verwendet.</value>
   </data>
   <data name="we_buildingEditor_paramEditorTabText" xml:space="preserve">
-    <value>Instance parameters</value>
+    <value>Instanzparameter</value>
   </data>
   <data name="we_buildingEditor_layoutEditorTabText" xml:space="preserve">
-    <value>Props texts</value>
+    <value>Dekorationstexte</value>
   </data>
   <data name="we_buildingEditor_currentBuildingBeingEdited" xml:space="preserve">
-    <value>Current Building: {0} (ID: {1})</value>
+    <value>Aktuelles Gebäude: {0} (ID: {1})</value>
   </data>
   <data name="we_buildingEditor_pickABuildingToEditParameters" xml:space="preserve">
     <value>Pick a building to edit its parameters.</value>
@@ -548,157 +548,157 @@ Check the data shown below to get information.</value>
     <value>&lt;color=yellow&gt;The building layouts are being loaded...&lt;/color&gt;</value>
   </data>
   <data name="we_vehicleEditor_theLayotsAreBeingLoaded" xml:space="preserve">
-    <value>&lt;color=yellow&gt;The vehicles layots are being loaded...&lt;/color&gt;</value>
+    <value>&lt;color=yellow&gt;Die Fahrzeuglayouts werden geladen...&lt;/color&gt;</value>
   </data>
   <data name="we_assetEditor_currentAssetIsNotVehicle" xml:space="preserve">
-    <value>&lt;color=yellow&gt;Current asset is not a vehicle&lt;/color&gt;</value>
+    <value>&lt;color=yellow&gt;Aktueller Gegenstand ist kein Fahrzeug&lt;/color&gt;</value>
   </data>
   <data name="we_generalTextEditor_previewTypeImageFrame" xml:space="preserve">
-    <value>Image frame</value>
+    <value>Bildrahmen</value>
   </data>
   <data name="we_generalTextEditor_assetEditorExibitionText" xml:space="preserve">
-    <value>Content to show in Asset Editor</value>
+    <value>Im Asset-Editor anzuzeigender Inhalt</value>
   </data>
   <data name="we_generalTextEditor_assetEditorPreviewSetText" xml:space="preserve">
-    <value>Text to show in Asset Editor</value>
+    <value>Im Asset-Editor anzuzeigender Text</value>
   </data>
   <data name="we_generalTextEditor_previewTypeSetText" xml:space="preserve">
-    <value>Custom text</value>
+    <value>Benutzerdefinierter Text</value>
   </data>
   <data name="we_generalTextEditor_previewTypeVariablePath" xml:space="preserve">
-    <value>WE variable path</value>
+    <value>WE Variablen-Pfad</value>
   </data>
   <data name="we_assetEditor_reloadAssetImages" xml:space="preserve">
-    <value>Reload images from asset</value>
+    <value>Bilder von Gegenstand erneut laden</value>
   </data>
   <data name="we_assetEditor_toggleFlags" xml:space="preserve">
-    <value>Toggle flags</value>
+    <value>Umschalten der Flags</value>
   </data>
   <data name="we_generalTextEditor_goToAssetSpritesFolder" xml:space="preserve">
-    <value>Go to WS asset images folder</value>
+    <value>Gehe zum Bildordner für WS Gegenstände</value>
   </data>
   <data name="we_general_errorsLoadingImagesFromAssetSpriteFolderHeader" xml:space="preserve">
-    <value>Some errors occurred when trying to load the images from asset: &lt;color=yellow&gt;{0}&lt;/color&gt;</value>
+    <value>Fehler beim Laden der Bilder aus dem Gegenstand: &lt;color=yellow&gt;{0}&lt;/color&gt;</value>
   </data>
   <data name="we_citySettings_title" xml:space="preserve">
-    <value>City settings</value>
+    <value>Stadteinstellungen</value>
   </data>
   <data name="WTS_ACTIVERULESONLY" xml:space="preserve">
-    <value>Filter assets having at least one layout active</value>
+    <value>Filtere Assets mit mindestens einem aktiven Layout</value>
   </data>
   <data name="WTS_BACKGROUNDANDBOX_SETTINGS" xml:space="preserve">
-    <value>Background &amp; box </value>
+    <value>Hintergrund &amp; Kasten </value>
   </data>
   <data name="WTS_BOARD_TEXT_TYPE_DESC__Any" xml:space="preserve">
-    <value>Any kind</value>
+    <value>Alle Typen</value>
   </data>
   <data name="WTS_BOARD_TEXT_TYPE_DESC__None" xml:space="preserve">
-    <value>None</value>
+    <value>Keine</value>
   </data>
   <data name="WTS_BOARD_TEXT_TYPE_DESC__ParameterizedSpriteFolder" xml:space="preserve">
-    <value>Sprite slideshow from a folder</value>
+    <value>Sprite Slideshow aus einem Ordner erstellen</value>
   </data>
   <data name="WTS_BOARD_TEXT_TYPE_DESC__ParameterizedSpriteSingle" xml:space="preserve">
-    <value>Parameterized sprite</value>
+    <value>Parametrisiertes Sprite</value>
   </data>
   <data name="WTS_BOARD_TEXT_TYPE_DESC__ParameterizedText" xml:space="preserve">
-    <value>Parameterized Text</value>
+    <value>Parametrisierter Text</value>
   </data>
   <data name="WTS_BOARD_TEXT_TYPE_DESC__TextParameterSequence" xml:space="preserve">
-    <value>Text sequence</value>
+    <value>Textsequenz</value>
   </data>
   <data name="WTS_BOXMESH_BACKOFFSETFROMCENTERBOTTOM" xml:space="preserve">
-    <value>Back mesh tilt offset (from Center/Bottom)</value>
+    <value>Rückseiten Mesh Neigungsversatz (von Mitten/Unten)</value>
   </data>
   <data name="WTS_BOXMESH_BACKSIZE" xml:space="preserve">
-    <value>Back mesh rectangle size</value>
+    <value>Rückseiten-Rechteckgröße</value>
   </data>
   <data name="WTS_BOXMESH_COLORSGROUP_LABEL" xml:space="preserve">
-    <value>Colors</value>
+    <value>Farben</value>
   </data>
   <data name="WTS_BOXMESH_DEPTH_BACK" xml:space="preserve">
-    <value>Depth BG-&gt;Back mesh</value>
+    <value>Tiefe BG-&gt;Rückseiten Mesh</value>
   </data>
   <data name="WTS_BOXMESH_DEPTH_FRONT" xml:space="preserve">
-    <value>Depth BG-&gt;Front mesh</value>
+    <value>Tiefe BG-&gt;Vorderseiten Mesh</value>
   </data>
   <data name="WTS_BOXMESH_EFFECTSGROUP_LABEL" xml:space="preserve">
-    <value>Effects</value>
+    <value>Effekte</value>
   </data>
   <data name="WTS_BOXMESH_OUTERCOLOR" xml:space="preserve">
-    <value>Box outer color</value>
+    <value>Außenfarbe der Kästen</value>
   </data>
   <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_COPYTOCITY" xml:space="preserve">
-    <value>Clone this layout to be edited in this savegame</value>
+    <value>Dieses Layout zum Bearbeiten in diesem Spielstand klonen</value>
   </data>
   <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_COPYTOCLIPBOARD" xml:space="preserve">
-    <value>Copy to clipboard</value>
+    <value>In die Zwischenablage kopieren</value>
   </data>
   <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_DELETEFROMCITY" xml:space="preserve">
-    <value>Delete from this savegame
-(Note: appdata or asset values will be used if exists)</value>
+    <value>Aus diesem Spielstand löschen
+(Hinweis: Appdata oder Gegenstands-Werte werden verwendet, falls vorhanden)</value>
   </data>
   <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_EXPORTASGLOBAL" xml:space="preserve">
-    <value>Export this layout to local folder (Appdata)</value>
+    <value>Dieses Layout in den lokalen Ordner exportieren (Appdata)</value>
   </data>
   <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_EXPORTTOASSETFOLDER" xml:space="preserve">
-    <value>Export this layout to be packed
-to Steam Workshop</value>
+    <value>Exportiere dieses Layout, um es für den
+Steam Workshop zu verpacken</value>
   </data>
   <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_NEWINCITY" xml:space="preserve">
-    <value>Create new layout for this savegame</value>
+    <value>Neues Layout für diesen Spielstand erstellen</value>
   </data>
   <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_OPENGLOBALSFOLDER" xml:space="preserve">
-    <value>Open appdata layouts folder</value>
+    <value>Appdata Layout-Ordner öffnen</value>
   </data>
   <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_PASTEFROMCLIPBOARD" xml:space="preserve">
-    <value>Paste from clipboard</value>
+    <value>Aus Zwischenspeicher einfügen</value>
   </data>
   <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_RELOADDESCRIPTORS" xml:space="preserve">
-    <value>Reload descriptors</value>
+    <value>Deskriptoren neu laden</value>
   </data>
   <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_SAVESKIN" xml:space="preserve">
-    <value>Save skin layout to disk</value>
+    <value>Skin-Layout auf Festplatte speichern</value>
   </data>
   <data name="WTS_BUILDINGEDITOR_MODELLAYOUTSELECT" xml:space="preserve">
-    <value>Model/Layout selection</value>
+    <value>Modell/Layoutauswahl</value>
   </data>
   <data name="WTS_CLASS_FONT" xml:space="preserve">
-    <value>Font class</value>
+    <value>Schriftklasse</value>
   </data>
   <data name="WTS_CLOCK_12H_CLOCK" xml:space="preserve">
-    <value>12h clock</value>
+    <value>12 Stunden Uhr</value>
   </data>
   <data name="WTS_CLOCK_MINUTES_PRECISION" xml:space="preserve">
-    <value>Precision (in minutes)
-Note that very low values are recommended only with Real Time mod or alike!</value>
+    <value>Präzision (in Minuten)
+Beachte, dass sehr niedrige Werte nur mit Real Time Mod oder ähnlichem funktionieren!</value>
   </data>
   <data name="WTS_CLOCK_SHOW_LEADING_ZERO" xml:space="preserve">
-    <value>Show leading zero of hours</value>
+    <value>Führende Null bei Stunden anzeigen</value>
   </data>
   <data name="WTS_CLONE_180DEG_INVERT_TEXT_HOR_ALIGN" xml:space="preserve">
-    <value>Invert text horizontal align on clone</value>
+    <value>Horizontale Ausrichtung des Textes beim Klon umkehren</value>
   </data>
   <data name="WTS_CONTENT_TEXTVALUE" xml:space="preserve">
-    <value>Parameter value</value>
+    <value>Parameterwert</value>
   </data>
   <data name="WTS_CURRENTLY_USING" xml:space="preserve">
-    <value>Currently using</value>
+    <value>Aktuell verwendet</value>
   </data>
   <data name="WTS_CURRENTSELECTION" xml:space="preserve">
-    <value>Current selection</value>
+    <value>Aktuelle Auswahl</value>
   </data>
   <data name="WTS_CUSTOMSPRITE_ERRORHEADER" xml:space="preserve">
-    <value>Some erros happened while trying to load custom sprites:</value>
+    <value>Einige Fehler sind beim Laden benutzerdefinierter Sprites aufgetreten:</value>
   </data>
   <data name="WTS_CUSTOMSPRITE_FAILEDREADIMAGE" xml:space="preserve">
-    <value>An error has occurred loading image...</value>
+    <value>Beim Laden des Bildes ist ein Fehler aufgetreten...</value>
   </data>
   <data name="WTS_CUSTOMSPRITE_IMAGETOOLARGE" xml:space="preserve">
-    <value>Image too large!!</value>
+    <value>Bild ist zu groß!</value>
   </data>
   <data name="WTS_DEFAULT_BUILDINGS_CONFIG_PATH_TITLE" xml:space="preserve">
-    <value>Default configurations for buildings folder</value>
+    <value>Standardkonfigurationen für Gebäude Ordner</value>
   </data>
   <data name="WTS_DEFAULT_FONT_LABEL" xml:space="preserve">
     <value>Default game font</value>
@@ -874,10 +874,10 @@ A text to succeed the variable value. Use the backslash to scape the slashes (&l
 Select for formatting options.</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableCitySubType_None" xml:space="preserve">
-    <value>&lt;None?&gt;</value>
+    <value>&lt;Kein&gt;</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_Direction" xml:space="preserve">
-    <value>Road direction - acronym in current language loaded in the mod. (English will be used as fallback)</value>
+    <value>Straßenrichtung - Akronym in der aktuellen Sprache, die im Mod geladen wird. (Englisch wird als Fallback verwendet)</value>
   </data>
   <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_District" xml:space="preserve">
     <value>District name, or the outside connection city if at map edge. City name will be used as fallback.
