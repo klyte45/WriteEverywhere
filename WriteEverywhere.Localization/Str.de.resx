@@ -238,42 +238,42 @@
     <value>Benutzeroberfläche</value>
   </data>
   <data name="we_settings_uiScale" xml:space="preserve">
-    <value>UI general scale</value>
+    <value>Allgemeine UI Skalierung</value>
   </data>
   <data name="we_generalLib_exportFullList" xml:space="preserve">
-    <value>Export whole list to library</value>
+    <value>Exportiere die ganze Liste in die Bibliothek</value>
   </data>
   <data name="we_generalLib_importAdditive" xml:space="preserve">
-    <value>Import adding all items into current list</value>
+    <value>Alle Elemente in die aktuelle Liste importieren</value>
   </data>
   <data name="we_generalLib_importFullList" xml:space="preserve">
-    <value>Import whole list from library</value>
+    <value>Importiere die ganze Liste aus der Bibliothek</value>
   </data>
   <data name="we_roadEditor_importAdding" xml:space="preserve">
-    <value>Import items into list</value>
+    <value>Importiere Elemente in die Liste</value>
   </data>
   <data name="we_roadEditor_importReplacing" xml:space="preserve">
-    <value>Replace items from lib</value>
+    <value>Ersetze Elemente aus der Bibliothek</value>
   </data>
   <data name="we_generalTextEditor_useBackground" xml:space="preserve">
-    <value>Create background</value>
+    <value>Hintergrund erstellen</value>
   </data>
   <data name="we_generalTextEditor_usePrefabColor" xml:space="preserve">
-    <value>Use prefab color</value>
+    <value>Verwende Prefab-Farbe</value>
   </data>
   <data name="we_roadEditor_verticalAlignmentBoxText" xml:space="preserve">
-    <value>Vertical alignment relative to base line
-(0 = below with baseline; 1 = top with capital line)</value>
+    <value>Vertikale Ausrichtung relativ zur Basislinie
+(0 = unten mit Basislinie; 1 = oben mit Kapitallinie)</value>
   </data>
   <data name="we_roadEditor_verticalAlignmentLineText" xml:space="preserve">
-    <value>Vertical alignment relative to the line when resizing
-(0 = below with baseline; 1 = top with capital line)</value>
+    <value>Vertikale Ausrichtung relativ zur Linie beim Vergrößern
+(0 = unten mit Basislinie; 1 = oben mit Kapitallinie)</value>
   </data>
   <data name="we_generalTextEditor_backfaceFontColorIsSameAsFrontFace" xml:space="preserve">
-    <value>Use front face color in the back face</value>
+    <value>Vorderflächenfarbe auf der Rückseite verwenden</value>
   </data>
   <data name="we_generalTextEditor_backgroundBackfaceColor" xml:space="preserve">
-    <value>BG backface color</value>
+    <value>BG-Rückseitenfarbe</value>
   </data>
   <data name="we_generalTextEditor_boxInnerColor" xml:space="preserve">
     <value>Box inner color</value>
