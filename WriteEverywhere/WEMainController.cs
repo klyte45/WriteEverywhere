@@ -141,8 +141,8 @@ namespace WriteEverywhere
             if (SceneUtils.IsAssetEditor)
             {
                 GameObjectUtils.CreateElement<AssetEditorFlagsToggleLiteUI>(UIView.GetAView().gameObject.transform, "AssetEditorFlagsToggleLiteUI");
-                BuildingPropsSingleton.LoadAllBuildingConfigurations();
-                VehicleTextsSingleton.LoadAllVehiclesConfigurations();
+                BuildingPropsSingleton.LoadAllBuildingConfigurations(false);
+                VehicleTextsSingleton.LoadAllVehiclesConfigurations(false);
             }
             else
             {

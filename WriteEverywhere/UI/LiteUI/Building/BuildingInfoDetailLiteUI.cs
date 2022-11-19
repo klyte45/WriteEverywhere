@@ -372,7 +372,7 @@ namespace WriteEverywhere.UI
                         }
                 });
 
-                ModInstance.Controller?.BuildingPropsSingleton?.LoadAllBuildingConfigurations();
+                ModInstance.Controller?.BuildingPropsSingleton?.LoadAllBuildingConfigurations(true);
                 m_resetSelection();
             }
         }
@@ -404,7 +404,7 @@ namespace WriteEverywhere.UI
 
         private void ReloadFiles()
         {
-            ModInstance.Controller?.BuildingPropsSingleton?.LoadAllBuildingConfigurations();
+            ModInstance.Controller?.BuildingPropsSingleton?.LoadAllBuildingConfigurations(true);
             OnChangeInfo(CurrentEditingInfo, m_currentSubBuilding);
         }
         private void GoToGlobalFolder() => ColossalFramework.Utils.OpenInFileBrowser(WEMainController.DefaultBuildingsConfigurationFolder);

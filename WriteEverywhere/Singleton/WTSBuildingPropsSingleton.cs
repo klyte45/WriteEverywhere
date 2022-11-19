@@ -1,6 +1,7 @@
 ﻿
 using ColossalFramework;
 using ColossalFramework.Math;
+using ColossalFramework.Threading;
 using ColossalFramework.UI;
 using Kwytto.LiteUI;
 using Kwytto.Utils;
@@ -44,7 +45,7 @@ namespace WriteEverywhere.Singleton
         }
 
         #region Initialize
-        public void Awake() => LoadAllBuildingConfigurations();
+        public void Awake() => LoadAllBuildingConfigurations(false);
 
         public void Start()
         {
@@ -665,20 +666,28 @@ namespace WriteEverywhere.Singleton
 
 
         private static string DefaultFilename { get; } = $"{WEMainController.m_defaultFileNameBuildingsXml}.xml";
-        public bool IsReady => LoadingCoroutineLocal is null && LoadingCoroutineAssets is null;
+        public bool IsReady => (!LoadingCoroutineLocal?.isAlive != true) && LoadingCoroutineAssets?.isAlive != true;
 
-        private Coroutine LoadingCoroutineAssets;
-        private Coroutine LoadingCoroutineLocal;
+        private static ActionThread LoadingCoroutineAssets;
+        private static ActionThread LoadingCoroutineLocal;
 
-        public Coroutine LoadAllBuildingConfigurations() => IsReady ? StartCoroutine(LoadAllBuildingConfigurations_Coroutine()) : null;
+        public Coroutine LoadAllBuildingConfigurations(bool sharedOnly) => IsReady ? StartCoroutine(LoadAllBuildingConfigurations_Coroutine(sharedOnly)) : null;
 
-        public IEnumerator LoadAllBuildingConfigurations_Coroutine()
+        public IEnumerator LoadAllBuildingConfigurations_Coroutine(bool sharedOnly)
         {
             LogUtils.DoLog("LOADING BUILDING CONFIG START -----------------------------");
-            LoadingCoroutineAssets = StartCoroutine(ReloadBuildingAssets_Coroutine());
+
+
+            SimpleXmlDictionary<string, WriteOnBuildingXml> asset = new SimpleXmlDictionary<string, WriteOnBuildingXml>();
+            SimpleXmlDictionary<string, WriteOnBuildingXml> shared = new SimpleXmlDictionary<string, WriteOnBuildingXml>();
+
+            if (!sharedOnly)
+            {
+                LoadingCoroutineAssets = ThreadHelper.CreateThread(() => ReloadBuildingAssets_thread(BuildingIndexes.instance.PrefabsData, asset));
+            }
             if (!SceneUtils.IsAssetEditor)
             {
-                LoadingCoroutineLocal = StartCoroutine(ReloadBuildingShared_coroutine());
+                LoadingCoroutineLocal = ThreadHelper.CreateThread(() => ReloadBuildingShared_thread(shared));
             }
             else
             {
@@ -686,65 +695,79 @@ namespace WriteEverywhere.Singleton
                 Data.CityDescriptors.Clear();
             }
             yield return new WaitUntil(() => IsReady);
+
+            if (!sharedOnly)
+            {
+                Data.AssetsDescriptors = asset;
+            }
+            Data.GlobalDescriptors = shared;
             Data.CleanCache();
             LogUtils.DoLog("LOADING BUILDING CONFIG END -----------------------------");
         }
 
-        private IEnumerator ReloadBuildingShared_coroutine()
+        private static void ReloadBuildingShared_thread(SimpleXmlDictionary<string, WriteOnBuildingXml> target)
         {
-            Data.GlobalDescriptors.Clear();
+            target.Clear();
             var errorList = new List<string>();
-            LogUtils.DoLog($"DefaultBuildingsConfigurationFolder = {WEMainController.DefaultBuildingsConfigurationFolder}");
+            if (ModInstance.DebugMode)
+            {
+                Dispatcher.main.Dispatch(() => LogUtils.DoLog($"DefaultBuildingsConfigurationFolder = {WEMainController.DefaultBuildingsConfigurationFolder}"));
+            }
+
             foreach (string filename in Directory.GetFiles(WEMainController.DefaultBuildingsConfigurationFolder, "*.xml"))
             {
                 try
                 {
                     if (ModInstance.DebugMode)
                     {
-                        LogUtils.DoLog($"Trying deserialize {filename}:\n{File.ReadAllText(filename)}");
+
+                        Dispatcher.main.Dispatch(() => LogUtils.DoLog($"Trying deserialize {filename}:\n{File.ReadAllText(filename)}"));
                     }
                     using (FileStream stream = File.OpenRead(filename))
                     {
-                        LoadDescriptorsFromXmlCommon(stream);
+                        LoadDescriptorsFromXmlCommon(stream, target);
                     }
                 }
                 catch (Exception e)
                 {
-                    LogUtils.DoWarnLog($"Error Loading file \"{filename}\" ({e.GetType()}): {e.Message}\n{e}");
+                    Dispatcher.main.Dispatch(() => LogUtils.DoWarnLog($"Error Loading file \"{filename}\" ({e.GetType()}): {e.Message}\n{e}"));
                     errorList.Add($"Error Loading file \"{filename}\" ({e.GetType()}): {e.Message}");
                 }
-                yield return 0;
             }
-
-            LoadingCoroutineLocal = null;
             if (errorList.Count > 0)
             {
-                KwyttoDialog.ShowModal(new KwyttoDialog.BindProperties
+                Dispatcher.main.Dispatch(() =>
                 {
-                    title = "WTS - Errors loading vehicle Files",
-                    scrollText = string.Join("\r\n", errorList.ToArray()),
-                    buttons = KwyttoDialog.basicOkButtonBar,
-                    showClose = true
+                    KwyttoDialog.ShowModal(new KwyttoDialog.BindProperties
+                    {
+                        title = "WTS - Errors loading vehicle Files",
+                        scrollText = string.Join("\r\n", errorList.ToArray()),
+                        buttons = KwyttoDialog.basicOkButtonBar,
+                        showClose = true
+                    });
                 });
             }
+            LoadingCoroutineLocal = null;
         }
 
-        private IEnumerator ReloadBuildingAssets_Coroutine()
+        private static void ReloadBuildingAssets_thread(Dictionary<string, IIndexedPrefabData> prefabsData, SimpleXmlDictionary<string, WriteOnBuildingXml> target)
         {
-            yield return 0;
-            Data.AssetsDescriptors.Clear();
-            foreach (var asset in BuildingIndexes.instance.PrefabsData.Where(x => x.Value.PackageName.TrimToNull() != null))
+            target.Clear();
+            var count = 0;
+            var assetsToScan = prefabsData.Where(x => x.Value.PackageName.TrimToNull() != null);
+            var countToScan = assetsToScan.Count();
+            foreach (var asset in assetsToScan)
             {
-                LoadDescriptorsFromXmlAsset(asset.Value.Info as BuildingInfo);
-                yield return 0;
+                Dispatcher.main.Dispatch(() => LogUtils.DoInfoLog($"[Asset loader][{++count:###0}/{countToScan:###0}] Scanning asset: {asset} "));
+                LoadDescriptorsFromXmlAsset(asset.Value.Info as BuildingInfo, target);
             }
             LoadingCoroutineAssets = null;
         }
 
 
 
-        private void LoadDescriptorsFromXmlCommon(FileStream stream) => LoadDescriptorsFromXml(stream, null, ref Data.GlobalDescriptors);
-        private void LoadDescriptorsFromXmlAsset(BuildingInfo info)
+        private static void LoadDescriptorsFromXmlCommon(FileStream stream, SimpleXmlDictionary<string, WriteOnBuildingXml> target) => LoadDescriptorsFromXml(stream, null, ref target);
+        private static void LoadDescriptorsFromXmlAsset(BuildingInfo info, SimpleXmlDictionary<string, WriteOnBuildingXml> target)
         {
             if (WEMainController.GetDirectoryForAssetOwn(info) is string str)
             {
@@ -753,16 +776,19 @@ namespace WriteEverywhere.Singleton
                 {
                     using (FileStream stream = File.OpenRead(filePath))
                     {
-                        LoadDescriptorsFromXml(stream, info, ref Data.AssetsDescriptors);
+                        LoadDescriptorsFromXml(stream, info, ref target);
                     }
                 }
             }
         }
-        private void LoadDescriptorsFromXml(FileStream stream, BuildingInfo info, ref SimpleXmlDictionary<string, WriteOnBuildingXml> referenceDic)
+        private static void LoadDescriptorsFromXml(FileStream stream, BuildingInfo info, ref SimpleXmlDictionary<string, WriteOnBuildingXml> referenceDic)
         {
             var serializer = new XmlSerializer(typeof(WriteOnBuildingXml));
 
-            LogUtils.DoLog($"trying deserialize: {info}");
+            if (ModInstance.DebugMode)
+            {
+                Dispatcher.main.Dispatch(() => LogUtils.DoLog($"trying deserialize: {info}"));
+            }
 
             if (serializer.Deserialize(stream) is WriteOnBuildingXml config)
             {

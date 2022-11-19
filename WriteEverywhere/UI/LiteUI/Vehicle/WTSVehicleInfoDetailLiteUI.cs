@@ -396,7 +396,7 @@ namespace WriteEverywhere.UI
                             }
                         }
                     });
-                    ModInstance.Controller?.VehicleTextsSingleton?.LoadAllVehiclesConfigurations();
+                    ModInstance.Controller?.VehicleTextsSingleton?.LoadAllVehiclesConfigurations(true);
                 }
                 m_currentInfo = null;
                 m_currentParentInfo = null;
@@ -454,7 +454,7 @@ namespace WriteEverywhere.UI
 
         private IEnumerator ReloadFiles_Coroutine()
         {
-            yield return ModInstance.Controller?.VehicleTextsSingleton?.LoadAllVehiclesConfigurations();
+            yield return ModInstance.Controller?.VehicleTextsSingleton?.LoadAllVehiclesConfigurations(true);
             OnChangeInfo(m_currentInfo, m_currentParentInfo);
         }
         private void GoToGlobalFolder() => ColossalFramework.Utils.OpenInFileBrowser(WEMainController.DefaultVehiclesConfigurationFolder);

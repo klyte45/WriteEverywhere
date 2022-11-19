@@ -12,6 +12,12 @@
 - Reduced the slowness when loading a city caused by trying to load layouts from buildings and vehicles
 - Fixed trailer vehicles line related missing informations
 
+<color=green>Update r10 (19/NOV/22):</color> 
+- Fixed the slowness when loading a city caused by trying to load layouts from buildings and vehicles
+- Fixed sorting of props search screens
+- Now asset scope layouts WON'T be reloaded in game, use asset editor to edit layouts to export to workshop
+
+
 This is the first version of this mod and brings most of main stuff of old Write The Signs mod but fixed, and also have new features, like listed below:
 
 <color=yellow>Features (the new ones are in yellow)</color>

@@ -1,5 +1,6 @@
 ﻿
 using ColossalFramework;
+using ColossalFramework.Threading;
 using Kwytto.LiteUI;
 using Kwytto.Localization;
 using Kwytto.Utils;
@@ -33,7 +34,7 @@ namespace WriteEverywhere.Singleton
         {
         }
 
-        public void Start() => LoadAllVehiclesConfigurations();
+        public void Start() => LoadAllVehiclesConfigurations(false);
 
 
         #endregion
@@ -271,18 +272,24 @@ namespace WriteEverywhere.Singleton
         private static string DefaultFilename { get; } = $"{WEMainController.m_defaultFileNameVehiclesXml}.xml";
         public bool IsReady => LoadingCoroutineLocal is null && LoadingCoroutineAssets is null;
 
-        private Coroutine LoadingCoroutineAssets;
-        private Coroutine LoadingCoroutineLocal;
+        private static ActionThread LoadingCoroutineAssets;
+        private static ActionThread LoadingCoroutineLocal;
 
-        public Coroutine LoadAllVehiclesConfigurations() => IsReady ? StartCoroutine(LoadAllVehiclesConfigurations_Coroutine()) : null;
+        public Coroutine LoadAllVehiclesConfigurations(bool sharedOnly) => IsReady ? StartCoroutine(LoadAllVehiclesConfigurations_Coroutine(sharedOnly)) : null;
 
-        public IEnumerator LoadAllVehiclesConfigurations_Coroutine()
+        public IEnumerator LoadAllVehiclesConfigurations_Coroutine(bool sharedOnly)
         {
             LogUtils.DoLog("LOADING VEHICLE CONFIG START -----------------------------");
-            LoadingCoroutineAssets = StartCoroutine(ReloadVehicleAssets_Coroutine());
+
+            var assets = new SimpleXmlDictionary<string, LayoutDescriptorVehicleXml>();
+            var shared = new SimpleXmlDictionary<string, LayoutDescriptorVehicleXml>();
+            if (!sharedOnly)
+            {
+                LoadingCoroutineAssets = ThreadHelper.CreateThread(() => ReloadVehicleAssets_thread(assets));
+            }
             if (!SceneUtils.IsAssetEditor)
             {
-                LoadingCoroutineLocal = StartCoroutine(ReloadVehicleShared_coroutine());
+                LoadingCoroutineLocal = ThreadHelper.CreateThread(() => ReloadVehicleShared_thread(shared));
             }
             else
             {
@@ -290,67 +297,66 @@ namespace WriteEverywhere.Singleton
                 Data.CityDescriptors.Clear();
             }
             yield return new WaitUntil(() => IsReady);
+            Data.GlobalDescriptors = shared;
+            if (!sharedOnly)
+            {
+                Data.AssetsDescriptors = assets;
+            }
             Data.CleanCache();
             LogUtils.DoLog("LOADING VEHICLE CONFIG END -----------------------------");
         }
 
-        private IEnumerator ReloadVehicleShared_coroutine()
+        private static void ReloadVehicleShared_thread(SimpleXmlDictionary<string, LayoutDescriptorVehicleXml> target)
         {
-            Data.GlobalDescriptors.Clear();
+            target.Clear();
             var errorList = new List<string>();
-            LogUtils.DoLog($"DefaultVehiclesConfigurationFolder = {WEMainController.DefaultVehiclesConfigurationFolder}");
 
             foreach (string filename in Directory.GetFiles(WEMainController.DefaultVehiclesConfigurationFolder, "*.xml"))
             {
                 try
                 {
-                    if (ModInstance.DebugMode)
-                    {
-                        LogUtils.DoLog($"Trying deserialize {filename}:\n{File.ReadAllText(filename)}");
-                    }
+                    Dispatcher.main.Dispatch(() => LogUtils.DoInfoLog($"Trying deserialize {filename}:\n{File.ReadAllText(filename)}"));
                     using (FileStream stream = File.OpenRead(filename))
                     {
-                        LoadDescriptorsFromXmlCommon(stream);
+                        LoadDescriptorsFromXmlCommon(stream, target);
                     }
                 }
                 catch (Exception e)
                 {
-                    LogUtils.DoWarnLog($"Error Loading file \"{filename}\" ({e.GetType()}): {e.Message}\n{e}");
+                    Dispatcher.main.Dispatch(() => LogUtils.DoWarnLog($"Error Loading file \"{filename}\" ({e.GetType()}): {e.Message}\n{e}"));
                     errorList.Add($"Error Loading file \"{filename}\" ({e.GetType()}): {e.Message}");
                 }
-                yield return 0;
-
+                Dispatcher.main.Dispatch(() => LogUtils.FlushBuffer());
             }
 
             LoadingCoroutineLocal = null;
             if (errorList.Count > 0)
             {
-                KwyttoDialog.ShowModal(new KwyttoDialog.BindProperties
-                {
-                    title = "WTS - Errors loading vehicle Files",
-                    scrollText = string.Join("\r\n", errorList.ToArray()),
-                    buttons = KwyttoDialog.basicOkButtonBar,
-                    showClose = true
-                });
+                Dispatcher.main.Dispatch(() =>
+                    KwyttoDialog.ShowModal(new KwyttoDialog.BindProperties
+                    {
+                        title = "WE - Errors loading vehicle Files",
+                        scrollText = string.Join("\r\n", errorList.ToArray()),
+                        buttons = KwyttoDialog.basicOkButtonBar,
+                        showClose = true
+                    })
+                );
             }
         }
 
-        private IEnumerator ReloadVehicleAssets_Coroutine()
+        private static void ReloadVehicleAssets_thread(SimpleXmlDictionary<string, LayoutDescriptorVehicleXml> target)
         {
-            yield return 0;
-            Data.AssetsDescriptors.Clear();
+            target.Clear();
             foreach (var asset in VehiclesIndexes.instance.PrefabsData.Where(x => x.Value.PackageName.TrimToNull() != null))
             {
-                LoadDescriptorsFromXmlAsset(asset.Value.Info as VehicleInfo);
-
-                yield return 0;
-
+                LoadDescriptorsFromXmlAsset(asset.Value.Info as VehicleInfo, target);
+                Dispatcher.main.Dispatch(() => LogUtils.FlushBuffer());
             }
             LoadingCoroutineAssets = null;
         }
 
-        private void LoadDescriptorsFromXmlCommon(FileStream stream) => LoadSingleDescriptorFromXml(stream, null, ref Data.GlobalDescriptors);
-        private void LoadDescriptorsFromXmlAsset(VehicleInfo info)
+        private static void LoadDescriptorsFromXmlCommon(FileStream stream, SimpleXmlDictionary<string, LayoutDescriptorVehicleXml> target) => LoadSingleDescriptorFromXml(stream, null, ref target);
+        private static void LoadDescriptorsFromXmlAsset(VehicleInfo info, SimpleXmlDictionary<string, LayoutDescriptorVehicleXml> target)
         {
             if (WEMainController.GetDirectoryForAssetOwn(info) is string str)
             {
@@ -359,17 +365,21 @@ namespace WriteEverywhere.Singleton
                 {
                     using (FileStream stream = File.OpenRead(filePath))
                     {
-                        LoadSingleDescriptorFromXml(stream, info, ref Data.AssetsDescriptors);
+                        LoadSingleDescriptorFromXml(stream, info, ref target);
                     }
                 }
             }
         }
 
-        private void LoadSingleDescriptorFromXml(FileStream stream, VehicleInfo info, ref SimpleXmlDictionary<string, LayoutDescriptorVehicleXml> referenceDic)
+        private static void LoadSingleDescriptorFromXml(FileStream stream, VehicleInfo info, ref SimpleXmlDictionary<string, LayoutDescriptorVehicleXml> referenceDic)
         {
             var serializer = new XmlSerializer(typeof(LayoutDescriptorVehicleXml));
 
-            LogUtils.DoLog($"trying deserialize: {info}");
+            if (ModInstance.DebugMode)
+            {
+                Dispatcher.main.Dispatch(() => LogUtils.DoLog($"trying deserialize: {info}"));
+            }
+
             if (serializer.Deserialize(stream) is LayoutDescriptorVehicleXml config)
             {
                 if (info != null)
@@ -387,12 +397,19 @@ namespace WriteEverywhere.Singleton
                         stream.Position = 0;
                         using (var sr = new StreamReader(stream))
                         {
-                            KwyttoDialog.ShowModal(new KwyttoDialog.BindProperties
+                            Dispatcher.main.Dispatch(() =>
                             {
-                                title = KStr.comm_errorTitle,
-                                message = string.Format(Str.we_errorLoadingVehicleLayout_msgSingle, info is null ? "global" : $"asset \"{info}\""),
-                                scrollText = sr.ReadToEnd(),
-                                buttons = KwyttoDialog.basicOkButtonBar
+                                try
+                                {
+                                    KwyttoDialog.ShowModal(new KwyttoDialog.BindProperties
+                                    {
+                                        title = KStr.comm_errorTitle,
+                                        message = string.Format(Str.we_errorLoadingVehicleLayout_msgSingle, info is null ? "global" : $"asset \"{info}\""),
+                                        scrollText = sr.ReadToEnd(),
+                                        buttons = KwyttoDialog.basicOkButtonBar
+                                    });
+                                }
+                                catch { }
                             });
                         }
                     }
