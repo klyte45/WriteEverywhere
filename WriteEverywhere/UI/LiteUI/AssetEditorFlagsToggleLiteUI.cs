@@ -15,6 +15,7 @@ namespace WriteEverywhere.UI
         protected override bool showOverModals => false;
 
         protected override bool requireModal => false;
+        protected override float FontSizeMultiplier => .9f;
 
         public int CurrentFlags1 { get; private set; }
         public int CurrentFlags2 { get; private set; }

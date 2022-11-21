@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace WriteEverywhere.Tools
 {
-    public class RoadSegmentTool : KwyttoSegmentToolBase
+    public class TargetSegmentPickerTool : KwyttoSegmentToolBase
     {
         public event Action<ushort> OnSelectSegment;
         public override void RenderOverlay(RenderManager.CameraInfo cameraInfo)

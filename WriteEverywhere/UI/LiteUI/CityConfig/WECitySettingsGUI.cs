@@ -22,6 +22,7 @@ namespace WriteEverywhere.UI
             Visible = false;
         }
         protected override bool showOverModals => false;
+        protected override float FontSizeMultiplier => .9f;
 
         protected override bool requireModal => false;
 

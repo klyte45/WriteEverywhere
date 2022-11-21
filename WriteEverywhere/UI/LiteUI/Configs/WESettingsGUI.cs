@@ -9,6 +9,7 @@ namespace WriteEverywhere.UI
 {
     internal class WESettingsGUI : GUIOpacityChanging
     {
+        protected override float FontSizeMultiplier => .9f;
         public static WESettingsGUI Instance
         {
             get

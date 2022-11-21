@@ -20,6 +20,7 @@ namespace WriteEverywhere.UI
         public ushort CurrentGrabbedId => m_detailUI.CurrentGrabbedId;
         public int CurrentPropSel => m_detailUI.PropSel;
         public int CurrentTextSel => m_detailUI.TextSel;
+        protected override float FontSizeMultiplier => .9f;
         public bool IsOnTextDimensionsView => m_detailUI.IsOnTextDimensionsView;
         public BuildingInfo CurrentEditingInfo => m_detailUI.CurrentEditingInfo;
 

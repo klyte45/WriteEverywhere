@@ -1,12 +1,16 @@
 ﻿extern alias UUI;
 using ColossalFramework;
+using ColossalFramework.IO;
+using ColossalFramework.Packaging;
 using ColossalFramework.UI;
 using ICities;
 using Kwytto.Interfaces;
+using Kwytto.LiteUI;
 using Kwytto.Utils;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
@@ -14,7 +18,7 @@ using WriteEverywhere.Localization;
 using WriteEverywhere.Tools;
 using WriteEverywhere.UI;
 
-[assembly: AssemblyVersion("0.1.0.10")]
+[assembly: AssemblyVersion("0.1.0.11")]
 namespace WriteEverywhere
 {
     public class ModInstance : BasicIUserMod<ModInstance, WEMainController>
@@ -91,8 +95,6 @@ namespace WriteEverywhere
                 {
                     GameObjectUtils.CreateElement<WESettingsGUI>(UIView.GetAView().transform);
                 }
-
-
             });
         }
         protected override bool IsValidLoadMode(LoadMode mode)

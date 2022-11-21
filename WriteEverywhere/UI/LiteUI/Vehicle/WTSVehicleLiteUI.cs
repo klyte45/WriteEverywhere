@@ -22,6 +22,7 @@ namespace WriteEverywhere.UI
         public VehicleInfo CurrentEditingInfo => m_detailUI.CurrentEditingInfo;
         public string CurrentSkin => m_detailUI.CurrentSkin;
         public List<VehicleInfo> CurrentTrailerList { get; private set; }
+        protected override float FontSizeMultiplier => .9f;
 
         public override void Awake()
         {

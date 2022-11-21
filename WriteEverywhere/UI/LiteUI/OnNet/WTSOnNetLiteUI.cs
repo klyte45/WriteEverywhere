@@ -21,6 +21,7 @@ namespace WriteEverywhere.UI
         private int m_textEditorTabIdx;
 
         private GUIStyle m_redButton;
+        protected override float FontSizeMultiplier => .9f;
         private GUIStyle RedButton
         {
             get

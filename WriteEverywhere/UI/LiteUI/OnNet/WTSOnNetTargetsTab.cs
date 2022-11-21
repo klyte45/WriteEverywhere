@@ -4,7 +4,6 @@ using Kwytto.Utils;
 using UnityEngine;
 using WriteEverywhere.Layout;
 using WriteEverywhere.Localization;
-using WriteEverywhere.Tools;
 
 namespace WriteEverywhere.UI
 {
@@ -72,8 +71,8 @@ namespace WriteEverywhere.UI
         {
             ToolsModifierControl.SetTool<DefaultTool>();
             ModInstance.Controller.RoadSegmentToolInstance.OnSelectSegment += (k) => item.SetTargetSegment(idx, k);
+            ToolsModifierControl.toolController.CurrentTool = ModInstance.Controller.RoadSegmentToolInstance;
             CurrentSegmentInSelect = idx;
-            ToolsModifierControl.SetTool<RoadSegmentTool>();
         }
 
         private int CurrentSegmentInSelect = -1;

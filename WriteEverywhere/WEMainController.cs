@@ -33,7 +33,7 @@ namespace WriteEverywhere
         #endregion
 
         #region Tool Access
-        public RoadSegmentTool RoadSegmentToolInstance => ToolsModifierControl.toolController.GetComponent<RoadSegmentTool>();
+        public TargetSegmentPickerTool RoadSegmentToolInstance {get;private set;}
         public BuildingEditorTool BuildingToolInstance => ToolsModifierControl.toolController.GetComponent<BuildingEditorTool>();
         #endregion
 
@@ -115,7 +115,7 @@ namespace WriteEverywhere
         {
             ToolsModifierControl.toolController.AddExtraToolToController<SegmentEditorPickerTool>();
             ToolsModifierControl.toolController.AddExtraToolToController<BuildingEditorTool>();
-            ToolsModifierControl.toolController.AddExtraToolToController<RoadSegmentTool>();
+            RoadSegmentToolInstance = ToolsModifierControl.toolController.AddExtraToolToController<TargetSegmentPickerTool>();
             ToolsModifierControl.toolController.AddExtraToolToController<VehicleEditorTool>();
 
             KFileUtils.EnsureFolderCreation(DefaultBuildingsConfigurationFolder);

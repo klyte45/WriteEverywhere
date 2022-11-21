@@ -1,21 +1,27 @@
 
 <color=yellow>Welcome to Write Everywhere!</color>
 
-<color=green>Update r7 (15/NOV/22):</color> Fixed ITM integration cache erasing
+<color=green>Update r11 (21/NOV/22):</color> 
+- Fixed on net target picker tool
+- Fixed UI Buttons and texts sizes
+- Fixed horizontal tabs behavior and text formatting
+- Minor UI improvements
 
-<color=green>Update r8 (17/NOV/22):</color> 
-- Fixed variables not appearing in the editor
-- Fixed road picker not working
+<color=green>Update r10 (19/NOV/22):</color> 
+- Fixed the slowness when loading a city caused by trying to load layouts from buildings and vehicles
+- Fixed sorting of props search screens
+- Now asset scope layouts WON'T be reloaded in game, use asset editor to edit layouts to export to workshop
 
 <color=green>Update r9 (18/NOV/22):</color> 
 - Fixed UI scale in non-1080p based resolutions
 - Reduced the slowness when loading a city caused by trying to load layouts from buildings and vehicles
 - Fixed trailer vehicles line related missing informations
 
-<color=green>Update r10 (19/NOV/22):</color> 
-- Fixed the slowness when loading a city caused by trying to load layouts from buildings and vehicles
-- Fixed sorting of props search screens
-- Now asset scope layouts WON'T be reloaded in game, use asset editor to edit layouts to export to workshop
+<color=green>Update r8 (17/NOV/22):</color> 
+- Fixed variables not appearing in the editor
+- Fixed road picker not working
+
+<color=green>Update r7 (15/NOV/22):</color> Fixed ITM integration cache erasing
 
 
 This is the first version of this mod and brings most of main stuff of old Write The Signs mod but fixed, and also have new features, like listed below:
