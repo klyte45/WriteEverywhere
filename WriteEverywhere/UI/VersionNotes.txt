@@ -1,6 +1,9 @@
 
 <color=yellow>Welcome to Write Everywhere!</color>
 
+<color=green>Update r12 (17/DEC/22):</color> 
+- Fixes for Financial Districts update
+
 <color=green>Update r11 (21/NOV/22):</color> 
 - Fixed on net target picker tool
 - Fixed UI Buttons and texts sizes
