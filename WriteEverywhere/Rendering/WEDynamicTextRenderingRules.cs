@@ -114,7 +114,7 @@ namespace WriteEverywhere.Rendering
             {
                 found = true;
                 ref Vehicle targetVehicle = ref VehicleManager.instance.m_vehicles.m_buffer[refId];
-                return targetVehicle.Info.m_vehicleAI.GetColor(refId, ref targetVehicle, InfoManager.InfoMode.None);
+                return targetVehicle.Info.m_vehicleAI.GetColor(refId, ref targetVehicle, InfoManager.InfoMode.None, InfoManager.SubInfoMode.None);
             }
             else if (instance is WriteOnBuildingPropXml buildingDescriptor)
             {
@@ -149,7 +149,7 @@ namespace WriteEverywhere.Rendering
                         byte districtId = DistrictManager.instance.GetDistrict(BuildingManager.instance.m_buildings.m_buffer[refId].m_position);
                         return ModInstance.Controller.ConnectorCD.GetDistrictColor(districtId);
                     case ColoringMode.FromBuilding:
-                        return BuildingManager.instance.m_buildings.m_buffer[refId].Info.m_buildingAI.GetColor(refId, ref BuildingManager.instance.m_buildings.m_buffer[refId], InfoManager.InfoMode.None);
+                        return BuildingManager.instance.m_buildings.m_buffer[refId].Info.m_buildingAI.GetColor(refId, ref BuildingManager.instance.m_buildings.m_buffer[refId], InfoManager.InfoMode.None, InfoManager.SubInfoMode.None);
                 }
             }
             else if (instance is WriteOnNetXml n)
