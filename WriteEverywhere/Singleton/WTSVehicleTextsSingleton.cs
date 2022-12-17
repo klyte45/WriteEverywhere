@@ -201,7 +201,7 @@ namespace WriteEverywhere.Singleton
                     {
                         flags ^= Vehicle.Flags.Reversed;
                     }
-                    var parentColor = vehicle.Info.m_vehicleAI.GetColor(vehicleId, ref vehicle, InfoManager.InfoMode.None);
+                    var parentColor = vehicle.Info.m_vehicleAI.GetColor(vehicleId, ref vehicle, InfoManager.InfoMode.None, InfoManager.SubInfoMode.None);
                     bool currentTextSelected = !hasFixedCamera && WTSVehicleLiteUI.Instance.Visible && (SceneUtils.IsAssetEditor ? WTSVehicleLiteUI.Instance.CurrentEditingInfo?.name.EndsWith(info.name) ?? false : currentSelectedInstanceId == vehicleId) && j == WTSVehicleLiteUI.Instance.CurrentTextSel;
                     var textPos = WETextRenderer.RenderTextMesh(null,
                           vehicleId,
