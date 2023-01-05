@@ -121,10 +121,10 @@
     <value>Allow to write text in-game to simulate stuff like boards or signs.</value>
   </data>
   <data name="we_PivotPosition__Left" xml:space="preserve">
-    <value>Left side</value>
+    <value>Lado izquierdo</value>
   </data>
   <data name="we_PivotPosition__Right" xml:space="preserve">
-    <value>Right side</value>
+    <value>Lado derecho</value>
   </data>
   <data name="we_PivotPosition__Center" xml:space="preserve">
     <value>Center (looking front)</value>
@@ -151,19 +151,19 @@
     <value>Lock camera at instance # (starting at 0)</value>
   </data>
   <data name="we_Enum__UIHorizontalAlignment_Center" xml:space="preserve">
-    <value>Center</value>
+    <value>Centro</value>
   </data>
   <data name="we_Enum__UIHorizontalAlignment_Right" xml:space="preserve">
-    <value>Right</value>
+    <value>Derecha</value>
   </data>
   <data name="we_Enum__UIHorizontalAlignment_Left" xml:space="preserve">
-    <value>Left</value>
+    <value>Izquierda</value>
   </data>
   <data name="we_Enum__FontClass_Regular" xml:space="preserve">
     <value>Regular</value>
   </data>
   <data name="we_Enum__FontClass_PublicTransport" xml:space="preserve">
-    <value>Public Transport</value>
+    <value>Transporte público</value>
   </data>
   <data name="we_Enum__FontClass_ElectronicBoards" xml:space="preserve">
     <value>Electronic Boards</value>
@@ -214,7 +214,7 @@
     <value>On Net Editor</value>
   </data>
   <data name="we_settings_windowTitle" xml:space="preserve">
-    <value>Settings</value>
+    <value>Ajustes</value>
   </data>
   <data name="we_settings_folders" xml:space="preserve">
     <value>Custom file folders</value>
@@ -226,22 +226,22 @@
     <value>Rendering quality</value>
   </data>
   <data name="we_settings_btnLabel" xml:space="preserve">
-    <value>Mod settings</value>
+    <value>Ajustes del Mod</value>
   </data>
   <data name="we_settings_applyUiSettings" xml:space="preserve">
-    <value>Apply UI Settings</value>
+    <value>Aplicar ajustes de la interfaz</value>
   </data>
   <data name="we_settings_goToFolderShort" xml:space="preserve">
-    <value>Go To</value>
+    <value>Ir a </value>
   </data>
   <data name="we_settings_ui" xml:space="preserve">
-    <value>UI</value>
+    <value>Interfaz</value>
   </data>
   <data name="we_settings_uiScale" xml:space="preserve">
-    <value>UI general scale</value>
+    <value>Escala general de Interfaz</value>
   </data>
   <data name="we_generalLib_exportFullList" xml:space="preserve">
-    <value>Export whole list to library</value>
+    <value>Exportar la lista completa a la biblioteca</value>
   </data>
   <data name="we_generalLib_importAdditive" xml:space="preserve">
     <value>Import adding all items into current list</value>
@@ -256,10 +256,10 @@
     <value>Replace items from lib</value>
   </data>
   <data name="we_generalTextEditor_useBackground" xml:space="preserve">
-    <value>Create background</value>
+    <value>Crear fondo</value>
   </data>
   <data name="we_generalTextEditor_usePrefabColor" xml:space="preserve">
-    <value>Use prefab color</value>
+    <value>Usar color prefabricado</value>
   </data>
   <data name="we_roadEditor_verticalAlignmentBoxText" xml:space="preserve">
     <value>Vertical alignment relative to base line
