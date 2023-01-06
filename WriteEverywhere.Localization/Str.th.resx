@@ -229,7 +229,7 @@
     <value>การตั้งค่าม็อด</value>
   </data>
   <data name="we_settings_applyUiSettings" xml:space="preserve">
-    <value>Apply UI Settings</value>
+    <value>นำการตั้งค่า UI ไปปรับใช้</value>
   </data>
   <data name="we_settings_goToFolderShort" xml:space="preserve">
     <value>ไปยัง</value>
