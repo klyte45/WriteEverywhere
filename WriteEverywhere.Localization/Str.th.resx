@@ -214,7 +214,7 @@
     <value>On Net Editor</value>
   </data>
   <data name="we_settings_windowTitle" xml:space="preserve">
-    <value>Settings</value>
+    <value>การตั้งค่า</value>
   </data>
   <data name="we_settings_folders" xml:space="preserve">
     <value>Custom file folders</value>
@@ -226,19 +226,19 @@
     <value>Rendering quality</value>
   </data>
   <data name="we_settings_btnLabel" xml:space="preserve">
-    <value>Mod settings</value>
+    <value>การตั้งค่าม็อด</value>
   </data>
   <data name="we_settings_applyUiSettings" xml:space="preserve">
     <value>Apply UI Settings</value>
   </data>
   <data name="we_settings_goToFolderShort" xml:space="preserve">
-    <value>Go To</value>
+    <value>ไปยัง</value>
   </data>
   <data name="we_settings_ui" xml:space="preserve">
     <value>UI</value>
   </data>
   <data name="we_settings_uiScale" xml:space="preserve">
-    <value>UI general scale</value>
+    <value>ขนาดทั่วไปของ UI</value>
   </data>
   <data name="we_generalLib_exportFullList" xml:space="preserve">
     <value>Export whole list to library</value>
