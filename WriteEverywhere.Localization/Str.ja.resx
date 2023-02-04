@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -117,5 +117,1009 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
- 
+  <data name="root_modDescription" xml:space="preserve">
+    <value>標識や看板などをシミュレートするために、ゲーム内で直接テキストが記述出来ます。</value>
+  </data>
+  <data name="we_PivotPosition__Left" xml:space="preserve">
+    <value>左側</value>
+  </data>
+  <data name="we_PivotPosition__Right" xml:space="preserve">
+    <value>右側</value>
+  </data>
+  <data name="we_PivotPosition__Center" xml:space="preserve">
+    <value>中央 (正面から見て)</value>
+  </data>
+  <data name="we_PivotPosition__LeftInvert" xml:space="preserve">
+    <value>左側 (逆の通行)</value>
+  </data>
+  <data name="we_PivotPosition__RightInvert" xml:space="preserve">
+    <value>右側 (逆の通行)</value>
+  </data>
+  <data name="we_PivotPosition__CenterInvert" xml:space="preserve">
+    <value>中央 (後方から見て)</value>
+  </data>
+  <data name="we_PivotPosition__CenterLookingLeft" xml:space="preserve">
+    <value>中央 (左から見て)</value>
+  </data>
+  <data name="we_PivotPosition__CenterLookingRight" xml:space="preserve">
+    <value>中央 (右から見て)</value>
+  </data>
+  <data name="we_roadEditor_pivotPosition" xml:space="preserve">
+    <value>ピボットの位置</value>
+  </data>
+  <data name="we_roadEditor_lockCameraAtInstance" xml:space="preserve">
+    <value>カメラをインスタンス # (0から始まる) にロック</value>
+  </data>
+  <data name="we_Enum__UIHorizontalAlignment_Center" xml:space="preserve">
+    <value>中央</value>
+  </data>
+  <data name="we_Enum__UIHorizontalAlignment_Right" xml:space="preserve">
+    <value>右</value>
+  </data>
+  <data name="we_Enum__UIHorizontalAlignment_Left" xml:space="preserve">
+    <value>左</value>
+  </data>
+  <data name="we_Enum__FontClass_Regular" xml:space="preserve">
+    <value>標準</value>
+  </data>
+  <data name="we_Enum__FontClass_PublicTransport" xml:space="preserve">
+    <value>公共交通</value>
+  </data>
+  <data name="we_Enum__FontClass_ElectronicBoards" xml:space="preserve">
+    <value>電子ボード</value>
+  </data>
+  <data name="we_Enum__FontClass_Stencil" xml:space="preserve">
+    <value>ステンシル</value>
+  </data>
+  <data name="we_Enum__FontClass_HighwayShields" xml:space="preserve">
+    <value>高速道路のシールド (標識)</value>
+  </data>
+  <data name="we_Enum__BlinkType_Custom" xml:space="preserve">
+    <value>カスタム</value>
+  </data>
+  <data name="we_Enum__MaterialType_OPAQUE" xml:space="preserve">
+    <value>不透明</value>
+  </data>
+  <data name="we_Enum__MaterialType_DAYNIGHT" xml:space="preserve">
+    <value>昼間/夜間の照明</value>
+  </data>
+  <data name="we_Enum__MaterialType_FLAGS" xml:space="preserve">
+    <value>フラグ順</value>
+  </data>
+  <data name="we_Enum__MaterialType_BRIGHT" xml:space="preserve">
+    <value>常に点灯</value>
+  </data>
+  <data name="we_Enum__BlinkType_None" xml:space="preserve">
+    <value>無し</value>
+  </data>
+  <data name="we_Enum__BlinkType_Blink_050_050" xml:space="preserve">
+    <value>500msの点滅</value>
+  </data>
+  <data name="we_Enum__BlinkType_MildFade_0125_0125" xml:space="preserve">
+    <value>軽度のフェード</value>
+  </data>
+  <data name="we_Enum__BlinkType_MediumFade_500_500" xml:space="preserve">
+    <value>中程度のフェード</value>
+  </data>
+  <data name="we_Enum__BlinkType_StrongBlaze_0125_0125" xml:space="preserve">
+    <value>強い炎(ネオン)</value>
+  </data>
+  <data name="we_Enum__BlinkType_StrongFade_250_250" xml:space="preserve">
+    <value>強力なフェード</value>
+  </data>
+  <data name="we_Enum__BlinkType_Blink_025_025" xml:space="preserve">
+    <value>250msの点滅</value>
+  </data>
+  <data name="we_roadEditor_windowTitle" xml:space="preserve">
+    <value>ネットエディタ上</value>
+  </data>
+  <data name="we_settings_windowTitle" xml:space="preserve">
+    <value>設定</value>
+  </data>
+  <data name="we_settings_folders" xml:space="preserve">
+    <value>カスタムファイルのフォルダ</value>
+  </data>
+  <data name="we_settings_reloadFonts" xml:space="preserve">
+    <value>フォントをリロード</value>
+  </data>
+  <data name="we_settings_quality" xml:space="preserve">
+    <value>レンダリングの品質</value>
+  </data>
+  <data name="we_settings_btnLabel" xml:space="preserve">
+    <value>MODの設定</value>
+  </data>
+  <data name="we_settings_applyUiSettings" xml:space="preserve">
+    <value>UI の設定を適用</value>
+  </data>
+  <data name="we_settings_goToFolderShort" xml:space="preserve">
+    <value>移動</value>
+  </data>
+  <data name="we_settings_ui" xml:space="preserve">
+    <value>UI</value>
+  </data>
+  <data name="we_settings_uiScale" xml:space="preserve">
+    <value>UI全般のスケール</value>
+  </data>
+  <data name="we_generalLib_exportFullList" xml:space="preserve">
+    <value>リスト全体をライブラリにエクスポート</value>
+  </data>
+  <data name="we_generalLib_importAdditive" xml:space="preserve">
+    <value>全てのアイテムを現在のリストに追加してインポート</value>
+  </data>
+  <data name="we_generalLib_importFullList" xml:space="preserve">
+    <value>リスト全体をライブラリにインポート</value>
+  </data>
+  <data name="we_roadEditor_importAdding" xml:space="preserve">
+    <value>リストにアイテムをインポート</value>
+  </data>
+  <data name="we_roadEditor_importReplacing" xml:space="preserve">
+    <value>ライブラリからアイテムを置き換え</value>
+  </data>
+  <data name="we_generalTextEditor_useBackground" xml:space="preserve">
+    <value>背景を作成</value>
+  </data>
+  <data name="we_generalTextEditor_usePrefabColor" xml:space="preserve">
+    <value>プレハブの色を使用</value>
+  </data>
+  <data name="we_roadEditor_verticalAlignmentBoxText" xml:space="preserve">
+    <value>ベースラインに対する垂直方向の配置
+(0 = ベースラインより下で、1 = 大文字のラインより上)</value>
+  </data>
+  <data name="we_roadEditor_verticalAlignmentLineText" xml:space="preserve">
+    <value>サイズ変更時のラインに対する垂直方向の配置
+(0 = ベースラインより下で、1 = 大文字のラインより上)</value>
+  </data>
+  <data name="we_generalTextEditor_backfaceFontColorIsSameAsFrontFace" xml:space="preserve">
+    <value>背面に前面の色を使用</value>
+  </data>
+  <data name="we_generalTextEditor_backgroundBackfaceColor" xml:space="preserve">
+    <value>BG背面の色</value>
+  </data>
+  <data name="we_generalTextEditor_boxInnerColor" xml:space="preserve">
+    <value>ボックス内側の色</value>
+  </data>
+  <data name="we_generalTextEditor_fontBackfaceColor" xml:space="preserve">
+    <value>テキスト背面の色</value>
+  </data>
+  <data name="we_generalTextEditor_backgroundImage" xml:space="preserve">
+    <value>背景画像</value>
+  </data>
+  <data name="we_generalTextEditor_imageBordersLBRTlabel" xml:space="preserve">
+    <value>画像の相対的な境界線
+(左/下/右/上で、0 ～ 1の範囲)</value>
+  </data>
+  <data name="we_generalTextEditor_imageDensityPixelsPerMeters" xml:space="preserve">
+    <value>ピクセルの密度/㎡</value>
+  </data>
+  <data name="we_generalTextEditor_imageSaveImageInfoBtn" xml:space="preserve">
+    <value>画像情報をファイルに保存</value>
+  </data>
+  <data name="we_generalTextEditor_imageShowBorders" xml:space="preserve">
+    <value>境界線を表示</value>
+  </data>
+  <data name="we_roadEditor_horizontalAlignmentBoxText" xml:space="preserve">
+    <value>ライン幅に対する水平方向の配置
+(0 = 左; 1 = 右)</value>
+  </data>
+  <data name="we_settings_uiOpacity" xml:space="preserve">
+    <value>UI背景の不透明度</value>
+  </data>
+  <data name="we_errorLoadingVehicleLayout_msg" xml:space="preserve">
+    <value>スコープで車両のアイテム {1}/{2} をロード時にエラーが発生: {2}
+情報を取得するには、以下のデータを確認して下さい。</value>
+  </data>
+  <data name="we_generalTextEditor_cloneType180" xml:space="preserve">
+    <value>180º Y型で複製</value>
+  </data>
+  <data name="we_vehicleEditor_headVehicleTitle" xml:space="preserve">
+    <value>先頭</value>
+  </data>
+  <data name="we_vehicleEditor_pickerBtn" xml:space="preserve">
+    <value>スポイト</value>
+  </data>
+  <data name="we_vehicleEditor_pickOrSpawnAVehicle" xml:space="preserve">
+    <value>車両のユニットが存在する場合は、ビューアーとして取得</value>
+  </data>
+  <data name="we_vehicleEditor_trailerNumTitle" xml:space="preserve">
+    <value>トレーラ {0}</value>
+  </data>
+  <data name="we_Enum__YCloneType_OnZ" xml:space="preserve">
+    <value>Z軸にミラーリング</value>
+  </data>
+  <data name="we_Enum__ConfigurationSource_ASSET" xml:space="preserve">
+    <value>ワークショップ</value>
+  </data>
+  <data name="we_Enum__ConfigurationSource_CITY" xml:space="preserve">
+    <value>セーブゲーム (都市)</value>
+  </data>
+  <data name="we_Enum__ConfigurationSource_GLOBAL" xml:space="preserve">
+    <value>ローカルフォルダ (Appdata)</value>
+  </data>
+  <data name="we_Enum__ConfigurationSource_NONE" xml:space="preserve">
+    <value>なし (無効化)</value>
+  </data>
+  <data name="we_Enum__ConfigurationSource_SKIN" xml:space="preserve">
+    <value>スキン (Vehicle Skinsから)</value>
+  </data>
+  <data name="we_Enum__YCloneType_None" xml:space="preserve">
+    <value>複製なし</value>
+  </data>
+  <data name="we_Enum__YCloneType_OnX" xml:space="preserve">
+    <value>X軸にミラーリング</value>
+  </data>
+  <data name="we_vehicleEditor_failedPickingAVehicle" xml:space="preserve">
+    <value>都市内で、モデルの車両が走行していません。
+モデルを公共交通などで路線設定して、強制的にスポーンを試して下さい。</value>
+  </data>
+  <data name="we_vehicleEditor_waitingGrabVehicle" xml:space="preserve">
+    <value>車両の検索を待っています...</value>
+  </data>
+  <data name="we_settings_defaultFontDescription" xml:space="preserve">
+    <value>デフォルトのフォントは建物/車両/ネットワークモードの配置で、レイアウト内で未選択だと使用されます。 または、下記の他のフィールドでは、フォントクラスとして選択出来ます。</value>
+  </data>
+  <data name="we_settings_defaultFonts" xml:space="preserve">
+    <value>デフォルトのフォント</value>
+  </data>
+  <data name="we_settings_defaultFontsAvailableOnlyWhenCityLoaded" xml:space="preserve">
+    <value>デフォルトのフォント設定は、都市がロードされた場合のみ有効です。</value>
+  </data>
+  <data name="we_buildingEditor_windowTitle" xml:space="preserve">
+    <value>建物エディタ</value>
+  </data>
+  <data name="we_buildingEditor_subBuildingNumTitle" xml:space="preserve">
+    <value>サブビルディング #{0}</value>
+  </data>
+  <data name="we_buildingEditor_mainBuildingTitle" xml:space="preserve">
+    <value>メインビルディング</value>
+  </data>
+  <data name="we_buildingEditor_pickerBtn" xml:space="preserve">
+    <value>建物をスポイト</value>
+  </data>
+  <data name="we_buildingEditor_selectBuilding" xml:space="preserve">
+    <value>建物を選択</value>
+  </data>
+  <data name="we_textEditor_needPropSelectedWarning" xml:space="preserve">
+    <value>テキストの編集前に、Propを選択して下さい！</value>
+  </data>
+  <data name="we_buildingEditor_noParametersUsedThisInstance" xml:space="preserve">
+    <value>このインスタンスでは、パラメータを使用していません。</value>
+  </data>
+  <data name="we_buildingEditor_paramEditorTabText" xml:space="preserve">
+    <value>インスタンスのパラメータ</value>
+  </data>
+  <data name="we_buildingEditor_layoutEditorTabText" xml:space="preserve">
+    <value>Propのテキスト</value>
+  </data>
+  <data name="we_buildingEditor_currentBuildingBeingEdited" xml:space="preserve">
+    <value>現在の建物: {0} (ID: {1})</value>
+  </data>
+  <data name="we_buildingEditor_pickABuildingToEditParameters" xml:space="preserve">
+    <value>パラメータを編集する建物をスポイトします。</value>
+  </data>
+  <data name="we_generalTextEditor_labelForParamListing" xml:space="preserve">
+    <value>パラメータリストのラベル</value>
+  </data>
+  <data name="we_buildingEditor_currentFocusInstance" xml:space="preserve">
+    <value>現在のフォーカスインスタンス (原点は0)</value>
+  </data>
+  <data name="we_buildingEditor_repeatLayoutDirection" xml:space="preserve">
+    <value>インスタンス間の距離</value>
+  </data>
+  <data name="we_buildingEditor_repeatLayoutTimes" xml:space="preserve">
+    <value>このPropレイアウトのインスタンス</value>
+  </data>
+  <data name="we_buildingEditor_lockCameraToEditingProp" xml:space="preserve">
+    <value>Propを編集するためにカメラをロック</value>
+  </data>
+  <data name="we_buildingEditor_transportStation_platformSelectionInfo" xml:space="preserve">
+    <value>プラットフォームの順序は、このPropのテキストで表示される情報を定義します。 優先順位は次の順序に従って、この建物を通過する路線をどこから取得するかを決定するために使用されます。 例えば、色などの情報を取得する場合は、上部にあるプラットフォームが他より優先されます。
+ゲーム中ではプラットフォームはハイライトされ、番号が振られています。地下のプラットフォームはメインとなる駅施設で表示されて、最も深いプラットフォームは他より下に表示されて、どの程度の深度にあるかを表示しています。地下のプラットフォームは、[brackets] で囲まれています。</value>
+  </data>
+  <data name="we_buildingEditor_buildingIsNotTransportStation" xml:space="preserve">
+    <value>この建物は公共交通の駅ではありません。</value>
+  </data>
+  <data name="we_buildingEditor_changePriorityOrder" xml:space="preserve">
+    <value>優先順位を変更</value>
+  </data>
+  <data name="we_buildingEditor_platformNameClickToToggle" xml:space="preserve">
+    <value>プラットフォーム名 (クリックで切り替え)</value>
+  </data>
+  <data name="we_buildingEditor_platformNamePlaceholder" xml:space="preserve">
+    <value>プラットフォーム #{0}</value>
+  </data>
+  <data name="we_buildingEditor_thisStationHasNoStops" xml:space="preserve">
+    <value>この駅には停車場所がありません</value>
+  </data>
+  <data name="we_buildingEditor_transportStationSettings" xml:space="preserve">
+    <value>公共交通の駅の設定</value>
+  </data>
+  <data name="we_generalTextEditor_colorSource" xml:space="preserve">
+    <value>色のソース</value>
+  </data>
+  <data name="we_generalTextEditor_useFixedIfMultiline" xml:space="preserve">
+    <value>プラットフォームで複数の路線が見つかった場合は、固定色を使用する (最初の路線カラーでは無く)</value>
+  </data>
+  <data name="we_Enum__ColoringSource_ContrastProp" xml:space="preserve">
+    <value>Prop/車両の色とのコントラスト</value>
+  </data>
+  <data name="we_Enum__ColoringSource_Prop" xml:space="preserve">
+    <value>Prop/車両の色</value>
+  </data>
+  <data name="we_Enum__ColoringSource_ContrastPlatformLine" xml:space="preserve">
+    <value>PTの路線カラーとのコントラスト</value>
+  </data>
+  <data name="we_Enum__ColoringSource_Fixed" xml:space="preserve">
+    <value>固定</value>
+  </data>
+  <data name="we_Enum__ColoringSource_PlatformLine" xml:space="preserve">
+    <value>PTの路線カラー</value>
+  </data>
+  <data name="we_Enum__TextRenderingClass_Any" xml:space="preserve">
+    <value>任意の種類</value>
+  </data>
+  <data name="we_Enum__TextRenderingClass_BgMesh" xml:space="preserve">
+    <value>背景画像</value>
+  </data>
+  <data name="we_Enum__TextRenderingClass_Buildings" xml:space="preserve">
+    <value>建物</value>
+  </data>
+  <data name="we_Enum__TextRenderingClass_None" xml:space="preserve">
+    <value>無し</value>
+  </data>
+  <data name="we_Enum__TextRenderingClass_PlaceOnNet" xml:space="preserve">
+    <value>セグメント上に配置</value>
+  </data>
+  <data name="we_Enum__TextRenderingClass_RoadNodes" xml:space="preserve">
+    <value>道路のノード</value>
+  </data>
+  <data name="we_Enum__TextRenderingClass_Vehicle" xml:space="preserve">
+    <value>車両</value>
+  </data>
+  <data name="we_generalTextEditor_bgFrontColor" xml:space="preserve">
+    <value>メッシュの前面カラー</value>
+  </data>
+  <data name="we_generalTextEditor_bgFrontColorForMultilineIfActive" xml:space="preserve">
+    <value>メッシュの前面カラー
+&lt;i&gt;(テキストに複数路線で固定色が有効な場合)&lt;/i&gt;</value>
+  </data>
+  <data name="we_generalTextEditor_bgRequiredForFrame" xml:space="preserve">
+    <value>フレームを生成する場合は、背景を有効化して下さい。</value>
+  </data>
+  <data name="we_generalTextEditor_depthNormalBg" xml:space="preserve">
+    <value>背景の奥行き効果 (αチャンネルに基づく)</value>
+  </data>
+  <data name="we_generalTextEditor_frameSettings" xml:space="preserve">
+    <value>生成されたフレームの設定</value>
+  </data>
+  <data name="we_textEditor_useAlsoForBg" xml:space="preserve">
+    <value>背景を点灯
+&lt;i&gt;画像のαチャンネルは、照明用クッキーのマスクになります。&lt;/i&gt;</value>
+  </data>
+  <data name="we_settings_invalidLocaleCode" xml:space="preserve">
+    <value>ロケールコードが無効です！代わりに、 &lt;b&gt;{0}&lt;/b&gt; ロケールを使用します。</value>
+  </data>
+  <data name="we_settings_clockAndFormatting" xml:space="preserve">
+    <value>時計と書式設定</value>
+  </data>
+  <data name="we_settings_clockFormat" xml:space="preserve">
+    <value>時計の形式</value>
+  </data>
+  <data name="we_settings_formatterLocaleCode" xml:space="preserve">
+    <value>一般的な書式設定のロケール</value>
+  </data>
+  <data name="we_settings_formattingSettings" xml:space="preserve">
+    <value>一般的な書式設定</value>
+  </data>
+  <data name="we_Enum__VariableEnvironmentSubType_Clock" xml:space="preserve">
+    <value>MODの設定で時計を使用</value>
+  </data>
+  <data name="we_Enum__VariableEnvironmentSubType_CustomFormattedDate" xml:space="preserve">
+    <value>日付の書式を指定することで、Real Timeや同様のMODを使用した場合は適切に動作します。</value>
+  </data>
+  <data name="we_Enum__VariableEnvironmentSubType_Temperature" xml:space="preserve">
+    <value>温度はゲーム設定の単位を使用</value>
+  </data>
+  <data name="we_Enum__ColoringSource_ContrastDistrict" xml:space="preserve">
+    <value>地区カラーからのコントラスト (Custom Dataのみ)</value>
+  </data>
+  <data name="we_Enum__ColoringSource_District" xml:space="preserve">
+    <value>地区カラー (Custom Dataのみ)</value>
+  </data>
+  <data name="we_assetEditor_currentAssetIsNotBuilding" xml:space="preserve">
+    <value>&lt;color=yellow&gt;現在の編集中のアセットは建物ではありません！&lt;/color&gt;</value>
+  </data>
+  <data name="we_assetEditor_deleteFromAsset" xml:space="preserve">
+    <value>アセットからレイアウトを削除</value>
+  </data>
+  <data name="we_assetEditor_dontForgetSaveAlert" xml:space="preserve">
+    <value>&lt;color=yellow&gt;エディタの終了前に、レイアウトの保存を忘れないで下さい！&lt;/color&gt;</value>
+  </data>
+  <data name="we_assetEditor_saveDefaultSkin" xml:space="preserve">
+    <value>アセットのデフォルトレイアウトを保存</value>
+  </data>
+  <data name="we_errorLoadingVehicleLayout_msgSingle" xml:space="preserve">
+    <value>スコープで車両のアイテムをロード時にエラーが発生: {0}
+情報を取得するには、以下のデータを確認して下さい。</value>
+  </data>
+  <data name="we_assetEditor_createLayoutAsset" xml:space="preserve">
+    <value>アセットのスコープに新規レイアウトを作成</value>
+  </data>
+  <data name="we_buildingEditor_theLayotsAreBeingLoaded" xml:space="preserve">
+    <value>&lt;color=yellow&gt;建物のレイアウトをロード中...&lt;/color&gt;</value>
+  </data>
+  <data name="we_vehicleEditor_theLayotsAreBeingLoaded" xml:space="preserve">
+    <value>&lt;color=yellow&gt;車両のレイアウトをロード中...&lt;/color&gt;</value>
+  </data>
+  <data name="we_assetEditor_currentAssetIsNotVehicle" xml:space="preserve">
+    <value>&lt;color=yellow&gt;現在のアセットは車両ではありません&lt;/color&gt;</value>
+  </data>
+  <data name="we_generalTextEditor_previewTypeImageFrame" xml:space="preserve">
+    <value>画像のフレーム</value>
+  </data>
+  <data name="we_generalTextEditor_assetEditorExibitionText" xml:space="preserve">
+    <value>アセットエディタに表示するコンテンツ</value>
+  </data>
+  <data name="we_generalTextEditor_assetEditorPreviewSetText" xml:space="preserve">
+    <value>アセットエディタに表示するテキスト</value>
+  </data>
+  <data name="we_generalTextEditor_previewTypeSetText" xml:space="preserve">
+    <value>カスタムテキスト</value>
+  </data>
+  <data name="we_generalTextEditor_previewTypeVariablePath" xml:space="preserve">
+    <value>WE用の変数パス</value>
+  </data>
+  <data name="we_assetEditor_reloadAssetImages" xml:space="preserve">
+    <value>アセットから画像をリロード</value>
+  </data>
+  <data name="we_assetEditor_toggleFlags" xml:space="preserve">
+    <value>フラグの切り替え</value>
+  </data>
+  <data name="we_generalTextEditor_goToAssetSpritesFolder" xml:space="preserve">
+    <value>WSアセットのイメージフォルダに移動</value>
+  </data>
+  <data name="we_general_errorsLoadingImagesFromAssetSpriteFolderHeader" xml:space="preserve">
+    <value>アセットから画像のロード中に、一部でエラーが発生: &lt;color=yellow&gt;{0}&lt;/color&gt;</value>
+  </data>
+  <data name="we_citySettings_title" xml:space="preserve">
+    <value>都市の設定</value>
+  </data>
+  <data name="WTS_ACTIVERULESONLY" xml:space="preserve">
+    <value>1つ以上のレイアウトを持つアセットをフィルター</value>
+  </data>
+  <data name="WTS_BACKGROUNDANDBOX_SETTINGS" xml:space="preserve">
+    <value>背景＆ボックス </value>
+  </data>
+  <data name="WTS_BOARD_TEXT_TYPE_DESC__Any" xml:space="preserve">
+    <value>任意の種類</value>
+  </data>
+  <data name="WTS_BOARD_TEXT_TYPE_DESC__None" xml:space="preserve">
+    <value>無し</value>
+  </data>
+  <data name="WTS_BOARD_TEXT_TYPE_DESC__ParameterizedSpriteFolder" xml:space="preserve">
+    <value>フォルダからスライドショーをスプライト化</value>
+  </data>
+  <data name="WTS_BOARD_TEXT_TYPE_DESC__ParameterizedSpriteSingle" xml:space="preserve">
+    <value>パラメーター付きスプライト</value>
+  </data>
+  <data name="WTS_BOARD_TEXT_TYPE_DESC__ParameterizedText" xml:space="preserve">
+    <value>パラメータ付きテキスト</value>
+  </data>
+  <data name="WTS_BOARD_TEXT_TYPE_DESC__TextParameterSequence" xml:space="preserve">
+    <value>テキストの順序</value>
+  </data>
+  <data name="WTS_BOXMESH_BACKOFFSETFROMCENTERBOTTOM" xml:space="preserve">
+    <value>バックメッシュの傾斜オフセット (中央/下から)</value>
+  </data>
+  <data name="WTS_BOXMESH_BACKSIZE" xml:space="preserve">
+    <value>バックメッシュの矩形サイズ</value>
+  </data>
+  <data name="WTS_BOXMESH_COLORSGROUP_LABEL" xml:space="preserve">
+    <value>カラー</value>
+  </data>
+  <data name="WTS_BOXMESH_DEPTH_BACK" xml:space="preserve">
+    <value>奥行き BG-&gt;バックメッシュ</value>
+  </data>
+  <data name="WTS_BOXMESH_DEPTH_FRONT" xml:space="preserve">
+    <value>奥行き BG-&gt;フロントメッシュ</value>
+  </data>
+  <data name="WTS_BOXMESH_EFFECTSGROUP_LABEL" xml:space="preserve">
+    <value>エフェクト</value>
+  </data>
+  <data name="WTS_BOXMESH_OUTERCOLOR" xml:space="preserve">
+    <value>ボックス外側の色</value>
+  </data>
+  <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_COPYTOCITY" xml:space="preserve">
+    <value>このレイアウトを複製して、現在のセーブゲームで編集します。</value>
+  </data>
+  <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_COPYTOCLIPBOARD" xml:space="preserve">
+    <value>クリップボードにコピー</value>
+  </data>
+  <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_DELETEFROMCITY" xml:space="preserve">
+    <value>このセーブデータから削除
+(警告: appdataやアセットに数値が残った場合は、それらが適用されます)</value>
+  </data>
+  <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_EXPORTASGLOBAL" xml:space="preserve">
+    <value>このレイアウトをローカルフォルダ (Appdata) にエクスポート</value>
+  </data>
+  <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_EXPORTTOASSETFOLDER" xml:space="preserve">
+    <value>このレイアウトをパック化して、
+Steamのワークショップ用にエクスポート</value>
+  </data>
+  <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_NEWINCITY" xml:space="preserve">
+    <value>このセーブゲーム用に新しいレイアウトを作成</value>
+  </data>
+  <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_OPENGLOBALSFOLDER" xml:space="preserve">
+    <value>Appdataのレイアウトフォルダを開く</value>
+  </data>
+  <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_PASTEFROMCLIPBOARD" xml:space="preserve">
+    <value>クリップボードから貼り付け</value>
+  </data>
+  <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_RELOADDESCRIPTORS" xml:space="preserve">
+    <value>記述子をリロード</value>
+  </data>
+  <data name="WTS_BUILDINGEDITOR_BUTTONROWACTION_SAVESKIN" xml:space="preserve">
+    <value>スキンのレイアウトを保存</value>
+  </data>
+  <data name="WTS_BUILDINGEDITOR_MODELLAYOUTSELECT" xml:space="preserve">
+    <value>モデル/レイアウトの選択</value>
+  </data>
+  <data name="WTS_CLASS_FONT" xml:space="preserve">
+    <value>フォントクラス</value>
+  </data>
+  <data name="WTS_CLOCK_12H_CLOCK" xml:space="preserve">
+    <value>12時間時計</value>
+  </data>
+  <data name="WTS_CLOCK_MINUTES_PRECISION" xml:space="preserve">
+    <value>精度 (分単位)
+注意: 非常に低い値は、Real Time MODなどでのみ推奨されます。</value>
+  </data>
+  <data name="WTS_CLOCK_SHOW_LEADING_ZERO" xml:space="preserve">
+    <value>時間の先頭にゼロを表示</value>
+  </data>
+  <data name="WTS_CLONE_180DEG_INVERT_TEXT_HOR_ALIGN" xml:space="preserve">
+    <value>複製時にテキストの水平方向で反転する</value>
+  </data>
+  <data name="WTS_CONTENT_TEXTVALUE" xml:space="preserve">
+    <value>パラメータ値</value>
+  </data>
+  <data name="WTS_CURRENTLY_USING" xml:space="preserve">
+    <value>現在使用中</value>
+  </data>
+  <data name="WTS_CURRENTSELECTION" xml:space="preserve">
+    <value>現在選択中</value>
+  </data>
+  <data name="WTS_CUSTOMSPRITE_ERRORHEADER" xml:space="preserve">
+    <value>カスタムスプライトのロード時に、一部でエラーが発生:</value>
+  </data>
+  <data name="WTS_CUSTOMSPRITE_FAILEDREADIMAGE" xml:space="preserve">
+    <value>画像のロード中にエラーが発生しました...</value>
+  </data>
+  <data name="WTS_CUSTOMSPRITE_IMAGETOOLARGE" xml:space="preserve">
+    <value>画像が大きすぎます！！</value>
+  </data>
+  <data name="WTS_DEFAULT_BUILDINGS_CONFIG_PATH_TITLE" xml:space="preserve">
+    <value>建物フォルダのデフォルト設定</value>
+  </data>
+  <data name="WTS_DEFAULT_FONT_LABEL" xml:space="preserve">
+    <value>ゲームデフォルトのフォント</value>
+  </data>
+  <data name="WTS_DEFAULT_PROP_LAYOUTS_PATH_TITLE" xml:space="preserve">
+    <value>デフォルトのPropレイアウト</value>
+  </data>
+  <data name="WTS_DEFAULT_VEHICLES_CONFIG_PATH_TITLE" xml:space="preserve">
+    <value>グローバル車両のテキストレイアウトのファイルフォルダ</value>
+  </data>
+  <data name="WTS_DELETETEXTITEM" xml:space="preserve">
+    <value>このテキストアイテムを削除</value>
+  </data>
+  <data name="WTS_EXPORTDATA_NAMEASKING" xml:space="preserve">
+    <value>保存するルールの名前:</value>
+  </data>
+  <data name="WTS_EXPORTDATA_NAMEASKING_OVERWRITE" xml:space="preserve">
+    <value>この名前のルールが既にあります。上書きしますか？</value>
+  </data>
+  <data name="WTS_EXPORTLAYOUT_LIB" xml:space="preserve">
+    <value>レイアウトをライブラリにエクスポート</value>
+  </data>
+  <data name="WTS_EXTRA_SPRITES_PATH_TITLE" xml:space="preserve">
+    <value>レイアウトで使用する、追加のスプライトフォルダ (最大400x400)</value>
+  </data>
+  <data name="WTS_FLAGSREQUREDFORBIDDEN" xml:space="preserve">
+    <value>フラグ: 必要/禁止</value>
+  </data>
+  <data name="WTS_FOLDERSRC_ASSET" xml:space="preserve">
+    <value>アセットからフォルダへ</value>
+  </data>
+  <data name="WTS_FOLDERSRC_LOCAL" xml:space="preserve">
+    <value>グローバルのフォルダ</value>
+  </data>
+  <data name="WTS_FONTFACE_SETTINGS" xml:space="preserve">
+    <value>フォントフェイスの設定</value>
+  </data>
+  <data name="WTS_FONT_FILES_PATH_TITLE" xml:space="preserve">
+    <value>フォントのフォルダ</value>
+  </data>
+  <data name="WTS_FONT_QUALITY" xml:space="preserve">
+    <value>フォントの品質
+(高い値は問題が発生する可能性があります)</value>
+  </data>
+  <data name="WTS_GENERAL_SETTINGS" xml:space="preserve">
+    <value>全般設定</value>
+  </data>
+  <data name="WTS_IMAGESRC_ASSET" xml:space="preserve">
+    <value>アセットフォルダからの画像</value>
+  </data>
+  <data name="WTS_IMAGESRC_LOCAL" xml:space="preserve">
+    <value>Appdataフォルダからの画像</value>
+  </data>
+  <data name="WTS_IMPORTLAYOUT_LIB" xml:space="preserve">
+    <value>ライブラリからレイアウトをインポート</value>
+  </data>
+  <data name="WTS_INITIAL_TEXTURE_SIZE_FONT" xml:space="preserve">
+    <value>初期のテクスチャサイズ
+(拡大時に「黒い文字」が表示される場合のみ上げて下さい)</value>
+  </data>
+  <data name="WTS_LAYOUTSKIN" xml:space="preserve">
+    <value>スキン (Vehicle Skinsから)</value>
+  </data>
+  <data name="WTS_LINEDIMENSIONS" xml:space="preserve">
+    <value>ラインの寸法 (メートル)(幅と高さ)</value>
+  </data>
+  <data name="WTS_MAX_PARALLEL_WORD_PROCESSES" xml:space="preserve">
+    <value>フォントごとに背景に描画される最大文字数</value>
+  </data>
+  <data name="WTS_ONNETEDITOR_INVALIDPARAMSETTINGS_DIFFERENTKINDSAMEPARAM" xml:space="preserve">
+    <value>&lt;color=#FF0000&gt;パラメータの設定が間違っています！&lt;/color&gt;
+このパラメータには異なる種類のテキストエントリが複数あります。 レイアウトの設定を確認して下さい。</value>
+  </data>
+  <data name="WTS_ONNETEDITOR_LOCATION_SETTINGS" xml:space="preserve">
+    <value>位置の設定</value>
+  </data>
+  <data name="WTS_ONNETEDITOR_NAME" xml:space="preserve">
+    <value>名前</value>
+  </data>
+  <data name="WTS_ONNETEDITOR_POSITIONOFFSET" xml:space="preserve">
+    <value>位置のオフセット</value>
+  </data>
+  <data name="WTS_ONNETEDITOR_ROTATION" xml:space="preserve">
+    <value>回転</value>
+  </data>
+  <data name="WTS_ONNETEDITOR_SCALE" xml:space="preserve">
+    <value>スケール</value>
+  </data>
+  <data name="WTS_ONNETEDITOR_SEGMENTPOSITION" xml:space="preserve">
+    <value>セグメントパスの相対位置</value>
+  </data>
+  <data name="WTS_ONNETEDITOR_SEGMENTPOSITION_COUNT" xml:space="preserve">
+    <value>インスタンスの数</value>
+  </data>
+  <data name="WTS_ONNETEDITOR_SEGMENTPOSITION_END" xml:space="preserve">
+    <value>最後のアイテムのセグメントオフセット</value>
+  </data>
+  <data name="WTS_ONNETEDITOR_SEGMENTPOSITION_START" xml:space="preserve">
+    <value>最初のアイテムのセグメントオフセット</value>
+  </data>
+  <data name="WTS_ONNETEDITOR_TARGET" xml:space="preserve">
+    <value>対象 {0}</value>
+  </data>
+  <data name="WTS_ONNETEDITOR_TEXTPARAM" xml:space="preserve">
+    <value>パラメータ {0}</value>
+  </data>
+  <data name="WTS_ONNETEDITOR_UNSETTARGETDESC" xml:space="preserve">
+    <value>&lt;対象が未設定&gt;</value>
+  </data>
+  <data name="WTS_OVERRIDE_FONT" xml:space="preserve">
+    <value>上書き用のテキストフォント</value>
+  </data>
+  <data name="WTS_PARAMSEQ_ACTIONS" xml:space="preserve">
+    <value>操作</value>
+  </data>
+  <data name="WTS_PARAMSEQ_STEPLENGTH" xml:space="preserve">
+    <value>持続時間</value>
+  </data>
+  <data name="WTS_PARAMTYPE_PLAINTEXT" xml:space="preserve">
+    <value>プレーンテキスト</value>
+  </data>
+  <data name="WTS_PARAMTYPE_VARIABLE" xml:space="preserve">
+    <value>ゲーム統計の変数</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__COMMON_DATEFORMAT" xml:space="preserve">
+    <value>日/日付の情報は"d"、月の情報は"M"、年の情報は "y "を使用して下さい。他の文字は使用できませんが、任意の記号を使用することは可能です。
+詳しくは、C#の日付フォーマットで検索してみて下さい。</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__COMMON_NUMBERFORMAT_FLOAT" xml:space="preserve">
+    <value>10進数のフォーマットを使用します。数値の例 &lt;color=#FFFF00&gt;1250.65&lt;/color&gt;:
+&lt;color=#FFFF00&gt;0&lt;/color&gt; =&gt; &lt;color=#00FF00&gt;1251&lt;/color&gt;
+&lt;color=#FFFF00&gt;0.000&lt;/color&gt; =&gt; &lt;color=#00FF00&gt;1250.650&lt;/color&gt;
+&lt;color=#FFFF00&gt;#,##0.0&lt;/color&gt; =&gt; &lt;color=#00FF00&gt;1,250.7&lt;/color&gt;
+
+詳しくは、C#の数値フォーマットのリファレンスで検索してみて下さい。</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__COMMON_NUMBERFORMAT_INT" xml:space="preserve">
+    <value>整数のフォーマットを使用します。数値の例 &lt;color=#FFFF00&gt;1251&lt;/color&gt;:
+&lt;color=#FFFF00&gt;0&lt;/color&gt; =&gt; &lt;color=#00FF00&gt;1251&lt;/color&gt;
+&lt;color=#FFFF00&gt;X&lt;/color&gt; =&gt; &lt;color=#00FF00&gt;4E3&lt;/color&gt; (Hexadecimal)
+&lt;color=#FFFF00&gt;#,##0&lt;/color&gt; =&gt; &lt;color=#00FF00&gt;1.251&lt;/color&gt;
+
+詳しくは、C#の数値フォーマットのリファレンスで検索してみて下さい。</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__COMMON_PARAMNUM" xml:space="preserve">
+    <value>値を取得するパラメータを設定します。</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__COMMON_PREFIX" xml:space="preserve">
+    <value>(オプション) 空欄でも可
+変数値の前に付けるテキスト: バックスラッシュを使用して、スラッシュ (&lt;color=#FF00FF&gt;/&lt;/color&gt;) をエスケープします。</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__COMMON_STRINGFORMAT" xml:space="preserve">
+    <value>(オプション) 空欄でも可
+&lt;color=#FFFF00&gt;U&lt;/color&gt; は、テキストを大文字に全て変換します。
+&lt;color=#FFFF00&gt;L&lt;/color&gt; は、テキストを小文字に全て変換します。
+&lt;color=#FFFF00&gt;A&lt;/color&gt; は、テキストに略語が適用されます。</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__COMMON_SUFFIX" xml:space="preserve">
+    <value>(オプション) 空欄でも可
+変数値を継承するテキスト: バックスラッシュを使用して、スラッシュ (&lt;color=#FF00FF&gt;/&lt;/color&gt;) をエスケープします。</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__SegmentTarget__SelectReference" xml:space="preserve">
+    <value>0～4の数値を入力して、リストで選択して続行します。
+
+&amp;lt;color=#FFFF00&amp;gt;0～4&amp;lt;/color&amp;gt; は、選択された参照用タブで使用することを意味します。</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableCitySubType_CityName" xml:space="preserve">
+    <value>都市名</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableCitySubType_CityPopulation" xml:space="preserve">
+    <value> 都市の人口
+
+書式設定のオプションを選択します。</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableCitySubType_None" xml:space="preserve">
+    <value>&lt;なし&gt;</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_Direction" xml:space="preserve">
+    <value>道路の方向 - MODにロードされた、現在の言語では頭文字や頭字語 (英語は代替え用として使用)</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_District" xml:space="preserve">
+    <value>地区名やマップ外に繋がる外部接続の名前 (都市名は代替え用として使用)
+
+ヒント: 外部接続の名前は、 &lt;color=#00FF00&gt;Addresses Mod&lt;/color&gt; を使用してカスタマイズできます。</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistrictAreaKm2" xml:space="preserve">
+    <value>現在の地区サイズを平方キロメートルで表示します。 飛び地がある場合は市街地のサイズを指します。
+
+書式設定のオプションを選択して下さい。</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistrictAreaM2" xml:space="preserve">
+    <value>現在の地区サイズを平方メートルで表示します。 飛び地がある場合は市街地のサイズを指します。
+
+書式設定のオプションを選択して下さい。</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistrictAreaMi2" xml:space="preserve">
+    <value>現在の地区サイズを平方マイルで表示します。 飛び地がある場合は市街地のサイズを指します。
+
+書式設定のオプションを選択して下さい。</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistrictOrPark" xml:space="preserve">
+    <value>地区名やマップ外に繋がる外部接続の名前になります。もし、利用不可でセグメントがサブエリア内にある場合は、サブエリア名が使用されます。 (都市名は代替え用として使用)
+
+ヒント: 外部接続の名前は、 &lt;color=#00FF00&gt;Addresses Mod&lt;/color&gt; を使用してカスタマイズできます。</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_DistrictPopulation" xml:space="preserve">
+    <value>地区の人口: 地区内にない場合は都市の人口を表示します。
+
+書式設定のオプションを選択して下さい。</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_MileageKilometers" xml:space="preserve">
+    <value>現在の移動距離をキロメートルで表示
+
+書式設定のオプションを選択して下さい</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_MileageMeters" xml:space="preserve">
+    <value>現在の移動距離をメートルで表示
+
+書式設定のオプションを選択して下さい</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_MileageMiles" xml:space="preserve">
+    <value>現在の移動距離をマイルで表示
+
+書式設定のオプションを選択して下さい</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_None" xml:space="preserve">
+    <value>選択したセグメントから、抽出するデータの種類を選択します。</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_Park" xml:space="preserve">
+    <value>サブエリア名、もしくはサブエリアに入っていない場合は空欄です。
+
+サブエリアはDLC Parklifeから導入されています。Industries/Campus/Airportsの各DLCでもそのまま使用されているため、内部的には全て「Park」と呼ばれます。</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_ParkAreaKm2" xml:space="preserve">
+    <value>サブエリアのサイズを平方キロメートルで表示します。 サブエリアの内側にない場合は、0になります。
+
+書式設定のオプションを選択して下さい。</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_ParkAreaM2" xml:space="preserve">
+    <value>サブエリアのサイズを平方メートルで表示します。 サブエリアの内側にない場合は、0になります。
+
+書式設定のオプションを選択して下さい。</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_ParkAreaMi2" xml:space="preserve">
+    <value>サブエリアのサイズを平方マイルで表示します。 サブエリアの内側にない場合は、0になります。
+
+書式設定のオプションを選択して下さい。</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_ParkOrDistrict" xml:space="preserve">
+    <value>サブエリア名を表示して、利用不可の場合は地区/外部接続/都市名を使用します。
+
+サブエリアはDLC Parklifeから導入されています。Industries/Campus/Airportsの各DLCでもそのまま使用されているため、内部的には全て「Park」と呼ばれます。
+
+ヒント: 外部接続の名前は、 &lt;color=#00FF00&gt;Addresses Mod&lt;/color&gt; を使用してカスタマイズできます。</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_StreetNameComplete" xml:space="preserve">
+    <value>セグメントのフルネーム</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_StreetPrefix" xml:space="preserve">
+    <value>修飾子有りのセグメント名 (AvenueやStreetなど)</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableSegmentTargetSubType_StreetSuffix" xml:space="preserve">
+    <value>修飾子無しのセグメント名</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableType_CityData" xml:space="preserve">
+    <value>都市全般のデータに関する変数</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableType_CurrentBuilding" xml:space="preserve">
+    <value>現在の建物に関する変数 (建物レイアウトのみ)</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableType_CurrentSegment" xml:space="preserve">
+    <value>現在のセグメントに関する変数 (ネットワークとノードのレイアウトのみ)</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableType_CurrentVehicle" xml:space="preserve">
+    <value>現在の車両に関する変数 (車両レイアウトのみ)</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableType_Environment" xml:space="preserve">
+    <value>都市環境に関する変数 (時間や温度など)</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableType_Invalid" xml:space="preserve">
+    <value>--無効--</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableType_Parameter" xml:space="preserve">
+    <value>セグメント内のインスタンスからローカル変数を使用して、その数値を決定します。 (セグメントのみ)</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableType_SegmentTarget" xml:space="preserve">
+    <value>参照先のセグメントに関する変数 (ネットワークのレイアウトのみ)</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableType_VehicleBuilding" xml:space="preserve">
+    <value>車両が出発したソースの建物に関する変数</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableVehicleSubType_LastStopLine" xml:space="preserve">
+    <value>路線の終点 (目的地)</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableVehicleSubType_LineFullName" xml:space="preserve">
+    <value>路線のフルネーム</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableVehicleSubType_LineIdentifier" xml:space="preserve">
+    <value>路線の識別子</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableVehicleSubType_NextStopLine" xml:space="preserve">
+    <value>次の停車場所</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableVehicleSubType_None" xml:space="preserve">
+    <value>&lt;なし&gt;</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VariableVehicleSubType_PrevStopLine" xml:space="preserve">
+    <value>前の停車場所</value>
+  </data>
+  <data name="WTS_PARAMVARS_DESC__VarLevelRoot" xml:space="preserve">
+    <value>アイテム内を1回クリックすると情報を取得して、2回クリックすると選択できます。</value>
+  </data>
+  <data name="WTS_PICK_A_SEGMENT" xml:space="preserve">
+    <value>セグメントを選択</value>
+  </data>
+  <data name="WTS_POSITIONINGMODE_ISMULTIPLE" xml:space="preserve">
+    <value>セグメントに沿って、複数のインスタンスをリピートします。</value>
+  </data>
+  <data name="WTS_PROPEDIT_CONFIGDELETE_MESSAGE" xml:space="preserve">
+    <value>"{0}" を削除してもよろしいですか？</value>
+  </data>
+  <data name="WTS_REFRESH_IMAGES_FOLDER" xml:space="preserve">
+    <value>画像のリロード</value>
+  </data>
+  <data name="WTS_RELATIVE_POS" xml:space="preserve">
+    <value>相対的な位置</value>
+  </data>
+  <data name="WTS_RELATIVE_ROT" xml:space="preserve">
+    <value>相対的な回転</value>
+  </data>
+  <data name="WTS_RESIZE_Y_TEXT_OVERFLOW" xml:space="preserve">
+    <value>画像/フォントの縦横比を維持</value>
+  </data>
+  <data name="WTS_SEGMENTEDITOR_BUTTONROWACTION_LOCKCAMERASELECTION" xml:space="preserve">
+    <value>現在の選択アイテムでカメラをロック</value>
+  </data>
+  <data name="WTS_SEGMENTPLACING_TITLE" xml:space="preserve">
+    <value>エディタでセグメント上に配置</value>
+  </data>
+  <data name="WTS_SEGMENT_CLEARDATA" xml:space="preserve">
+    <value>アイテムのクリア</value>
+  </data>
+  <data name="WTS_SEGMENT_CLEARDATA_AYS" xml:space="preserve">
+    <value>リスト内にある全てのアイテムを消去してもよろしいですか？</value>
+  </data>
+  <data name="WTS_SEGMENT_EXPORTDATA" xml:space="preserve">
+    <value>データをライブラリにエクスポート</value>
+  </data>
+  <data name="WTS_SEGMENT_IMPORTDATA" xml:space="preserve">
+    <value>ルールをインポート</value>
+  </data>
+  <data name="WTS_SEGMENT_REMOVEITEM" xml:space="preserve">
+    <value>アイテムを削除</value>
+  </data>
+  <data name="WTS_TEXTBACKGROUNDSIZEGENERATED" xml:space="preserve">
+    <value>背景のサイズ</value>
+  </data>
+  <data name="WTS_TEXT_ALIGN_HOR" xml:space="preserve">
+    <value>水平方向に整列</value>
+  </data>
+  <data name="WTS_TEXT_BLINKTYPE" xml:space="preserve">
+    <value>点滅のタイプ</value>
+  </data>
+  <data name="WTS_TEXT_COLOR" xml:space="preserve">
+    <value>テキストの色</value>
+  </data>
+  <data name="WTS_TEXT_CONTAINERFRONTBORDERTHICKNESS" xml:space="preserve">
+    <value>前面境界線の太さ</value>
+  </data>
+  <data name="WTS_TEXT_CONTAINERGLASSCOLOR" xml:space="preserve">
+    <value>ガラスの色</value>
+  </data>
+  <data name="WTS_TEXT_CONTAINERGLASSSPECULARITY" xml:space="preserve">
+    <value>ガラスの鏡面度</value>
+  </data>
+  <data name="WTS_TEXT_CONTAINERGLASSTRANSPARENCY" xml:space="preserve">
+    <value>ガラスの透明度</value>
+  </data>
+  <data name="WTS_TEXT_CONTENT" xml:space="preserve">
+    <value>テキストコンテンツのタイプ</value>
+  </data>
+  <data name="WTS_TEXT_CONTENTVALUE_TAB" xml:space="preserve">
+    <value>テキストコンテンツ</value>
+  </data>
+  <data name="WTS_TEXT_CUSTOMBLINKPARAMS" xml:space="preserve">
+    <value>カスタムした点滅パラメータ</value>
+  </data>
+  <data name="WTS_TEXT_DEPTH" xml:space="preserve">
+    <value>奥行き</value>
+  </data>
+  <data name="WTS_TEXT_ILLUMINATIONSTRENGTH" xml:space="preserve">
+    <value>照明の強度</value>
+  </data>
+  <data name="WTS_TEXT_ILLUMINATION_ATTRIBUTES" xml:space="preserve">
+    <value>照明の属性</value>
+  </data>
+  <data name="WTS_TEXT_MATERIALTYPE" xml:space="preserve">
+    <value>マテリアルの輝度</value>
+  </data>
+  <data name="WTS_TEXT_SIZE_ATTRIBUTES" xml:space="preserve">
+    <value>テキストサイズの属性</value>
+  </data>
+  <data name="WTS_TEXT_TAB_TITLE" xml:space="preserve">
+    <value>テキストメッシュのタイトル</value>
+  </data>
+  <data name="WTS_TEXT_USEFRAME" xml:space="preserve">
+    <value>背景の周囲にボックスを作成</value>
+  </data>
+  <data name="WTS_USE_GROUP_SETTING_FONT" xml:space="preserve">
+    <value>&lt;親のフォント設定を使用&gt;</value>
+  </data>
+  <data name="WTS_VEHICLEEDITOR_SELECTMODEL" xml:space="preserve">
+    <value>車両モデルを選択</value>
+  </data>
+  <data name="WTS_VEHICLEEDITOR_WINDOWTITLE" xml:space="preserve">
+    <value>車両エディタ</value>
+  </data>
+  <data name="WTS_VEHICLE_EXPORTLAYOUT" xml:space="preserve">
+    <value>車両のレイアウトをエクスポート</value>
+  </data>
+  <data name="WTS_VEHICLE_EXPORTLAYOUT_SUCCESSSAVEDATA" xml:space="preserve">
+    <value>車両レイアウトを正常にエクスポートしました:</value>
+  </data>
 </root>
