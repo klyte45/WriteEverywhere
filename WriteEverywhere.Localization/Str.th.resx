@@ -121,10 +121,10 @@
     <value>Allow to write text in-game to simulate stuff like boards or signs.</value>
   </data>
   <data name="we_PivotPosition__Left" xml:space="preserve">
-    <value>Left side</value>
+    <value>ด้านซ้าย</value>
   </data>
   <data name="we_PivotPosition__Right" xml:space="preserve">
-    <value>Right side</value>
+    <value>ด้านขวา</value>
   </data>
   <data name="we_PivotPosition__Center" xml:space="preserve">
     <value>Center (looking front)</value>
@@ -151,16 +151,16 @@
     <value>Lock camera at instance # (starting at 0)</value>
   </data>
   <data name="we_Enum__UIHorizontalAlignment_Center" xml:space="preserve">
-    <value>Center</value>
+    <value>กลาง</value>
   </data>
   <data name="we_Enum__UIHorizontalAlignment_Right" xml:space="preserve">
-    <value>Right</value>
+    <value>ขวา</value>
   </data>
   <data name="we_Enum__UIHorizontalAlignment_Left" xml:space="preserve">
-    <value>Left</value>
+    <value>ซ้าย</value>
   </data>
   <data name="we_Enum__FontClass_Regular" xml:space="preserve">
-    <value>Regular</value>
+    <value>ปกติ</value>
   </data>
   <data name="we_Enum__FontClass_PublicTransport" xml:space="preserve">
     <value>Public Transport</value>
